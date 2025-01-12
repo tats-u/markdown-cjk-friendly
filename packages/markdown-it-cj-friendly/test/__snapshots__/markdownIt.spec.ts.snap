@@ -1,0 +1,101 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`markdown-it-cj-friendly > ** around Kana/Han is converted to <strong> 1`] = `
+"<p>これは<strong>私のやりたかったこと。</strong>だからするの。</p>
+<p><strong><a href="./product-foo">製品ほげ</a></strong>と<strong><a href="./product-bar">製品ふが</a></strong>をお試しください</p>
+<p>単語と<strong><a href="word-and">単語と</a></strong>単語</p>
+<p><strong>これは太字になりません。</strong>ご注意ください。</p>
+<p>カッコに注意<strong>（太字にならない）</strong>文が続く場合に要警戒。</p>
+<p><strong><a href="https://example.com">リンク</a></strong>も注意。（画像も同様）</p>
+<p>先頭の<strong>\`コード\`も注意。</strong></p>
+<p><strong>末尾の\`コード\`</strong>も注意。</p>
+<p>税込<strong>¥10,000</strong>で入手できます。</p>
+<p>正解は<strong>④</strong>です。</p>
+<p>太郎は<strong>「こんにちわ」</strong>といった</p>
+<p>太郎は<strong>&quot;こんにちわ&quot;</strong>といった</p>
+<p>太郎は<strong>こんにちわ</strong>といった</p>
+<p>太郎は<strong>「Hello」</strong>といった</p>
+<p>太郎は<strong>&quot;Hello&quot;</strong>といった</p>
+<p>太郎は<strong>Hello</strong>といった</p>
+<p>太郎は<strong>「Oh my god」</strong>といった</p>
+<p>太郎は<strong>&quot;Oh my god&quot;</strong>といった</p>
+<p>太郎は<strong>Oh my god</strong>といった</p>
+<p><strong>C#</strong>や<strong>F#</strong>は<strong>「.NET」</strong>というプラットフォーム上で動作します。</p>
+<p>IDが<strong>001号</strong>になります。</p>
+<p>IDが<strong>００１号</strong>になります。</p>
+<p>Go<strong>「初心者」</strong>を対象とした記事です。</p>
+<p><strong><a href="https://example.com">リンク</a></strong>も注意。</p>
+<p><strong>⻲田太郎</strong>と申します</p>
+<p>・<strong>㋐</strong>:選択肢１つ目</p>
+<p><strong>真，</strong>她</p>
+<p><strong>真。</strong>她</p>
+<p><strong>真、</strong>她</p>
+<p><strong>真；</strong>她</p>
+<p><strong>真：</strong>她</p>
+<p><strong>真？</strong>她</p>
+<p><strong>真！</strong>她</p>
+<p><strong>真“</strong>她</p>
+<p><strong>真”</strong>她</p>
+<p><strong>真‘</strong>她</p>
+<p><strong>真’</strong>她</p>
+<p><strong>真（</strong>她</p>
+<p>真<strong>（她</strong></p>
+<p><strong>真）</strong>她</p>
+<p><strong>真【</strong>她</p>
+<p>真<strong>【她</strong></p>
+<p><strong>真】</strong>她</p>
+<p><strong>真《</strong>她</p>
+<p>真<strong>《她</strong></p>
+<p><strong>真》</strong>她</p>
+<p><strong>真—</strong>她</p>
+<p><strong>真～</strong>她</p>
+<p><strong>真…</strong>她</p>
+<p><strong>真·</strong>她</p>
+<p><strong>真〃</strong>她</p>
+<p><strong>真-</strong>她</p>
+<p><strong>真々</strong>她</p>
+<p><strong>真</strong>她</p>
+<p><strong>真，</strong> 她</p>
+<p><strong>真</strong>，她</p>
+<p><strong>真，</strong>​她</p>
+<p>私は<strong>⻲田太郎</strong>と申します</p>
+<p>選択肢<strong>㋐</strong>: 1つ目の選択肢</p>
+<p><strong>さようなら︙</strong>と太郎はいった。</p>
+<p>.NET<strong>（.NET Frameworkは不可）</strong>では、</p>
+<p>「禰󠄀」の偏は示ではなく<strong>礻</strong>です。</p>
+<p>Git<strong>（注：不是GitHub）</strong></p>
+<p>太郎は<strong>「こんにちわ」</strong>といった。</p>
+<p>𰻞𰻞<strong>（ビャンビャン）</strong>麺</p>
+<p>𰻞𰻞<strong>(ビャンビャン)</strong>麺</p>
+<p>ハイパーテキストコーヒーポット制御プロトコル<strong>(HTCPCP)</strong></p>
+<p>﨑<strong>(崎)</strong></p>
+<p>国際規格<strong><a href="https://tc39.es/ecma262/">ECMA-262</a></strong></p>
+<p>㐧<strong>(第の俗字)</strong></p>
+<p>𠮟<strong>(こちらが正式表記)</strong></p>
+<p>𪜈<strong>(トモの合略仮名)</strong></p>
+<p>𫠉<strong>(馬の俗字)</strong></p>
+<p>谺𬤲<strong>(こだま)</strong>石神社</p>
+<p>石𮧟<strong>(いしただら)</strong></p>
+<p><strong>推荐几个框架：</strong>React、Vue等前端框架。</p>
+<p>葛󠄀<strong>(こちらが正式表記)</strong>城市</p>
+<p>禰󠄀<strong>(こちらが正式表記)</strong>豆子</p>
+<p>𱟛<strong>(U+317DB)</strong></p>
+<p>阿寒湖アイヌシアターイコㇿ<strong>(Akanko Ainu Theater Ikor)</strong></p>
+<p>あ𛀙<strong>(か)</strong>よろし</p>
+<p>𮹝<strong>(simplified form of 龘 in China)</strong></p>
+<p>大塚︀<strong>(U+585A U+FE00)</strong> 大塚<strong>(U+FA10)</strong></p>
+<p>〽︎<strong>(庵点)</strong>は、</p>
+"
+`;
+
+exports[`markdown-it-cj-friendly > recognizes non-BMP punctuation and symbols 1`] = `
+"<p>a**a«**a</p>
+<p>a**»a**a</p>
+<p>a**a∇**a</p>
+<p>a**∇a**a</p>
+<p>a**a𝜵**a</p>
+<p>a**𝜵a**a</p>
+<p>a**𐬻a**a</p>
+<p>a**a𐬻**a</p>
+"
+`;

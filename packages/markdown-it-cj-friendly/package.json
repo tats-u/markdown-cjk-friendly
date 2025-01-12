@@ -1,0 +1,37 @@
+{
+  "name": "markdown-it-cj-friendly",
+  "version": "0.1.0",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "module-sync": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": ["dist"],
+  "scripts": {
+    "build": "rslib build",
+    "dev": "rslib build --watch",
+    "test": "vitest run",
+    "test:watch": "vitest watch"
+  },
+  "devDependencies": {
+    "@rslib/core": "^0.3.1",
+    "@types/markdown-it": "^14.1.2",
+    "markdown-it": "^14.1.0"
+  },
+  "peerDependencies": {
+    "@types/markdown-it": "*",
+    "markdown-it": "*"
+  },
+  "peerDependenciesMeta": {
+    "@types/markdown-it": {
+      "optional": true
+    }
+  }
+}
