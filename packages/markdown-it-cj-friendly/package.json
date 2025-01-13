@@ -13,12 +13,13 @@
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
-  "files": ["dist"],
+  "files": ["dist", "LICENSE", "README.md"],
   "scripts": {
     "build": "rslib build",
     "dev": "rslib build --watch",
     "test": "vitest run",
-    "test:watch": "vitest watch"
+    "test:watch": "vitest watch",
+    "prepack": "node -e \"require('fs').cpSync('../../LICENSE', './LICENSE')\""
   },
   "devDependencies": {
     "@rslib/core": "^0.3.1",
