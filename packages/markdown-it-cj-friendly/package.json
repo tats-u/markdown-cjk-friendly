@@ -1,6 +1,6 @@
 {
   "name": "markdown-it-cj-friendly",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "type": "module",
   "exports": {
     ".": {
@@ -20,6 +20,14 @@
   "license": "MIT",
   "author": "Tatsunori Uchino <tats.u@live.jp> (https://github.com/tats-u)",
   "bugs": "https://github.com/tats-u/markdown-cj-friendly/issues",
+  "keywords": [
+    "markdown-it-plugin",
+    "markdown-it",
+    "markdown",
+    "japanese",
+    "chinese"
+  ],
+  "description": "markdown-it plugin to make Markdown emphasis (`**`) in CommonMark more friendly with Chinese and Japanese",
   "scripts": {
     "build": "rslib build",
     "dev": "rslib build --watch",
