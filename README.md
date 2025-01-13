@@ -1,14 +1,14 @@
 # Markdown packages in CommonMark compatible with Chinese and Japanese
 
-## Packages / パッケージ一覧 / 包裹
+## Packages / <span lang="ja">パッケージ一覧</span> / <span lang="zh-Hans-CN">包裹</span>
 
 - `markdown-it-cj-friendly` [![Version](https://img.shields.io/npm/v/markdown-it-cj-friendly)](https://npmjs.com/package/markdown-it-cj-friendly)
 
-## Planned / 予定 / 计划
+## Planned / <span lang="ja">予定</span> / <span lang="zh-Hans-CN">计划</span>
 
 - Drop-in replacement packages for micromark
 
-## Problem / 問題 / 问题
+## Problem / <span lang="ja">問題</span> / <span lang="zh-Hans-CN">问题</span>
 
 CommonMark has a problem that the following emphasis marks `**` are not recognized as emphasis marks in Japanese and Chinese.
 
@@ -35,7 +35,7 @@ Of course, not only the end side but also the start side has the same issue.
 <span lang="zh-Hans-CN">当然，不仅是结束侧，开始侧也存在同样的问题。</span>
 
 
-## Submit an issue or PR / Issue・PRの投稿 / 提出一个 issue 或 PR
+## Submit an issue or PR / <span lang="ja">Issue・PRの投稿</span> / <span lang="zh-Hans-CN">提出一个 issue 或 PR</span>
 
 Please submit an issue or PR in English or Japanese. English is recommended.
 
