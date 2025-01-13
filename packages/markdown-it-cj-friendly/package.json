@@ -14,6 +14,12 @@
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "files": ["dist", "LICENSE", "README.md"],
+  "repository": {
+    "url": "https://github.com/tats-u/markdown-cj-friendly"
+  },
+  "license": "MIT",
+  "author": "Tatsunori Uchino <tats.u@live.jp> (https://github.com/tats-u)",
+  "bugs": "https://github.com/tats-u/markdown-cj-friendly/issues",
   "scripts": {
     "build": "rslib build",
     "dev": "rslib build --watch",
