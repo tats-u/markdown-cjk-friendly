@@ -4,7 +4,9 @@
   "scripts": {
     "test": "pnpm -r test",
     "build": "pnpm -r build",
-    "lint": "run-s lint:*",
+    "lint": "run-s lint:prebuild lint:postbuild",
+    "lint:prebuild": "run-s lint:biome",
+    "lint:postbuild": "run-s lint:type",
     "lint:type": "tsc --noEmit",
     "lint:biome": "biome check",
     "fix": "run-s fix:*",

@@ -12,9 +12,11 @@ jobs:
       - uses: pnpm/action-setup@v2
         with:
           run_install: true
-      - name: Lint
-        run: pnpm lint
+      - name: Lint (prebuild)
+        run: pnpm lint:prebuild
       - name: Build
         run: pnpm build
+      - name: Lint (postbuild)
+        run: pnpm lint:postbuild
       - name: Test
         run: pnpm test
