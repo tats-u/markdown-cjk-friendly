@@ -39,6 +39,8 @@ Of course, not only the end side but also the start side has the same issue.
 
 <span lang="zh-Hans-CN">当然，不仅是结束侧，开始侧也存在同样的问题。</span>
 
+CommonMark issue: https://github.com/commonmark/commonmark-spec/issues/650
+
 ## Contributing / <span lang="ja">貢獻</span> / <span lang="zh-Hans-CN">贡献</span>
 
 ### Submit an issue or PR / <span lang="ja">Issue・PRの投稿</span> / <span lang="zh-Hans-CN">提出一个 issue 或 PR</span>
