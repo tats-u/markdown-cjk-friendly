@@ -46,6 +46,12 @@ Install `markdown-it-cj-friendly` via [npm](https://www.npmjs.com/):
 npm install markdown-it-cj-friendly
 ```
 
+If you use another package manager, please replace `npm` with the command of the package manager you use (e.g. `pnpm`).
+
+<span lang="ja">npm以外のパッケージマネージャを使う場合は、`npm`を当該パッケージマネージャのコマンド（例：`pnpm`）に置き換えてください。</span>
+
+<span lang="zh-Hans-CN">如果使用其他包管理器，请将 `npm` 替换为当时包管理器的命令（例如：`pnpm`）。</span>
+
 ## Usage / <span lang="ja">使い方</span> / <span lang="zh-Hans-CN">用法</span>
 
 Import `markdown-it` and `markdown-it-cj-friendly`, and use the plugin as follows:
