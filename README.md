@@ -34,11 +34,29 @@ Of course, not only the end side but also the start side has the same issue.
 
 <span lang="zh-Hans-CN">当然，不仅是结束侧，开始侧也存在同样的问题。</span>
 
+## Contributing / <span lang="ja">貢獻</span> / <span lang="zh-Hans-CN">贡献</span>
 
-## Submit an issue or PR / <span lang="ja">Issue・PRの投稿</span> / <span lang="zh-Hans-CN">提出一个 issue 或 PR</span>
+### Submit an issue or PR / <span lang="ja">Issue・PRの投稿</span> / <span lang="zh-Hans-CN">提出一个 issue 或 PR</span>
 
 Please submit an issue or PR in English or Japanese. English is recommended.
 
 <span lang="ja">Issue・PRは英語か日本語で投稿してください。英語を推奨します。</span>
 
 <span lang="zh-Hans-CN">请用英语或日语提交问题或 PR。建议使用英语。</span>
+
+### Build
+
+This repository adopts [PNPM](https://pnpm.io/) as a package manager.
+
+To build all packages, run:
+
+```bash
+pnpm i
+node --run build
+```
+
+To run tests, run:
+
+```bash
+node --run test
+```
