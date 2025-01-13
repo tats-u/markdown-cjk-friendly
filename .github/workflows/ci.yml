@@ -13,10 +13,10 @@ jobs:
         with:
           run_install: true
       - name: Lint (prebuild)
-        run: pnpm lint:prebuild
+        run: node --run lint:prebuild
       - name: Build
-        run: pnpm build
+        run: node --run build
       - name: Lint (postbuild)
-        run: pnpm lint:postbuild
+        run: node --run lint:postbuild
       - name: Test
-        run: pnpm test
+        run: node --run test

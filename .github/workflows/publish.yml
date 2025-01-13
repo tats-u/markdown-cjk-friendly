@@ -19,7 +19,7 @@ jobs:
         with:
           run_install: true
       - name: Build packages
-        run: pnpm build
+        run: node --run build
       - name: Determine package from tag
         uses: actions/github-script@v6
         with:
