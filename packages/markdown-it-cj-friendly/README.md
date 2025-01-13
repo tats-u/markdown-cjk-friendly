@@ -68,7 +68,7 @@ const md = MarkdownIt();
 md.use(markdownItCjFriendly);
 ```
 
-## Contributing / <span lang="ja">貢獻</span> / <span lang="zh-Hans-CN">贡献</span>
+## Contributing / <span lang="ja">貢献</span> / <span lang="zh-Hans-CN">贡献</span>
 
 ### Setup
 
