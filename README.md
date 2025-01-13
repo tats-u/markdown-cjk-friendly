@@ -7,6 +7,11 @@
 ## Planned / <span lang="ja">予定</span> / <span lang="zh-Hans-CN">计划</span>
 
 - Drop-in replacement packages for micromark
+- Question: should we consider Korean? e.g.:
+
+  ```md
+  패키지를 발행하려면 **`npm publish`**를 실행하십시오.
+  ```
 
 ## Problem / <span lang="ja">問題</span> / <span lang="zh-Hans-CN">问题</span>
 
