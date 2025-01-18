@@ -9,7 +9,7 @@ CommonMark issue: https://github.com/commonmark/commonmark-spec/issues/650
 A <a href="#cjk-character-without-variation-selector" id="cjk-character-without-variation-selector">CJK code point without variation selector</a> is an Unicode code point that meets _at least one_ of the following criteria:
 
 - Meets _both_ of the following criteria:
-  - [UAX #11 East Asian width](https://www.unicode.org/reports/tr11/) category is either `W`, `F`, or `H`
+  - [UAX #11 East Asian Width](https://www.unicode.org/reports/tr11/) category is either `W`, `F`, or `H`
   - Not "fully-qualified emoji" defined in [UTS #51 Unicode Emoji](https://www.unicode.org/reports/tr51/#def_qualified_emoji_character)
 - [UAX #24 Unicode Script Property](https://www.unicode.org/reports/tr24/) is Hangul
 
@@ -39,3 +39,17 @@ A right-flanking delimiter run is a [delimiter run](https://spec.commonmark.org/
   - 🈷 (U+1F237)
   - ㊗ (U+3297)
   - ㊙ (U+3299)
+- The East Asian Width of IVS and SVS is `A`.
+- The East Asian Width of characters whose Script is Hangul can be `N` (U+1160–U+11FF). However, there are no characters whose Script is Hangul and East Asian Width is `A` or `Na` as of Unicode 16.
+- The East Asian Width of unassigned characters (e.g. U+3097 and U+2FFFF) is undefined. If you want to generate ranges for [CJK code points without variation selector](#cjk-character-without-variation-selector) and pass them to e.g. an `if` statement as a condition expression concatenated with `||`, you can treat unassigned characters as CJK to concatenate 2 separated ranges (by this you can reduce product terms) or non-CJK. It is up to you implementers to decide how to treat unassigned characters whose East Asian Width is undefined.
+
+## Unicode data list
+
+| Data name | Latest | Unicode 16 |
+| --- | --- | --- |
+| East Asian Width | https://www.unicode.org/Public/UCD/latest/ucd/EastAsianWidth.txt | https://www.unicode.org/Public/16.0.0/ucd/EastAsianWidth.txt |
+| Script | https://www.unicode.org/Public/UCD/latest/ucd/Scripts.txt | https://www.unicode.org/Public/16.0.0/ucd/Scripts.txt |
+| Block | https://www.unicode.org/Public/UCD/latest/ucd/Blocks.txt | https://www.unicode.org/Public/16.0.0/ucd/Blocks.txt |
+| Characters followed by SVS | https://www.unicode.org/Public/UCD/latest/ucd/StandardizedVariants.txt | https://www.unicode.org/Public/16.0.0/ucd/StandardizedVariants.txt |
+| Fully-qualified Emojis (without ZWJ) | https://unicode.org/Public/emoji/latest/emoji-sequences.txt | https://unicode.org/Public/16.0.0/emoji/emoji-sequences.txt |
+| Emoji qualification test | https://unicode.org/Public/emoji/latest/emoji-test.txt | https://unicode.org/Public/16.0.0/emoji/emoji-test.txt |
