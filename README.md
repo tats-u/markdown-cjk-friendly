@@ -9,6 +9,16 @@
 
 - Drop-in replacement packages for micromark
 
+## Specification / <span lang="ja">規格書</span> / <span lang="zh-Hans-CN">规范</span> / <span lang="ko">규정서</span>
+
+See [specification.md](specification.md).
+
+<span lang="ja">[specification.md](specification.md)（英語） を参照してください。</span>
+
+<span lang="zh-Hans-CN">参考 [specification.md](specification.md)（英文）。</span>
+
+<span lang="ko">[specification.md](specification.md)（영어）를 참고해 주시기 바라요.</span>
+
 ## Problem / <span lang="ja">問題</span> / <span lang="zh-Hans-CN">问题</span> / <span lang="ko">문제점</span>
 
 CommonMark has a problem that the following emphasis marks `**` are not recognized as emphasis marks in Japanese and Chinese.
