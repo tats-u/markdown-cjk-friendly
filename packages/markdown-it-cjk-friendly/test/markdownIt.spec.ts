@@ -1,6 +1,9 @@
 import { readFile } from "node:fs/promises";
 import MarkdownIt from "markdown-it";
 import markdownItCjkFriendly from "markdown-it-cjk-friendly";
+import commonMarkTestCases from "../../../testcases/commonmark.json" with {
+  type: "json",
+};
 
 const md = MarkdownIt();
 md.use(markdownItCjkFriendly);
@@ -70,5 +73,15 @@ describe("markdown-it-cjk-friendly", () => {
       expect(line).not.toMatch(/\*\*[^\n]+\*\*/);
     }
     expect(result).toMatchSnapshot();
+  });
+
+  it("Don't conflict with existing CommonMark test cases", async () => {
+    for (const testCase of commonMarkTestCases) {
+      if (testCase.section !== "Emphasis and strong emphasis") continue;
+      // markdown-it is not incompatible with test cases containing raw HTML tags
+      if (/<[a-z]+ [^>]+=[^>]+>/.test(testCase.markdown)) continue;
+      const result = md.render(testCase.markdown);
+      expect(result).toBe(testCase.html);
+    }
   });
 });
