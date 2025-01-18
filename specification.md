@@ -6,7 +6,7 @@ CommonMark issue: https://github.com/commonmark/commonmark-spec/issues/650
 
 ### 2.1 Characters and lines
 
-A <a href="#cjk-character-without-variation-selector" id="cjk-character-without-variation-selector">CJK code point without variation selector</a> is an Unicode code point that meets _at least one_ of the following criteria:
+A <a href="#cjk-code-point-without-variation-selector" id="cjk-code-point-without-variation-selector">CJK code point without variation selector</a> is an Unicode code point that meets _at least one_ of the following criteria:
 
 - Meets _both_ of the following criteria:
   - [UAX #11 East Asian Width](https://www.unicode.org/reports/tr11/) category is either `W`, `F`, or `H`
@@ -26,13 +26,13 @@ A <a href="#svs-that-can-follow-cjk" id="svs-that-can-follow-cjk">SVS (Standard 
 > [!NOTE]
 > The ***bold italic*** means the modified part.
 
-A [left-flanking delimiter run](#left-flanking-delimiter-run) is a [delimiter run](https://spec.commonmark.org/0.31.2/#delimiter-run) that is (1) not followed by [Unicode whitespace](https://spec.commonmark.org/0.31.2/#unicode-whitespace), and either (2a) not followed by a [Unicode punctuation character](https://spec.commonmark.org/0.31.2/#unicode-punctuation-character), or (2b) followed by a [Unicode punctuation character](https://spec.commonmark.org/0.31.2/#unicode-punctuation-character) and preceded by [Unicode whitespace](https://spec.commonmark.org/0.31.2/#unicode-whitespace)***,*** a [Unicode punctuation character](https://spec.commonmark.org/0.31.2/#unicode-punctuation-character)***, a [CJK code point without variation selector](#cjk-character-without-variation-selector), an [IVS (Ideographic Variation Selector/Sequence)](#ivs), or [SVS that can follow CJK](#svs-that-can-follow-cjk) preceded by [CJK code point without variation selector](#cjk-character-without-variation-selector)***. For purposes of this definition, the beginning and the end of the line count as [Unicode whitespace](https://spec.commonmark.org/0.31.2/#unicode-whitespace).
+A [left-flanking delimiter run](#left-flanking-delimiter-run) is a [delimiter run](https://spec.commonmark.org/0.31.2/#delimiter-run) that is (1) not followed by [Unicode whitespace](https://spec.commonmark.org/0.31.2/#unicode-whitespace), and either (2a) not followed by a [Unicode punctuation character](https://spec.commonmark.org/0.31.2/#unicode-punctuation-character), or (2b) followed by a [Unicode punctuation character](https://spec.commonmark.org/0.31.2/#unicode-punctuation-character) and preceded by [Unicode whitespace](https://spec.commonmark.org/0.31.2/#unicode-whitespace)***,*** a [Unicode punctuation character](https://spec.commonmark.org/0.31.2/#unicode-punctuation-character)***, a [CJK code point without variation selector](#cjk-code-point-without-variation-selector), an [IVS (Ideographic Variation Selector/Sequence)](#ivs), or a [SVS that can follow CJK](#svs-that-can-follow-cjk) preceded by a [CJK code point without variation selector](#cjk-code-point-without-variation-selector)***. For purposes of this definition, the beginning and the end of the line count as [Unicode whitespace](https://spec.commonmark.org/0.31.2/#unicode-whitespace).
 
-A right-flanking delimiter run is a [delimiter run](https://spec.commonmark.org/0.31.2/#delimiter-run) that is (1) not preceded by [Unicode whitespace](https://spec.commonmark.org/0.31.2/#unicode-whitespace), and either (2a) not preceded by a [Unicode punctuation character](https://spec.commonmark.org/0.31.2/#unicode-punctuation-character), or (2b) preceded by a [Unicode punctuation character](https://spec.commonmark.org/0.31.2/#unicode-punctuation-character) and followed by [Unicode whitespace](https://spec.commonmark.org/0.31.2/#unicode-whitespace)***,*** a [Unicode punctuation character](https://spec.commonmark.org/0.31.2/#unicode-punctuation-character)***, or a [CJK code point without variation selector](#cjk-character-without-variation-selector)***. For purposes of this definition, the beginning and the end of the line count as [Unicode whitespace](https://spec.commonmark.org/0.31.2/#unicode-whitespace).
+A right-flanking delimiter run is a [delimiter run](https://spec.commonmark.org/0.31.2/#delimiter-run) that is (1) not preceded by [Unicode whitespace](https://spec.commonmark.org/0.31.2/#unicode-whitespace), and either (2a) not preceded by a [Unicode punctuation character](https://spec.commonmark.org/0.31.2/#unicode-punctuation-character), or (2b) preceded by a [Unicode punctuation character](https://spec.commonmark.org/0.31.2/#unicode-punctuation-character) and followed by [Unicode whitespace](https://spec.commonmark.org/0.31.2/#unicode-whitespace)***,*** a [Unicode punctuation character](https://spec.commonmark.org/0.31.2/#unicode-punctuation-character)***, or a [CJK code point without variation selector](#cjk-code-point-without-variation-selector)***. For purposes of this definition, the beginning and the end of the line count as [Unicode whitespace](https://spec.commonmark.org/0.31.2/#unicode-whitespace).
 
 ## Tips for Implementers
 
-- [CJK character without variation selector](#cjk-character-without-variation-selector) contains the following characters:
+- [CJK code point without variation selector](#cjk-code-point-without-variation-selector) contains the following characters:
   - 〰 (U+3030)
   - 〽 (U+303D)
   - 🈂 (U+1F202)
@@ -41,7 +41,7 @@ A right-flanking delimiter run is a [delimiter run](https://spec.commonmark.org/
   - ㊙ (U+3299)
 - The East Asian Width of IVS and SVS is `A`.
 - The East Asian Width of characters whose Script is Hangul can be `N` (U+1160–U+11FF). However, there are no characters whose Script is Hangul and East Asian Width is `A` or `Na` as of Unicode 16.
-- The East Asian Width of unassigned characters (e.g. U+3097 and U+2FFFF) is undefined. If you want to generate ranges for [CJK code points without variation selector](#cjk-character-without-variation-selector) and pass them to e.g. an `if` statement as a condition expression concatenated with `||`, you can treat unassigned characters as CJK to concatenate 2 separated ranges (by this you can reduce product terms) or non-CJK. It is up to you implementers to decide how to treat unassigned characters whose East Asian Width is undefined.
+- The East Asian Width of unassigned characters (e.g. U+3097 and U+2FFFF) is undefined. If you want to generate ranges for [CJK code points without variation selector](#cjk-code-point-without-variation-selector) and pass them to e.g. an `if` statement as a condition expression concatenated with `||`, you can treat unassigned characters as CJK to concatenate 2 separated ranges (by this you can reduce product terms) or non-CJK. It is up to you implementers to decide how to treat unassigned characters whose East Asian Width is undefined.
 
 ## Unicode data list
 
