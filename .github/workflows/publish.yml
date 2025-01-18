@@ -25,7 +25,7 @@ jobs:
         with:
           script: |
             const tagName = context.ref.replace(/refs\/tags\//, "");
-            const [packageName, version] = tagName.split(/-(?=v\d+\.\d+\.\d+)/, 2);
+            const [packageName, version] = tagName.split(/-(?=v\d+\.\d+\.\d+)|(?<!^)@/, 2);
 
             if (!version) {
               throw new Error(`Could not determine version from tag ${tagName} (should be <package-name>-v<version>)`);
