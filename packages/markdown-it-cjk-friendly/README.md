@@ -2,13 +2,13 @@
 
 [![Version](https://img.shields.io/npm/v/markdown-it-cjk-friendly)](https://npmjs.com/package/markdown-it-cjk-friendly)
 
-A [markdown-it](https://github.com/markdown-it/markdown-it) plugin to make Markdown emphasis (`**`) in CommonMark compatible with Chinese, Japanese, and Korean.
+A [markdown-it](https://github.com/markdown-it/markdown-it) plugin to make Markdown emphasis (`**`) in CommonMark compatible with Chinese, Japanese, and Korean (CJK).
 
-<span lang="ja">CommonMarkの強調記号(`**`)を中国語・日本語・韓国語にきちんと対応させるための[markdown-it](https://github.com/markdown-it/markdown-it)プラグイン</span>
+<span lang="ja">CommonMarkの強調記号(`**`)を日本語・中国語・韓国語にきちんと対応させるための[markdown-it](https://github.com/markdown-it/markdown-it)プラグイン</span>
 
 <span lang="zh-Hans-CN">一个 [markdown-it](https://github.com/markdown-it/markdown-it) 插件，用于使 CommonMark 的强调标记(`**`)能够正确支持中文、日语和韩语文本。</span>
 
-<span lang="ko">CommonMark의 강조 표시(**) 를 중국어, 일본어, 한국어와 호환되도록 만드는 [markdown-it](https://github.com/markdown-it/markdown-it) 플러그인</span>
+<span lang="ko">CommonMark의 강조 표시(`**`) 를 한국어, 중국어, 일본어와 호환되도록 만드는 [markdown-it](https://github.com/markdown-it/markdown-it) 플러그인</span>
 
 ## Problem / <span lang="ja">問題</span> / <span lang="zh-Hans-CN">问题</span> / <span lang="ko">문제점</span>
 
@@ -46,6 +46,29 @@ Of course, not only the end side but also the start side has the same issue.
 
 CommonMark issue: https://github.com/commonmark/commonmark-spec/issues/650
 
+## Runtime Requirements / <span lang="ja">実行環境の要件</span> / <span lang="zh-Hans-CN">运行环境要求</span> / <span lang="ko">업데이트 전략</span>
+
+This package uses the [`v` flag of the regular expression](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/unicodeSets) introduced in ES2024 to determine whether the character is an emoji or not.
+
+<span lang="ja">本パッケージは文字が絵文字かどうかを判定するために、ES2024で導入された[正規表現の`v`フラグ](https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/RegExp/unicodeSets)を使用しています。</span>
+
+<span lang="zh-CN">本包使用 ES2024 引入的[`v` 标志](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/unicodeSets) 来判断字符是否为 emoji。</span>
+
+<span lang="ko">이 패키지는 ES2024에서 도입된 [`v` 플래그](https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/RegExp/unicodeSets)를 사용하여 문자가 이모지인지 여부를 판단합니다.</span>
+
+It makes this package compatible only with relatively recent browsers and Node.js:
+
+<span lang="ja">このため、本パッケージは、次のような比較的新しいブラウザやNode.jsでしか動作しません。</span>
+
+<span lang="zh-CN">因此，本包只兼容比较新的浏览器和 Node.js:</span>
+
+<span lang="ko">따라서, 이 패키지는 비교적 최신 브라우저와 Node.js에서만 작동합니다.</span>
+
+- Chrome / Edge 112 or later
+- Firefox 116 or later
+- Safari 17 or later
+- Node.js 20 or later
+
 ## Installation / <span lang="ja">インストール</span> / <span lang="zh-Hans-CN">安装</span> / <span lang="ko">설치</span>
 
 Install `markdown-it-cjk-friendly` via [npm](https://www.npmjs.com/):
@@ -55,7 +78,6 @@ Install `markdown-it-cjk-friendly` via [npm](https://www.npmjs.com/):
 <span lang="zh-Hans-CN">通过 [npm](https://www.npmjs.com/) 安装 `markdown-it-cjk-friendly`。</span>
 
 <span lang="ko">`markdown-it-cjk-friendly`를 [npm](https://www.npmjs.com/)으로 설치하세요.</span>
-
 
 ```bash
 npm install markdown-it-cjk-friendly
