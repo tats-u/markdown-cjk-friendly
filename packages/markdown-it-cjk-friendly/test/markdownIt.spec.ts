@@ -50,8 +50,11 @@ describe("markdown-it-cjk-friendly", () => {
     expect(result).toMatchSnapshot();
   });
 
-  it("Example Markdown in README", async() => {
-    const readme = await readFile(new URL("../README.md", import.meta.url), "utf-8")
+  it("Example Markdown in README", async () => {
+    const readme = await readFile(
+      new URL("../README.md", import.meta.url),
+      "utf-8",
+    );
     const markdownRegexResult = /```md((?:.(?!```))+)/s.exec(readme);
     if (!markdownRegexResult) {
       throw new Error("Failed to find example Markdown in README");
@@ -59,5 +62,5 @@ describe("markdown-it-cjk-friendly", () => {
     const result = md.render(markdownRegexResult[1]);
     expect(result.split(/\r?\n/)).not.toContain(/\*\*[^\n]+\*\*/);
     expect(result).toMatchSnapshot();
-  })
+  });
 });

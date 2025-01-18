@@ -12,9 +12,7 @@
     "fix": "run-s fix:*",
     "fix:biome": "biome check --write"
   },
-  "workspaces": [
-    "packages/*"
-  ],
+  "workspaces": ["packages/*"],
   "type": "module",
   "devDependencies": {
     "@biomejs/biome": "1.9.4",

@@ -1,12 +1,10 @@
+import { eastAsianWidthType } from "get-east-asian-width";
 import type MarkdownIt from "markdown-it";
 import {
   isMdAsciiPunct,
   isPunctChar,
   isWhiteSpace,
 } from "markdown-it/lib/common/utils.mjs";
-import {
-  eastAsianWidthType
-} from "get-east-asian-width";
 
 /**
  * Check if `uc` is CJK. Deferred (returns `null`) if IVS.
@@ -18,19 +16,19 @@ function isCjkBase(uc: number) {
   const eaw = eastAsianWidthType(uc);
   switch (eaw) {
     case "fullwidth":
-      case "halfwidth":
-        return true; // never be emoji
-      case "wide":
-        return !/^\p{RGI_Emoji}/v.test(String.fromCodePoint(uc));
-      case "narrow":
-        return false;
-      case "ambiguous":
-        // no Hangul as of Unicode 16
-        // IVS is Ambiguous
-        return 0xE0100 <= uc && uc <= 0xE01EF ? null : false;
-      case "neutral":
-        // 1160..11FF     ; N  # Lo   [160] HANGUL JUNGSEONG FILLER..HANGUL JONGSEONG SSANGNIEUN
-        return (/^\p{sc=Hangul}/u.test(String.fromCodePoint(uc)));
+    case "halfwidth":
+      return true; // never be emoji
+    case "wide":
+      return !/^\p{RGI_Emoji}/v.test(String.fromCodePoint(uc));
+    case "narrow":
+      return false;
+    case "ambiguous":
+      // no Hangul as of Unicode 16
+      // IVS is Ambiguous
+      return 0xe0100 <= uc && uc <= 0xe01ef ? null : false;
+    case "neutral":
+      // 1160..11FF     ; N  # Lo   [160] HANGUL JUNGSEONG FILLER..HANGUL JONGSEONG SSANGNIEUN
+      return /^\p{sc=Hangul}/u.test(String.fromCodePoint(uc));
   }
 }
 
