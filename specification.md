@@ -10,7 +10,7 @@ A <a href="#cjk-code-point-without-variation-selector" id="cjk-code-point-withou
 
 - Meets _both_ of the following criteria:
   - [UAX #11 East Asian Width](https://www.unicode.org/reports/tr11/) category is either `W`, `F`, or `H`
-  - Not "fully-qualified emoji" defined in [UTS #51 Unicode Emoji](https://www.unicode.org/reports/tr51/#def_qualified_emoji_character)
+  - Not in [RGI emoji set](https://www.unicode.org/reports/tr51/#def_rgi_set) (i.e. is not [fully-qualified emoji](https://www.unicode.org/reports/tr51/#def_fully_qualified_emoji)) defined in [UTS #51 Unicode Emoji](https://www.unicode.org/reports/tr51/#def_qualified_emoji_character)
 - [UAX #24 Unicode Script Property](https://www.unicode.org/reports/tr24/) is Hangul
 
 An <a href="#ivs" id="ivs">IVS (Ideographic Variation Selector/Sequence)</a> is an Unicode code point in the Variation Selectors Supplement Block (U+E0100–U+E01EF).
@@ -44,6 +44,7 @@ A right-flanking delimiter run is a [delimiter run](https://spec.commonmark.org/
   - ㊗ (U+3297)
   - ㊙ (U+3299)
 - Do not treat every character in [emoji-data.txt](https://www.unicode.org/Public/UCD/latest/ucd/emoji/emoji-data.txt) in the below data list as emoji. It includes ASCII digits, ASCII asterisk, ASCII hash sign, copyright symbol, trademark symbol, and so on. They should not be treated as emoji unless followed by a U+FE0F.
+- You can use `/^\p{Basic_Emoji}/v` or `/^\p{RGI_Emoji}/v` in JavaScript to check if a code point is an emoji (in the RGI emoji set). __`RGI_Emoji` characters other than `Basic_Emoji`__ ([basic emoji set](https://www.unicode.org/reports/tr51/#def_basic_emoji_set)) __have multiple code points and are not CJK as of Unicode 16. Never use `/^\p{Emoji}/u`__ instead of them because it is useless due to the fact that `/^\p{Emoji}/u.test("1")` is `true` (who on earth would insist that `1` is an emoji?). The `v` flag is available since ES2024 and supported by Node >= 20, Chrome (Edge) >= 112, Firefox >= 116, and Safari >= 17.
 - The East Asian Width of IVS and SVS is `A`.
 - The East Asian Width of characters whose Script is Hangul can be `N` (U+1160–U+11FF). However, there are no characters whose Script is Hangul and East Asian Width is `A` or `Na` as of Unicode 16.
 - The East Asian Width of unassigned characters (e.g. U+3097 and U+2FFFF) is undefined. If you want to generate ranges for [CJK code points without variation selector](#cjk-code-point-without-variation-selector) and pass them to e.g. an `if` statement as a condition expression concatenated with `||`, you can treat unassigned characters as CJK to concatenate 2 separated ranges (by this you can reduce product terms) or non-CJK. It is up to you implementers to decide how to treat unassigned characters whose East Asian Width is undefined.
