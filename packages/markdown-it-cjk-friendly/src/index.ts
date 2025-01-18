@@ -57,8 +57,11 @@ export default function markdownItCjFriendlyPlugin(md: MarkdownIt) {
       const marker = this.src.charCodeAt(start);
 
       let [lastChar, lastCharPos] = getLastCharCode(this.src, start);
-      if (maybeHanSVS(lastChar))
+      let isLastActuallyTwoPrev = false;
+      if (maybeHanSVS(lastChar)) {
         [lastChar, lastCharPos] = getLastCharCode(this.src, lastCharPos);
+        isLastActuallyTwoPrev = true;
+      }
 
       let pos = start;
       while (pos < max && this.src.charCodeAt(pos) === marker) {
@@ -71,35 +74,40 @@ export default function markdownItCjFriendlyPlugin(md: MarkdownIt) {
       // biome-ignore lint/style/noNonNullAssertion: always in range thanks to pos < max
       const nextChar = pos < max ? this.src.codePointAt(pos)! : 0x20;
 
-      const isLastPunctChar =
-        isMdAsciiPunct(lastChar) || isPunctChar(String.fromCodePoint(lastChar));
-      const isNextPunctChar =
-        isMdAsciiPunct(nextChar) || isPunctChar(String.fromCodePoint(nextChar));
+      const isLastCJKChar = (isLastActuallyTwoPrev ? isCjk : isCjkOrIvs)(
+        lastChar,
+      );
+      const isNextCJKChar = isCjk(nextChar);
+
+      const isLastNonCjkPunctChar =
+        isMdAsciiPunct(lastChar) ||
+        (isPunctChar(String.fromCodePoint(lastChar)) && !isLastCJKChar);
+      const isNextNonCjkPunctChar =
+        isMdAsciiPunct(nextChar) ||
+        (isPunctChar(String.fromCodePoint(nextChar)) && !isNextCJKChar);
 
       const isLastWhiteSpace = isWhiteSpace(lastChar);
       const isNextWhiteSpace = isWhiteSpace(nextChar);
 
-      const isLastCJKChar = isCjkOrIvs(lastChar);
-      const isNextCJKChar = isCjk(nextChar);
-      const adjacentToCjChar = isLastCJKChar || isNextCJKChar;
-
       const left_flanking =
         !isNextWhiteSpace &&
-        (!isNextPunctChar ||
+        (!isNextNonCjkPunctChar ||
+          isLastNonCjkPunctChar ||
           isLastWhiteSpace ||
-          isLastPunctChar ||
-          adjacentToCjChar);
+          isLastCJKChar);
       const right_flanking =
         !isLastWhiteSpace &&
-        (!isLastPunctChar ||
+        (!isLastNonCjkPunctChar ||
           isNextWhiteSpace ||
-          isNextPunctChar ||
-          adjacentToCjChar);
+          isNextNonCjkPunctChar ||
+          isNextCJKChar);
 
       const can_open =
-        left_flanking && (canSplitWord || !right_flanking || isLastPunctChar);
+        left_flanking &&
+        (canSplitWord || !right_flanking || isLastNonCjkPunctChar);
       const can_close =
-        right_flanking && (canSplitWord || !left_flanking || isNextPunctChar);
+        right_flanking &&
+        (canSplitWord || !left_flanking || isNextNonCjkPunctChar);
 
       return { can_open, can_close, length: count };
 
