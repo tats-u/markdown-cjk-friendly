@@ -13,7 +13,9 @@ describe("markdown-it-cjk-friendly", () => {
         "utf-8",
       ),
     );
-    expect(result.split(/\r?\n/)).not.toContain(/\*\*[^\n]+\*\*/);
+    for (const line of result.split(/\r?\n/)) {
+      expect(line).not.toMatch(/\*\*[^\n]+\*\*/);
+    }
     expect(result).toMatchSnapshot();
   });
 
@@ -24,7 +26,9 @@ describe("markdown-it-cjk-friendly", () => {
         "utf-8",
       ),
     );
-    expect(result.split(/\r?\n/)).not.toContain(/\*\*[^\n]+\*\*/);
+    for (const line of result.split(/\r?\n/)) {
+      expect(line).not.toMatch(/\*\*[^\n]+\*\*/);
+    }
     expect(result).toMatchSnapshot();
   });
 
@@ -35,7 +39,9 @@ describe("markdown-it-cjk-friendly", () => {
         "utf-8",
       ),
     );
-    expect(result.split(/\r?\n/)).not.toContain(/\*\*[^\n]+\*\*/);
+    for (const line of result.split(/\r?\n/)) {
+      expect(line).not.toMatch(/\*\*[^\n]+\*\*/);
+    }
     expect(result).toMatchSnapshot();
   });
 
@@ -60,7 +66,9 @@ describe("markdown-it-cjk-friendly", () => {
       throw new Error("Failed to find example Markdown in README");
     }
     const result = md.render(markdownRegexResult[1]);
-    expect(result.split(/\r?\n/)).not.toContain(/\*\*[^\n]+\*\*/);
+    for (const line of result.split(/\r?\n/)) {
+      expect(line).not.toMatch(/\*\*[^\n]+\*\*/);
+    }
     expect(result).toMatchSnapshot();
   });
 });
