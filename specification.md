@@ -15,13 +15,13 @@ A <a href="#cjk-code-point-without-variation-selector" id="cjk-code-point-withou
 
 An <a href="#ivs" id="ivs">IVS (Ideographic Variation Selector/Sequence)</a> is an Unicode code point in the Variation Selectors Supplement Block (U+E0100–U+E01EF).
 
-A <a href="#svs-that-can-follow-cjk" id="svs-that-can-follow-cjk">SVS (Standard Variation Selector/Sequence) that can follow CJK</a> is an Unicode code point in U+FE00–U+FE02 or U+FE0E as of Unicode 16. [^svs-range]
+A <a href="#svs-that-can-follow-cjk" id="svs-that-can-follow-cjk">SVS (Standard Variation Selector/Sequence) that can follow CJK</a> is an Unicode code point other than U+FE0F in the Variation Selectors Block (U+FE00–U+FE0F) that can follow [CJK code point without variation selector](#cjk-code-point-without-variation-selector) (U+FE00–U+FE02 or U+FE0E as of Unicode 16[^svs-range]).
 
 A <a href="#cjk-punctuation-character" id="cjk-punctuation-character">CJK punctuation character</a> is a [Unicode punctuation character](https://spec.commonmark.org/0.31.2/#unicode-punctuation-character) that is also a [CJK code point without variation selector](#cjk-code-point-without-variation-selector).
 
 A <a href="non-cjk-punctuation-character" id="non-cjk-punctuation-character">non-CJK punctuation character</a> is a [Unicode punctuation character](https://spec.commonmark.org/0.31.2/#unicode-punctuation-character) other than [CJK punctuation character](#cjk-punctuation-character).
 
-[^svs-range]: The range except for U+FE0E is computed from https://www.unicode.org/Public/16.0.0/ucd/StandardizedVariants.txt (as of Unicode 16) by extracting those that can follow CJK characters.
+[^svs-range]: The range except for U+FE0E is computed from https://www.unicode.org/Public/16.0.0/ucd/StandardizedVariants.txt (as of Unicode 16) by extracting those that can follow CJK characters. Also, https://unicode.org/Public/16.0.0/ucd/emoji/emoji-variation-sequences.txt shows that U+FE0E can follow some CJK characters.
 
 ## 6. Inlines
 
