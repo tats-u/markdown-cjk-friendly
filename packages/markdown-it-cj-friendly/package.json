@@ -33,6 +33,7 @@
     "dev": "rslib build --watch",
     "test": "vitest run",
     "test:watch": "vitest watch",
+    "lint:type": "tsc --noEmit",
     "prepack": "node -e \"require('fs').cpSync('../../LICENSE', './LICENSE')\""
   },
   "devDependencies": {
