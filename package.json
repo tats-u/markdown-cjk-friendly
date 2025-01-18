@@ -1,5 +1,5 @@
 {
-  "name": "markdown-cj-friendly",
+  "name": "markdown-cjk-friendly",
   "private": true,
   "scripts": {
     "test": "pnpm -r test",
