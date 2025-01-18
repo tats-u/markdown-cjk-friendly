@@ -21,13 +21,13 @@ See [specification.md](specification.md).
 
 ## Problem / <span lang="ja">問題</span> / <span lang="zh-Hans-CN">问题</span> / <span lang="ko">문제점</span>
 
-CommonMark has a problem that the following emphasis marks `**` are not recognized as emphasis marks in Japanese and Chinese.
+CommonMark has a problem that the following emphasis marks `**` are not recognized as emphasis marks in Japanese,Chinese, and Korean.
 
-<span lang="ja">CommonMarkには、日本語・中国語内の次のような強調記号(`**`)が強調記号として認識されない問題があります。</span>
+<span lang="ja">CommonMarkには、日本語・中国語・韓国語内の次のような強調記号(`**`)が強調記号として認識されない問題があります。</span>
 
-<span lang="zh-Hans-CN">CommonMark存在以下问题：在中文和日语文本中，强调标记**不会被识别为强调标记。</span>
+<span lang="zh-Hans-CN">CommonMark存在以下问题：在中文、日语和韩语文本中，强调标记`**`不会被识别为强调标记。</span>
 
-<span lang="ko">CommonMark는 일본어와 중국어에서 다음과 같은 강조 표시 **가 강조 표시로 인식되지 않는 문제가 있습니다.</span>
+<span lang="ko">CommonMark는 일본어와 중국어에서 다음과 같은 강조 표시 `**`가 강조 표시로 인식되지 않는 문제가 있습니다.</span>
 
 ```md
 **このアスタリスクは強調記号として認識されず、そのまま表示されます。**この文のせいで。
