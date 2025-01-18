@@ -12,7 +12,9 @@
     "fix": "run-s fix:*",
     "fix:biome": "biome check --write"
   },
-  "workspaces": ["packages/*"],
+  "workspaces": [
+    "packages/*"
+  ],
   "type": "module",
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
@@ -20,7 +22,7 @@
     "npm-run-all": "^4.1.5",
     "typescript": "^5.7.3",
     "unplugin-auto-import": "^19.0.0",
-    "vitest": "^2.1.8"
+    "vitest": "^3.0.2"
   },
   "packageManager": "pnpm@9.15.3"
 }
