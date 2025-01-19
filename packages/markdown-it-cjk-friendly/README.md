@@ -109,6 +109,10 @@ const md = MarkdownIt();
 md.use(markdownItCjkFriendly);
 ```
 
+## Specification / <span lang="ja">規格書</span> / <span lang="zh-Hans-CN">规范</span> / <span lang="ko">규정서</span>
+
+https://github.com/tats-u/markdown-cjk-friendly/blob/main/specification.md (English)
+
 ## Contributing / <span lang="ja">貢献</span> / <span lang="zh-Hans-CN">贡献</span> / <span lang="ko">기여</span>
 
 ### Setup
