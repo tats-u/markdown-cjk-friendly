@@ -55,7 +55,22 @@ describe("markdown-it-cjk-friendly", () => {
         "utf-8",
       ),
     );
-    expect(result.split(/\r?\n/)).not.toContain("<strong>");
+    for (const line of result.split(/\r?\n/)) {
+      expect(line).not.toContain("<strong>");
+    }
+    expect(result).toMatchSnapshot();
+  });
+
+  it("process underscores around CJK punctuation", async () => {
+    const result = md.render(
+      await readFile(
+        new URL("../../../testcases/underscore-cjk-punct.md", import.meta.url),
+        "utf-8",
+      ),
+    );
+    for (const line of result.split(/\r?\n/)) {
+      expect(line).not.toContain("_");
+    }
     expect(result).toMatchSnapshot();
   });
 

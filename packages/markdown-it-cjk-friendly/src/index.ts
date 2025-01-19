@@ -79,12 +79,12 @@ export default function markdownItCjFriendlyPlugin(md: MarkdownIt) {
       );
       const isNextCJKChar = isCjk(nextChar);
 
-      const isLastNonCjkPunctChar =
-        isMdAsciiPunct(lastChar) ||
-        (isPunctChar(String.fromCodePoint(lastChar)) && !isLastCJKChar);
-      const isNextNonCjkPunctChar =
-        isMdAsciiPunct(nextChar) ||
-        (isPunctChar(String.fromCodePoint(nextChar)) && !isNextCJKChar);
+      const isLastPunctChar =
+        isMdAsciiPunct(lastChar) || isPunctChar(String.fromCodePoint(lastChar));
+      const isNextPunctChar =
+        isMdAsciiPunct(nextChar) || isPunctChar(String.fromCodePoint(nextChar));
+      const isLastNonCjkPunctChar = isLastPunctChar && !isLastCJKChar;
+      const isNextNonCjkPunctChar = isNextPunctChar && !isNextCJKChar;
 
       const isLastWhiteSpace = isWhiteSpace(lastChar);
       const isNextWhiteSpace = isWhiteSpace(nextChar);
@@ -103,11 +103,9 @@ export default function markdownItCjFriendlyPlugin(md: MarkdownIt) {
           isNextCJKChar);
 
       const can_open =
-        left_flanking &&
-        (canSplitWord || !right_flanking || isLastNonCjkPunctChar);
+        left_flanking && (canSplitWord || !right_flanking || isLastPunctChar);
       const can_close =
-        right_flanking &&
-        (canSplitWord || !left_flanking || isNextNonCjkPunctChar);
+        right_flanking && (canSplitWord || !left_flanking || isNextPunctChar);
 
       return { can_open, can_close, length: count };
 

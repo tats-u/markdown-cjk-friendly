@@ -115,6 +115,12 @@ exports[`markdown-it-cjk-friendly > Example Markdown in README 1`] = `
 "
 `;
 
+exports[`markdown-it-cjk-friendly > process underscores around CJK punctuation 1`] = `
+"<p><strong>注意</strong>：注意事項</p>
+<p>注意：<strong>注意事項</strong></p>
+"
+`;
+
 exports[`markdown-it-cjk-friendly > recognizes non-BMP punctuation and symbols 1`] = `
 "<p>a**a«**a</p>
 <p>a**»a**a</p>
