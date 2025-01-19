@@ -83,13 +83,13 @@ Install `markdown-it-cjk-friendly` via [npm](https://www.npmjs.com/):
 npm install markdown-it-cjk-friendly
 ```
 
-If you use another package manager, please replace `npm` with the command of the package manager you use (e.g. `pnpm`).
+If you use another package manager, please replace `npm install` with the command of the package manager you use (e.g. `pnpm add` or `yarn add`).
 
-<span lang="ja">npm以外のパッケージマネージャを使う場合は、`npm`を当該パッケージマネージャのコマンド（例：`pnpm`）に置き換えてください。</span>
+<span lang="ja">npm以外のパッケージマネージャを使う場合は、`npm install`を当該パッケージマネージャのコマンド（例：`pnpm add`・`yarn add`）に置き換えてください。</span>
 
-<span lang="zh-Hans-CN">如果使用其他包管理器，请将 `npm` 替换为当时包管理器的命令（例如：`pnpm`）。</span>
+<span lang="zh-Hans-CN">如果使用其他包管理器，请将 `npm install` 替换为当时包管理器的命令（例如：`pnpm add`、`yarn add`）。</span>
 
-<span lang="ko">다른 패키지 매니저를 사용하는 경우 `npm`을 해당 패키지 매니저의 명령어(예: `pnpm`)로 바꾸어 주세요.</span>
+<span lang="ko">다른 패키지 매니저를 사용하는 경우 `npm install`을 해당 패키지 매니저의 명령어(예: `pnpm add`, `yarn add`)로 바꾸어 주세요.</span>
 
 ## Usage / <span lang="ja">使い方</span> / <span lang="zh-Hans-CN">用法</span> / <span lang="ko">사용법</span>
 
