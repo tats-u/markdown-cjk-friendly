@@ -1,6 +1,7 @@
 # markdown-it-cj-friendly
 
-[![Version](https://img.shields.io/npm/v/markdown-it-cj-friendly)](https://npmjs.com/package/markdown-it-cj-friendly)
+[![Version](https://img.shields.io/npm/v/markdown-it-cj-friendly)](https://npmjs.com/package/markdown-it-cj-friendly)![NPM Downloads](https://img.shields.io/npm/dw/markdown-it-cjk-friendly)![NPM Last Update](https://img.shields.io/npm/last-update/markdown-it-cjk-friendly)
+
 
 A [markdown-it](https://github.com/markdown-it/markdown-it) plugin to make Markdown emphasis (`**`) in CommonMark compatible with Chinese and Japanese.
 
