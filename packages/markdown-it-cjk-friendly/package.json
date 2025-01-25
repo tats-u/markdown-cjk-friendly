@@ -30,6 +30,7 @@
     "cjk"
   ],
   "description": "markdown-it plugin to make Markdown emphasis (`**`) in CommonMark more friendly with Chinese, Japanese, and Korean (CJK)",
+  "sideEffects": false,
   "scripts": {
     "build": "rslib build",
     "dev": "rslib build --watch",
