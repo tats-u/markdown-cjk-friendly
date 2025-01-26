@@ -21,6 +21,10 @@ See [specification.md](specification.md).
 
 <span lang="ko">[specification.md](specification.md)（영어）를 참고해 주시기 바라요.</span>
 
+### Documents for implementers / <span lang="ja">実装者向け文書</span> / <span lang="zh-Hans-CN">实施者文件</span> / <span lang="ko">구현자를 위한 문서</span>
+
+- [implementers-tips.md](implementers-tips.md) (English)
+
 ## Problem / <span lang="ja">問題</span> / <span lang="zh-Hans-CN">问题</span> / <span lang="ko">문제점</span>
 
 CommonMark has a problem that the following emphasis marks `**` are not recognized as emphasis marks in Japanese,Chinese, and Korean.
