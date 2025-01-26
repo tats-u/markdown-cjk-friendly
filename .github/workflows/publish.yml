@@ -32,7 +32,7 @@ jobs:
             }
             core.exportVariable("PACKAGE_NAME", packageName);
             core.exportVariable("PACKAGE_VERSION", version);
-      - run: node --run prepack && npm publish --provenance --access public
+      - run: node --run prepack && pnpm publish --provenance --access public
         working-directory: packages/${{ env.PACKAGE_NAME }}
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
