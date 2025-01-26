@@ -108,7 +108,18 @@ exports[`markdown-it-cjk-friendly > ** around pseudo-emoji (CJK symbols that are
 "
 `;
 
-exports[`markdown-it-cjk-friendly > Compatible with GFM extension 1`] = `
+exports[`markdown-it-cjk-friendly > Compatible with GFM extension (1) 1`] = `
+"<p>あ<strong>()</strong>あ<sup><a href="#user-content-fn-1" id="user-content-fnref-1" data-footnote-ref="" aria-describedby="footnote-label">1</a></sup></p>
+<section data-footnotes="" class="footnotes"><h2 id="footnote-label" class="sr-only">Footnotes</h2>
+<ol>
+<li id="user-content-fn-1">
+<p><del>あ</del> <a href="#user-content-fnref-1" data-footnote-backref="" aria-label="Back to reference 1" class="data-footnote-backref">↩</a></p>
+</li>
+</ol>
+</section>"
+`;
+
+exports[`markdown-it-cjk-friendly > Compatible with GFM extension (2) 1`] = `
 "<p>あ<strong>()</strong>あ<sup><a href="#user-content-fn-1" id="user-content-fnref-1" data-footnote-ref="" aria-describedby="footnote-label">1</a></sup></p>
 <section data-footnotes="" class="footnotes"><h2 id="footnote-label" class="sr-only">Footnotes</h2>
 <ol>
