@@ -1,5 +1,5 @@
-import type { Extension } from "micromark-util-types";
 import { codes } from "micromark-util-symbol";
+import type { Extension } from "micromark-util-types";
 import { attention } from "./ext/attention.js";
 
 /**
