@@ -43,7 +43,7 @@
     "prepack": "node -e \"require('fs').cpSync('../../LICENSE', './LICENSE')\""
   },
   "dependencies": {
-    "micromark-extension-cjk-friendly": "<2.0.0"
+    "micromark-extension-cjk-friendly": "workspace:<2.0.0"
   },
   "devDependencies": {
     "@rslib/core": "^0.3.1",
