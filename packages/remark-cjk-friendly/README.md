@@ -93,13 +93,13 @@ If you use another package manager, please replace `npm install` with the comman
 
 ## Usage / <span lang="ja">使い方</span> / <span lang="zh-Hans-CN">用法</span> / <span lang="ko">사용법</span>
 
-Import `remark` and `remark-cjk-friendly`, and use the plugin as follows:
+Import `remark-cjk-friendly` with other remark-related packages, and use the plugin as follows:
 
-<span lang="ja">`remark`と`remark-cjk-friendly`をインポートし、次のようにプラグインを使用してください。</span>
+<span lang="ja">`remark-cjk-friendly`を他のremark関連パッケージと一緒にインポートし、次のようにプラグインを使用してください。</span>
 
-<span lang="zh-Hans-CN">通过 `remark` 和 `remark-cjk-friendly` 导入，然后使用插件如下：</span>
+<span lang="zh-Hans-CN">将 `remark-cjk-friendly` 与其他 remark 相关的包一起导入，然后使用插件如下:</span>
 
-<span lang="ko">`remark`와 `remark-cjk-friendly`를 임포트하고 다음과 같이 플러그인을 사용하세요.</span>
+<span lang="ko">`remark-cjk-friendly`를 다른 remark 관련 패키지와 함께 가져온 후 다음과 같이 플러그인을 사용하세요.</span>
 
 ```js
 import rehypeStringify from "rehype-stringify";
@@ -119,6 +119,29 @@ const processor = unified()
 
 const htmlResult = (await processor.process(markdownString)).toString();
 ```
+
+For MDX, add `remarkCjkFriendly` to the `remarkPlugins` array in the config object:
+
+<span lang="ja">MDXでは、設定オブジェクトの`remarkPlugins`配列に`remarkCjkFriendly`を追加してください。</span>
+
+<span lang="zh-Hans-CN">对于 MDX，将 `remarkCjkFriendly` 添加到配置对象的 `remarkPlugins` 数组中。</span>
+
+<span lang="ko">MDX의 경우, `remarkCjkFriendly`를 `remarkPlugins` 배열에 추가해주세요.</span>
+
+```js
+const someMdxConfig = {
+  remarkPlugins: [remarkGfm, remarkCjkFriendly, ...otherRemarkPlugins],
+  rehypePlugins: [...someRehypePlugins],
+};
+```
+
+In [Rspress](https://rspress.dev/guide/basic/use-mdx#disabling-the-rust-version-compiler) and [Next.js (`@next/mdx`)](https://nextjs.org/docs/pages/building-your-application/configuring/mdx#using-the-rust-based-mdx-compiler-experimental), you will probably need to set `mdxRs` to `false` to make Rspress use a JavaScript-based and monkey-patchable parser.
+
+<span lang="ja">[Rspress](https://rspress.dev/guide/basic/use-mdx#disabling-the-rust-version-compiler)と[Next.js（`@next/mdx`）](https://nextjs.org/docs/pages/building-your-application/configuring/mdx#using-the-rust-based-mdx-compiler-experimental)では、`mdxRs`を`false`に設定して、RspressにJavaScript製でモンキーパッチ可能なパーサを使わせる必要がおそらくあります。</span>
+
+<span lang="zh-CN">在[Rspress](https://rspress.dev/zh/guide/basic/use-mdx#%E5%85%B3%E9%97%AD-rust-%E7%89%88%E6%9C%AC%E7%BC%96%E8%AF%91%E5%99%A8)和[Next.js(`@next/mdx`)](https://nextjs.org/docs/pages/building-your-application/configuring/mdx#using-the-rust-based-mdx-compiler-experimental)中，您可能需要将`mdxRs`设置为`false`，以使Rspress使用基于JavaScript且可进行猴子补丁的解析器。</span>
+
+<span lang="ko">[Rspress](https://rspress.dev/guide/basic/use-mdx#disabling-the-rust-version-compiler)와 [Next.js(`@next/mdx`)](https://nextjs.org/docs/pages/building-your-application/configuring/mdx#using-the-rust-based-mdx-compiler-experimental)에서는 `mdxRs`를 `false`로 설정하여 Rspress가 JavaScript 기반이며 몽키 패치가 가능한 파서를 사용하도록 해야 할 것 같습니다.</span>
 
 ## Specification / <span lang="ja">規格書</span> / <span lang="zh-Hans-CN">规范</span> / <span lang="ko">규정서</span>
 
