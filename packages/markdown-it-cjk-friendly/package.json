@@ -41,7 +41,6 @@
     "prepack": "node -e \"require('fs').cpSync('../../LICENSE', './LICENSE')\""
   },
   "devDependencies": {
-    "@rslib/core": "^0.3.1",
     "@types/markdown-it": "^14.1.2",
     "markdown-it": "^14.1.0"
   },
