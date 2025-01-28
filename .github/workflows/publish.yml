@@ -33,7 +33,7 @@ jobs:
             core.exportVariable("PACKAGE_NAME", packageName);
             core.exportVariable("PACKAGE_VERSION", version);
       # pnpm publish doesn't allow a publish from tag, so --no-git-checks is needed
-      - run: node --run prepack && pnpm publish --provenance --access public --no-git-checks
+      - run: pnpm publish --provenance --access public --no-git-checks
         working-directory: packages/${{ env.PACKAGE_NAME }}
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

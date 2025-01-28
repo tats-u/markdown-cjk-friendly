@@ -39,14 +39,13 @@
     "test": "vitest --run",
     "test:up": "vitest -u",
     "test:watch": "vitest watch",
-    "lint:type": "tsc --noEmit",
-    "prepack": "node -e \"require('fs').cpSync('../../LICENSE', './LICENSE')\""
+    "lint:type": "tsc --noEmit"
   },
   "dependencies": {
     "micromark-extension-cjk-friendly": "workspace:<2.0.0"
   },
   "devDependencies": {
-        "rehype-stringify": "10.0.1",
+    "rehype-stringify": "10.0.1",
     "remark": "^15.0.1",
     "remark-gfm": "^4.0.0",
     "remark-parse": "^11.0.0",
