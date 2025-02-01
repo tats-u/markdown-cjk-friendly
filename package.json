@@ -10,7 +10,8 @@
     "lint:type": "pnpm -r lint:type",
     "lint:biome": "biome check",
     "fix": "run-s fix:*",
-    "fix:biome": "biome check --write"
+    "fix:biome": "biome check --write",
+    "print-ranges": "node --experimental-strip-types scripts/cjk-ranges.ts"
   },
   "workspaces": ["packages/*"],
   "type": "module",
