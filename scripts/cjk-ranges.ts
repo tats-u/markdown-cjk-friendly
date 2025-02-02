@@ -652,7 +652,8 @@ function getPrintRanges({ format, variableNames, newVariable }: FormatSet) {
 
 ///// output /////
 
-let lang = (args.values["output-lang"] as Language | undefined) ?? "md";
+let lang =
+  (args.values["output-lang"]?.toLowerCase() as Language | undefined) ?? "md";
 lang = langAlias.get(lang) ?? lang;
 let formatLang =
   // @ts-expect-error
