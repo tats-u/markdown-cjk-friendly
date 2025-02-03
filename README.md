@@ -24,6 +24,7 @@ See [specification.md](specification.md).
 ### Documents for implementers / <span lang="ja">実装者向け文書</span> / <span lang="zh-Hans-CN">实施者文件</span> / <span lang="ko">구현자를 위한 문서</span>
 
 - [implementers-tips.md](implementers-tips.md) (English)
+- [ranges.md](ranges.md) (English)
 
 ## Problem / <span lang="ja">問題</span> / <span lang="zh-Hans-CN">问题</span> / <span lang="ko">문제점</span>
 

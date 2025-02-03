@@ -25,6 +25,9 @@ A <a href="non-cjk-punctuation-character" id="non-cjk-punctuation-character">non
 
 [^svs-range]: The range except for U+FE0E is computed from https://www.unicode.org/Public/16.0.0/ucd/StandardizedVariants.txt (as of Unicode 16) by extracting those that can follow CJK characters. Also, https://unicode.org/Public/16.0.0/ucd/emoji/emoji-variation-sequences.txt shows that U+FE0E can follow some CJK characters.
 
+> [!NOTE]
+> To see the concrete ranges of each definition, see [ranges.md](ranges.md).
+
 ## 6. Inlines
 
 ### 6.2 Emphasis and strong emphasis
