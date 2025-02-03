@@ -508,8 +508,8 @@ const markdownCase: VariableNames = {
   //   "Emojis derived from CJK symbols (can be switched to text symbol by U+FE0E)",
 };
 
-type FormatBaseLanguage = "rust" | "c" | "cs" | "py" | "md" | "js-regex";
-type Language = FormatBaseLanguage | "java" | "js" | "cpp" | "ts";
+type FormatBaseLanguage = "rust" | "c" | "js" | "cs" | "py" | "md" | "js-regex";
+type Language = FormatBaseLanguage | "java" | "cpp" | "ts";
 
 function toJsRegexEscape(cp: number) {
   if (cp >= 0x10000) {
@@ -576,6 +576,17 @@ const formatType = new Map<FormatBaseLanguage, StatementBuildInfo>([
     },
   ],
   [
+    "js",
+    {
+      prefix: (variableName) => `${variableName} = `,
+      suffix: ";",
+      joiner: "\n  || ",
+      single: (cp) => `cp === 0x${cp.toString(16)}`, // different from C
+      range: (first, last) =>
+        `0x${first.toString(16)} <= cp && cp <= 0x${last.toString(16)}`,
+    },
+  ],
+  [
     "js-regex",
     {
       prefix: (variableName) => `${variableName}Regex = /^[`,
@@ -632,8 +643,7 @@ const formatAlias = new Map<
   FormatBaseLanguage
 >([
   ["cpp", "c"],
-  ["js", "c"],
-  ["ts", "c"],
+  ["ts", "js"],
   ["java", "c"],
 ]);
 
