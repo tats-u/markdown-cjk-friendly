@@ -282,7 +282,9 @@ const unassignedAsCjkRanges: Range[] = mapFilter(
     if (reResult) {
       const first = Number.parseInt(reResult[1], 16);
       const last = Number.parseInt(reResult[2], 16);
-      return { first, last } satisfies Range;
+
+      // U+2FFFE & U+2FFFF are Noncharacter; their EAW are undefined
+      return { first, last: last === 0x2fffd ? 0x2ffff : last } satisfies Range;
     }
 
     return null;
@@ -496,7 +498,7 @@ const camelCase: VariableNames = {
 };
 
 const markdownCase: VariableNames = {
-  isCjk: "CJK code points",
+  isCjk: "CJK code points without variation selector",
   isSvsFollowingCjk: "SVS following CJK code points",
   isWideIfEawUnassigned:
     'EAW is treated as "W" if unassigned (defined by Unicode)',
