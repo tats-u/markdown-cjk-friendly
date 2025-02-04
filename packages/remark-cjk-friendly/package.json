@@ -31,7 +31,7 @@
     "mdast",
     "unified"
   ],
-  "description": "remark plugin to make Markdown emphasis (`**`) in CommonMark more friendly with Chinese, Japanese, and Korean (CJK)",
+  "description": "remark plugin to make Markdown emphasis (`**`) in CommonMark (and MDX) more friendly with Chinese, Japanese, and Korean (CJK)",
   "sideEffects": false,
   "scripts": {
     "build": "rslib build",

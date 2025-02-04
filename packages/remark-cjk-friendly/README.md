@@ -2,13 +2,13 @@
 
 [![Version](https://img.shields.io/npm/v/remark-cjk-friendly)](https://npmjs.com/package/remark-cjk-friendly) [![NPM Downloads](https://img.shields.io/npm/dw/remark-cjk-friendly)](https://npmjs.com/package/remark-cjk-friendly) [![NPM Last Update](https://img.shields.io/npm/last-update/remark-cjk-friendly)](https://npmjs.com/package/remark-cjk-friendly)
 
-A [remark](https://github.com/remarkjs/remark) plugin to make Markdown emphasis (`**`) in CommonMark compatible with Chinese, Japanese, and Korean (CJK).
+A [remark](https://github.com/remarkjs/remark) plugin to make Markdown emphasis (`**`) in CommonMark (and MDX) compatible with Chinese, Japanese, and Korean (CJK).
 
-<span lang="ja">CommonMarkの強調記号(`**`)を日本語・中国語・韓国語にきちんと対応させるための[remark](https://github.com/remarkjs/remark)プラグイン</span>
+<span lang="ja">CommonMark（・MDX）の強調記号(`**`)を日本語・中国語・韓国語にきちんと対応させるための[remark](https://github.com/remarkjs/remark)プラグイン</span>
 
-<span lang="zh-Hans-CN">一个 [remark](https://github.com/remarkjs/remark) 插件，用于使 CommonMark 的强调标记(`**`)能够正确支持中文、日语和韩语文本。</span>
+<span lang="zh-Hans-CN">一个 [remark](https://github.com/remarkjs/remark) 插件，用于使 CommonMark（和 MDX）的强调标记(`**`)能够正确支持中文、日语和韩语文本。</span>
 
-<span lang="ko">CommonMark의 강조 표시(`**`) 를 한국어, 중국어, 일본어와 호환되도록 만드는 [remark](https://github.com/remarkjs/remark) 플러그인</span>
+<span lang="ko">CommonMark(및 MDX)의 강조 표시(`**`)를 한국어, 중국어, 일본어와 호환되도록 만드는 [remark](https://github.com/remarkjs/remark) 플러그인</span>
 
 ## Problem / <span lang="ja">問題</span> / <span lang="zh-Hans-CN">问题</span> / <span lang="ko">문제점</span>
 
