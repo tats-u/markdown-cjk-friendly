@@ -1,14 +1,8 @@
-# micromark-extension-cjk-friendly
+# micromark-extension-cjk-friendly-util
 
-[![Version](https://img.shields.io/npm/v/micromark-extension-cjk-friendly)](https://npmjs.com/package/micromark-extension-cjk-friendly) [![NPM Downloads](https://img.shields.io/npm/dw/micromark-extension-cjk-friendly)](https://npmjs.com/package/micromark-extension-cjk-friendly) [![NPM Last Update](https://img.shields.io/npm/last-update/micromark-extension-cjk-friendly)](https://npmjs.com/package/micromark-extension-cjk-friendly)
+[![Version](https://img.shields.io/npm/v/micromark-extension-cjk-friendly-util)](https://npmjs.com/package/micromark-extension-cjk-friendly-util) [![NPM Downloads](https://img.shields.io/npm/dw/micromark-extension-cjk-friendly-util)](https://npmjs.com/package/micromark-extension-cjk-friendly-util) [![NPM Last Update](https://img.shields.io/npm/last-update/micromark-extension-cjk-friendly-util)](https://npmjs.com/package/micromark-extension-cjk-friendly-util)
 
-A [micromark](https://github.com/micromark/micromark) extension to make Markdown emphasis (`**`) in CommonMark compatible with Chinese, Japanese, and Korean (CJK).
-
-<span lang="ja">CommonMarkの強調記号(`**`)を日本語・中国語・韓国語にきちんと対応させるための[micromark](https://github.com/micromark/micromark)拡張</span>
-
-<span lang="zh-Hans-CN">一个 [micromark](https://github.com/micromark/micromark) 扩展，用于使 CommonMark 的强调标记(`**`)能够正确支持中文、日语和韩语文本。</span>
-
-<span lang="ko">CommonMark의 강조 표시(`**`) 를 한국어, 중국어, 일본어와 호환되도록 만드는 [micromark](https://github.com/micromark/micromark) 확장</span>
+An utility library package for [micromark-extension-cjk-friendly](https://npmjs.com/package/micromark-extension-cjk-friendly), which is internally used by [remark-cjk-friendly](https://npmjs.com/package/remark-cjk-friendly), and its related packages.
 
 ## Problem / <span lang="ja">問題</span> / <span lang="zh-Hans-CN">问题</span> / <span lang="ko">문제점</span>
 
@@ -71,16 +65,16 @@ It makes this package compatible only with relatively recent browsers and Node.j
 
 ## Installation / <span lang="ja">インストール</span> / <span lang="zh-Hans-CN">安装</span> / <span lang="ko">설치</span>
 
-Install `micromark-extension-cjk-friendly` via [npm](https://www.npmjs.com/):
+Install `micromark-extension-cjk-friendly-util` via [npm](https://www.npmjs.com/):
 
-<span lang="ja">`micromark-extension-cjk-friendly`を[npm](https://www.npmjs.com/)でインストールしてください。</span>
+<span lang="ja">`micromark-extension-cjk-friendly-util`を[npm](https://www.npmjs.com/)でインストールしてください。</span>
 
-<span lang="zh-Hans-CN">通过 [npm](https://www.npmjs.com/) 安装 `micromark-extension-cjk-friendly`。</span>
+<span lang="zh-Hans-CN">通过 [npm](https://www.npmjs.com/) 安装 `micromark-extension-cjk-friendly-util`。</span>
 
-<span lang="ko">`micromark-extension-cjk-friendly`를 [npm](https://www.npmjs.com/)으로 설치하세요.</span>
+<span lang="ko">`micromark-extension-cjk-friendly-util`를 [npm](https://www.npmjs.com/)으로 설치하세요.</span>
 
 ```bash
-npm install micromark-extension-cjk-friendly
+npm install micromark-extension-cjk-friendly-util
 ```
 
 If you use another package manager, please replace `npm install` with the command of the package manager you use (e.g. `pnpm add` or `yarn add`).
@@ -93,38 +87,20 @@ If you use another package manager, please replace `npm install` with the comman
 
 ## Usage / <span lang="ja">使い方</span> / <span lang="zh-Hans-CN">用法</span> / <span lang="ko">사용법</span>
 
-Import `micromark` and `micromark-extension-cjk-friendly`, and use the extension as follows:
+> [!IMPORTANT]
+> Most people do not have to use this package directly. Did you mean:
+>
+> - [remark-cjk-friendly](https://npmjs.com/package/remark-cjk-friendly)
+> - [micromark-extension-cjk-friendly](https://npmjs.com/package/micromark-extension-cjk-friendly)
 
-<span lang="ja">`micromark`と`micromark-extension-cjk-friendly`をインポートし、次のように拡張を使用してください。</span>
+This package provides a function and a namespace based on the original micromark-related packages:
 
-<span lang="zh-Hans-CN">通过 `micromark` 和 `micromark-extension-cjk-friendly` 导入，然后使用扩展如下：</span>
+| Name | Type | Derived from | Original Name | Description |
+| --- | --- | --- | --- | --- |
+| `classifyCharacter` | function | [micromark-util-character](https://npmjs.com/package/micromark-util-character) | (same) | Tells whether a character is not only a punctuation or whitespace but also a CJK or variation selector |
+| `constantsEx` | namespace | [micromark-util-symbol](https://npmjs.com/package/micromark-util-symbol) | `constants` | Constants meaning CJK and variation selectors; use it and the original `constants` together. |
 
-<span lang="ko">`micromark`와 `micromark-extension-cjk-friendly`를 임포트하고 다음과 같이 확장을 사용하세요.</span>
-
-```js
-import { micromark } from "micromark";
-import { gfm, gfmHtml } from "micromark-extension-gfm";
-import { cjkFriendlyExtension } from "micromark-extension-cjk-friendly";
-
-// e.g. combine with GFM extension
-const htmlString = micromark(
-  markdownString,
-  {
-    extensions: [gfm(), cjkFriendlyExtension()], // in no particular order
-    htmlExtensions: [gfmHtml()],
-  }
-)
-```
-
-## Compatibility with the other languages / <span lang="ja">他言語との互換性</span> / <span lang="zh-Hans-CN">与其他语言的兼容性</span> / <span lang="ko">다른 언어와의 호환성</span>
-
-This modification of the specification does not affect the other languages than Chinese, Japanese, and Korean. Even if your application or document has translations or content in other languages, it will not be affected, so please feel free to use this packages. I assure that even with this package (amendment suggestion), micromark still outputs the same HTML for all CommonMark test cases as of 0.31.2.
-
-<span lang="ja">この仕様変更提案は、日本語・中国語・韓国語以外の言語には影響しません。アプリケーションやドキュメントに他言語の翻訳やコンテンツが含まれていても影響はありませんので、安心して本パッケージをご利用ください。</span>
-
-<span lang="zh-Hans-CN">除中文、日文和韩文外，建议的规范变更不会影响其他语言。请放心使用此软件包，因为如果您的应用程序或文档包含其他语言的翻译或内容，也不会受到影响。我保证，即使使用此软件包（修正建议），micromark 仍然会为 0.31.2 版本的所有 CommonMark 测试用例输出相同的 HTML。</span>
-
-<span lang="ko">이번 사양 변경 제안은 한국어, 중국어, 일본어 이외의 언어에는 영향을 미치지 않습니다. 애플리케이션이나 문서에 다른 언어의 번역이나 콘텐츠가 포함되어 있어도 영향을 받지 않으므로 안심하고 본 패키지를 사용하시기 바랍니다. 본 패키지(수정안)를 사용해도 0.31.2 시점의 모든 CommonMark 테스트케이스에서 micromark가 동일한 HTML을 출력하는 것을 보장합니다.</span>
+Also, this package provides some utility functions to check whether a character belongs to the category defined in the specification (e.g. CJK code point without variation selector), or to help you fetch the Unicode Code Point of a character around the emphasis mark.
 
 ## Specification / <span lang="ja">規格書</span> / <span lang="zh-Hans-CN">规范</span> / <span lang="ko">규정서</span>
 
@@ -132,9 +108,10 @@ https://github.com/tats-u/markdown-cjk-friendly/blob/main/specification.md (Engl
 
 ## Related packages / <span lang="ja">関連パッケージ</span> / <span lang="zh-Hans-CN">相关包</span> / <span lang="ko">관련 패키지</span>
 
+- [micromark-extension-cjk-friendly](https://npmjs.com/package/micromark-extension-cjk-friendly) [![Version](https://img.shields.io/npm/v/micromark-extension-cjk-friendly)](https://npmjs.com/package/micromark-extension-cjk-friendly) [![NPM Downloads](https://img.shields.io/npm/dw/micromark-extension-cjk-friendly)](https://npmjs.com/package/micromark-extension-cjk-friendly) [![NPM Last Update](https://img.shields.io/npm/last-update/micromark-extension-cjk-friendly)](https://npmjs.com/package/micromark-extension-cjk-friendly)
 - [remark-cjk-friendly](https://npmjs.com/package/remark-cjk-friendly) [![Version](https://img.shields.io/npm/v/remark-cjk-friendly)](https://npmjs.com/package/remark-cjk-friendly) [![NPM Downloads](https://img.shields.io/npm/dw/remark-cjk-friendly)](https://npmjs.com/package/remark-cjk-friendly) [![NPM Last Update](https://img.shields.io/npm/last-update/remark-cjk-friendly)](https://npmjs.com/package/remark-cjk-friendly)
 - [markdown-it-cjk-friendly](https://npmjs.com/package/markdown-it-cjk-friendly) [![Version](https://img.shields.io/npm/v/markdown-it-cjk-friendly)](https://npmjs.com/package/markdown-it-cjk-friendly) [![NPM Downloads](https://img.shields.io/npm/dw/markdown-it-cjk-friendly)](https://npmjs.com/package/markdown-it-cjk-friendly) [![NPM Last Update](https://img.shields.io/npm/last-update/markdown-it-cjk-friendly)](https://npmjs.com/package/markdown-it-cjk-friendly)
-- [micromark-extension-cjk-friendly-util](https://npmjs.com/package/micromark-extension-cjk-friendly-util) [![Version](https://img.shields.io/npm/v/micromark-extension-cjk-friendly-util)](https://npmjs.com/package/micromark-extension-cjk-friendly-util) [![NPM Downloads](https://img.shields.io/npm/dw/micromark-extension-cjk-friendly-util)](https://npmjs.com/package/micromark-extension-cjk-friendly-util) [![NPM Last Update](https://img.shields.io/npm/last-update/micromark-extension-cjk-friendly-util)](https://npmjs.com/package/micromark-extension-cjk-friendly-util)
+- [remark-cjk-friendly](https://npmjs.com/package/remark-cjk-friendly) [![Version](https://img.shields.io/npm/v/remark-cjk-friendly)](https://npmjs.com/package/remark-cjk-friendly) [![NPM Downloads](https://img.shields.io/npm/dw/remark-cjk-friendly)](https://npmjs.com/package/remark-cjk-friendly) [![NPM Last Update](https://img.shields.io/npm/last-update/remark-cjk-friendly)](https://npmjs.com/package/remark-cjk-friendly)
 
 ## Contributing / <span lang="ja">貢献</span> / <span lang="zh-Hans-CN">贡献</span> / <span lang="ko">기여</span>
 

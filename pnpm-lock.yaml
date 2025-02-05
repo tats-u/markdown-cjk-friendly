@@ -57,12 +57,9 @@ importers:
       devlop:
         specifier: ^1.0.0
         version: 1.1.0
-      get-east-asian-width:
-        specifier: ^1.3.0
-        version: 1.3.0
-      micromark-util-character:
-        specifier: ^2.0.0
-        version: 2.1.1
+      micromark-extension-cjk-friendly-util:
+        specifier: workspace:^
+        version: link:../micromark-extension-cjk-friendly-util
       micromark-util-chunked:
         specifier: ^2.0.0
         version: 2.0.1
@@ -79,6 +76,22 @@ importers:
       micromark-extension-gfm:
         specifier: ^3.0.0
         version: 3.0.0
+      micromark-util-types:
+        specifier: ^2.0.0
+        version: 2.0.1
+
+  packages/micromark-extension-cjk-friendly-util:
+    dependencies:
+      get-east-asian-width:
+        specifier: ^1.3.0
+        version: 1.3.0
+      micromark-util-character:
+        specifier: ^2.0.0
+        version: 2.1.1
+      micromark-util-symbol:
+        specifier: ^2.0.0
+        version: 2.0.1
+    devDependencies:
       micromark-util-types:
         specifier: ^2.0.0
         version: 2.0.1

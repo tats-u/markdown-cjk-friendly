@@ -12,10 +12,23 @@ import type {
 } from "micromark-util-types";
 
 import { ok as assert } from "devlop";
+import {
+  classifyCharacter,
+  isCjk,
+  isCodeHighSurrogate,
+  isCodeLowSurrogate,
+  isIvs,
+  isNonCjkPunctuation,
+  isSpaceOrPunctuation,
+  isSvsFollowingCjk,
+  isUnicodeWhitespace,
+  tryGetCodeTwoBefore,
+  tryGetGenuineNextCode,
+  tryGetGenuinePreviousCode,
+} from "micromark-extension-cjk-friendly-util";
 import { push, splice } from "micromark-util-chunked";
 import { resolveAll } from "micromark-util-resolve-all";
-import { constants, codes, types } from "micromark-util-symbol";
-import { classifyCharacter, constantsEx } from "./classifyCharacter.js";
+import { codes, types } from "micromark-util-symbol";
 
 /** @type {Construct} */
 export const attention = {
@@ -202,70 +215,23 @@ function tokenizeAttention(
   ok: State,
 ): State {
   const attentionMarkers = this.parser.constructs.attentionMarkers.null;
-  let previous = this.previous;
-  const { now, sliceSerialize } = this;
-  // second (lower) surrogate likely to be preceded by first (higher) surrogate
-  if (previous && previous >= 0xdc_00 && previous <= 0xdf_ff) {
-    const nowPoint = now(); // @ first attention marker
-    if (nowPoint._bufferIndex >= 2) {
-      const previousBuffer = sliceSerialize({
-        // take 2 characters
-        start: { ...nowPoint, _bufferIndex: nowPoint._bufferIndex - 2 },
-        end: nowPoint,
-      });
-      const previousCandidate = previousBuffer.codePointAt(0);
-      // possibly undefined or non-surrogate (=lonely surrogate), so we have to make sure not
-      if (previousCandidate && previousCandidate >= 65_536) {
-        previous = previousCandidate;
-      }
-    }
-  }
+  const { now, sliceSerialize, previous: tentativePrevious } = this;
+  const previous = isCodeLowSurrogate(tentativePrevious)
+    ? // second (lower) surrogate likely to be preceded by first (higher) surrogate
+      tryGetGenuinePreviousCode(tentativePrevious, now(), sliceSerialize)
+    : tentativePrevious;
 
   const before = classifyCharacter(previous);
   let beforePrimary = before;
 
-  if (before === constantsEx.svsFollowingCjk) {
-    const nowPoint = now();
-    // biome-ignore lint/style/noNonNullAssertion: if `previous` were null, before would be `undefined`
-    const previousWidth = previous! >= 65536 ? 2 : 1;
-    if (nowPoint._bufferIndex >= 1 + previousWidth) {
-      // There are some cases where we can take only 1 character (collided with boundary)
-      // If we pass negative _bufferIndex, an empty string is returned
-      const idealStart = nowPoint._bufferIndex - previousWidth - 2;
-      const twoPreviousBuffer = sliceSerialize({
-        // take 1--2 character
-        start: {
-          ...nowPoint,
-          _bufferIndex: idealStart >= 0 ? idealStart : 0,
-        },
-        end: {
-          ...nowPoint,
-          _bufferIndex: nowPoint._bufferIndex - previousWidth,
-        },
-      });
-      const twoPreviousLast = twoPreviousBuffer.charCodeAt(
-        twoPreviousBuffer.length - 1,
-      );
-      // out of range in charCodeAt => NaN
-      if (!Number.isNaN(twoPreviousLast)) {
-        let twoPrevious: number;
-        if (
-          twoPreviousBuffer.length >= 2 &&
-          twoPreviousLast >= 0xdc_00 &&
-          twoPreviousLast <= 0xdf_ff
-        ) {
-          const twoPreviousCandidate = twoPreviousBuffer.codePointAt(0);
-          if (twoPreviousCandidate && twoPreviousCandidate >= 65_536) {
-            twoPrevious = twoPreviousCandidate;
-          } else {
-            twoPrevious = twoPreviousLast;
-          }
-        } else {
-          twoPrevious = twoPreviousLast;
-        }
-        beforePrimary = classifyCharacter(twoPrevious);
-      }
-    }
+  if (isSvsFollowingCjk(before)) {
+    const twoPrevious = tryGetCodeTwoBefore(
+      // biome-ignore lint/style/noNonNullAssertion: if `previous` were null, before would be `undefined`
+      previous!,
+      now(),
+      sliceSerialize,
+    );
+    if (twoPrevious !== null) beforePrimary = classifyCharacter(twoPrevious);
   }
 
   /** @type {NonNullable<Code>} */
@@ -312,64 +278,43 @@ function tokenizeAttention(
     const token = effects.exit("attentionSequence");
 
     // To do: next major: move these to resolver, just like `markdown-rs`.
-    let next = code;
-    // possibly first (lower) surrogate
-    if (next && next >= 0xd8_00 && next <= 0xdf_ff) {
-      const nowPoint = now(); // @ first character next to attention marker
-      const nextCandidate = sliceSerialize({
-        start: nowPoint,
-        end: { ...nowPoint, _bufferIndex: nowPoint._bufferIndex + 2 },
-      }).codePointAt(0);
-      if (nextCandidate && nextCandidate >= 65_536) {
-        next = nextCandidate;
-      }
-    }
+    const next = isCodeHighSurrogate(code)
+      ? tryGetGenuineNextCode(code, now(), sliceSerialize)
+      : code;
 
     const after = classifyCharacter(next);
 
     // Always populated by defaults.
     assert(attentionMarkers, "expected `attentionMarkers` to be populated");
 
-    const beforeNonCjkPunctuation: boolean = Boolean(
-      (before & constantsEx.cjkPunctuation) ===
-        constants.characterGroupPunctuation,
-    );
-    const beforeSpaceOrNonCjkPunctuation: boolean = Boolean(
-      beforeNonCjkPunctuation || before & constants.characterGroupWhitespace,
-    );
-    const afterNonCjkPunctuation: boolean = Boolean(
-      (after & constantsEx.cjkPunctuation) ===
-        constants.characterGroupPunctuation,
-    );
-    const afterSpaceOrNonCjkPunctuation: boolean = Boolean(
-      afterNonCjkPunctuation || after & constants.characterGroupWhitespace,
-    );
-    const beforeCjkOrIvs: boolean = Boolean(
-      beforePrimary & constantsEx.cjk || before & constantsEx.ivs,
-    );
+    const beforeNonCjkPunctuation = isNonCjkPunctuation(before);
+    const beforeSpaceOrNonCjkPunctuation =
+      beforeNonCjkPunctuation || isUnicodeWhitespace(before);
+    const afterNonCjkPunctuation = isNonCjkPunctuation(after);
+    const afterSpaceOrNonCjkPunctuation =
+      afterNonCjkPunctuation || isUnicodeWhitespace(after);
+    const beforeCjkOrIvs = isCjk(beforePrimary) || isIvs(before);
 
-    const open = Boolean(
+    const open =
       !afterSpaceOrNonCjkPunctuation ||
-        (afterNonCjkPunctuation &&
-          (beforeSpaceOrNonCjkPunctuation || beforeCjkOrIvs)) ||
-        attentionMarkers.includes(code),
-    );
-    const close = Boolean(
+      (afterNonCjkPunctuation &&
+        (beforeSpaceOrNonCjkPunctuation || beforeCjkOrIvs)) ||
+      attentionMarkers.includes(code);
+    const close =
       !beforeSpaceOrNonCjkPunctuation ||
-        (beforeNonCjkPunctuation &&
-          (afterSpaceOrNonCjkPunctuation || after & constantsEx.cjk)) ||
-        attentionMarkers.includes(previous),
-    );
+      (beforeNonCjkPunctuation &&
+        (afterSpaceOrNonCjkPunctuation || isCjk(after))) ||
+      attentionMarkers.includes(previous);
 
     token._open = Boolean(
       marker === codes.asterisk
         ? open
-        : open && (before & constantsEx.spaceOrPunctuation || !close),
+        : open && (isSpaceOrPunctuation(before) || !close),
     );
     token._close = Boolean(
       marker === codes.asterisk
         ? close
-        : close && (after & constantsEx.spaceOrPunctuation || !open),
+        : close && (isSpaceOrPunctuation(after) || !open),
     );
     return ok(code);
   }

@@ -1,0 +1,69 @@
+import { constants } from "micromark-util-symbol";
+import { type classifyCharacter, constantsEx } from "./classifyCharacter.js";
+
+type Category = ReturnType<typeof classifyCharacter>;
+
+/**
+ * `true` if the code point represents an [Unicode whitespace character](https://spec.commonmark.org/0.31.2/#unicode-whitespace-character).
+ *
+ * @param category the return value of `classifyCharacter`.
+ * @returns `true` if the code point represents an Unicode whitespace character
+ */
+export function isUnicodeWhitespace(category: Category): boolean {
+  return Boolean(category & constants.characterGroupWhitespace);
+}
+
+/**
+ * `true` if the code point represents a [non-CJK punctuation character](https://github.com/tats-u/markdown-cjk-friendly/blob/main/specification.md#non-cjk-punctuation-character).
+ *
+ * @param category the return value of `classifyCharacter`.
+ * @returns `true` if the code point represents a non-CJK punctuation character
+ */
+export function isNonCjkPunctuation(category: Category): boolean {
+  return (
+    (category & constantsEx.cjkPunctuation) ===
+    constants.characterGroupPunctuation
+  );
+}
+
+/**
+ * `true` if the code point represents a [CJK character (CJK code point without variation selector)](https://github.com/tats-u/markdown-cjk-friendly/blob/main/specification.md#cjk-code-point-without-variation-selector).
+ *
+ * @param category the return value of `classifyCharacter`.
+ * @returns `true` if the code point represents a CJK character
+ */
+export function isCjk(category: Category): boolean {
+  return Boolean(category & constantsEx.cjk);
+}
+
+/**
+ * `true` if the code point represents an [IVS (Ideographic Variation Selector)](https://github.com/tats-u/markdown-cjk-friendly/blob/main/specification.md#ivs).
+ *
+ * @param category the return value of `classifyCharacter`.
+ * @returns `true` if the code point represents an IVS
+ */
+export function isIvs(category: Category): boolean {
+  // Exclusive with the others
+  return category === constantsEx.ivs;
+}
+
+/**
+ * `true` if the code point represents a [SVS (Standard Variation Selector/Sequence) that can follow CJK](https://github.com/tats-u/markdown-cjk-friendly/blob/main/specification.md#svs-that-can-follow-cjk).
+ *
+ * @param category the return value of `classifyCharacter`.
+ * @returns `true` if the code point represents an SVS that can follow CJK
+ */
+export function isSvsFollowingCjk(category: Category): boolean {
+  // Exclusive with the others
+  return category === constantsEx.svsFollowingCjk;
+}
+
+/**
+ * `true` if the code point represents an [Unicode whitespace character](https://spec.commonmark.org/0.31.2/#unicode-whitespace-character) or an [Unicode punctuation character](https://spec.commonmark.org/0.31.2/#unicode-punctuation-character).
+ *
+ * @param category the return value of `classifyCharacter`.
+ * @returns `true` if the code point represents a space or punctuation
+ */
+export function isSpaceOrPunctuation(category: Category): boolean {
+  return Boolean(category & constantsEx.spaceOrPunctuation);
+}

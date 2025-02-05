@@ -2,7 +2,7 @@ Copyright (c) 2025 Tatsunori Uchino <tats.u@live.jp>
 
 MIT LICENSE
 
-Based on micromark and micromark-core-commonmark
+Based on micromark's sub-packages (micromark-util-character, micromark-util-symbol, and micromark-util-classify-character)
 
 (The MIT License)
 
