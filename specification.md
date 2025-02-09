@@ -21,7 +21,7 @@ A <a href="#svs-that-can-follow-cjk" id="svs-that-can-follow-cjk">SVS (Standard 
 
 A <a href="#cjk-punctuation-character" id="cjk-punctuation-character">CJK punctuation character</a> is a [Unicode punctuation character](https://spec.commonmark.org/0.31.2/#unicode-punctuation-character) that is also a [CJK code point without variation selector](#cjk-code-point-without-variation-selector).
 
-A <a href="non-cjk-punctuation-character" id="non-cjk-punctuation-character">non-CJK punctuation character</a> is a [Unicode punctuation character](https://spec.commonmark.org/0.31.2/#unicode-punctuation-character) other than [CJK punctuation character](#cjk-punctuation-character).
+A <a href="#non-cjk-punctuation-character" id="non-cjk-punctuation-character">non-CJK punctuation character</a> is a [Unicode punctuation character](https://spec.commonmark.org/0.31.2/#unicode-punctuation-character) other than [CJK punctuation character](#cjk-punctuation-character).
 
 [^svs-range]: The range except for U+FE0E is computed from https://www.unicode.org/Public/16.0.0/ucd/StandardizedVariants.txt (as of Unicode 16) by extracting those that can follow CJK characters. Also, https://unicode.org/Public/16.0.0/ucd/emoji/emoji-variation-sequences.txt shows that U+FE0E can follow some CJK characters.
 
