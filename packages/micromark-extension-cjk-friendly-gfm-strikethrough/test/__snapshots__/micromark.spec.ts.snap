@@ -1,0 +1,7 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`markdown-it-cjk-friendly-gfm-strikethrough > Compatible with GFM extension (1) 1`] = `
+"<p>あ<strong>()</strong>あ1</p>
+1
+<p>あ()</p>"
+`;

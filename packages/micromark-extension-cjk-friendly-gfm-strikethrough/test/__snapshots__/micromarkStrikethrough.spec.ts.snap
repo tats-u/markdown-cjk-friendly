@@ -1,0 +1,14 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`markdown-it-cjk-friendly-gfm-strikethrough > Compatible with CJK 1`] = `
+"<p>a<del>a()</del>あ</p>
+<p>あ<del>()a</del>a</p>
+<p>𩸽<del>()a</del>a</p>
+<p>a<del>a()</del>𩸽</p>
+<p>葛󠄀<del>()a</del>a</p>
+<p>羽︀<del>()a</del>a</p>
+<p>a<del>「a</del>」</p>
+<p>「<del>a」</del>a</p>
+<p><del>a</del>：<del>a</del></p>
+"
+`;
