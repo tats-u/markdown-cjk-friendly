@@ -64,13 +64,13 @@ CommonMark issue: https://github.com/commonmark/commonmark-spec/issues/650
 
 ## Compatibility with the other languages / <span lang="ja">他言語との互換性</span> / <span lang="zh-Hans-CN">与其他语言的兼容性</span> / <span lang="ko">다른 언어와의 호환성</span>
 
-This modification of the specification does not affect the other languages than Chinese, Japanese, and Korean. Even if your application or document has translations or content in other languages, it will not be affected, so please feel free to use the packages.
+This modification of the specification does not affect the other languages than Chinese, Japanese, and Korean. Even if your application or document has translations or content in other languages, it will not be affected, so please feel free to use the packages. I assure that even with the above plugin/extension packages (this amendment suggestion), the Markdown implementations still output the same HTML for all CommonMark test cases as of 0.31.2.
 
-<span lang="ja">この仕様変更提案は、日本語・中国語・韓国語以外の言語には影響しません。アプリケーションやドキュメントに他言語の翻訳やコンテンツが含まれていても影響はありませんので、安心してパッケージをご利用ください。</span>
+<span lang="ja">この仕様変更提案は、日本語・中国語・韓国語以外の言語には影響しません。アプリケーションやドキュメントに他言語の翻訳やコンテンツが含まれていても影響はありませんので、安心してパッケージをご利用ください。上記のプラグイン/拡張パッケージ（本修正案）を使用しても、0.31.2時点の全てのCommonMarkテストケースで、Markdown実装が同じHTMLを出力することを保証しています。</span>
 
-<span lang="zh-Hans-CN">除中文、日文和韩文外，建议的规范变更不会影响其他语言。请放心使用该软件包，因为如果您的应用程序或文档包含其他语言的翻译或内容，也不会受到影响。</span>
+<span lang="zh-Hans-CN">除中文、日文和韩文外，建议的规范变更不会影响其他语言。请放心使用该软件包，因为如果您的应用程序或文档包含其他语言的翻译或内容，也不会受到影响。我可以保证，使用上述插件/扩展包（本建议的修改）后，Markdown 实现仍然会为 0.31.2 版本的所有 CommonMark 测试用例输出相同的 HTML。</span>
 
-<span lang="ko">이번 사양 변경 제안은 일본어, 중국어, 한국어 이외의 언어에는 영향을 미치지 않습니다. 애플리케이션이나 문서에 다른 언어의 번역이나 콘텐츠가 포함되어 있어도 영향을 받지 않으므로 안심하고 패키지를 사용하시기 바랍니다.</span>
+<span lang="ko">이번 사양 변경 제안은 일본어, 중국어, 한국어 이외의 언어에는 영향을 미치지 않습니다. 애플리케이션이나 문서에 다른 언어의 번역이나 콘텐츠가 포함되어 있어도 영향을 받지 않으므로 안심하고 패키지를 사용하시기 바랍니다. 위의 플러그인/확장 패키지(본 수정안)를 사용해도 0.31.2 시점의 모든 CommonMark 테스트케이스에서 Markdown 구현이 동일한 HTML을 출력하는 것을 보장합니다.</span>
 
 ## Contributing / <span lang="ja">貢献</span> / <span lang="zh-Hans-CN">贡献</span> / <span lang="ko">기여</span>
 
