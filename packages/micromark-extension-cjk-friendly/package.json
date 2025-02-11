@@ -5,14 +5,9 @@
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "import": "./dist/index.js",
-      "module-sync": "./dist/index.js",
-      "require": "./dist/index.cjs"
+      "default": "./dist/index.js"
     }
   },
-  "main": "./dist/index.cjs",
-  "module": "./dist/index.js",
-  "types": "./dist/index.d.ts",
   "files": ["dist", "LICENSE", "README.md"],
   "repository": {
     "url": "https://github.com/tats-u/markdown-cjk-friendly"

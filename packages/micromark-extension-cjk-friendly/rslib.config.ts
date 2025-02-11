@@ -7,9 +7,5 @@ export default defineConfig({
       syntax: "es2024",
       dts: true,
     },
-    {
-      format: "cjs",
-      syntax: "es2024",
-    },
   ],
 });
