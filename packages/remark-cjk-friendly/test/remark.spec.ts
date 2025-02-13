@@ -1,4 +1,5 @@
 import { readFile } from "node:fs/promises";
+import { compile as compileMdx } from "@mdx-js/mdx";
 import rehypeStringify from "rehype-stringify";
 import remarkCjkFriendly from "remark-cjk-friendly";
 import remarkGfm from "remark-gfm";
@@ -41,6 +42,20 @@ async function md2Html(md: string): Promise<string> {
 
 async function md2HtmlOriginal(md: string): Promise<string> {
   const result = await processorOriginal.process(md);
+  return result.toString();
+}
+
+async function mdx2React(md: string): Promise<string> {
+  const result = await compileMdx(md, {
+    remarkPlugins: [remarkGfm, remarkCjkFriendly],
+  });
+  return result.toString();
+}
+
+async function mdx2ReactNonCjk(md: string): Promise<string> {
+  const result = await compileMdx(md, {
+    remarkPlugins: [remarkGfm],
+  });
   return result.toString();
 }
 
@@ -157,6 +172,71 @@ describe("remark-cjk-friendly", () => {
     const result = await gfm2Html2("あ**()**あ[^1]\n\n[^1]: ~~あ~~");
     expect(result).not.toMatch(/\*\*[^\n]+\*\*/);
     expect(result).not.toContain("~~");
+    expect(result).toMatchSnapshot();
+  });
+
+  it("** around Kana/Han is converted to <strong> (MDX)", async () => {
+    const result = await mdx2React(
+      await readFile(
+        new URL("../../../testcases/strong.md", import.meta.url),
+        "utf-8",
+      ),
+    );
+    for (const line of result.split(/\r?\n/)) {
+      expect(line).not.toMatch(/\*\*[^\n]+\*\*/);
+    }
+    expect(result).toMatchSnapshot();
+  });
+
+  it("** around Korean is converted to <strong> (MDX)", async () => {
+    const result = await mdx2React(
+      await readFile(
+        new URL("../../../testcases/korean.md", import.meta.url),
+        "utf-8",
+      ),
+    );
+    for (const line of result.split(/\r?\n/)) {
+      expect(line).not.toMatch(/\*\*[^\n]+\*\*/);
+    }
+    expect(result).toMatchSnapshot();
+  });
+
+  it("** around pseudo-emoji (CJK symbols that are also unqualified-emoji) is converted to <strong> (MDX)", async () => {
+    const result = await mdx2React(
+      await readFile(
+        new URL("../../../testcases/pseudo-emoji.md", import.meta.url),
+        "utf-8",
+      ),
+    );
+    for (const line of result.split(/\r?\n/)) {
+      expect(line).not.toMatch(/\*\*[^\n]+\*\*/);
+    }
+    expect(result).toMatchSnapshot();
+  });
+
+  it("recognizes non-BMP punctuation and symbols (MDX)", async () => {
+    const result = await mdx2React(
+      await readFile(
+        new URL("../../../testcases/non-bmp.md", import.meta.url),
+        "utf-8",
+      ),
+    );
+    for (const line of result.split(/\r?\n/)) {
+      expect(line).not.toContain(".strong,");
+    }
+    expect(result).toMatchSnapshot();
+  });
+
+  it("process underscores around CJK punctuation (MDX)", async () => {
+    const result = await mdx2React(
+      await readFile(
+        new URL("../../../testcases/underscore-cjk-punct.md", import.meta.url),
+        "utf-8",
+      ),
+    );
+    for (const line of result.split(/\r?\n/)) {
+      expect(line).not.toContain("__");
+    }
     expect(result).toMatchSnapshot();
   });
 });

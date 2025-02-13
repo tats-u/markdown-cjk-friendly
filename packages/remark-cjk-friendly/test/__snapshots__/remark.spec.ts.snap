@@ -1,5 +1,392 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`remark-cjk-friendly > ** around Kana/Han is converted to <strong> (MDX) 1`] = `
+"import {Fragment as _Fragment, jsx as _jsx, jsxs as _jsxs} from "react/jsx-runtime";
+function _createMdxContent(props) {
+  const _components = {
+    a: "a",
+    p: "p",
+    strong: "strong",
+    ...props.components
+  };
+  return _jsxs(_Fragment, {
+    children: [_jsxs(_components.p, {
+      children: ["これは", _jsx(_components.strong, {
+        children: "私のやりたかったこと。"
+      }), "だからするの。"]
+    }), "\\n", _jsxs(_components.p, {
+      children: [_jsx(_components.strong, {
+        children: _jsx(_components.a, {
+          href: "./product-foo",
+          children: "製品ほげ"
+        })
+      }), "と", _jsx(_components.strong, {
+        children: _jsx(_components.a, {
+          href: "./product-bar",
+          children: "製品ふが"
+        })
+      }), "をお試しください"]
+    }), "\\n", _jsxs(_components.p, {
+      children: ["単語と", _jsx(_components.strong, {
+        children: _jsx(_components.a, {
+          href: "word-and",
+          children: "単語と"
+        })
+      }), "単語"]
+    }), "\\n", _jsxs(_components.p, {
+      children: [_jsx(_components.strong, {
+        children: "これは太字になりません。"
+      }), "ご注意ください。"]
+    }), "\\n", _jsxs(_components.p, {
+      children: ["カッコに注意", _jsx(_components.strong, {
+        children: "（太字にならない）"
+      }), "文が続く場合に要警戒。"]
+    }), "\\n", _jsxs(_components.p, {
+      children: [_jsx(_components.strong, {
+        children: _jsx(_components.a, {
+          href: "https://example.com",
+          children: "リンク"
+        })
+      }), "も注意。（画像も同様）"]
+    }), "\\n", _jsxs(_components.p, {
+      children: ["先頭の", _jsx(_components.strong, {
+        children: "\`コード\`も注意。"
+      })]
+    }), "\\n", _jsxs(_components.p, {
+      children: [_jsx(_components.strong, {
+        children: "末尾の\`コード\`"
+      }), "も注意。"]
+    }), "\\n", _jsxs(_components.p, {
+      children: ["税込", _jsx(_components.strong, {
+        children: "¥10,000"
+      }), "で入手できます。"]
+    }), "\\n", _jsxs(_components.p, {
+      children: ["正解は", _jsx(_components.strong, {
+        children: "④"
+      }), "です。"]
+    }), "\\n", _jsxs(_components.p, {
+      children: ["太郎は", _jsx(_components.strong, {
+        children: "「こんにちわ」"
+      }), "といった"]
+    }), "\\n", _jsxs(_components.p, {
+      children: ["太郎は", _jsx(_components.strong, {
+        children: "\\"こんにちわ\\""
+      }), "といった"]
+    }), "\\n", _jsxs(_components.p, {
+      children: ["太郎は", _jsx(_components.strong, {
+        children: "こんにちわ"
+      }), "といった"]
+    }), "\\n", _jsxs(_components.p, {
+      children: ["太郎は", _jsx(_components.strong, {
+        children: "「Hello」"
+      }), "といった"]
+    }), "\\n", _jsxs(_components.p, {
+      children: ["太郎は", _jsx(_components.strong, {
+        children: "\\"Hello\\""
+      }), "といった"]
+    }), "\\n", _jsxs(_components.p, {
+      children: ["太郎は", _jsx(_components.strong, {
+        children: "Hello"
+      }), "といった"]
+    }), "\\n", _jsxs(_components.p, {
+      children: ["太郎は", _jsx(_components.strong, {
+        children: "「Oh my god」"
+      }), "といった"]
+    }), "\\n", _jsxs(_components.p, {
+      children: ["太郎は", _jsx(_components.strong, {
+        children: "\\"Oh my god\\""
+      }), "といった"]
+    }), "\\n", _jsxs(_components.p, {
+      children: ["太郎は", _jsx(_components.strong, {
+        children: "Oh my god"
+      }), "といった"]
+    }), "\\n", _jsxs(_components.p, {
+      children: [_jsx(_components.strong, {
+        children: "C#"
+      }), "や", _jsx(_components.strong, {
+        children: "F#"
+      }), "は", _jsx(_components.strong, {
+        children: "「.NET」"
+      }), "というプラットフォーム上で動作します。"]
+    }), "\\n", _jsxs(_components.p, {
+      children: ["IDが", _jsx(_components.strong, {
+        children: "001号"
+      }), "になります。"]
+    }), "\\n", _jsxs(_components.p, {
+      children: ["IDが", _jsx(_components.strong, {
+        children: "００１号"
+      }), "になります。"]
+    }), "\\n", _jsxs(_components.p, {
+      children: ["Go", _jsx(_components.strong, {
+        children: "「初心者」"
+      }), "を対象とした記事です。"]
+    }), "\\n", _jsxs(_components.p, {
+      children: [_jsx(_components.strong, {
+        children: _jsx(_components.a, {
+          href: "https://example.com",
+          children: "リンク"
+        })
+      }), "も注意。"]
+    }), "\\n", _jsxs(_components.p, {
+      children: [_jsx(_components.strong, {
+        children: "⻲田太郎"
+      }), "と申します"]
+    }), "\\n", _jsxs(_components.p, {
+      children: ["・", _jsx(_components.strong, {
+        children: "㋐"
+      }), ":選択肢１つ目"]
+    }), "\\n", _jsxs(_components.p, {
+      children: [_jsx(_components.strong, {
+        children: "真，"
+      }), "她"]
+    }), "\\n", _jsxs(_components.p, {
+      children: [_jsx(_components.strong, {
+        children: "真。"
+      }), "她"]
+    }), "\\n", _jsxs(_components.p, {
+      children: [_jsx(_components.strong, {
+        children: "真、"
+      }), "她"]
+    }), "\\n", _jsxs(_components.p, {
+      children: [_jsx(_components.strong, {
+        children: "真；"
+      }), "她"]
+    }), "\\n", _jsxs(_components.p, {
+      children: [_jsx(_components.strong, {
+        children: "真："
+      }), "她"]
+    }), "\\n", _jsxs(_components.p, {
+      children: [_jsx(_components.strong, {
+        children: "真？"
+      }), "她"]
+    }), "\\n", _jsxs(_components.p, {
+      children: [_jsx(_components.strong, {
+        children: "真！"
+      }), "她"]
+    }), "\\n", _jsxs(_components.p, {
+      children: [_jsx(_components.strong, {
+        children: "真“"
+      }), "她"]
+    }), "\\n", _jsxs(_components.p, {
+      children: [_jsx(_components.strong, {
+        children: "真”"
+      }), "她"]
+    }), "\\n", _jsxs(_components.p, {
+      children: [_jsx(_components.strong, {
+        children: "真‘"
+      }), "她"]
+    }), "\\n", _jsxs(_components.p, {
+      children: [_jsx(_components.strong, {
+        children: "真’"
+      }), "她"]
+    }), "\\n", _jsxs(_components.p, {
+      children: [_jsx(_components.strong, {
+        children: "真（"
+      }), "她"]
+    }), "\\n", _jsxs(_components.p, {
+      children: ["真", _jsx(_components.strong, {
+        children: "（她"
+      })]
+    }), "\\n", _jsxs(_components.p, {
+      children: [_jsx(_components.strong, {
+        children: "真）"
+      }), "她"]
+    }), "\\n", _jsxs(_components.p, {
+      children: [_jsx(_components.strong, {
+        children: "真【"
+      }), "她"]
+    }), "\\n", _jsxs(_components.p, {
+      children: ["真", _jsx(_components.strong, {
+        children: "【她"
+      })]
+    }), "\\n", _jsxs(_components.p, {
+      children: [_jsx(_components.strong, {
+        children: "真】"
+      }), "她"]
+    }), "\\n", _jsxs(_components.p, {
+      children: [_jsx(_components.strong, {
+        children: "真《"
+      }), "她"]
+    }), "\\n", _jsxs(_components.p, {
+      children: ["真", _jsx(_components.strong, {
+        children: "《她"
+      })]
+    }), "\\n", _jsxs(_components.p, {
+      children: [_jsx(_components.strong, {
+        children: "真》"
+      }), "她"]
+    }), "\\n", _jsxs(_components.p, {
+      children: [_jsx(_components.strong, {
+        children: "真—"
+      }), "她"]
+    }), "\\n", _jsxs(_components.p, {
+      children: [_jsx(_components.strong, {
+        children: "真～"
+      }), "她"]
+    }), "\\n", _jsxs(_components.p, {
+      children: [_jsx(_components.strong, {
+        children: "真…"
+      }), "她"]
+    }), "\\n", _jsxs(_components.p, {
+      children: [_jsx(_components.strong, {
+        children: "真·"
+      }), "她"]
+    }), "\\n", _jsxs(_components.p, {
+      children: [_jsx(_components.strong, {
+        children: "真〃"
+      }), "她"]
+    }), "\\n", _jsxs(_components.p, {
+      children: [_jsx(_components.strong, {
+        children: "真-"
+      }), "她"]
+    }), "\\n", _jsxs(_components.p, {
+      children: [_jsx(_components.strong, {
+        children: "真々"
+      }), "她"]
+    }), "\\n", _jsxs(_components.p, {
+      children: [_jsx(_components.strong, {
+        children: "真"
+      }), "她"]
+    }), "\\n", _jsxs(_components.p, {
+      children: [_jsx(_components.strong, {
+        children: "真，"
+      }), " 她"]
+    }), "\\n", _jsxs(_components.p, {
+      children: [_jsx(_components.strong, {
+        children: "真"
+      }), "，她"]
+    }), "\\n", _jsxs(_components.p, {
+      children: [_jsx(_components.strong, {
+        children: "真，"
+      }), "​她"]
+    }), "\\n", _jsxs(_components.p, {
+      children: ["私は", _jsx(_components.strong, {
+        children: "⻲田太郎"
+      }), "と申します"]
+    }), "\\n", _jsxs(_components.p, {
+      children: ["選択肢", _jsx(_components.strong, {
+        children: "㋐"
+      }), ": 1つ目の選択肢"]
+    }), "\\n", _jsxs(_components.p, {
+      children: [_jsx(_components.strong, {
+        children: "さようなら︙"
+      }), "と太郎はいった。"]
+    }), "\\n", _jsxs(_components.p, {
+      children: [".NET", _jsx(_components.strong, {
+        children: "（.NET Frameworkは不可）"
+      }), "では、"]
+    }), "\\n", _jsxs(_components.p, {
+      children: ["「禰󠄀」の偏は示ではなく", _jsx(_components.strong, {
+        children: "礻"
+      }), "です。"]
+    }), "\\n", _jsxs(_components.p, {
+      children: ["Git", _jsx(_components.strong, {
+        children: "（注：不是GitHub）"
+      })]
+    }), "\\n", _jsxs(_components.p, {
+      children: ["太郎は", _jsx(_components.strong, {
+        children: "「こんにちわ」"
+      }), "といった。"]
+    }), "\\n", _jsxs(_components.p, {
+      children: ["𰻞𰻞", _jsx(_components.strong, {
+        children: "（ビャンビャン）"
+      }), "麺"]
+    }), "\\n", _jsxs(_components.p, {
+      children: ["𰻞𰻞", _jsx(_components.strong, {
+        children: "(ビャンビャン)"
+      }), "麺"]
+    }), "\\n", _jsxs(_components.p, {
+      children: ["ハイパーテキストコーヒーポット制御プロトコル", _jsx(_components.strong, {
+        children: "(HTCPCP)"
+      })]
+    }), "\\n", _jsxs(_components.p, {
+      children: ["﨑", _jsx(_components.strong, {
+        children: "(崎)"
+      })]
+    }), "\\n", _jsxs(_components.p, {
+      children: ["国際規格", _jsx(_components.strong, {
+        children: _jsx(_components.a, {
+          href: "https://tc39.es/ecma262/",
+          children: "ECMA-262"
+        })
+      })]
+    }), "\\n", _jsxs(_components.p, {
+      children: ["㐧", _jsx(_components.strong, {
+        children: "(第の俗字)"
+      })]
+    }), "\\n", _jsxs(_components.p, {
+      children: ["𠮟", _jsx(_components.strong, {
+        children: "(こちらが正式表記)"
+      })]
+    }), "\\n", _jsxs(_components.p, {
+      children: ["𪜈", _jsx(_components.strong, {
+        children: "(トモの合略仮名)"
+      })]
+    }), "\\n", _jsxs(_components.p, {
+      children: ["𫠉", _jsx(_components.strong, {
+        children: "(馬の俗字)"
+      })]
+    }), "\\n", _jsxs(_components.p, {
+      children: ["谺𬤲", _jsx(_components.strong, {
+        children: "(こだま)"
+      }), "石神社"]
+    }), "\\n", _jsxs(_components.p, {
+      children: ["石𮧟", _jsx(_components.strong, {
+        children: "(いしただら)"
+      })]
+    }), "\\n", _jsxs(_components.p, {
+      children: [_jsx(_components.strong, {
+        children: "推荐几个框架："
+      }), "React、Vue等前端框架。"]
+    }), "\\n", _jsxs(_components.p, {
+      children: ["葛󠄀", _jsx(_components.strong, {
+        children: "(こちらが正式表記)"
+      }), "城市"]
+    }), "\\n", _jsxs(_components.p, {
+      children: ["禰󠄀", _jsx(_components.strong, {
+        children: "(こちらが正式表記)"
+      }), "豆子"]
+    }), "\\n", _jsxs(_components.p, {
+      children: ["𱟛", _jsx(_components.strong, {
+        children: "(U+317DB)"
+      })]
+    }), "\\n", _jsxs(_components.p, {
+      children: ["阿寒湖アイヌシアターイコㇿ", _jsx(_components.strong, {
+        children: "(Akanko Ainu Theater Ikor)"
+      })]
+    }), "\\n", _jsxs(_components.p, {
+      children: ["あ𛀙", _jsx(_components.strong, {
+        children: "(か)"
+      }), "よろし"]
+    }), "\\n", _jsxs(_components.p, {
+      children: ["𮹝", _jsx(_components.strong, {
+        children: "(simplified form of 龘 in China)"
+      })]
+    }), "\\n", _jsxs(_components.p, {
+      children: ["大塚︀", _jsx(_components.strong, {
+        children: "(U+585A U+FE00)"
+      }), " 大塚", _jsx(_components.strong, {
+        children: "(U+FA10)"
+      })]
+    }), "\\n", _jsxs(_components.p, {
+      children: ["〽︎", _jsx(_components.strong, {
+        children: "(庵点)"
+      }), "は、"]
+    })]
+  });
+}
+export default function MDXContent(props = {}) {
+  const {wrapper: MDXLayout} = props.components || ({});
+  return MDXLayout ? _jsx(MDXLayout, {
+    ...props,
+    children: _jsx(_createMdxContent, {
+      ...props
+    })
+  }) : _createMdxContent(props);
+}
+"
+`;
+
 exports[`remark-cjk-friendly > ** around Kana/Han is converted to <strong> 1`] = `
 "<p>これは<strong>私のやりたかったこと。</strong>だからするの。</p>
 <p><strong><a href="./product-foo">製品ほげ</a></strong>と<strong><a href="./product-bar">製品ふが</a></strong>をお試しください</p>
@@ -87,6 +474,61 @@ exports[`remark-cjk-friendly > ** around Kana/Han is converted to <strong> 1`] =
 <p>〽︎<strong>(庵点)</strong>は、</p>"
 `;
 
+exports[`remark-cjk-friendly > ** around Korean is converted to <strong> (MDX) 1`] = `
+"import {Fragment as _Fragment, jsx as _jsx, jsxs as _jsxs} from "react/jsx-runtime";
+function _createMdxContent(props) {
+  const _components = {
+    a: "a",
+    code: "code",
+    p: "p",
+    strong: "strong",
+    ...props.components
+  };
+  return _jsxs(_Fragment, {
+    children: [_jsxs(_components.p, {
+      children: [_jsxs(_components.strong, {
+        children: ["이 ", _jsx(_components.a, {
+          href: "https://example.kr/",
+          children: "링크"
+        })]
+      }), "만을 강조하고 싶다."]
+    }), "\\n", _jsxs(_components.p, {
+      children: [_jsx(_components.strong, {
+        children: "스크립트(script)"
+      }), "라고"]
+    }), "\\n", _jsxs(_components.p, {
+      children: ["패키지를 발행하려면 ", _jsx(_components.strong, {
+        children: _jsx(_components.code, {
+          children: "npm publish"
+        })
+      }), "를 실행하십시오."]
+    }), "\\n", _jsxs(_components.p, {
+      children: [_jsx(_components.strong, {
+        children: "안녕(hello)"
+      }), "하세요."]
+    }), "\\n", _jsxs(_components.p, {
+      children: ["ᅡ", _jsx(_components.strong, {
+        children: "(a)"
+      })]
+    }), "\\n", _jsxs(_components.p, {
+      children: [_jsx(_components.strong, {
+        children: "(k)"
+      }), "ᄏ"]
+    })]
+  });
+}
+export default function MDXContent(props = {}) {
+  const {wrapper: MDXLayout} = props.components || ({});
+  return MDXLayout ? _jsx(MDXLayout, {
+    ...props,
+    children: _jsx(_createMdxContent, {
+      ...props
+    })
+  }) : _createMdxContent(props);
+}
+"
+`;
+
 exports[`remark-cjk-friendly > ** around Korean is converted to <strong> 1`] = `
 "<p><strong>이 <a href="https://example.kr/">링크</a></strong>만을 강조하고 싶다.</p>
 <p><strong>스크립트(script)</strong>라고</p>
@@ -94,6 +536,54 @@ exports[`remark-cjk-friendly > ** around Korean is converted to <strong> 1`] = `
 <p><strong>안녕(hello)</strong>하세요.</p>
 <p>ᅡ<strong>(a)</strong></p>
 <p><strong>(k)</strong>ᄏ</p>"
+`;
+
+exports[`remark-cjk-friendly > ** around pseudo-emoji (CJK symbols that are also unqualified-emoji) is converted to <strong> (MDX) 1`] = `
+"import {Fragment as _Fragment, jsx as _jsx, jsxs as _jsxs} from "react/jsx-runtime";
+function _createMdxContent(props) {
+  const _components = {
+    p: "p",
+    strong: "strong",
+    ...props.components
+  };
+  return _jsxs(_Fragment, {
+    children: [_jsxs(_components.p, {
+      children: ["a", _jsx(_components.strong, {
+        children: "〰"
+      }), "a"]
+    }), "\\n", _jsxs(_components.p, {
+      children: ["a", _jsx(_components.strong, {
+        children: "〽"
+      }), "a"]
+    }), "\\n", _jsxs(_components.p, {
+      children: ["a", _jsx(_components.strong, {
+        children: "🈂"
+      }), "a"]
+    }), "\\n", _jsxs(_components.p, {
+      children: ["a", _jsx(_components.strong, {
+        children: "🈷"
+      }), "a"]
+    }), "\\n", _jsxs(_components.p, {
+      children: ["a", _jsx(_components.strong, {
+        children: "㊗"
+      }), "a"]
+    }), "\\n", _jsxs(_components.p, {
+      children: ["a", _jsx(_components.strong, {
+        children: "㊙"
+      }), "a"]
+    })]
+  });
+}
+export default function MDXContent(props = {}) {
+  const {wrapper: MDXLayout} = props.components || ({});
+  return MDXLayout ? _jsx(MDXLayout, {
+    ...props,
+    children: _jsx(_createMdxContent, {
+      ...props
+    })
+  }) : _createMdxContent(props);
+}
+"
 `;
 
 exports[`remark-cjk-friendly > ** around pseudo-emoji (CJK symbols that are also unqualified-emoji) is converted to <strong> 1`] = `
@@ -133,9 +623,80 @@ exports[`remark-cjk-friendly > Example Markdown in README 1`] = `
 <p><strong>이 별표는 강조 표시로 인식되지 않고 그대로 표시됩니다(이 괄호 때문에)</strong>이 문장 때문에.</p>"
 `;
 
+exports[`remark-cjk-friendly > process underscores around CJK punctuation (MDX) 1`] = `
+"import {Fragment as _Fragment, jsx as _jsx, jsxs as _jsxs} from "react/jsx-runtime";
+function _createMdxContent(props) {
+  const _components = {
+    p: "p",
+    strong: "strong",
+    ...props.components
+  };
+  return _jsxs(_Fragment, {
+    children: [_jsxs(_components.p, {
+      children: [_jsx(_components.strong, {
+        children: "注意"
+      }), "：注意事項"]
+    }), "\\n", _jsxs(_components.p, {
+      children: ["注意：", _jsx(_components.strong, {
+        children: "注意事項"
+      })]
+    })]
+  });
+}
+export default function MDXContent(props = {}) {
+  const {wrapper: MDXLayout} = props.components || ({});
+  return MDXLayout ? _jsx(MDXLayout, {
+    ...props,
+    children: _jsx(_createMdxContent, {
+      ...props
+    })
+  }) : _createMdxContent(props);
+}
+"
+`;
+
 exports[`remark-cjk-friendly > process underscores around CJK punctuation 1`] = `
 "<p><strong>注意</strong>：注意事項</p>
 <p>注意：<strong>注意事項</strong></p>"
+`;
+
+exports[`remark-cjk-friendly > recognizes non-BMP punctuation and symbols (MDX) 1`] = `
+"import {Fragment as _Fragment, jsx as _jsx, jsxs as _jsxs} from "react/jsx-runtime";
+function _createMdxContent(props) {
+  const _components = {
+    p: "p",
+    ...props.components
+  };
+  return _jsxs(_Fragment, {
+    children: [_jsx(_components.p, {
+      children: "a**a«**a"
+    }), "\\n", _jsx(_components.p, {
+      children: "a**»a**a"
+    }), "\\n", _jsx(_components.p, {
+      children: "a**a∇**a"
+    }), "\\n", _jsx(_components.p, {
+      children: "a**∇a**a"
+    }), "\\n", _jsx(_components.p, {
+      children: "a**a𝜵**a"
+    }), "\\n", _jsx(_components.p, {
+      children: "a**𝜵a**a"
+    }), "\\n", _jsx(_components.p, {
+      children: "a**𐬻a**a"
+    }), "\\n", _jsx(_components.p, {
+      children: "a**a𐬻**a"
+    })]
+  });
+}
+export default function MDXContent(props = {}) {
+  const {wrapper: MDXLayout} = props.components || ({});
+  return MDXLayout ? _jsx(MDXLayout, {
+    ...props,
+    children: _jsx(_createMdxContent, {
+      ...props
+    })
+  }) : _createMdxContent(props);
+}
+"
 `;
 
 exports[`remark-cjk-friendly > recognizes non-BMP punctuation and symbols 1`] = `
