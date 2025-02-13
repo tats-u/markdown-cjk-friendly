@@ -1,0 +1,75 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`remark-cjk-friendly-gfm-strikethrough > Compatible with CJK (MDX) 1`] = `
+"import {Fragment as _Fragment, jsx as _jsx, jsxs as _jsxs} from "react/jsx-runtime";
+function _createMdxContent(props) {
+  const _components = {
+    del: "del",
+    p: "p",
+    ...props.components
+  };
+  return _jsxs(_Fragment, {
+    children: [_jsxs(_components.p, {
+      children: ["a", _jsx(_components.del, {
+        children: "a()"
+      }), "あ"]
+    }), "\\n", _jsxs(_components.p, {
+      children: ["あ", _jsx(_components.del, {
+        children: "()a"
+      }), "a"]
+    }), "\\n", _jsxs(_components.p, {
+      children: ["𩸽", _jsx(_components.del, {
+        children: "()a"
+      }), "a"]
+    }), "\\n", _jsxs(_components.p, {
+      children: ["a", _jsx(_components.del, {
+        children: "a()"
+      }), "𩸽"]
+    }), "\\n", _jsxs(_components.p, {
+      children: ["葛󠄀", _jsx(_components.del, {
+        children: "()a"
+      }), "a"]
+    }), "\\n", _jsxs(_components.p, {
+      children: ["羽︀", _jsx(_components.del, {
+        children: "()a"
+      }), "a"]
+    }), "\\n", _jsxs(_components.p, {
+      children: ["a", _jsx(_components.del, {
+        children: "「a"
+      }), "」"]
+    }), "\\n", _jsxs(_components.p, {
+      children: ["「", _jsx(_components.del, {
+        children: "a」"
+      }), "a"]
+    }), "\\n", _jsxs(_components.p, {
+      children: [_jsx(_components.del, {
+        children: "a"
+      }), "：", _jsx(_components.del, {
+        children: "a"
+      })]
+    })]
+  });
+}
+export default function MDXContent(props = {}) {
+  const {wrapper: MDXLayout} = props.components || ({});
+  return MDXLayout ? _jsx(MDXLayout, {
+    ...props,
+    children: _jsx(_createMdxContent, {
+      ...props
+    })
+  }) : _createMdxContent(props);
+}
+"
+`;
+
+exports[`remark-cjk-friendly-gfm-strikethrough > Compatible with CJK 1`] = `
+"<p>a<del>a()</del>あ</p>
+<p>あ<del>()a</del>a</p>
+<p>𩸽<del>()a</del>a</p>
+<p>a<del>a()</del>𩸽</p>
+<p>葛󠄀<del>()a</del>a</p>
+<p>羽︀<del>()a</del>a</p>
+<p>a<del>「a</del>」</p>
+<p>「<del>a」</del>a</p>
+<p><del>a</del>：<del>a</del></p>"
+`;
