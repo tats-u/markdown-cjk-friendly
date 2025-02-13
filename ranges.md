@@ -443,7 +443,7 @@ is_cjk = 0x1100 <= cp <= 0x11ff \
 ## EAW is treated as "W" if unassigned (defined by Unicode)
 
 > [!NOTE]
-> The following result is extracted from https://www.unicode.org/Public/16.0.0/ucd/EastAsianWidth.txt. It is sightly different from https://www.unicode.org/reports/tr11/#Unassigned. U+2FFFE, U+2FFFF, U+3FFFE, and U+3FFFF are missing, but [they are "Noncharacter"](https://www.unicode.org/versions/Unicode16.0.0/core-spec/chapter-23/#G19653), not ["Unassigned" (or "Reserved")](https://www.unicode.org/glossary/#reserved_code_point). This shows that we do not have to care about whether they are included in the list of CJK code points or not. To simplify the ranges, U+2FFFE and U+2FFFF are merged to U+20000–U+2FFFD here.
+> The following result is extracted from https://www.unicode.org/Public/16.0.0/ucd/EastAsianWidth.txt. It is slightly different from https://www.unicode.org/reports/tr11/#Unassigned. U+2FFFE, U+2FFFF, U+3FFFE, and U+3FFFF are missing, but [they are "Noncharacter"](https://www.unicode.org/versions/Unicode16.0.0/core-spec/chapter-23/#G19653), not ["Unassigned" (or "Reserved")](https://www.unicode.org/glossary/#reserved_code_point). This shows that we do not have to care about whether they are included in the list of CJK code points or not. To simplify the ranges, U+2FFFE and U+2FFFF are merged to U+20000–U+2FFFD here.
 
 - U+3400..U+4DBF (㐀..䶿)
 - U+4E00..U+9FFF (一..鿿)
