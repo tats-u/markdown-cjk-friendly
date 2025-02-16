@@ -66,15 +66,63 @@ Of course, not only the end side but also the start side has the same issue.
 
 CommonMark issue: https://github.com/commonmark/commonmark-spec/issues/650
 
+## Who should adopt this specifications instead of the original CommonMark or GFM? / <span lang="ja">元のCommonMarkやGFMの代わりにこの仕様を採用べき人</span> / <span lang="zh-Hans-CN">谁应该采用这个规范而不是原始的CommonMark或GFM？</span> / <span lang="ko">누가 원래의 CommonMark나 GFM 대신 이 사양을 채택해야 하는가?</span>
+
+If you are an engineer who must handle Japanese, Chinese, and Korean content that cannot be fully supervised, it is strongly recommended to adopt this specification instead of plain CommonMark or GFM. "Cannot be fully supervised" refers to situations such as:
+
+1. When you need to display user-generated or AI-generated content as-is
+2. When many translators do not understand this CommonMark behavior, and you cannot provide real-time rendering previews similar to production, and `<strong>` tags are not allowed
+    - When using translation services like Crowdin or Transifex
+    - When the person responsible for translation quality is not an engineer or does not understand this CommonMark behavior
+
+Additionally, if you are creating Markdown-related software or services primarily targeting Japanese, Chinese, or Korean users (or all of them), it is strongly recommended to adopt this specification.
+
+<span lang="ja">もしエンジニアであるあなたが全てに監修を入れられない日本語・中国語・韓国語のコンテンツを扱わなければならない場合、素のCommonMarkやGFMではなく、この仕様を採用することを強く推奨します。「全てに監修を入れられない」というのは、例えば次のようなものを指します。</span>
+
+1. <span lang="ja">ユーザまたはAIが作成したコンテンツをそのまま表示する必要がある場合</span>
+2. <span lang="ja">翻訳者に、このCommonMarkの仕様を理解していない人も多く、なおかつリアルタイムで本番同様の描画プレビューを提供できず、`<strong>`タグを許可していない場合</span>
+    - <span lang="ja">翻訳にCrowdin・Transifexなどの翻訳サービスを使っている場合</span>
+    - <span lang="ja">翻訳の品質に責任を負っている人が非エンジニアである、またはComonMarkのこの挙動を理解していない場合</span>
+
+<span lang="ja">また、あなたが主に日本人・中国人・韓国人のいずれかまたは全てを対象としたMarkdown関連のソフトウェアやサービスを作成する場合も、この仕様を採用することを強く推奨します。</span>
+
+<span lang="zh">如果作为工程师的您必须处理无法全面监督的日文、中文和韩文内容，强烈建议采用此规范，而不是普通的CommonMark或GFM。"无法全面监督"指的是以下情况：</span>
+
+1. <span lang="zh">当需要按原样显示用户生成或AI生成的内容时</span>
+2. <span lang="zh">当许多翻译人员不理解这个CommonMark行为，而且无法提供类似生产环境的实时渲染预览，并且不允许使用`<strong>`标签时</span>
+    - <span lang="zh">当使用Crowdin或Transifex等翻译服务时</span>
+    - <span lang="zh">当负责翻译质量的人不是工程师或不理解这个CommonMark行为时</span>
+
+<span lang="zh">此外，如果您正在创建主要面向日本人、中国人或韩国人（或全部）的Markdown相关软件或服务，也强烈建议采用此规范。</span>
+
+<span lang="ko">엔지니어로서 완전히 감독할 수 없는 일본어, 중국어, 한국어 콘텐츠를 다뤄야 하는 경우, 일반 CommonMark나 GFM 대신 이 사양을 채택할 것을 강력히 권장합니다. "완전히 감독할 수 없는"이란 다음과 같은 상황을 의미합니다:</span>
+
+1. <span lang="ko">사용자 또는 AI가 생성한 콘텐츠를 그대로 표시해야 하는 경우</span>
+2. <span lang="ko">많은 번역자가 이 CommonMark 동작을 이해하지 못하고, 실시간으로 실제 환경과 유사한 렌더링 미리보기를 제공할 수 없으며, `<strong>` 태그가 허용되지 않는 경우</span>
+    - <span lang="ko">Crowdin이나 Transifex 같은 번역 서비스를 사용하는 경우</span>
+    - <span lang="ko">번역 품질에 책임을 지는 사람이 엔지니어가 아니거나 이 CommonMark 동작을 이해하지 못하는 경우</span>
+
+<span lang="ko">또한, 주로 일본어, 중국어, 한국어 사용자(또는 모두)를 대상으로 하는 Markdown 관련 소프트웨어나 서비스를 만들고 있다면, 이 사양을 채택할 것을 강력히 권장합니다.</span>
+
+## Compatibility with CommonMark / <span lang="ja">CommonMarkとの互換性</span> / <span lang="zh-Hans-CN">与CommonMark的兼容性</span> / <span lang="ko">CommonMark와의 호환성</span>
+
+This specification is identical to CommonMark for all input except Chinese, Japanese, Korean, and (some emojis and symbols). The aforementioned plugins/extension packages guarantee that their Markdown implementations output the same HTML for all CommonMark test cases as of CommonMark 0.31.2.
+
+<span lang="ja">本仕様は、日本語・中国語・韓国語・ごく一部の絵文字や記号以外の入力に対してはCommonMarkと同一です。上記のプラグイン/拡張パッケージは、CommonMark 0.31.2時点の全てのCommonMarkテストケースでMarkdown実装が同じHTMLを出力することを保証しています。</span>
+
+<span lang="zh-Hans-CN">除中文、日文、韩文和（少数表情符号和符号）之外的所有输入，本规范与CommonMark完全相同。上述插件/扩展包保证其Markdown实现在CommonMark 0.31.2的所有测试用例中输出相同的HTML。</span>
+
+<span lang="ko">본 사양은 한국어, 중국어, 일본어 및 (일부 이모티콘과 기호)를 제외한 모든 입력에 대해 CommonMark와 동일합니다. 앞서 언급된 플러그인/확장 패키지는 CommonMark 0.31.2 기준의 모든 CommonMark 테스트 케이스에서 동일한 HTML을 출력하는 Markdown 구현을 보장합니다.</span>
+
 ## Compatibility with the other languages / <span lang="ja">他言語との互換性</span> / <span lang="zh-Hans-CN">与其他语言的兼容性</span> / <span lang="ko">다른 언어와의 호환성</span>
 
-This modification of the specification does not affect the other languages than Chinese, Japanese, and Korean. Even if your application or document has translations or content in other languages, it will not be affected, so please feel free to use the packages. I assure that even with the above plugin/extension packages (this amendment suggestion), the Markdown implementations still output the same HTML for all CommonMark test cases as of 0.31.2.
+This modification of the specification does not affect the other languages than Chinese, Japanese, and Korean. Even if your application or document has translations or content in other languages, it will not be affected, so please feel free to use the packages.
 
-<span lang="ja">この仕様変更提案は、日本語・中国語・韓国語以外の言語には影響しません。アプリケーションやドキュメントに他言語の翻訳やコンテンツが含まれていても影響はありませんので、安心してパッケージをご利用ください。上記のプラグイン/拡張パッケージ（本修正案）を使用しても、0.31.2時点の全てのCommonMarkテストケースで、Markdown実装が同じHTMLを出力することを保証しています。</span>
+<span lang="ja">この仕様変更提案は、日本語・中国語・韓国語以外の言語には影響しません。アプリケーションやドキュメントに他言語の翻訳やコンテンツが含まれていても影響はありませんので、安心してパッケージをご利用ください。</span>
 
-<span lang="zh-Hans-CN">除中文、日文和韩文外，建议的规范变更不会影响其他语言。请放心使用该软件包，因为如果您的应用程序或文档包含其他语言的翻译或内容，也不会受到影响。我可以保证，使用上述插件/扩展包（本建议的修改）后，Markdown 实现仍然会为 0.31.2 版本的所有 CommonMark 测试用例输出相同的 HTML。</span>
+<span lang="zh-Hans-CN">除中文、日文和韩文外，建议的规范变更不会影响其他语言。请放心使用该软件包，因为如果您的应用程序或文档包含其他语言的翻译或内容，也不会受到影响。</span>
 
-<span lang="ko">이번 사양 변경 제안은 일본어, 중국어, 한국어 이외의 언어에는 영향을 미치지 않습니다. 애플리케이션이나 문서에 다른 언어의 번역이나 콘텐츠가 포함되어 있어도 영향을 받지 않으므로 안심하고 패키지를 사용하시기 바랍니다. 위의 플러그인/확장 패키지(본 수정안)를 사용해도 0.31.2 시점의 모든 CommonMark 테스트케이스에서 Markdown 구현이 동일한 HTML을 출력하는 것을 보장합니다.</span>
+<span lang="ko">이번 사양 변경 제안은 일본어, 중국어, 한국어 이외의 언어에는 영향을 미치지 않습니다. 애플리케이션이나 문서에 다른 언어의 번역이나 콘텐츠가 포함되어 있어도 영향을 받지 않으므로 안심하고 패키지를 사용하시기 바랍니다.</span>
 
 ## Contributing / <span lang="ja">貢献</span> / <span lang="zh-Hans-CN">贡献</span> / <span lang="ko">기여</span>
 
