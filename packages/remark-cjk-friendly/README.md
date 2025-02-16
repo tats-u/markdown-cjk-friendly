@@ -10,6 +10,15 @@ A [remark](https://github.com/remarkjs/remark) plugin to make Markdown emphasis 
 
 <span lang="ko">CommonMark(및 MDX)의 강조 표시(`**`)를 한국어, 중국어, 일본어와 호환되도록 만드는 [remark](https://github.com/remarkjs/remark) 플러그인</span>
 
+> [!NOTE]
+> This package does not support the strikethrough syntax (`~~`) in GFM (GitHub Flavored Markdown). If you want to support it, please use [`remark-cjk-friendly-gfm-strikethrough`](https://npmjs.com/package/remark-cjk-friendly-gfm-strikethrough) along with this package.
+>
+> <span lang="ja">本パッケージはGitHub Flavored Markdown（GFM）の取り消し線（`~~`）に対応しません。対応させたい場合は、[`remark-cjk-friendly-gfm-strikethrough`](https://npmjs.com/package/remark-cjk-friendly-gfm-strikethrough)を併用してください。</span>
+>
+> <span lang="zh-Hans-CN">本包不支持 GitHub Flavored Markdown（GFM）的删除线（`~~`）。如果需要支持，请同时使用 [`remark-cjk-friendly-gfm-strikethrough`](https://npmjs.com/package/remark-cjk-friendly-gfm-strikethrough)。</span>
+>
+> <span lang="ko">이 패키지는 GitHub Flavored Markdown(GFM)의 취소선(`~~`)을 지원하지 않습니다. 지원하고 싶은 경우에는 [`remark-cjk-friendly-gfm-strikethrough`](https://npmjs.com/package/remark-cjk-friendly-gfm-strikethrough)를 함께 사용해 주세요.</span>
+
 ## Problem / <span lang="ja">問題</span> / <span lang="zh-Hans-CN">问题</span> / <span lang="ko">문제점</span>
 
 CommonMark has a problem that the following emphasis marks `**` are not recognized as emphasis marks in Japanese, Chinese, and Korean.
