@@ -14,6 +14,7 @@
 
 - Tweak specifications
 - Port for non-JavaScript implementations
+- Add integration tests for real world JavaScript frameworks and site generators
 
 ## Specification / <span lang="ja">規格書</span> / <span lang="zh-Hans-CN">规范</span> / <span lang="ko">규정서</span>
 
