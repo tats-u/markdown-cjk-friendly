@@ -1,6 +1,6 @@
 {
   "name": "micromark-extension-cjk-friendly-gfm-strikethrough",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "type": "module",
   "exports": {
     ".": {
@@ -54,7 +54,7 @@
   "peerDependencies": {
     "micromark": "^4.0.0",
     "micromark-util-types": "^2.0.0",
-    "micromark-extension-cjk-friendly-util": "^0.1.0"
+    "micromark-extension-cjk-friendly-util": "<2.0.0"
   },
   "peerDependenciesMeta": {
     "micromark-util-types": {
