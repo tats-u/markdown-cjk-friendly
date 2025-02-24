@@ -14,9 +14,9 @@ const getUrlBase = {
   ucd(version: string) {
     return `${unicodePublic}${version}.0/ucd/`;
   },
-  // ucdEmoji(version: string) {
-  //   return `${unicodePublic}UCD/${version}/emoji/`;
-  // },
+  ucdEmoji(version: string) {
+    return `${unicodePublic}UCD/${version}/emoji/`;
+  },
   emoji(version: string) {
     return `${unicodePublic}emoji/${version}/`;
   },
@@ -291,17 +291,17 @@ const unassignedAsCjkRanges: Range[] = mapFilter(
   }.bind({ preambleEnded: false }),
 ).toArray();
 
-// const textSwitchableEmojis: number[] = mapFilter(
-//   dataStore.emojiVariationSequences,
-//   (line) => {
-//     const reResult = /^([0-9A-F]+) FE0E +; /.exec(line);
-//     if (reResult) {
-//       const cp = Number.parseInt(reResult[1], 16);
-//       return cp;
-//     }
-//     return null;
-//   },
-// ).toArray();
+const textSwitchableEmojis: number[] = mapFilter(
+  dataStore.emojiVariationSequences,
+  (line) => {
+    const reResult = /^([0-9A-F]+) FE0E +; /.exec(line);
+    if (reResult) {
+      const cp = Number.parseInt(reResult[1], 16);
+      return cp;
+    }
+    return null;
+  },
+).toArray();
 
 const emojiSwitchableSymbols: number[] = mapFilter(
   dataStore.emojiVariationSequences,
@@ -317,7 +317,7 @@ const emojiSwitchableSymbols: number[] = mapFilter(
 
 ///// main process ///
 
-// const cjkDisablingEmojis = new Set<number>();
+const cjkDisablingEmojis = new Set<number>();
 
 for (const { first, last, isCjk } of eawRanges) {
   for (let cp = first; cp <= last; ++cp) isCjkTable[cp] = isCjk;
@@ -325,9 +325,9 @@ for (const { first, last, isCjk } of eawRanges) {
 
 for (const { first, last } of singleCodePointEmojiRanges) {
   for (let cp = first; cp <= last; ++cp) {
-    // if (isCjkTable[cp]) {
-    //   cjkDisablingEmojis.add(cp);
-    // }
+    if (isCjkTable[cp]) {
+      cjkDisablingEmojis.add(cp);
+    }
     isCjkTable[cp] = false;
   }
 }
@@ -366,9 +366,9 @@ const cjkSymbolsSwitchableToEmoji: number[] = emojiSwitchableSymbols.filter(
   (cp) => isCjkTable[cp],
 );
 
-// const emojisDerivedFromCjkSymbols: number[] = textSwitchableEmojis.filter(
-//   (cp) => cjkDisablingEmojis.has(cp),
-// );
+const emojisDerivedFromCjkSymbols: number[] = textSwitchableEmojis.filter(
+  (cp) => cjkDisablingEmojis.has(cp),
+);
 
 ///// table to ranges /////
 
@@ -477,7 +477,7 @@ interface VariableNames {
   isCjk: string;
   isSvsFollowingCjk: string;
   isWideIfEawUnassigned: string;
-  // emojisDerivedFromCjk: string;
+  emojisDerivedFromCjk: string;
   cjkSymbolsSwitchableToEmoji: string;
 }
 
@@ -486,7 +486,7 @@ const snakeCase: VariableNames = {
   isSvsFollowingCjk: "is_svs_following_cjk",
   isWideIfEawUnassigned: "is_wide_if_eaw_unassigned",
   cjkSymbolsSwitchableToEmoji: "cjk_symbols_switchable_to_emoji",
-  // emojisDerivedFromCjk: "emojis_derived_from_cjk",
+  emojisDerivedFromCjk: "emojis_derived_from_cjk",
 };
 
 const camelCase: VariableNames = {
@@ -494,7 +494,7 @@ const camelCase: VariableNames = {
   isSvsFollowingCjk: "isSvsFollowingCjk",
   isWideIfEawUnassigned: "isWideIfEawUnassigned",
   cjkSymbolsSwitchableToEmoji: "cjkSymbolsSwitchableToEmoji",
-  // emojisDerivedFromCjk: "emojisDerivedFromCjk",
+  emojisDerivedFromCjk: "emojisDerivedFromCjk",
 };
 
 const markdownCase: VariableNames = {
@@ -504,8 +504,8 @@ const markdownCase: VariableNames = {
     'EAW is treated as "W" if unassigned (defined by Unicode)',
   cjkSymbolsSwitchableToEmoji:
     "CJK Symbols that can be switched to emoji by U+FE0F",
-  // emojisDerivedFromCjk:
-  //   "Emojis derived from CJK symbols (can be switched to text symbol by U+FE0E)",
+  emojisDerivedFromCjk:
+    "(for discussion for the future) Emojis derived from CJK symbols (can be switched to text symbol by U+FE0E)",
 };
 
 type FormatBaseLanguage = "rust" | "c" | "js" | "cs" | "py" | "md" | "js-regex";
@@ -705,11 +705,11 @@ if (formatLang === "md") {
       "cjkSymbolsSwitchableToEmoji",
     ),
   );
-  // console.log();
-  // console.log(
-  //   printRanges(
-  //     rangesFromAscSortedValues(emojisDerivedFromCjkSymbols),
-  //     "emojisDerivedFromCjk",
-  //   ),
-  // );
+  console.log();
+  console.log(
+    printRanges(
+      rangesFromAscSortedValues(emojisDerivedFromCjkSymbols),
+      "emojisDerivedFromCjk",
+    ),
+  );
 }
