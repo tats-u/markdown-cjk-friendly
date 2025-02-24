@@ -70,14 +70,14 @@ CommonMark issue: https://github.com/commonmark/commonmark-spec/issues/650
 
 ## Who should adopt this specifications instead of the original CommonMark or GFM? / <span lang="ja">元のCommonMarkやGFMの代わりにこの仕様を採用べき人</span> / <span lang="zh-Hans-CN">谁应该采用这个规范而不是原始的CommonMark或GFM？</span> / <span lang="ko">누가 원래의 CommonMark나 GFM 대신 이 사양을 채택해야 하는가?</span>
 
-If you are an engineer who must handle Japanese, Chinese, and Korean content that cannot be fully supervised, it is strongly recommended to adopt this specification instead of plain CommonMark or GFM. "Cannot be fully supervised" refers to situations such as:
+If you are an engineer who must handle Chinese, Japanese, and Korean content that cannot be fully supervised, it is strongly recommended to adopt this specification instead of plain CommonMark or GFM. "Cannot be fully supervised" refers to situations such as:
 
 1. When you need to display user-generated or AI-generated content as-is
 2. When many translators do not understand this CommonMark behavior, and you cannot provide real-time rendering previews similar to production, and `<strong>` tags are not allowed
     - When using translation services like Crowdin or Transifex
     - When the person responsible for translation quality is not an engineer or does not understand this CommonMark behavior
 
-Additionally, if you are creating Markdown-related software or services primarily targeting Japanese, Chinese, or Korean users (or all of them), it is strongly recommended to adopt this specification.
+Additionally, if you are creating Markdown-related software or services primarily targeting Chinese, Japanese, or Korean users (or all of them), it is strongly recommended to adopt this specification.
 
 <span lang="ja">もしエンジニアであるあなたが全てに監修を入れられない日本語・中国語・韓国語のコンテンツを扱わなければならない場合、素のCommonMarkやGFMではなく、この仕様を採用することを強く推奨します。「全てに監修を入れられない」というのは、例えば次のようなものを指します。</span>
 
@@ -88,23 +88,23 @@ Additionally, if you are creating Markdown-related software or services primaril
 
 <span lang="ja">また、あなたが主に日本人・中国人・韓国人のいずれかまたは全てを対象としたMarkdown関連のソフトウェアやサービスを作成する場合も、この仕様を採用することを強く推奨します。</span>
 
-<span lang="zh">如果作为工程师的您必须处理无法全面监督的日文、中文和韩文内容，强烈建议采用此规范，而不是普通的CommonMark或GFM。"无法全面监督"指的是以下情况：</span>
+<span lang="zh">如果作为工程师的您必须处理无法全面监督的中文、日文和韩文内容，强烈建议采用此规范，而不是普通的CommonMark或GFM。"无法全面监督"指的是以下情况：</span>
 
 1. <span lang="zh">当需要按原样显示用户生成或AI生成的内容时</span>
 2. <span lang="zh">当许多翻译人员不理解这个CommonMark行为，而且无法提供类似生产环境的实时渲染预览，并且不允许使用`<strong>`标签时</span>
     - <span lang="zh">当使用Crowdin或Transifex等翻译服务时</span>
     - <span lang="zh">当负责翻译质量的人不是工程师或不理解这个CommonMark行为时</span>
 
-<span lang="zh">此外，如果您正在创建主要面向日本人、中国人或韩国人（或全部）的Markdown相关软件或服务，也强烈建议采用此规范。</span>
+<span lang="zh">此外，如果您正在创建主要面向中国人、日本人或韩国人（或全部）的Markdown相关软件或服务，也强烈建议采用此规范。</span>
 
-<span lang="ko">엔지니어로서 완전히 감독할 수 없는 일본어, 중국어, 한국어 콘텐츠를 다뤄야 하는 경우, 일반 CommonMark나 GFM 대신 이 사양을 채택할 것을 강력히 권장합니다. "완전히 감독할 수 없는"이란 다음과 같은 상황을 의미합니다:</span>
+<span lang="ko">엔지니어로서 완전히 감독할 수 없는 한국어, 일본어, 중국어 콘텐츠를 다뤄야 하는 경우, 일반 CommonMark나 GFM 대신 이 사양을 채택할 것을 강력히 권장합니다. "완전히 감독할 수 없는"이란 다음과 같은 상황을 의미합니다:</span>
 
 1. <span lang="ko">사용자 또는 AI가 생성한 콘텐츠를 그대로 표시해야 하는 경우</span>
 2. <span lang="ko">많은 번역자가 이 CommonMark 동작을 이해하지 못하고, 실시간으로 실제 환경과 유사한 렌더링 미리보기를 제공할 수 없으며, `<strong>` 태그가 허용되지 않는 경우</span>
     - <span lang="ko">Crowdin이나 Transifex 같은 번역 서비스를 사용하는 경우</span>
     - <span lang="ko">번역 품질에 책임을 지는 사람이 엔지니어가 아니거나 이 CommonMark 동작을 이해하지 못하는 경우</span>
 
-<span lang="ko">또한, 주로 일본어, 중국어, 한국어 사용자(또는 모두)를 대상으로 하는 Markdown 관련 소프트웨어나 서비스를 만들고 있다면, 이 사양을 채택할 것을 강력히 권장합니다.</span>
+<span lang="ko">또한, 주로 한국어, 일본어, 중국어 사용자(또는 모두)를 대상으로 하는 Markdown 관련 소프트웨어나 서비스를 만들고 있다면, 이 사양을 채택할 것을 강력히 권장합니다.</span>
 
 ## Compatibility with CommonMark / <span lang="ja">CommonMarkとの互換性</span> / <span lang="zh-Hans-CN">与CommonMark的兼容性</span> / <span lang="ko">CommonMark와의 호환성</span>
 
