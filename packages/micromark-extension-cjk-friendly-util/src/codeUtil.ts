@@ -106,6 +106,48 @@ export function tryGetCodeTwoBefore(
 }
 
 /**
+ * Lazily get the [Unicode Code Point](https://www.unicode.org/glossary/#code_point) two positions before the current position only if necessary.
+ * 
+ * @see {@link tryGetCodeTwoBefore}
+ */
+export class TwoPreviousCode {
+  private cachedValue: Code | undefined = undefined;
+
+  /**
+   * @see {@link tryGetCodeTwoBefore}
+   * 
+   * @param previousCode a previous code point. Should be greater than 65,535 if it represents a [Supplementary Character](https://www.unicode.org/glossary/#supplementary_character).
+   * @param nowPoint `this.now()` (`this` = `TokenizeContext`)
+   * @param sliceSerialize `this.sliceSerialize` (`this` = `TokenizeContext`)
+   */
+  constructor(
+    readonly previousCode: Exclude<Code, null>,
+    readonly nowPoint: Point,
+    readonly sliceSerialize: TokenizeContext["sliceSerialize"],
+  ) {}
+
+  /**
+   * Returns the return value of {@link tryGetCodeTwoBefore}.
+   * 
+   * If the value has not been computed yet, it will be computed and cached.
+   * 
+   * @see {@link tryGetCodeTwoBefore}
+   * 
+   * @returns a value greater than 65,535 if the code point two positions before represents a [Supplementary Character](https://www.unicode.org/glossary/#supplementary_character), a value less than 65,536 for a [BMP Character](https://www.unicode.org/glossary/#bmp_character), or `null` if not found
+   */
+  value(): Code {
+    if (this.cachedValue === undefined) {
+      this.cachedValue = tryGetCodeTwoBefore(
+        this.previousCode,
+        this.nowPoint,
+        this.sliceSerialize,
+      );
+    }
+    return this.cachedValue;
+  }
+}
+
+/**
  * If `code` is a [High-Surrogate Code Unit](https://www.unicode.org/glossary/#high_surrogate_code_unit), try to get a genuine next [Unicode Scalar Value](https://www.unicode.org/glossary/#unicode_scalar_value) corresponding to the High-Surrogate Code Unit.
  * @param code a tentative next [code unit](https://www.unicode.org/glossary/#code_unit) less than 65,536, including a High-Surrogate one
  * @param nowPoint `this.now()` (`this` = `TokenizeContext`)

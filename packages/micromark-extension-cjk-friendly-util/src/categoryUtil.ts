@@ -37,7 +37,7 @@ export function isCjk(category: Category): boolean {
 }
 
 /**
- * `true` if the code point represents an [IVS (Ideographic Variation Selector)](https://github.com/tats-u/markdown-cjk-friendly/blob/main/specification.md#ivs).
+ * `true` if the code point represents an [Ideographic Variation Selector](https://github.com/tats-u/markdown-cjk-friendly/blob/main/specification.md#ideographi-variation-selector).
  *
  * @param category the return value of `classifyCharacter`.
  * @returns `true` if the code point represents an IVS
@@ -48,10 +48,10 @@ export function isIvs(category: Category): boolean {
 }
 
 /**
- * `true` if the code point represents a [SVS (Standard Variation Selector/Sequence) that can follow CJK](https://github.com/tats-u/markdown-cjk-friendly/blob/main/specification.md#svs-that-can-follow-cjk).
+ * `true` if the code point represents a [Standard Variation Selector that can follow CJK](https://github.com/tats-u/markdown-cjk-friendly/blob/main/specification.md#svs-that-can-follow-cjk).
  *
  * @param category the return value of `classifyCharacter`.
- * @returns `true` if the code point represents an SVS that can follow CJK
+ * @returns `true` if the code point represents an Standard Variation Selector that can follow CJK
  */
 export function isSvsFollowingCjk(category: Category): boolean {
   // Exclusive with the others

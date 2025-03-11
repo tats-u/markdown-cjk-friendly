@@ -435,7 +435,7 @@ is_cjk = 0x1100 <= cp <= 0x11ff \
 
 </details>
 
-## SVS following CJK code points
+## Standard Variation Selectors following CJK code points
 
 - U+FE00..U+FE02
 - U+FE0E

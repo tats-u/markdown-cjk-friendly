@@ -499,7 +499,7 @@ const camelCase: VariableNames = {
 
 const markdownCase: VariableNames = {
   isCjk: "CJK code points without variation selector",
-  isSvsFollowingCjk: "SVS following CJK code points",
+  isSvsFollowingCjk: "Standard Variation Selectors following CJK code points",
   isWideIfEawUnassigned:
     'EAW is treated as "W" if unassigned (defined by Unicode)',
   cjkSymbolsSwitchableToEmoji:

@@ -29,6 +29,7 @@ import {
 import { push, splice } from "micromark-util-chunked";
 import { resolveAll } from "micromark-util-resolve-all";
 import { codes, types } from "micromark-util-symbol";
+import { TwoPreviousCode } from "../../../micromark-extension-cjk-friendly-util/dist/codeUtil";
 
 /** @type {Construct} */
 export const attention = {
@@ -225,13 +226,13 @@ function tokenizeAttention(
   let beforePrimary = before;
 
   if (isSvsFollowingCjk(before)) {
-    const twoPrevious = tryGetCodeTwoBefore(
+    const twoPrevious = new TwoPreviousCode(
       // biome-ignore lint/style/noNonNullAssertion: if `previous` were null, before would be `undefined`
       previous!,
       now(),
       sliceSerialize,
     );
-    if (twoPrevious !== null) beforePrimary = classifyCharacter(twoPrevious);
+    if (twoPrevious.value() !== null) beforePrimary = classifyCharacter(twoPrevious.value());
   }
 
   /** @type {NonNullable<Code>} */
