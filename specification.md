@@ -39,6 +39,8 @@ A [left-flanking delimiter run](#left-flanking-delimiter-run) is a [delimiter ru
 
 A right-flanking delimiter run is a [delimiter run](https://spec.commonmark.org/0.31.2/#delimiter-run) that is (1) not preceded by [Unicode whitespace](https://spec.commonmark.org/0.31.2/#unicode-whitespace), and either (2a) not preceded by a ***[non-CJK punctuation character](#non-cjk-punctuation-character)***, or (2b) preceded by a ***[non-CJK punctuation character](#non-cjk-punctuation-character)*** and followed by ***(2bα)*** [Unicode whitespace](https://spec.commonmark.org/0.31.2/#unicode-whitespace)***, (2bβ)*** a ***[non-CJK punctuation character](#non-cjk-punctuation-character), or (2bγ) a [CJK code point without variation selector](#cjk-code-point-without-variation-selector)***. For purposes of this definition, the beginning and the end of the line count as [Unicode whitespace](https://spec.commonmark.org/0.31.2/#unicode-whitespace).
 
+If the [delimiter run](https://spec.commonmark.org/0.31.2/#delimiter-run) adjoins [Ill-Formed Code Unit Subsequence](https://www.unicode.org/glossary/#ill_formed_code_unit_subsequence)s (including isolated [Surrogate Code Points](https://www.unicode.org/glossary/#surrogate_code_point)/Units), both of whether the [delimiter run](https://spec.commonmark.org/0.31.2/#delimiter-run) is left-flanking or right-flanking are [Unspecified](https://en.wikipedia.org/wiki/Unspecified_behavior).
+
 ## Tips for Implementers
 
 See [implementers-tips.md](implementers-tips.md).
