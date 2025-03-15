@@ -8,6 +8,18 @@ import { themes as prismThemes } from "prism-react-renderer";
 import remarkCjkFriendly from "remark-cjk-friendly";
 import remarkCjkFriendlyGfmStrikethrough from "remark-cjk-friendly-gfm-strikethrough";
 
+/**
+ * @import { Options as PresetOptions } from "@docusaurus/preset-classic"
+ * @typedef {Exclude<PresetOptions["blog"], boolean | undefined>} BlogOptions
+ * @typedef {Exclude<PresetOptions["docs"], boolean | undefined>} DocsOptions
+ * @typedef {Exclude<PresetOptions["pages"], boolean | undefined>} PagesOptions
+ * @typedef {BlogOptions & DocsOptions & PagesOptions} CommonOptions
+ * @type {Exclude<CommonOptions["remarkPlugins"], undefined>}
+ */
+// You may need to add this to multiple `remarkPlugins` fields. (e.g. when you use both docs and blog)
+// This is why this variable is defined here in advance.
+const remarkPlugins = [remarkCjkFriendly, remarkCjkFriendlyGfmStrikethrough];
+
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 
 /** @type {import('@docusaurus/types').Config} */
@@ -43,15 +55,22 @@ const config = {
       "classic",
       /** @type {import('@docusaurus/preset-classic').Options} */
       ({
-        docs: false,
-        blog: false,
+        docs: {
+          remarkPlugins, // Add this field to every content type (docs / blog / pages).
+          sidebarPath: "./sidebars.js",
+        },
+        blog: {
+          remarkPlugins, // Don't forget to add this here too.
+          showReadingTime: false,
+          onInlineTags: "warn",
+          onInlineAuthors: "warn",
+          onUntruncatedBlogPosts: "ignore", // because this is just a demo
+        }, // If you use blog, you need to configure `remarkPlugins` here too.
         theme: {
           customCss: "./src/css/custom.css",
         },
         pages: {
-          // If you use docs or blog, you should add these plugins there instead of here.
-          // If you use more than one of docs, blog, or pages, you should make sure to copy this field to each of them.
-          remarkPlugins: [remarkCjkFriendly, remarkCjkFriendlyGfmStrikethrough],
+          remarkPlugins, // Don't forget to add this here too.
         },
       }),
     ],
@@ -68,6 +87,21 @@ const config = {
           alt: "My Site Logo",
           src: "img/logo.svg",
         },
+        items: [
+          {
+            type: "docSidebar",
+            docId: "index",
+            sidebarId: "docSidebar",
+            position: "left",
+            label: "Docs",
+          },
+          { to: "blog", label: "Blog", position: "left" },
+          {
+            href: "https://github.com/tats-u/markdown-cjk-friendly",
+            label: "GitHub",
+            position: "right",
+          },
+        ],
       },
       footer: {
         style: "dark",
