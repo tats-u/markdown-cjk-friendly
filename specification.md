@@ -15,9 +15,9 @@ A <a href="#cjk-character" id="cjk-character">CJK character</a> is a [character]
   - Not in [RGI emoji set](https://www.unicode.org/reports/tr51/#def_rgi_set) (i.e. is not [fully-qualified emoji](https://www.unicode.org/reports/tr51/#def_fully_qualified_emoji)) defined in [UTS #51 Unicode Emoji](https://www.unicode.org/reports/tr51/#def_qualified_emoji_character)
 - [UAX #24 Unicode Script Property](https://www.unicode.org/reports/tr24/) is Hangul
 
-An <a href="#ideographic-variation-selector" id="ideographic-variation-selector">Ideographic Variation Selector</a> is an [Unicode code point](http://unicode.org/glossary/#code_point) in the Variation Selectors Supplement Block (U+E0100–U+E01EF).
+An <a href="#ideographic-variation-selector" id="ideographic-variation-selector">Ideographic Variation Selector</a> is a [character](https://spec.commonmark.org/0.31.2/#character) in the Variation Selectors Supplement Block (U+E0100–U+E01EF).
 
-A <a href="#svs-that-can-follow-cjk" id="svs-that-can-follow-cjk">Standard Variation Selector that can follow CJK</a> is an [Unicode code point](http://unicode.org/glossary/#code_point) other than U+FE0F in the Variation Selectors Block (U+FE00–U+FE0F) that can follow [CJK character](#cjk-character) (U+FE00–U+FE02 or U+FE0E as of Unicode 16[^svs-range]).
+A <a href="#svs-that-can-follow-cjk" id="svs-that-can-follow-cjk">Standard Variation Selector that can follow CJK</a> is a [character](https://spec.commonmark.org/0.31.2/#character) other than U+FE0F in the Variation Selectors Block (U+FE00–U+FE0F) that can follow [CJK character](#cjk-character) (U+FE00–U+FE02 or U+FE0E as of Unicode 16[^svs-range]).
 
 A <a href="#cjk-punctuation-character" id="cjk-punctuation-character">CJK punctuation character</a> is a [Unicode punctuation character](https://spec.commonmark.org/0.31.2/#unicode-punctuation-character) that is also a [CJK character](#cjk-character).
 
