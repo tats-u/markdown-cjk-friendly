@@ -1,0 +1,15 @@
+{
+  "scripts": {
+    "build": "rspress build",
+    "dev": "rspress dev",
+    "preview": "rspress preview"
+  },
+  "dependencies": {
+    "rspress": "^1.40.2",
+    "remark-cjk-friendly": "workspace:^",
+    "remark-cjk-friendly-gfm-strikethrough": "workspace:^"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.10"
+  }
+}
