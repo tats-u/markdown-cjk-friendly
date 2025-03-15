@@ -232,7 +232,8 @@ function tokenizeAttention(
       now(),
       sliceSerialize,
     );
-    if (twoPrevious.value() !== null) beforePrimary = classifyCharacter(twoPrevious.value());
+    if (twoPrevious.value() !== null)
+      beforePrimary = classifyCharacter(twoPrevious.value());
   }
 
   /** @type {NonNullable<Code>} */

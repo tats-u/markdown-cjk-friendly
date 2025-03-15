@@ -107,7 +107,7 @@ export function tryGetCodeTwoBefore(
 
 /**
  * Lazily get the [Unicode Code Point](https://www.unicode.org/glossary/#code_point) two positions before the current position only if necessary.
- * 
+ *
  * @see {@link tryGetCodeTwoBefore}
  */
 export class TwoPreviousCode {
@@ -115,7 +115,7 @@ export class TwoPreviousCode {
 
   /**
    * @see {@link tryGetCodeTwoBefore}
-   * 
+   *
    * @param previousCode a previous code point. Should be greater than 65,535 if it represents a [Supplementary Character](https://www.unicode.org/glossary/#supplementary_character).
    * @param nowPoint `this.now()` (`this` = `TokenizeContext`)
    * @param sliceSerialize `this.sliceSerialize` (`this` = `TokenizeContext`)
@@ -128,11 +128,11 @@ export class TwoPreviousCode {
 
   /**
    * Returns the return value of {@link tryGetCodeTwoBefore}.
-   * 
+   *
    * If the value has not been computed yet, it will be computed and cached.
-   * 
+   *
    * @see {@link tryGetCodeTwoBefore}
-   * 
+   *
    * @returns a value greater than 65,535 if the code point two positions before represents a [Supplementary Character](https://www.unicode.org/glossary/#supplementary_character), a value less than 65,536 for a [BMP Character](https://www.unicode.org/glossary/#bmp_character), or `null` if not found
    */
   value(): Code {
