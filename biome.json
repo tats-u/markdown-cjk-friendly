@@ -10,7 +10,8 @@
     "ignore": [
       "packages/*/dist/**",
       "**/auto-imports.d.ts",
-      "**/__snapshots__/**"
+      "**/__snapshots__/**",
+      "demos/astro/.astro/**"
     ]
   },
   "formatter": {
