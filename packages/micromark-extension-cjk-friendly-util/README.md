@@ -100,7 +100,7 @@ This package provides a function and a namespace based on the original micromark
 | `classifyCharacter` | function | [micromark-util-character](https://npmjs.com/package/micromark-util-character) | (same) | Tells whether a character is not only a punctuation or whitespace but also a CJK or variation selector |
 | `constantsEx` | namespace | [micromark-util-symbol](https://npmjs.com/package/micromark-util-symbol) | `constants` | Constants meaning CJK and variation selectors; use it and the original `constants` together. |
 
-Also, this package provides some utility functions to check whether a character belongs to the category defined in the specification (e.g. CJK code point without variation selector), or to help you fetch the Unicode Code Point of a character around the emphasis mark.
+Also, this package provides some utility functions to check whether a character belongs to the category defined in the specification (e.g. CJK character), or to help you fetch the Unicode Code Point of a character around the emphasis mark.
 
 ## Specification / <span lang="ja">規格書</span> / <span lang="zh-Hans-CN">规范</span> / <span lang="ko">규정서</span>
 

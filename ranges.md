@@ -22,7 +22,7 @@ node --run print-ranges -- -h
 
 16
 
-## CJK code points without variation selector
+## CJK characters
 
 - U+1100..U+11FF (ᄀ..ᇿ)
 - U+20A9 (₩)

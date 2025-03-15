@@ -1,6 +1,6 @@
 # Tips for Implementers
 
-- [CJK code point without variation selector](./specification.md#cjk-code-point-without-variation-selector) contains the following characters:
+- [CJK character](./specification.md#cjk-character) contains the following characters:
   - 〰 (U+3030)
   - 〽 (U+303D)
   - 🈂 (U+1F202)

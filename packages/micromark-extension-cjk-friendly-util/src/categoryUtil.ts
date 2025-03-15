@@ -27,7 +27,7 @@ export function isNonCjkPunctuation(category: Category): boolean {
 }
 
 /**
- * `true` if the code point represents a [CJK character (CJK code point without variation selector)](https://github.com/tats-u/markdown-cjk-friendly/blob/main/specification.md#cjk-code-point-without-variation-selector).
+ * `true` if the code point represents a [CJK character](https://github.com/tats-u/markdown-cjk-friendly/blob/main/specification.md#cjk-character).
  *
  * @param category the return value of `classifyCharacter`.
  * @returns `true` if the code point represents a CJK character
