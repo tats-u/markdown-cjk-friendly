@@ -11,6 +11,8 @@
       "default": "./dist/index.js"
     }
   },
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "files": ["dist", "LICENSE", "README.md"],
   "repository": {
     "url": "https://github.com/tats-u/markdown-cjk-friendly"
