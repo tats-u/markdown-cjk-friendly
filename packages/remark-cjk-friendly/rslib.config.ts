@@ -6,6 +6,7 @@ export default defineConfig({
       format: "esm",
       syntax: "es2024",
       dts: true,
+      bundle: false,
     },
   ],
 });
