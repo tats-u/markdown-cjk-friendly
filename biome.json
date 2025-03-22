@@ -11,7 +11,11 @@
       "packages/*/dist/**",
       "**/auto-imports.d.ts",
       "**/__snapshots__/**",
-      "demos/astro/.astro/**"
+      "demos/astro/.astro/**",
+      "demos/astro/dist/**",
+      "demos/docusaurus/.docusaurus/**",
+      "demos/docusaurus/build/**",
+      "demos/rspress/doc_build/**"
     ]
   },
   "formatter": {
