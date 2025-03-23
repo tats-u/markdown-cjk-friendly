@@ -28,7 +28,7 @@
     "vitest": "^3.0.2"
   },
   "packageManager": "pnpm@9.15.3",
-  "pnpm":{
+  "pnpm": {
     "overrides": {
       "@docusaurus/faster@^3.7.0>@rspack/core": "^1.2.2",
       "@docusaurus/plugin-debug@^3.7.0>react-json-view-lite": "^2.0.0"
