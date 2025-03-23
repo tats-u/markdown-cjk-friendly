@@ -134,6 +134,10 @@ This modification of the specification does not affect the other languages than 
 - [Astro](./demos/astro/astro.config.mjs)
 - [Rspress](./demos/rspress/rspress.config.ts)
 
+### `markdown-it` (using `markdown-it-cjk-friendly`)
+
+- [VitePress](./demos/vitepress/.vitepress/config.mjs)
+
 ## Contributing / <span lang="ja">貢献</span> / <span lang="zh-Hans-CN">贡献</span> / <span lang="ko">기여</span>
 
 ### Submit an issue or PR / <span lang="ja">Issue・PRの投稿</span> / <span lang="zh-Hans-CN">提出一个 issue 或 PR</span> / <span lang="ko">이슈 및 PR 제출</span>

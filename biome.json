@@ -15,7 +15,9 @@
       "demos/astro/dist/**",
       "demos/docusaurus/.docusaurus/**",
       "demos/docusaurus/build/**",
-      "demos/rspress/doc_build/**"
+      "demos/rspress/doc_build/**",
+      "demos/vitepress/.vitepress/cache/**",
+      "demos/vitepress/.vitepress/dist/**"
     ]
   },
   "formatter": {
