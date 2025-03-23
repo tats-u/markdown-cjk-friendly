@@ -1,9 +1,9 @@
 {
-  "name": "markdown-cjk-friendly",
-  "private": true,
   "scripts": {
     "test": "pnpm -r test",
     "build": "pnpm -r build",
+    "test:lib": "pnpm -r test:lib",
+    "build:lib": "pnpm -r build:lib",
     "lint": "run-s lint:prebuild lint:postbuild",
     "lint:prebuild": "run-s lint:biome",
     "lint:postbuild": "run-s lint:type",
