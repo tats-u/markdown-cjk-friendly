@@ -1,6 +1,6 @@
 {
   "name": "remark-cjk-friendly",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "type": "module",
   "exports": {
     ".": {
@@ -45,7 +45,7 @@
     "lint:type": "tsc --noEmit"
   },
   "dependencies": {
-    "micromark-extension-cjk-friendly": "workspace:<2.0.0"
+    "micromark-extension-cjk-friendly": "workspace:^"
   },
   "devDependencies": {
     "@mdx-js/mdx": "^3.1.0",

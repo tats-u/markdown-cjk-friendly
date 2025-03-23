@@ -232,7 +232,7 @@ importers:
         specifier: ^4.0.0
         version: 4.0.4
       micromark-extension-cjk-friendly:
-        specifier: workspace:<2.0.0
+        specifier: workspace:^
         version: link:../micromark-extension-cjk-friendly
     devDependencies:
       '@mdx-js/mdx':
