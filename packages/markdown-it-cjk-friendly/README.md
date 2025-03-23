@@ -86,21 +86,21 @@ Additionally, if you are creating Markdown-related software or services primaril
 
 ## Runtime Requirements / <span lang="ja">実行環境の要件</span> / <span lang="zh-Hans-CN">运行环境要求</span> / <span lang="ko">업데이트 전략</span>
 
-This package uses the [`v` flag of the regular expression](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/unicodeSets) introduced in ES2024 to determine whether the character is an emoji or not.
+If you require() this package in a CommonJS environment, it will load another ESM-only package internally. Because of it, Node.js version 20.19, 22.12, 23 or later, and a bundler will be required. If you import this package as ESM, there will be no additional requirements.
 
-<span lang="ja">本パッケージは文字が絵文字かどうかを判定するために、ES2024で導入された[正規表現の`v`フラグ](https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/RegExp/unicodeSets)を使用しています。</span>
+<span lang="ja">本パッケージをCommonJS環境でrequire()する場合、内部で別のESM専用パッケージを読み込みます。そのため、require(ESM)に対応したNode.jsのバージョン（20.19 / 22.12 / 23 以上）やバンドラが必要になります。ESMとしてインポートする場合は特に追加の要件はありません。</span>
 
-<span lang="zh-CN">本包使用 ES2024 引入的[`v` 标志](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/unicodeSets) 来判断字符是否为 emoji。</span>
+<span lang="zh-Hans-CN">如果您在CommonJS环境中require()此包，它将内部加载另一个仅支持ESM的包。因此，需要使用Node.js版本20.19、22.12、23或更高版本，以及打包工具。如果您以ESM方式导入此包，则没有额外要求。</span>
 
-<span lang="ko">이 패키지는 ES2024에서 도입된 [`v` 플래그](https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/RegExp/unicodeSets)를 사용하여 문자가 이모지인지 여부를 판단합니다.</span>
+<span lang="ko">이 패키지를 CommonJS 환경에서 require()할 경우, 내부적으로 ESM 전용 패키지를 로드하게 됩니다. 이로 인해 Node.js 버전 20.19, 22.12, 23 이상 및 번들러가 필요합니다. ESM으로 이 패키지를 가져올 경우에는 추가 요구사항이 없습니다.</span>
 
-It makes this package compatible only with relatively recent browsers and Node.js:
+This package uses the [`v` flag for regular expressions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/unicodeSets) introduced in ES2024, if available, to determine whether a character is an emoji. In the following compatible environments, it will comply with the Unicode version supported by the runtime. Otherwise, it will fall back to the snapshot as of Unicode 16.
 
-<span lang="ja">このため、本パッケージは、次のような比較的新しいブラウザやNode.jsでしか動作しません。</span>
+<span lang="ja">本パッケージは文字が絵文字かどうかを判定するために、ES2024で導入された[正規表現の`v`フラグ](https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/RegExp/unicodeSets)が利用可能であれば使用します。以下の対応環境の場合、ランタイムが対応しているUnicodeバージョンに準拠します。それ以外の場合、Unicode 16時点のスナップショットにフォールバックします。</span>
 
-<span lang="zh-CN">因此，本包只兼容比较新的浏览器和 Node.js:</span>
+<span lang="zh-Hans-CN">本包使用ES2024引入的[正则表达式`v`标志](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/unicodeSets)（如果可用）来判断字符是否为表情符号。在以下兼容环境中，将遵循运行时支持的Unicode版本。否则，将回退到Unicode 16的快照。</span>
 
-<span lang="ko">따라서, 이 패키지는 비교적 최신 브라우저와 Node.js에서만 작동합니다.</span>
+<span lang="ko">이 패키지는 문자가 이모지인지 판단하기 위해 ES2024에서 도입된 [정규표현식 `v` 플래그](https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/RegExp/unicodeSets)를 사용할 수 있다면 사용합니다. 다음 호환 환경에서는 런타임이 지원하는 Unicode 버전을 따릅니다. 그렇지 않은 경우, Unicode 16 시점의 스냅샷으로 폴백합니다.</span>
 
 - Chrome / Edge 112 or later
 - Firefox 116 or later
