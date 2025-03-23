@@ -13,6 +13,6 @@ jobs:
         with:
           run_install: true
       - name: Build
-        run: node --run build:lib
+        run: pnpm run build:lib
       - name: Test
-        run: node --run test:lib
+        run: pnpm run test:lib
