@@ -29,8 +29,12 @@
   ],
   "description": "markdown-it plugin to make Markdown emphasis (`**`) in CommonMark more friendly with Chinese and Japanese",
   "scripts": {
-    "build": "rslib build",
-    "dev": "rslib build --watch",
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "build:lib": "tsup",
+    "dev:lib": "tsup --watch",
+    "build:rslib": "rslib build",
+    "dev:rslib": "rslib build --watch",
     "test": "vitest run",
     "test:watch": "vitest watch",
     "lint:type": "tsc --noEmit"
