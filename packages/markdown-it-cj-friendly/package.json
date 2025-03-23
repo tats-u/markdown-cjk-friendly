@@ -37,6 +37,7 @@
     "dev:rslib": "rslib build --watch",
     "test": "vitest run",
     "test:watch": "vitest watch",
+    "test:lib:watch": "vitest watch",
     "lint:type": "tsc --noEmit"
   },
   "devDependencies": {

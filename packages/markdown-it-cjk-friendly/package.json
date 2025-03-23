@@ -38,9 +38,11 @@
     "dev": "tsup --watch",
     "dev:lib": "tsup --watch",
     "dev:rslib": "rslib build --watch",
-    "test": "vitest --run",
+    "test": "vitest run",
+    "test:lib": "vitest run",
     "test:up": "vitest -u",
     "test:watch": "vitest watch",
+    "test:lib:watch": "vitest watch",
     "lint:type": "tsc --noEmit"
   },
   "devDependencies": {
