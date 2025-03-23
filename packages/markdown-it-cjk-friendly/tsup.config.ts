@@ -5,5 +5,5 @@ export default defineConfig({
   format: ["esm", "cjs"],
   splitting: false,
   dts: true,
-  target: "es2024",
+  target: "es2021",
 });

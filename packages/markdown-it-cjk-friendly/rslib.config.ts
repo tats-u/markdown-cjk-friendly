@@ -4,12 +4,12 @@ export default defineConfig({
   lib: [
     {
       format: "esm",
-      syntax: "es2024",
+      syntax: "es2021",
       dts: true,
     },
     {
       format: "cjs",
-      syntax: "es2024",
+      syntax: "es2021",
     },
   ],
 });
