@@ -1,5 +1,5 @@
-import { defineConfig } from "vitepress";
 import markdownItCjkFriendly from "markdown-it-cjk-friendly";
+import { defineConfig } from "vitepress";
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
