@@ -126,6 +126,14 @@ This modification of the specification does not affect the other languages than 
 
 <span lang="ko">이번 사양 변경 제안은 일본어, 중국어, 한국어 이외의 언어에는 영향을 미치지 않습니다. 애플리케이션이나 문서에 다른 언어의 번역이나 콘텐츠가 포함되어 있어도 영향을 받지 않으므로 안심하고 패키지를 사용하시기 바랍니다.</span>
 
+## Example Configurations / <span lang="ja">設定例</span> / <span lang="zh-Hans-CN">示例配置</span> / <span lang="ko">예제 새플</span>
+
+### MDX (using `remark-cjk-frienly` family)
+
+- [Docusaurus](./demos/docusaurus/docusaurus.config.js)
+- [Astro](./demos/astro/astro.config.mjs)
+- [Rspress](./demos/rspress/rspress.config.ts)
+
 ## Contributing / <span lang="ja">貢献</span> / <span lang="zh-Hans-CN">贡献</span> / <span lang="ko">기여</span>
 
 ### Submit an issue or PR / <span lang="ja">Issue・PRの投稿</span> / <span lang="zh-Hans-CN">提出一个 issue 或 PR</span> / <span lang="ko">이슈 및 PR 제출</span>
