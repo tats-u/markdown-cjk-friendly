@@ -263,7 +263,7 @@ importers:
         specifier: ^4.0.0
         version: 4.0.4
       micromark-extension-cjk-friendly-gfm-strikethrough:
-        specifier: workspace:<2.0.0
+        specifier: workspace:^
         version: link:../micromark-extension-cjk-friendly-gfm-strikethrough
     devDependencies:
       '@mdx-js/mdx':
@@ -276,7 +276,7 @@ importers:
         specifier: ^15.0.1
         version: 15.0.1
       remark-cjk-friendly:
-        specifier: workspace:<2.0.0
+        specifier: workspace:^
         version: link:../remark-cjk-friendly
       remark-gfm:
         specifier: ^4.0.0
