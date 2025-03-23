@@ -1,0 +1,18 @@
+name: Regular CI (old Node.js)
+on: [push, pull_request]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '16.x'
+          registry-url: 'https://registry.npmjs.org'
+      - uses: pnpm/action-setup@v2
+        with:
+          run_install: true
+      - name: Build
+        run: node --run build:lib
+      - name: Test
+        run: node --run test:lib
