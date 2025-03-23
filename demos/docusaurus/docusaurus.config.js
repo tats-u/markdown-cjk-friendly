@@ -65,7 +65,7 @@ const config = {
           onInlineTags: "warn",
           onInlineAuthors: "warn",
           onUntruncatedBlogPosts: "ignore", // because this is just a demo
-        }, // If you use blog, you need to configure `remarkPlugins` here too.
+        },
         theme: {
           customCss: "./src/css/custom.css",
         },
