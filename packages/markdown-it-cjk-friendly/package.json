@@ -44,6 +44,8 @@
     "test:up": "vitest -u",
     "test:watch": "vitest watch",
     "test:lib:watch": "vitest watch",
+    "bench": "vitest bench --run",
+    "bench:watch": "vitest bench",
     "lint:type": "tsc --noEmit"
   },
   "devDependencies": {
