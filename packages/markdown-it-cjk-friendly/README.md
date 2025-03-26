@@ -86,15 +86,13 @@ Additionally, if you are creating Markdown-related software or services primaril
 
 ## Runtime Requirements / <span lang="ja">実行環境の要件</span> / <span lang="zh-Hans-CN">运行环境要求</span> / <span lang="ko">업데이트 전략</span>
 
-If you require() this package in a CommonJS environment, it will load another ESM-only package internally. Because of it, Node.js version 20.19, 22.12, 23 or later, and a bundler will be required. If you import this package as ESM, there will be no additional requirements.
+This package is ESM-only. It requires Node.js 16 or later.
 
-<span lang="ja">本パッケージをCommonJS環境でrequire()する場合、内部で別のESM専用パッケージを読み込みます。そのため、require(ESM)に対応したNode.jsのバージョン（20.19 / 22.12 / 23 以上）やバンドラが必要になります。ESMとしてインポートする場合は特に追加の要件はありません。</span>
+<span lang="ja">本パッケージはESM専用です。Node.js 16以上が必要です。</span>
 
-<span lang="zh-Hans-CN">如果您在CommonJS环境中require()此包，它将内部加载另一个仅支持ESM的包。因此，需要使用Node.js版本20.19、22.12、23或更高版本，以及打包工具。如果您以ESM方式导入此包，则没有额外要求。</span>
+<span lang="zh-Hans-CN">此包仅支持ESM。需要Node.js 16或更高版本。</span>
 
-<span lang="ko">이 패키지를 CommonJS 환경에서 require()할 경우, 내부적으로 ESM 전용 패키지를 로드하게 됩니다. 이로 인해 Node.js 버전 20.19, 22.12, 23 이상 및 번들러가 필요합니다. ESM으로 이 패키지를 가져올 경우에는 추가 요구사항이 없습니다.</span>
-
-This package uses the [`v` flag for regular expressions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/unicodeSets) introduced in ES2024, if available, to determine whether a character is an emoji. In the following compatible environments, it will comply with the Unicode version supported by the runtime. Otherwise, it will fall back to the snapshot as of Unicode 16.
+<span lang="ko">이 패키지는 ESM만 사용을 위한 패키지입니다. Node.js 16或更高版本가 필요입니다.</span>
 
 <span lang="ja">本パッケージは文字が絵文字かどうかを判定するために、ES2024で導入された[正規表現の`v`フラグ](https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/RegExp/unicodeSets)が利用可能であれば使用します。以下の対応環境の場合、ランタイムが対応しているUnicodeバージョンに準拠します。それ以外の場合、Unicode 16時点のスナップショットにフォールバックします。</span>
 
