@@ -137,6 +137,41 @@ This modification of the specification does not affect the other languages than 
 
 - [VitePress](./demos/vitepress/.vitepress/config.mjs)
 
+## Which package(s) should I use? / <span lang="ja">どのパッケージを使うべきか</span> / <span lang="zh-Hans-CN">应该使用哪个包</span> / <span lang="ko">쓰었는 패키지를 사용해야 하나</span>
+
+If you're using `remark`, `markdown-it`, or `micromark` directly, you should use the corresponding packages whose names start with the name of the package you're using.
+
+<span lang="ja">`remark`・`markdown-it`・`micromark`を直接使っている場合は、そのパッケージの名前から始まるパッケージを使ってください。</span>
+
+<span lang="zh-Hans-CN">如果您因为直接使用 `remark`、`markdown-it` 或 `micromark` 而不知道该使用哪个包，可以参考下面的流程图。</span>
+
+<span lang="ko">`remark`, `markdown-it`, `micromark`를 직접 사용하지 않아서 어떤 패키지를 사용해야 하나에는 그녀의 패키지를 사용해야 하나요.</span>
+
+If you don't know which package to use because you're not using `remark`, `markdown-it`, or `micromark` directly, you can follow the flowchart below.
+
+<span lang="ja">`remark`・`markdown-it`・`micromark`を直接は使っていないのでどのパッケージを使うべきか不明な場合は、下記のフローチャートを参考にしてください。</span>
+
+<span lang="zh-Hans-CN">如果您因为没有直接使用 `remark`、`markdown-it` 或 `micromark` 而不知道该使用哪个包，可以参考下面的流程图。</span>
+
+<span lang="ko">`remark`, `markdown-it`, `micromark`를 직접 사용하지 않아서 어떤 패키지를 사용해야 할지 모르는 경우에는 아래의 순서도를 참고해 주시기 바랍니다.</span>
+
+```mermaid
+flowchart TD
+
+isMdx{"Can the document
+be MDX?"}--"Yes"--> remarkRoot{"Is GFM enabled by (an option of) your framework or tool?"}
+isMdx--"No"--> pluginStyle{"How are custom Markdown plugins configured?
+(search the docs of your framework or tool)"}
+pluginStyle --"remarkPlugins & rehypePlugins properties"--> remarkRoot
+pluginStyle --"pass a function where &lt;parameter&gt;.use(&lt;plugin&gt;) are called"--> markdownIt([markdown-it-cjk-friendly])
+remarkRoot --"Yes"--> remarkBoth(["remark-cjk-friendly
+& remark-cjk-friendly-gfm-strikethrough"])
+remarkRoot --"No"--> remarkGfm{"Is remark-gfm
+also passed?"}
+remarkGfm --"Yes"--> remarkBoth
+remarkGfm --"No"--> remarkBase([remark-cjk-friendly])
+```
+
 ## Contributing / <span lang="ja">貢献</span> / <span lang="zh-Hans-CN">贡献</span> / <span lang="ko">기여</span>
 
 ### Submit an issue or PR / <span lang="ja">Issue・PRの投稿</span> / <span lang="zh-Hans-CN">提出一个 issue 或 PR</span> / <span lang="ko">이슈 및 PR 제출</span>
