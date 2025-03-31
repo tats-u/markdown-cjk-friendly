@@ -26,6 +26,7 @@
     "@types/node": "^22.15.32",
     "jsdom": "^26.1.0",
     "npm-run-all2": "^8.0.4",
+    "tsdown": "^0.14.2",
     "tsup": "^8.5.0",
     "typescript": "^5.8.3",
     "unplugin-auto-import": "^19.3.0",
