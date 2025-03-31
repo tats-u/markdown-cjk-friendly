@@ -348,8 +348,10 @@ export function cjkOrIvs(uc: Code): boolean | null {
  *
  * U+FE0E is used for some CJK symbols (e.g. U+3299) that can also be
  */
-// biome-ignore lint/suspicious/noMisleadingCharacterClass: variation selector range
-export const svsFollowingCjk: (code: Code) => boolean = regexCheck(/[\uFE00-\uFE02\uFE0E]/u);
+export const svsFollowingCjk: (code: Code) => boolean = regexCheck(
+  // biome-ignore lint/suspicious/noMisleadingCharacterClass: variation selector range
+  /[\uFE00-\uFE02\uFE0E]/u,
+);
 
 // Size note: removing ASCII from the regex and using `asciiPunctuation` here
 // In fact adds to the bundle size.
@@ -372,7 +374,8 @@ export const svsFollowingCjk: (code: Code) => boolean = regexCheck(/[\uFE00-\uFE
  * @returns
  *   Whether it matches.
  */
-export const unicodePunctuation: (code: Code) => boolean = regexCheck(/\p{P}|\p{S}/u);
+export const unicodePunctuation: (code: Code) => boolean =
+  regexCheck(/\p{P}|\p{S}/u);
 
 // no Unicode whitespace outside of BMP; Surrogate has its own category Cs
 /**
