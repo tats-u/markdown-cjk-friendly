@@ -30,8 +30,7 @@ import { push, splice } from "micromark-util-chunked";
 import { resolveAll } from "micromark-util-resolve-all";
 import { codes, types } from "micromark-util-symbol";
 
-/** @type {Construct} */
-export const attention = {
+export const attention: Construct = {
   name: "attention",
   resolveAll: resolveAllAttention,
   tokenize: tokenizeAttention,
