@@ -361,7 +361,7 @@ function maybeHanSVS(uc: number) {
   );
 }
 
-export default function markdownItCjFriendlyPlugin(md: MarkdownIt) {
+export default function markdownItCjFriendlyPlugin(md: MarkdownIt): void {
   const PreviousState = md.inline.State;
 
   class CjFriendlyState extends PreviousState {
