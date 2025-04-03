@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`markdown-it-cjk-friendly > ** around Kana/Han is converted to <strong> 1`] = `
+exports[`micromark-extensions-cjk-friendly > ** around Kana/Han is converted to <strong> 1`] = `
 "<p>これは<strong>私のやりたかったこと。</strong>だからするの。</p>
 <p><strong><a href="./product-foo">製品ほげ</a></strong>と<strong><a href="./product-bar">製品ふが</a></strong>をお試しください</p>
 <p>単語と<strong><a href="word-and">単語と</a></strong>単語</p>
@@ -88,7 +88,7 @@ exports[`markdown-it-cjk-friendly > ** around Kana/Han is converted to <strong> 
 "
 `;
 
-exports[`markdown-it-cjk-friendly > ** around Korean is converted to <strong> 1`] = `
+exports[`micromark-extensions-cjk-friendly > ** around Korean is converted to <strong> 1`] = `
 "<p><strong>이 <a href="https://example.kr/">링크</a></strong>만을 강조하고 싶다.</p>
 <p><strong>스크립트(script)</strong>라고</p>
 <p>패키지를 발행하려면 <strong><code>npm publish</code></strong>를 실행하십시오.</p>
@@ -98,7 +98,7 @@ exports[`markdown-it-cjk-friendly > ** around Korean is converted to <strong> 1`
 "
 `;
 
-exports[`markdown-it-cjk-friendly > ** around pseudo-emoji (CJK symbols that are also unqualified-emoji) is converted to <strong> 1`] = `
+exports[`micromark-extensions-cjk-friendly > ** around pseudo-emoji (CJK symbols that are also unqualified-emoji) is converted to <strong> 1`] = `
 "<p>a<strong>〰</strong>a</p>
 <p>a<strong>〽</strong>a</p>
 <p>a<strong>🈂</strong>a</p>
@@ -108,7 +108,7 @@ exports[`markdown-it-cjk-friendly > ** around pseudo-emoji (CJK symbols that are
 "
 `;
 
-exports[`markdown-it-cjk-friendly > Compatible with GFM extension (1) 1`] = `
+exports[`micromark-extensions-cjk-friendly > Compatible with GFM extension (1) 1`] = `
 "<p>あ<strong>()</strong>あ<sup><a href="#user-content-fn-1" id="user-content-fnref-1" data-footnote-ref="" aria-describedby="footnote-label">1</a></sup></p>
 <section data-footnotes="" class="footnotes"><h2 id="footnote-label" class="sr-only">Footnotes</h2>
 <ol>
@@ -119,7 +119,7 @@ exports[`markdown-it-cjk-friendly > Compatible with GFM extension (1) 1`] = `
 </section>"
 `;
 
-exports[`markdown-it-cjk-friendly > Compatible with GFM extension (2) 1`] = `
+exports[`micromark-extensions-cjk-friendly > Compatible with GFM extension (2) 1`] = `
 "<p>あ<strong>()</strong>あ<sup><a href="#user-content-fn-1" id="user-content-fnref-1" data-footnote-ref="" aria-describedby="footnote-label">1</a></sup></p>
 <section data-footnotes="" class="footnotes"><h2 id="footnote-label" class="sr-only">Footnotes</h2>
 <ol>
@@ -130,19 +130,19 @@ exports[`markdown-it-cjk-friendly > Compatible with GFM extension (2) 1`] = `
 </section>"
 `;
 
-exports[`markdown-it-cjk-friendly > Example Markdown in README 1`] = `
+exports[`micromark-extensions-cjk-friendly > Example Markdown in README 1`] = `
 "<p><strong>このアスタリスクは強調記号として認識されず、そのまま表示されます。</strong>この文のせいで。</p>
 <p><strong>该星号不会被识别，而是直接显示。</strong>这是因为它没有被识别为强调符号。</p>
 <p><strong>이 별표는 강조 표시로 인식되지 않고 그대로 표시됩니다(이 괄호 때문에)</strong>이 문장 때문에.</p>"
 `;
 
-exports[`markdown-it-cjk-friendly > process underscores around CJK punctuation 1`] = `
+exports[`micromark-extensions-cjk-friendly > process underscores around CJK punctuation 1`] = `
 "<p><strong>注意</strong>：注意事項</p>
 <p>注意：<strong>注意事項</strong></p>
 "
 `;
 
-exports[`markdown-it-cjk-friendly > recognizes non-BMP punctuation and symbols 1`] = `
+exports[`micromark-extensions-cjk-friendly > recognizes non-BMP punctuation and symbols 1`] = `
 "<p>a**a«**a</p>
 <p>a**»a**a</p>
 <p>a**a∇**a</p>

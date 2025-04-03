@@ -19,7 +19,7 @@ function md2HtmlNonCjk(md: string): string {
   return micromark(md, { extensions: nonCjkExtensions, htmlExtensions });
 }
 
-describe("markdown-it-cjk-friendly-gfm-strikethrough", () => {
+describe("micromark-extension-gfm-strikethrough", () => {
   it("Compatible with CJK", async () => {
     const result = md2Html(
       await readFile(

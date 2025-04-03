@@ -28,7 +28,7 @@ function md2HtmlOriginal(md: string): string {
   return micromark(md);
 }
 
-describe("markdown-it-cjk-friendly", () => {
+describe("micromark-extensions-cjk-friendly", () => {
   it("** around Kana/Han is converted to <strong>", async () => {
     const result = md2Html(
       await readFile(
