@@ -139,6 +139,10 @@ exports[`micromark-extensions-cjk-friendly > Example Markdown in README 1`] = `
 exports[`micromark-extensions-cjk-friendly > process underscores around CJK punctuation 1`] = `
 "<p><strong>注意</strong>：注意事項</p>
 <p>注意：<strong>注意事項</strong></p>
+<p>正體字。︁<em>Traditional.</em></p>
+<p>正體字。︁<strong>Hong Kong and Taiwan.</strong></p>
+<p>简体字 / 新字体。︀<em>Simplified.</em></p>
+<p>简体字 / 新字体。︀<strong>Mainland China or Japan.</strong></p>
 "
 `;
 

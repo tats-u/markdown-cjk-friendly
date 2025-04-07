@@ -19,8 +19,8 @@ import {
   isCodeLowSurrogate,
   isIvs,
   isNonCjkPunctuation,
+  isNonEmojiGeneralUseVS,
   isSpaceOrPunctuation,
-  isSvsFollowingCjk,
   isUnicodeWhitespace,
   tryGetCodeTwoBefore,
   tryGetGenuineNextCode,
@@ -223,14 +223,16 @@ function tokenizeAttention(
   const before = classifyCharacter(previous);
   let beforePrimary = before;
 
-  if (isSvsFollowingCjk(before)) {
+  if (isNonEmojiGeneralUseVS(before)) {
     const twoPrevious = tryGetCodeTwoBefore(
       // biome-ignore lint/style/noNonNullAssertion: if `previous` were null, before would be `undefined`
       previous!,
       now(),
       sliceSerialize,
     );
-    if (twoPrevious !== null) beforePrimary = classifyCharacter(twoPrevious);
+    if (twoPrevious !== null) {
+      beforePrimary = classifyCharacter(twoPrevious);
+    }
   }
 
   /** @type {NonNullable<Code>} */
@@ -286,9 +288,9 @@ function tokenizeAttention(
     // Always populated by defaults.
     assert(attentionMarkers, "expected `attentionMarkers` to be populated");
 
-    const beforeNonCjkPunctuation = isNonCjkPunctuation(before);
+    const beforeNonCjkPunctuation = isNonCjkPunctuation(beforePrimary);
     const beforeSpaceOrNonCjkPunctuation =
-      beforeNonCjkPunctuation || isUnicodeWhitespace(before);
+      beforeNonCjkPunctuation || isUnicodeWhitespace(beforePrimary);
     const afterNonCjkPunctuation = isNonCjkPunctuation(after);
     const afterSpaceOrNonCjkPunctuation =
       afterNonCjkPunctuation || isUnicodeWhitespace(after);
@@ -308,7 +310,7 @@ function tokenizeAttention(
     token._open = Boolean(
       marker === codes.asterisk
         ? open
-        : open && (isSpaceOrPunctuation(before) || !close),
+        : open && (isSpaceOrPunctuation(beforePrimary) || !close),
     );
     token._close = Boolean(
       marker === codes.asterisk

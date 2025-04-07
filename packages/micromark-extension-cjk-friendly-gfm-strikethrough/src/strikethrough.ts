@@ -19,7 +19,7 @@ import {
   isCodeLowSurrogate,
   isIvs,
   isNonCjkPunctuation,
-  isSvsFollowingCjk,
+  isNonEmojiGeneralUseVS,
   isUnicodeWhitespace,
   tryGetCodeTwoBefore,
   tryGetGenuineNextCode,
@@ -182,7 +182,7 @@ export function gfmStrikethroughCjkFriendly(
     const before = classifyCharacter(previous);
     let beforePrimary = before;
 
-    if (isSvsFollowingCjk(before)) {
+    if (isNonEmojiGeneralUseVS(before)) {
       const twoPrevious = tryGetCodeTwoBefore(
         // biome-ignore lint/style/noNonNullAssertion: if `previous` were null, before would be `undefined`
         previous!,
@@ -230,9 +230,9 @@ export function gfmStrikethroughCjkFriendly(
 
       const after = classifyCharacter(next);
 
-      const beforeNonCjkPunctuation = isNonCjkPunctuation(before);
+      const beforeNonCjkPunctuation = isNonCjkPunctuation(beforePrimary);
       const beforeSpaceOrNonCjkPunctuation =
-        beforeNonCjkPunctuation || isUnicodeWhitespace(before);
+        beforeNonCjkPunctuation || isUnicodeWhitespace(beforePrimary);
       const afterNonCjkPunctuation = isNonCjkPunctuation(after);
       const afterSpaceOrNonCjkPunctuation =
         afterNonCjkPunctuation || isUnicodeWhitespace(after);

@@ -3,7 +3,7 @@ export {
   isIvs,
   isNonCjkPunctuation,
   isSpaceOrPunctuation,
-  isSvsFollowingCjk,
+  isNonEmojiGeneralUseVS,
   isUnicodeWhitespace,
 } from "./categoryUtil.js";
 export { classifyCharacter, constantsEx } from "./classifyCharacter.js";
