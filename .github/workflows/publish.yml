@@ -32,6 +32,20 @@ jobs:
               throw new Error(`Could not determine version from tag ${tagName} (should be <package-name>-v<version>)`);
             }
             const isPrerelease = context.payload.release.prerelease;
+
+            if (isPrerelease !== version.includes("-")) {
+              throw new Error(`Version ${version} in tag ${tagName} does not match prerelease status`);
+            }
+
+            const fs = require("node:fs");
+            const packageJson = JSON.parse(fs.readFileSync(`packages/${packageName}/package.json`, "utf8"));
+            if (packageJson.name !== packageName) {
+              throw new Error(`Package name ${packageName} in tag ${tagName} does not match package name in package.json (${packageJson.name})`);
+            }
+            if (packageJson.version !== version) {
+              throw new Error(`Version ${version} in tag ${tagName} does not match version in package.json (${packageJson.version})`);
+            }
+
             core.setOutput("packageName", packageName);
             core.exportVariable("IS_PRERELEASE", isPrerelease ? "1" : "0");
       # pnpm publish doesn't allow a publish from tag, so --no-git-checks is needed
