@@ -105,6 +105,18 @@ Additionally, if you are creating Markdown-related software or services primaril
 
 <span lang="ko">또한, 주로 한국어, 일본어, 중국어 사용자(또는 모두)를 대상으로 하는 Markdown 관련 소프트웨어나 서비스를 만들고 있다면, 이 사양을 채택할 것을 강력히 권장합니다.</span>
 
+### Example of 1. (Chinese) / <span lang="ja">1.の例（中国語）</span> / <span lang="zh-Hans-CN">1.的例子</span> / <span lang="ko">1.의 예제(한국어)</span>:
+
+Plain CommonMark:
+
+![plain CommonMark](https://github.com/user-attachments/assets/80bd3ffd-9416-4080-bc10-a408afef845b)
+
+with this spec:
+
+![with this spec](https://github.com/user-attachments/assets/b2e159c5-3cae-495f-89c6-280ddb2926ce)
+
+From: [CherryHQ/cherry-studio#4119](https://github.com/CherryHQ/cherry-studio/pull/4119)
+
 ## Compatibility with CommonMark / <span lang="ja">CommonMarkとの互換性</span> / <span lang="zh-Hans-CN">与CommonMark的兼容性</span> / <span lang="ko">CommonMark와의 호환성</span>
 
 This specification is identical to CommonMark for all input except Chinese, Japanese, Korean, and (some emojis and symbols). The aforementioned plugins/extension packages guarantee that their Markdown implementations output the same HTML for all CommonMark test cases as of CommonMark 0.31.2.
