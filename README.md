@@ -107,15 +107,15 @@ Additionally, if you are creating Markdown-related software or services primaril
 
 ### Example of 1. (Chinese) / <span lang="ja">1.の例（中国語）</span> / <span lang="zh-Hans-CN">1.的例子</span> / <span lang="ko">1.의 예제(한국어)</span>:
 
-❌️Plain CommonMark:
+❌️Plain CommonMark / <span lang="ja">素のCommonMark</span> / <span lang="zh-Hans-CN">原生CommonMark</span> / <span lang="ko">기본 CommonMark</span>:
 
 ![plain CommonMark](https://github.com/user-attachments/assets/80bd3ffd-9416-4080-bc10-a408afef845b)
 
-✅️With this spec:
+✅️With this spec / <span lang="ja">本規格</span> / <span lang="zh-Hans-CN">这个规范</span> / <span lang="ko">이 사양을 채택하는 경우</span>:
 
 ![with this spec](https://github.com/user-attachments/assets/b2e159c5-3cae-495f-89c6-280ddb2926ce)
 
-From: [CherryHQ/cherry-studio#4119](https://github.com/CherryHQ/cherry-studio/pull/4119)
+Image source: [CherryHQ/cherry-studio#4119](https://github.com/CherryHQ/cherry-studio/pull/4119)
 
 ## Compatibility with CommonMark / <span lang="ja">CommonMarkとの互換性</span> / <span lang="zh-Hans-CN">与CommonMark的兼容性</span> / <span lang="ko">CommonMark와의 호환성</span>
 
