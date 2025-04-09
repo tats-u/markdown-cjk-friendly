@@ -107,11 +107,11 @@ Additionally, if you are creating Markdown-related software or services primaril
 
 ### Example of 1. (Chinese) / <span lang="ja">1.の例（中国語）</span> / <span lang="zh-Hans-CN">1.的例子</span> / <span lang="ko">1.의 예제(한국어)</span>:
 
-Plain CommonMark:
+❌️Plain CommonMark:
 
 ![plain CommonMark](https://github.com/user-attachments/assets/80bd3ffd-9416-4080-bc10-a408afef845b)
 
-with this spec:
+✅️With this spec:
 
 ![with this spec](https://github.com/user-attachments/assets/b2e159c5-3cae-495f-89c6-280ddb2926ce)
 
