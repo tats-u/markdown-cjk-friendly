@@ -3,7 +3,7 @@ import { constants, codes } from "micromark-util-symbol";
 import type { Code } from "micromark-util-types";
 import {
   cjkOrIvs,
-  svsFollowingCjk,
+  nonEmojiGeneralUseVS,
   unicodePunctuation,
   unicodeWhitespace,
 } from "./characterWithNonBmp.js";
@@ -14,7 +14,7 @@ export namespace constantsEx {
   export const cjkPunctuation = 0x1002 as const;
   export const ivs = 0x2000 as const;
   export const cjkOrIvs = 0x3000 as const;
-  export const svsFollowingCjk = 0x4000 as const;
+  export const nonEmojiGeneralUseVS = 0x4000 as const;
   export const variationSelector = 0x7000 as const;
 }
 
@@ -40,7 +40,7 @@ export function classifyCharacter(
   | typeof constantsEx.cjk
   | typeof constantsEx.cjkPunctuation
   | typeof constantsEx.ivs
-  | typeof constantsEx.svsFollowingCjk
+  | typeof constantsEx.nonEmojiGeneralUseVS
   | 0 {
   if (
     code === codes.eof ||
@@ -53,8 +53,8 @@ export function classifyCharacter(
   let value = 0;
 
   if (code >= 0x1100) {
-    if (svsFollowingCjk(code)) {
-      return constantsEx.svsFollowingCjk;
+    if (nonEmojiGeneralUseVS(code)) {
+      return constantsEx.nonEmojiGeneralUseVS;
     }
     switch (cjkOrIvs(code)) {
       case null: // IVS
