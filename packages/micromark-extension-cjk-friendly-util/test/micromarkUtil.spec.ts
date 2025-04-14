@@ -44,7 +44,7 @@ describe("micromark-extension-cjk-friendly-util", () => {
     // biome-ignore lint/style/noNonNullAssertion: not empty
     const code = char.codePointAt(char.length - 1)!;
     const category = util.classifyCharacter(code);
-    expect(util.isSvsFollowingCjk(category)).toBe(true);
+    expect(util.isNonEmojiGeneralUseVS(category)).toBe(true);
   });
 
   it.concurrent.each(["𩸽", "🈀"])("Surrogate check (%s)", (char) => {
