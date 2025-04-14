@@ -15,13 +15,13 @@ jobs:
         with:
           node-version: '22.x'
           registry-url: 'https://registry.npmjs.org'
-      - uses: pnpm/action-setup@v2
+      - uses: pnpm/action-setup@v4
         with:
           run_install: true
       - name: Build packages
         run: node --run build
       - name: Determine package from tag
-        uses: actions/github-script@v6
+        uses: actions/github-script@v7
         id: determine
         with:
           script: |

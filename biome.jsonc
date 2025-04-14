@@ -7,6 +7,10 @@
   },
   "files": {
     "ignoreUnknown": false,
+    // .gitignore in subdirectories are not respected as of Biome 1.9.4
+    // will be fixed in 2.0.0 (confirmed in 2.0.0-beta.1)
+    // https://github.com/biomejs/biome/issues/2312
+    // https://github.com/biomejs/biome/pull/5195
     "ignore": [
       "packages/*/dist/**",
       "**/auto-imports.d.ts",
