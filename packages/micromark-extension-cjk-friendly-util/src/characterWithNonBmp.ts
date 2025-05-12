@@ -321,7 +321,8 @@ const isEmoji = function (
  * @returns `true` if `uc` is CJK, `null` if IVS, or `false` if neither
  */
 export function cjkOrIvs(uc: Code): boolean | null {
-  if (!uc || uc < 0) {
+  if (!uc || uc < 0x1100) {
+    // < 0x1100: Fast path
     return false;
   }
   const eaw = eastAsianWidthType(uc);
@@ -341,6 +342,13 @@ export function cjkOrIvs(uc: Code): boolean | null {
       // 1160..11FF     ; N  # Lo   [160] HANGUL JUNGSEONG FILLER..HANGUL JONGSEONG SSANGNIEUN
       return /^\p{sc=Hangul}/u.test(String.fromCodePoint(uc));
   }
+}
+
+export function isCjkAmbiguousPunctuation(main: Code, vs: Code): boolean {
+  if (vs !== 0xfe01 || !main || main < 0x2018) return false;
+  return (
+    main === 0x2018 || main === 0x2019 || main === 0x201c || main === 0x201d
+  );
 }
 
 /**

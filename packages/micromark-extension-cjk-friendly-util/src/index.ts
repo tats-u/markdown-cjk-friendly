@@ -1,16 +1,22 @@
 export {
   isCjk,
+  isCjkOrIvs,
   isIvs,
   isNonCjkPunctuation,
-  isSpaceOrPunctuation,
   isNonEmojiGeneralUseVS,
+  isSpaceOrPunctuation,
   isUnicodeWhitespace,
 } from "./categoryUtil.js";
-export { classifyCharacter, constantsEx } from "./classifyCharacter.js";
+export {
+  classifyCharacter,
+  classifyPrecedingCharacter,
+  constantsEx,
+} from "./classifyCharacter.js";
 export {
   isCodeHighSurrogate,
   isCodeLowSurrogate,
+  tryGetCodeTwoBefore,
   tryGetGenuineNextCode,
   tryGetGenuinePreviousCode,
-  tryGetCodeTwoBefore,
+  TwoPreviousCode,
 } from "./codeUtil.js";

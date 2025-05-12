@@ -48,6 +48,16 @@ export function isIvs(category: Category): boolean {
 }
 
 /**
+ * `true` if {@link isCjk} or {@link isIvs}.
+ *
+ * @param category the return value of {@link classifyCharacter}.
+ * @returns `true` if the code point represents a CJK or IVS
+ */
+export function isCjkOrIvs(category: Category): boolean {
+  return Boolean(category & constantsEx.cjkOrIvs);
+}
+
+/**
  * `true` if the code point represents a [Non-emoji General-use Variation Selector](https://github.com/tats-u/markdown-cjk-friendly/blob/main/specification.md#non-emoji-general-use-variation-selector).
  *
  * @param category the return value of `classifyCharacter`.

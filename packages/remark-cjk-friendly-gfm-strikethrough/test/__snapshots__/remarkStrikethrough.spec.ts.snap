@@ -51,6 +51,10 @@ function _createMdxContent(props) {
       children: [_jsx(_components.del, {
         children: "日本語。︀"
       }), "English."]
+    }), "\\n", _jsxs(_components.p, {
+      children: [_jsx(_components.del, {
+        children: "“︁a”︁"
+      }), "a"]
     })]
   });
 }
@@ -76,5 +80,6 @@ exports[`remark-cjk-friendly-gfm-strikethrough > Compatible with CJK 1`] = `
 <p>a<del>「a</del>」</p>
 <p>「<del>a」</del>a</p>
 <p><del>a</del>：<del>a</del></p>
-<p><del>日本語。︀</del>English.</p>"
+<p><del>日本語。︀</del>English.</p>
+<p><del>“︁a”︁</del>a</p>"
 `;

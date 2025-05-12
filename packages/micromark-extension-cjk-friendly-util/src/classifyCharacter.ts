@@ -1,8 +1,10 @@
 import { markdownLineEndingOrSpace } from "micromark-util-character";
 import { constants, codes } from "micromark-util-symbol";
 import type { Code } from "micromark-util-types";
+import { isNonEmojiGeneralUseVS, isUnicodeWhitespace } from "./categoryUtil.ts";
 import {
   cjkOrIvs,
+  isCjkAmbiguousPunctuation,
   nonEmojiGeneralUseVS,
   unicodePunctuation,
   unicodeWhitespace,
@@ -15,7 +17,8 @@ export namespace constantsEx {
   export const ivs = 0x2000 as const;
   export const cjkOrIvs = 0x3000 as const;
   export const nonEmojiGeneralUseVS = 0x4000 as const;
-  export const variationSelector = 0x7000 as const;
+  export const variationSelector = 0x6000 as const;
+  export const ivsToCjkRightShift = 1 as const; // ivs / cjk
 }
 
 /**
@@ -74,4 +77,39 @@ export function classifyCharacter(
     | typeof constantsEx.cjkPunctuation
     // returned undefined in original micromark for uncategorized characters, but 0 is better for bitwise operations
     | 0;
+}
+
+/**}
+ * Classify whether a code represents whitespace, punctuation, or something else.
+ *
+ * Recognizes general-use variation selectors. Use this instead of {@linkcode classifyCharacter} for previous character.
+ *
+ * @param before result of {@linkcode classifyCharacter} of the preceding character.
+ * @param get2Previous a function that returns the code point of the character before the preceding character. Use lambda or {@linkcode Function.prototype.bind}.
+ * @param previous code point of the preceding character
+ * @returns
+ *   Group of the main code point of the preceding character. Use `isCjkOrIvs` to check whether it is CJK
+ */
+export function classifyPrecedingCharacter(
+  before: ReturnType<typeof classifyCharacter>,
+  get2Previous: () => Code,
+  previous: Code,
+): ReturnType<typeof classifyCharacter> {
+  if (!isNonEmojiGeneralUseVS(before)) {
+    return before;
+  }
+  const twoPrevious = get2Previous();
+  const twoBefore = classifyCharacter(twoPrevious);
+
+  return !twoPrevious || isUnicodeWhitespace(twoBefore)
+    ? before
+    : isCjkAmbiguousPunctuation(twoPrevious, previous)
+      ? constantsEx.cjkPunctuation
+      : stripIvs(twoBefore);
+}
+
+function stripIvs(
+  twoBefore: ReturnType<typeof classifyCharacter>,
+): ReturnType<typeof classifyCharacter> {
+  return (twoBefore & ~constantsEx.ivs) as ReturnType<typeof classifyCharacter>;
 }

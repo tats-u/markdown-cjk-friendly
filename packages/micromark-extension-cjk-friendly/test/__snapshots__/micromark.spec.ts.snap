@@ -85,6 +85,7 @@ exports[`micromark-extensions-cjk-friendly > ** around Kana/Han is converted to 
 <p>𮹝<strong>(simplified form of 龘 in China)</strong></p>
 <p>大塚︀<strong>(U+585A U+FE00)</strong> 大塚<strong>(U+FA10)</strong></p>
 <p>〽︎<strong>(庵点)</strong>は、</p>
+<p><strong>“︁Git”︁</strong>Hub</p>
 "
 `;
 
@@ -143,6 +144,7 @@ exports[`micromark-extensions-cjk-friendly > process underscores around CJK punc
 <p>正體字。︁<strong>Hong Kong and Taiwan.</strong></p>
 <p>简体字 / 新字体。︀<em>Simplified.</em></p>
 <p>简体字 / 新字体。︀<strong>Mainland China or Japan.</strong></p>
+<p>“︁Git”︁<strong>Hub</strong></p>
 "
 `;
 

@@ -11,5 +11,6 @@ exports[`micromark-extension-gfm-strikethrough > Compatible with CJK 1`] = `
 <p>「<del>a」</del>a</p>
 <p><del>a</del>：<del>a</del></p>
 <p><del>日本語。︀</del>English.</p>
+<p><del>“︁a”︁</del>a</p>
 "
 `;

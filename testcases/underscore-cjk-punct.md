@@ -9,3 +9,5 @@ __注意__：注意事項
 简体字 / 新字体。︀_Simplified._
 
 简体字 / 新字体。︀__Mainland China or Japan.__
+
+“︁Git”︁__Hub__

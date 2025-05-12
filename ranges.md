@@ -450,6 +450,13 @@ is_cjk = 0x1100 <= cp <= 0x11ff \
 - U+F900..U+FAFF (豈..﫿)
 - U+20000..U+3FFFD (𠀀..𿿽)
 
+## CJK ambiguous punctuation sequences
+
+- U+2018 U+FE01 (‘︁)
+- U+2019 U+FE01 (’︁)
+- U+201C U+FE01 (“︁)
+- U+201D U+FE01 (”︁)
+
 ## (for discussion for the future) Emojis derived from CJK symbols (can be switched to text symbol by U+FE0E)
 
 > [!NOTE]
