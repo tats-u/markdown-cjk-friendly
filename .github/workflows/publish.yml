@@ -22,6 +22,7 @@ jobs:
         run: node --run build
       - name: Determine package from tag
         uses: actions/github-script@v7
+        id: determine
         with:
           script: |
             const tagName = context.ref.replace(/refs\/tags\//, "");
@@ -30,10 +31,30 @@ jobs:
             if (!version) {
               throw new Error(`Could not determine version from tag ${tagName} (should be <package-name>-v<version>)`);
             }
-            core.exportVariable("PACKAGE_NAME", packageName);
-            core.exportVariable("PACKAGE_VERSION", version);
+            const isPrerelease = context.payload.release.prerelease;
+
+            if (isPrerelease !== version.includes("-")) {
+              throw new Error(`Version ${version} in tag ${tagName} does not match prerelease status`);
+            }
+
+            const fs = require("node:fs");
+            const packageJson = JSON.parse(fs.readFileSync(`packages/${packageName}/package.json`, "utf8"));
+            if (packageJson.name !== packageName) {
+              throw new Error(`Package name ${packageName} in tag ${tagName} does not match package name in package.json (${packageJson.name})`);
+            }
+            if (packageJson.version !== version) {
+              throw new Error(`Version ${version} in tag ${tagName} does not match version in package.json (${packageJson.version})`);
+            }
+
+            core.setOutput("packageName", packageName);
+            core.exportVariable("IS_PRERELEASE", isPrerelease ? "1" : "0");
       # pnpm publish doesn't allow a publish from tag, so --no-git-checks is needed
-      - run: pnpm publish --provenance --access public --no-git-checks
-        working-directory: packages/${{ env.PACKAGE_NAME }}
+      - run: |
+          if [ "$IS_PRERELEASE" = "1" ]; then
+            pnpm publish --provenance --access public --no-git-checks --tag next
+          else
+            pnpm publish --provenance --access public --no-git-checks
+          fi
+        working-directory: packages/${{ steps.determine.outputs.packageName }}
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

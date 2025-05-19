@@ -14,18 +14,18 @@ import type {
 import { ok as assert } from "devlop";
 import {
   classifyCharacter,
+  classifyPrecedingCharacter,
   isCjk,
+  isCjkOrIvs,
   isCodeHighSurrogate,
   isCodeLowSurrogate,
-  isIvs,
   isNonCjkPunctuation,
   isSpaceOrPunctuation,
-  isSvsFollowingCjk,
   isUnicodeWhitespace,
-  tryGetCodeTwoBefore,
   tryGetGenuineNextCode,
   tryGetGenuinePreviousCode,
 } from "micromark-extension-cjk-friendly-util";
+import { TwoPreviousCode } from "micromark-extension-cjk-friendly-util";
 import { push, splice } from "micromark-util-chunked";
 import { resolveAll } from "micromark-util-resolve-all";
 import { codes, types } from "micromark-util-symbol";
@@ -221,17 +221,13 @@ function tokenizeAttention(
     : tentativePrevious;
 
   const before = classifyCharacter(previous);
-  let beforePrimary = before;
-
-  if (isSvsFollowingCjk(before)) {
-    const twoPrevious = tryGetCodeTwoBefore(
-      // biome-ignore lint/style/noNonNullAssertion: if `previous` were null, before would be `undefined`
-      previous!,
-      now(),
-      sliceSerialize,
-    );
-    if (twoPrevious !== null) beforePrimary = classifyCharacter(twoPrevious);
-  }
+  // biome-ignore lint/style/noNonNullAssertion: null = EOF, but never be
+  const twoPrevious = new TwoPreviousCode(previous!, now(), sliceSerialize);
+  const beforePrimary = classifyPrecedingCharacter(
+    before,
+    twoPrevious.value.bind(twoPrevious),
+    previous,
+  );
 
   /** @type {NonNullable<Code>} */
   let marker: NonNullable<Code>;
@@ -286,13 +282,13 @@ function tokenizeAttention(
     // Always populated by defaults.
     assert(attentionMarkers, "expected `attentionMarkers` to be populated");
 
-    const beforeNonCjkPunctuation = isNonCjkPunctuation(before);
+    const beforeNonCjkPunctuation = isNonCjkPunctuation(beforePrimary);
     const beforeSpaceOrNonCjkPunctuation =
-      beforeNonCjkPunctuation || isUnicodeWhitespace(before);
+      beforeNonCjkPunctuation || isUnicodeWhitespace(beforePrimary);
     const afterNonCjkPunctuation = isNonCjkPunctuation(after);
     const afterSpaceOrNonCjkPunctuation =
       afterNonCjkPunctuation || isUnicodeWhitespace(after);
-    const beforeCjkOrIvs = isCjk(beforePrimary) || isIvs(before);
+    const beforeCjkOrIvs = isCjkOrIvs(beforePrimary);
 
     const open =
       !afterSpaceOrNonCjkPunctuation ||
@@ -308,7 +304,7 @@ function tokenizeAttention(
     token._open = Boolean(
       marker === codes.asterisk
         ? open
-        : open && (isSpaceOrPunctuation(before) || !close),
+        : open && (isSpaceOrPunctuation(beforePrimary) || !close),
     );
     token._close = Boolean(
       marker === codes.asterisk

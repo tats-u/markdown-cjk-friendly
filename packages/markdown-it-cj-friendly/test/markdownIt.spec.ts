@@ -13,7 +13,12 @@ describe("markdown-it-cj-friendly", () => {
         "utf-8",
       ),
     );
-    expect(result.split(/\r?\n/)).not.toContain(/\*\*[^\n]+\*\*/);
+    for (const line of result.split(/\r?\n/)) {
+      // won't support these variation sequences in cj-friendly (use cjk-friendly instead)
+      if (!/[“”‘’…]\ufe01/.test(line)) {
+        expect(line).not.toMatch(/\*\*[^\n]+\*\*/);
+      }
+    }
     expect(result).toMatchSnapshot();
   });
 
@@ -24,7 +29,9 @@ describe("markdown-it-cj-friendly", () => {
         "utf-8",
       ),
     );
-    expect(result.split(/\r?\n/)).not.toContain("<strong>");
+    for (const line of result.split(/\r?\n/)) {
+      expect(line).not.toContain("<strong>");
+    }
     expect(result).toMatchSnapshot();
   });
 });

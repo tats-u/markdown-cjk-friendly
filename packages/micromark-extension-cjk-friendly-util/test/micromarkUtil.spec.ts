@@ -44,7 +44,7 @@ describe("micromark-extension-cjk-friendly-util", () => {
     // biome-ignore lint/style/noNonNullAssertion: not empty
     const code = char.codePointAt(char.length - 1)!;
     const category = util.classifyCharacter(code);
-    expect(util.isSvsFollowingCjk(category)).toBe(true);
+    expect(util.isNonEmojiGeneralUseVS(category)).toBe(true);
   });
 
   it.concurrent.each(["𩸽", "🈀"])("Surrogate check (%s)", (char) => {
@@ -53,4 +53,22 @@ describe("micromark-extension-cjk-friendly-util", () => {
     expect(util.isCodeHighSurrogate(highCode)).toBe(true);
     expect(util.isCodeLowSurrogate(lowCode)).toBe(true);
   });
+
+  it.concurrent.each(["‘", "’", "“", "”"])(
+    "Ambiguous punctuation check (%s)",
+    (char) => {
+      const vsCode = 0xfe01;
+      // biome-ignore lint/style/noNonNullAssertion: not empty
+      const punctuationCode = char.codePointAt(0)!;
+      const withVs = util.classifyPrecedingCharacter(
+        util.classifyCharacter(vsCode),
+        () => punctuationCode,
+        vsCode,
+      );
+      const withoutVs = util.classifyCharacter(punctuationCode);
+      expect(util.isNonCjkPunctuation(withoutVs)).toBe(true);
+      expect(util.isSpaceOrPunctuation(withVs)).toBe(true);
+      expect(util.isCjk(withVs)).toBe(true);
+    },
+  );
 });

@@ -13,15 +13,15 @@ import type {
 
 import { ok as assert } from "devlop";
 import {
+  TwoPreviousCode,
   classifyCharacter,
+  classifyPrecedingCharacter,
   isCjk,
   isCodeHighSurrogate,
   isCodeLowSurrogate,
   isIvs,
   isNonCjkPunctuation,
-  isSvsFollowingCjk,
   isUnicodeWhitespace,
-  tryGetCodeTwoBefore,
   tryGetGenuineNextCode,
   tryGetGenuinePreviousCode,
 } from "micromark-extension-cjk-friendly-util";
@@ -180,17 +180,13 @@ export function gfmStrikethroughCjkFriendly(
       : tentativePrevious;
 
     const before = classifyCharacter(previous);
-    let beforePrimary = before;
-
-    if (isSvsFollowingCjk(before)) {
-      const twoPrevious = tryGetCodeTwoBefore(
-        // biome-ignore lint/style/noNonNullAssertion: if `previous` were null, before would be `undefined`
-        previous!,
-        now(),
-        sliceSerialize,
-      );
-      if (twoPrevious !== null) beforePrimary = classifyCharacter(twoPrevious);
-    }
+    // biome-ignore lint/style/noNonNullAssertion: null = EOF, but never be
+    const twoPrevious = new TwoPreviousCode(previous!, now(), sliceSerialize);
+    const beforePrimary = classifyPrecedingCharacter(
+      before,
+      twoPrevious.value.bind(twoPrevious),
+      previous,
+    );
     const events = this.events;
     let size = 0;
 
@@ -230,9 +226,9 @@ export function gfmStrikethroughCjkFriendly(
 
       const after = classifyCharacter(next);
 
-      const beforeNonCjkPunctuation = isNonCjkPunctuation(before);
+      const beforeNonCjkPunctuation = isNonCjkPunctuation(beforePrimary);
       const beforeSpaceOrNonCjkPunctuation =
-        beforeNonCjkPunctuation || isUnicodeWhitespace(before);
+        beforeNonCjkPunctuation || isUnicodeWhitespace(beforePrimary);
       const afterNonCjkPunctuation = isNonCjkPunctuation(after);
       const afterSpaceOrNonCjkPunctuation =
         afterNonCjkPunctuation || isUnicodeWhitespace(after);

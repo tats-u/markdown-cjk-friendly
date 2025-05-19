@@ -326,6 +326,7 @@ const isEmoji = function (
  * @returns `true` if `uc` is CJK, `false` if not, `null` if IVS
  */
 function isCjkBase(uc: number) {
+  if (uc < 0x1100) return false; // Fast path; see: https://www.unicode.org/Public/UCD/latest/ucd/Scripts.txt
   const eaw = eastAsianWidthType(uc);
   switch (eaw) {
     case "fullwidth":
@@ -337,28 +338,52 @@ function isCjkBase(uc: number) {
       return false;
     case "ambiguous":
       // no Hangul as of Unicode 16
-      // IVS is Ambiguous
-      return 0xe0100 <= uc && uc <= 0xe01ef ? null : false;
+      // needs an additional check according to the distance from the emphasis
+      return null;
     case "neutral":
       // 1160..11FF     ; N  # Lo   [160] HANGUL JUNGSEONG FILLER..HANGUL JONGSEONG SSANGNIEUN
       return /^\p{sc=Hangul}/u.test(String.fromCodePoint(uc));
   }
 }
 
-function isCjk(uc: number) {
+function is2PreviousCjk(uc: number, prev: number) {
+  // https://www.unicode.org/Public/16.0.0/ucd/StandardizedVariants.txt
+  // See {left,right}-justified fullwidth form in East Asian punctuation positional and width variants
+  return isCjkBase(uc) ?? (prev === 0xfe01 && isQuotationMark(uc));
+
+  function isQuotationMark(uc: number) {
+    return uc === 0x2018 || uc === 0x2019 || uc === 0x201c || uc === 0x201d;
+  }
+}
+
+function isPreviousCjk(uc: number) {
+  // IVS is Ambiguous
+  return isCjkBase(uc) ?? (0xe0100 <= uc && uc <= 0xe01ef);
+}
+
+interface CjkAnalysis {
+  isCjk: boolean | null;
+  mainChar: number;
+}
+
+function analyzePreviousCjk(uc: number): Readonly<CjkAnalysis> {
+  const isCjk = isCjkBase(uc);
+  if (isCjk !== null) {
+    return { isCjk, mainChar: uc };
+  }
+  // IVS is Ambiguous
+  if (0xe0100 <= uc && uc <= 0xe01ef) {
+    return { isCjk: true, mainChar: uc };
+  }
+  return { isCjk: false, mainChar: uc };
+}
+
+function isNextCjk(uc: number) {
   return isCjkBase(uc) ?? false;
 }
 
-function isCjkOrIvs(uc: number) {
-  const raw = isCjkBase(uc);
-  return raw === null ? true : raw;
-}
-
-function maybeHanSVS(uc: number) {
-  return (
-    (uc & 0xfff0) === 0xfe00 &&
-    ((uc >= 0xfe00 && uc <= 0xfe02) || uc === 0xfe0e)
-  );
+function nonEmojiGeneralUseVS(uc: number) {
+  return uc >= 0xfe00 && uc <= 0xfe0e;
 }
 
 export default function markdownItCjFriendlyPlugin(md: MarkdownIt): void {
@@ -369,11 +394,15 @@ export default function markdownItCjFriendlyPlugin(md: MarkdownIt): void {
       const max = this.posMax;
       const marker = this.src.charCodeAt(start);
 
-      let [lastChar, lastCharPos] = getLastCharCode(this.src, start);
-      let isLastActuallyTwoPrev = false;
-      if (maybeHanSVS(lastChar)) {
-        [lastChar, lastCharPos] = getLastCharCode(this.src, lastCharPos);
-        isLastActuallyTwoPrev = true;
+      const [lastChar, lastCharPos] = getLastCharCode(this.src, start);
+      let lastMainChar = lastChar;
+      let twoPrevChar: number | null = null;
+
+      if (nonEmojiGeneralUseVS(lastChar)) {
+        twoPrevChar = getLastCharCode(this.src, lastCharPos)[0];
+        if (!/^\p{Zs}/u.test(String.fromCodePoint(twoPrevChar))) {
+          lastMainChar = twoPrevChar;
+        }
       }
 
       let pos = start;
@@ -387,19 +416,23 @@ export default function markdownItCjFriendlyPlugin(md: MarkdownIt): void {
       // biome-ignore lint/style/noNonNullAssertion: always in range thanks to pos < max
       const nextChar = pos < max ? this.src.codePointAt(pos)! : 0x20;
 
-      const isLastCJKChar = (isLastActuallyTwoPrev ? isCjk : isCjkOrIvs)(
-        lastChar,
-      );
-      const isNextCJKChar = isCjk(nextChar);
+      // We don't consider a sequence of an ideographic VS followed by a general-purpose VS
+      const isLastCJKChar =
+        twoPrevChar !== null
+          ? is2PreviousCjk(twoPrevChar, lastChar)
+          : isPreviousCjk(lastChar);
+      const isNextCJKChar = isNextCjk(nextChar);
 
       const isLastPunctChar =
-        isMdAsciiPunct(lastChar) || isPunctChar(String.fromCodePoint(lastChar));
+        isMdAsciiPunct(lastMainChar) ||
+        isPunctChar(String.fromCodePoint(lastMainChar));
       const isNextPunctChar =
         isMdAsciiPunct(nextChar) || isPunctChar(String.fromCodePoint(nextChar));
       const isLastNonCjkPunctChar = isLastPunctChar && !isLastCJKChar;
       const isNextNonCjkPunctChar = isNextPunctChar && !isNextCJKChar;
 
-      const isLastWhiteSpace = isWhiteSpace(lastChar);
+      // We don't consider a sequence of an Unicode whitespace followed by a general-use VS
+      const isLastWhiteSpace = isWhiteSpace(lastMainChar);
       const isNextWhiteSpace = isWhiteSpace(nextChar);
 
       const left_flanking =

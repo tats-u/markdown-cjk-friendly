@@ -321,7 +321,8 @@ const isEmoji = function (
  * @returns `true` if `uc` is CJK, `null` if IVS, or `false` if neither
  */
 export function cjkOrIvs(uc: Code): boolean | null {
-  if (!uc || uc < 0) {
+  if (!uc || uc < 0x1100) {
+    // < 0x1100: Fast path
     return false;
   }
   const eaw = eastAsianWidthType(uc);
@@ -343,15 +344,19 @@ export function cjkOrIvs(uc: Code): boolean | null {
   }
 }
 
+export function isCjkAmbiguousPunctuation(main: Code, vs: Code): boolean {
+  if (vs !== 0xfe01 || !main || main < 0x2018) return false;
+  return (
+    main === 0x2018 || main === 0x2019 || main === 0x201c || main === 0x201d
+  );
+}
+
 /**
- * Check whether the character code represents Standard Variation Sequence that can follow an ideographic character.
- *
- * U+FE0E is used for some CJK symbols (e.g. U+3299) that can also be
+ * Check whether the character code represents Non-emoji General-use Variation Selector (U+FE00-U+FE0E).
  */
-export const svsFollowingCjk: (code: Code) => boolean = regexCheck(
-  // biome-ignore lint/suspicious/noMisleadingCharacterClass: variation selector range
-  /[\uFE00-\uFE02\uFE0E]/u,
-);
+export function nonEmojiGeneralUseVS(code: Code) {
+  return code !== null && code >= 0xfe00 && code <= 0xfe0e;
+}
 
 // Size note: removing ASCII from the regex and using `asciiPunctuation` here
 // In fact adds to the bundle size.

@@ -372,6 +372,10 @@ function _createMdxContent(props) {
       children: ["〽︎", _jsx(_components.strong, {
         children: "(庵点)"
       }), "は、"]
+    }), "\\n", _jsxs(_components.p, {
+      children: [_jsx(_components.strong, {
+        children: "“︁Git”︁"
+      }), "Hub"]
     })]
   });
 }
@@ -471,7 +475,8 @@ exports[`remark-cjk-friendly > ** around Kana/Han is converted to <strong> 1`] =
 <p>あ𛀙<strong>(か)</strong>よろし</p>
 <p>𮹝<strong>(simplified form of 龘 in China)</strong></p>
 <p>大塚︀<strong>(U+585A U+FE00)</strong> 大塚<strong>(U+FA10)</strong></p>
-<p>〽︎<strong>(庵点)</strong>は、</p>"
+<p>〽︎<strong>(庵点)</strong>は、</p>
+<p><strong>“︁Git”︁</strong>Hub</p>"
 `;
 
 exports[`remark-cjk-friendly > ** around Korean is converted to <strong> (MDX) 1`] = `
@@ -627,6 +632,7 @@ exports[`remark-cjk-friendly > process underscores around CJK punctuation (MDX) 
 "import {Fragment as _Fragment, jsx as _jsx, jsxs as _jsxs} from "react/jsx-runtime";
 function _createMdxContent(props) {
   const _components = {
+    em: "em",
     p: "p",
     strong: "strong",
     ...props.components
@@ -639,6 +645,26 @@ function _createMdxContent(props) {
     }), "\\n", _jsxs(_components.p, {
       children: ["注意：", _jsx(_components.strong, {
         children: "注意事項"
+      })]
+    }), "\\n", _jsxs(_components.p, {
+      children: ["正體字。︁", _jsx(_components.em, {
+        children: "Traditional."
+      })]
+    }), "\\n", _jsxs(_components.p, {
+      children: ["正體字。︁", _jsx(_components.strong, {
+        children: "Hong Kong and Taiwan."
+      })]
+    }), "\\n", _jsxs(_components.p, {
+      children: ["简体字 / 新字体。︀", _jsx(_components.em, {
+        children: "Simplified."
+      })]
+    }), "\\n", _jsxs(_components.p, {
+      children: ["简体字 / 新字体。︀", _jsx(_components.strong, {
+        children: "Mainland China or Japan."
+      })]
+    }), "\\n", _jsxs(_components.p, {
+      children: ["“︁Git”︁", _jsx(_components.strong, {
+        children: "Hub"
       })]
     })]
   });
@@ -657,7 +683,12 @@ export default function MDXContent(props = {}) {
 
 exports[`remark-cjk-friendly > process underscores around CJK punctuation 1`] = `
 "<p><strong>注意</strong>：注意事項</p>
-<p>注意：<strong>注意事項</strong></p>"
+<p>注意：<strong>注意事項</strong></p>
+<p>正體字。︁<em>Traditional.</em></p>
+<p>正體字。︁<strong>Hong Kong and Taiwan.</strong></p>
+<p>简体字 / 新字体。︀<em>Simplified.</em></p>
+<p>简体字 / 新字体。︀<strong>Mainland China or Japan.</strong></p>
+<p>“︁Git”︁<strong>Hub</strong></p>"
 `;
 
 exports[`remark-cjk-friendly > recognizes non-BMP punctuation and symbols (MDX) 1`] = `

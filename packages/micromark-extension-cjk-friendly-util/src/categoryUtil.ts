@@ -48,14 +48,24 @@ export function isIvs(category: Category): boolean {
 }
 
 /**
- * `true` if the code point represents a [Standard Variation Selector that can follow CJK](https://github.com/tats-u/markdown-cjk-friendly/blob/main/specification.md#svs-that-can-follow-cjk).
+ * `true` if {@link isCjk} or {@link isIvs}.
+ *
+ * @param category the return value of {@link classifyCharacter}.
+ * @returns `true` if the code point represents a CJK or IVS
+ */
+export function isCjkOrIvs(category: Category): boolean {
+  return Boolean(category & constantsEx.cjkOrIvs);
+}
+
+/**
+ * `true` if the code point represents a [Non-emoji General-use Variation Selector](https://github.com/tats-u/markdown-cjk-friendly/blob/main/specification.md#non-emoji-general-use-variation-selector).
  *
  * @param category the return value of `classifyCharacter`.
- * @returns `true` if the code point represents an Standard Variation Selector that can follow CJK
+ * @returns `true` if the code point represents an Non-emoji General-use Variation Selector
  */
-export function isSvsFollowingCjk(category: Category): boolean {
+export function isNonEmojiGeneralUseVS(category: Category): boolean {
   // Exclusive with the others
-  return category === constantsEx.svsFollowingCjk;
+  return category === constantsEx.nonEmojiGeneralUseVS;
 }
 
 /**
