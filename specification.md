@@ -4,7 +4,7 @@ CommonMark issue: https://github.com/commonmark/commonmark-spec/issues/650
 
 The following chapters are written as an amendment to [the original CommonMark specification](https://spec.commonmark.org/0.31.2/). Missing chapters, sections, and definitions are the same as in the original specification.
 
-## 2. Preliminaries 
+## 2. Preliminaries
 
 ### 2.1 Characters and lines
 
