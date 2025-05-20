@@ -1,0 +1,33 @@
+name: Prepare draft release
+on:
+  push:
+    tags: ["*@*.*.*"]
+jobs:
+  prepare-release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/github-script@v7
+        with:
+          script: |
+            const tagName = context.ref.replace("refs/tags/", "");
+            const [ packageName, tagVersionWithV ] = tagName.split(/-(?=v\d+\.\d+\.\d+)|(?<!^)@/, 2);
+            const { version: packageJsonVersion } = require(`./packages/${packageName}/package.json`);
+            const tagVersion = tagVersionWithV.replace(/^v/, "");
+            if (tagVersion !== packageJsonVersion) {
+              throw new Error(
+                `Tag name (${tagVersion}) does not match package.json version (${packageJsonVersion})`
+              );
+            }
+
+            const release = await github.rest.repos.createRelease({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              tag_name: tagName,
+              name: `${packageName}@${tagVersion}`,
+              draft: true,
+              prerelease: tagVersion.includes("-"),
+              generate_release_notes: true,
+            });
