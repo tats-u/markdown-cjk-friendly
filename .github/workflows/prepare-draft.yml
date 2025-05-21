@@ -12,7 +12,7 @@ jobs:
       - uses: actions/github-script@v7
         with:
           script: |
-            async function getPreviousReleaseTagName(packageName) {
+            async function getPreviousReleaseTagName(packageName, allowPrerelease) {
               for (let page = 1; ; page++) {
                 const releases = await github.rest.repos.listReleases({
                   owner: context.repo.owner,
@@ -32,7 +32,7 @@ jobs:
                   );
                 }
                 for (const release of releases.data) {
-                  if (release.name.startsWith(`${packageName}@`)) {
+                  if (release.name.startsWith(`${packageName}@`) && (allowPrerelease || !release.prerelease)) {
                     return release.tag_name;
                   }
                 }
@@ -48,11 +48,13 @@ jobs:
               );
             }
 
+            const isPrerelease = tagVersion.includes("-");
+
             const releaseNotes = await github.rest.repos.generateReleaseNotes({
               owner: context.repo.owner,
               repo: context.repo.repo,
               tag_name: tagName,
-              previous_tag_name: (await getPreviousReleaseTagName(packageName)) ?? undefined,
+              previous_tag_name: (await getPreviousReleaseTagName(packageName, isPrerelease)) ?? undefined,
             });
 
             const release = await github.rest.repos.createRelease({
@@ -61,6 +63,6 @@ jobs:
               tag_name: tagName,
               name: `${packageName}@${tagVersion}`,
               draft: true,
-              prerelease: tagVersion.includes("-"),
+              prerelease: isPrerelease,
               body: releaseNotes.data.body
             });
