@@ -1,5 +1,10 @@
 name: Regular CI (old Node.js)
-on: [push, pull_request]
+on:
+  push:
+      branches:
+        - "**"
+        - "!pr/*"
+  pull_request:
 jobs:
   build:
     runs-on: ubuntu-latest
