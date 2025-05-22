@@ -7,11 +7,11 @@
     "test:watch": "vitest watch"
   },
   "dependencies": {
-    "rspress": "^1.40.2",
     "remark-cjk-friendly": "workspace:^",
-    "remark-cjk-friendly-gfm-strikethrough": "workspace:^"
+    "remark-cjk-friendly-gfm-strikethrough": "workspace:^",
+    "rspress": "^1.44.0"
   },
   "devDependencies": {
-    "@types/node": "^22.13.10"
+    "@types/node": "^22.15.21"
   }
 }
