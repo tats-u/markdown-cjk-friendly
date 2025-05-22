@@ -25,7 +25,7 @@
     "tsup": "^8.4.0",
     "typescript": "^5.7.3",
     "unplugin-auto-import": "^19.0.0",
-    "vitest": "^3.0.2"
+    "vitest": "^3.0.5"
   },
   "packageManager": "pnpm@9.15.3",
   "pnpm": {
