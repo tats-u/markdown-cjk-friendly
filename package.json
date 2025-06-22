@@ -21,13 +21,13 @@
     "@biomejs/biome": "2.0.4",
     "@rslib/core": "^0.4.1",
     "@types/jsdom": "^21.1.7",
-    "@types/node": "^22.15.21",
+    "@types/node": "^22.15.32",
     "jsdom": "^26.1.0",
     "npm-run-all2": "^8.0.4",
     "tsup": "^8.5.0",
     "typescript": "^5.8.3",
-    "unplugin-auto-import": "^19.2.0",
-    "vitest": "^3.1.4"
+    "unplugin-auto-import": "^19.3.0",
+    "vitest": "^3.2.4"
   },
   "packageManager": "pnpm@9.15.3",
   "pnpm": {
