@@ -7,23 +7,7 @@
   },
   "files": {
     "ignoreUnknown": false,
-    // .gitignore in subdirectories are not respected as of Biome 1.9.4
-    // will be fixed in 2.0.0 (confirmed in 2.0.0-beta.1)
-    // https://github.com/biomejs/biome/issues/2312
-    // https://github.com/biomejs/biome/pull/5195
-    "includes": [
-      "**",
-      "!**/packages/**/*/dist/**",
-      "!**/auto-imports.d.ts",
-      "!**/__snapshots__/**",
-      "!**/demos/astro/.astro/**",
-      "!**/demos/astro/dist/**",
-      "!**/demos/docusaurus/.docusaurus/**",
-      "!**/demos/docusaurus/build/**",
-      "!**/demos/rspress/doc_build/**",
-      "!**/demos/vitepress/.vitepress/cache/**",
-      "!**/demos/vitepress/.vitepress/dist/**"
-    ]
+    "includes": ["**", "!**/auto-imports.d.ts", "!**/__snapshots__/**"]
   },
   "formatter": {
     "enabled": true,
