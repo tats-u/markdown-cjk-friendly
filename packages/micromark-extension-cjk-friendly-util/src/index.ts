@@ -15,8 +15,8 @@ export {
 export {
   isCodeHighSurrogate,
   isCodeLowSurrogate,
+  TwoPreviousCode,
   tryGetCodeTwoBefore,
   tryGetGenuineNextCode,
   tryGetGenuinePreviousCode,
-  TwoPreviousCode,
 } from "./codeUtil.js";

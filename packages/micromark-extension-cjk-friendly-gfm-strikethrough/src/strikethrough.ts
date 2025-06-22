@@ -1,19 +1,5 @@
-import type {
-  Code,
-  Effects,
-  Event,
-  Extension,
-  Resolver,
-  State,
-  Token,
-  TokenType,
-  TokenizeContext,
-  Tokenizer,
-} from "micromark-util-types";
-
 import { ok as assert } from "devlop";
 import {
-  TwoPreviousCode,
   classifyCharacter,
   classifyPrecedingCharacter,
   isCjk,
@@ -22,12 +8,25 @@ import {
   isIvs,
   isNonCjkPunctuation,
   isUnicodeWhitespace,
+  TwoPreviousCode,
   tryGetGenuineNextCode,
   tryGetGenuinePreviousCode,
 } from "micromark-extension-cjk-friendly-util";
 import { splice } from "micromark-util-chunked";
 import { resolveAll } from "micromark-util-resolve-all";
-import { constants, codes, types } from "micromark-util-symbol";
+import { codes, constants, types } from "micromark-util-symbol";
+import type {
+  Code,
+  Effects,
+  Event,
+  Extension,
+  Resolver,
+  State,
+  Token,
+  TokenizeContext,
+  Tokenizer,
+  TokenType,
+} from "micromark-util-types";
 
 export interface Options {
   singleTilde?: boolean;

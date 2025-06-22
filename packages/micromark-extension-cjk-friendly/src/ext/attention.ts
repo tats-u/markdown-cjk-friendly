@@ -1,3 +1,21 @@
+import { ok as assert } from "devlop";
+import {
+  classifyCharacter,
+  classifyPrecedingCharacter,
+  isCjk,
+  isCjkOrIvs,
+  isCodeHighSurrogate,
+  isCodeLowSurrogate,
+  isNonCjkPunctuation,
+  isSpaceOrPunctuation,
+  isUnicodeWhitespace,
+  TwoPreviousCode,
+  tryGetGenuineNextCode,
+  tryGetGenuinePreviousCode,
+} from "micromark-extension-cjk-friendly-util";
+import { push, splice } from "micromark-util-chunked";
+import { resolveAll } from "micromark-util-resolve-all";
+import { codes, types } from "micromark-util-symbol";
 import type {
   Code,
   Construct,
@@ -10,25 +28,6 @@ import type {
   TokenizeContext,
   Tokenizer,
 } from "micromark-util-types";
-
-import { ok as assert } from "devlop";
-import {
-  classifyCharacter,
-  classifyPrecedingCharacter,
-  isCjk,
-  isCjkOrIvs,
-  isCodeHighSurrogate,
-  isCodeLowSurrogate,
-  isNonCjkPunctuation,
-  isSpaceOrPunctuation,
-  isUnicodeWhitespace,
-  tryGetGenuineNextCode,
-  tryGetGenuinePreviousCode,
-} from "micromark-extension-cjk-friendly-util";
-import { TwoPreviousCode } from "micromark-extension-cjk-friendly-util";
-import { push, splice } from "micromark-util-chunked";
-import { resolveAll } from "micromark-util-resolve-all";
-import { codes, types } from "micromark-util-symbol";
 
 export const attention: Construct = {
   name: "attention",

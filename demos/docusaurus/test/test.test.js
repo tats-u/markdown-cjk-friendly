@@ -8,7 +8,7 @@ async function loadHtml(path) {
 
 describe("index.html (pages)", () => {
   /** @type {HTMLElement} */
-  let markdown = undefined;
+  let markdown;
   beforeAll(async () => {
     const source = await loadHtml("../build/index.html");
     markdown = new JSDOM(source).window.document.querySelector("article");
@@ -35,7 +35,7 @@ describe("index.html (pages)", () => {
 
 describe("docs/index.html", () => {
   /** @type {HTMLElement} */
-  let markdown = undefined;
+  let markdown;
   beforeAll(async () => {
     const source = await loadHtml("../build/docs/index.html");
     markdown = new JSDOM(source).window.document.querySelector("article");
@@ -62,7 +62,7 @@ describe("docs/index.html", () => {
 
 describe("blog/index.html", () => {
   /** @type {HTMLElement} */
-  let markdown = undefined;
+  let markdown;
   beforeAll(async () => {
     const source = await loadHtml("../build/blog/index.html");
     markdown = new JSDOM(source).window.document.querySelector("article");

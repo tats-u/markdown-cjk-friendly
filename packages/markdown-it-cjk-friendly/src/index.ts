@@ -361,23 +361,6 @@ function isPreviousCjk(uc: number) {
   return isCjkBase(uc) ?? (0xe0100 <= uc && uc <= 0xe01ef);
 }
 
-interface CjkAnalysis {
-  isCjk: boolean | null;
-  mainChar: number;
-}
-
-function analyzePreviousCjk(uc: number): Readonly<CjkAnalysis> {
-  const isCjk = isCjkBase(uc);
-  if (isCjk !== null) {
-    return { isCjk, mainChar: uc };
-  }
-  // IVS is Ambiguous
-  if (0xe0100 <= uc && uc <= 0xe01ef) {
-    return { isCjk: true, mainChar: uc };
-  }
-  return { isCjk: false, mainChar: uc };
-}
-
 function isNextCjk(uc: number) {
   return isCjkBase(uc) ?? false;
 }

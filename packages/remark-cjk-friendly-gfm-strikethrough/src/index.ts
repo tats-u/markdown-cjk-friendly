@@ -1,10 +1,9 @@
 import type { Root } from "mdast";
-import type { Processor } from "unified";
-
 import {
-  type Options,
   gfmStrikethroughCjkFriendly,
+  type Options,
 } from "micromark-extension-cjk-friendly-gfm-strikethrough";
+import type { Processor } from "unified";
 
 export type { Options };
 

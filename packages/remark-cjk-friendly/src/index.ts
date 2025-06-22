@@ -1,7 +1,6 @@
 import type { Root } from "mdast";
-import type { Processor } from "unified";
-
 import { cjkFriendlyExtension } from "micromark-extension-cjk-friendly";
+import type { Processor } from "unified";
 
 /**
  * Make Markdown emphasis (`**`) in CommonMark more friendly with Chinese, Japanese, and Korean (CJK).

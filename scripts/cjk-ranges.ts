@@ -195,7 +195,7 @@ const dataStore = await mapObjValuesAsync(dataUrl, async (url) => {
   async function tryStat(path: string) {
     try {
       return await stat(path);
-    } catch (e) {
+    } catch {
       return null;
     }
   }
@@ -675,13 +675,13 @@ if (!formatType.has(formatLang)) {
   formatLang = "md";
 }
 const format =
-  // biome-ignore lint/style/noNonNullAssertion: <explanation>
+  // biome-ignore lint/style/noNonNullAssertion: 100% exists
   formatType.get(formatLang)!;
 const variableNames =
-  // biome-ignore lint/style/noNonNullAssertion: <explanation>
+  // biome-ignore lint/style/noNonNullAssertion: 100% exists
   variableNamesMap.get(lang) ?? variableNamesMap.get(formatLang)!;
 const newVariable =
-  // biome-ignore lint/style/noNonNullAssertion: <explanation>
+  // biome-ignore lint/style/noNonNullAssertion: 100% exists
   newVariableMap.get(lang) ?? newVariableMap.get(formatLang)!;
 const formatSet: FormatSet = { format, variableNames, newVariable };
 

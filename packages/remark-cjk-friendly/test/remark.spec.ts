@@ -52,13 +52,6 @@ async function mdx2React(md: string): Promise<string> {
   return result.toString();
 }
 
-async function mdx2ReactNonCjk(md: string): Promise<string> {
-  const result = await compileMdx(md, {
-    remarkPlugins: [remarkGfm],
-  });
-  return result.toString();
-}
-
 async function gfm2Html(md: string): Promise<string> {
   const result = await processorWithGfm.process(md);
   return result.toString();
