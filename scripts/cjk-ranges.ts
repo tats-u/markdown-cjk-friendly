@@ -342,23 +342,13 @@ for (const { first, last } of unassignedAsCjkRanges) {
   }
 }
 
-///// variation selector following cjk /////
+///// Non-emoji General-use Variation Selectors /////
 
-const variationSelectorSet = new Set<number>();
-
-for (const line of dataStore.standardizedVariants) {
-  const re = /^([0-9A-F]+) ([0-9A-F]+); /.exec(line);
-  if (!re) continue;
-  const primary = Number.parseInt(re[1], 16);
-  const vs = Number.parseInt(re[2], 16);
-  if (!isCjkTable[primary]) continue;
-
-  variationSelectorSet.add(vs);
-}
-variationSelectorSet.add(0xfe0e);
-
-const variationSelectorArray = Array.from(variationSelectorSet);
-variationSelectorArray.sort((a, b) => a - b);
+// [0xFE00, 0xFE0E]
+const variationSelectorArray = Array.from(
+  { length: 0xfe0e - 0xfe00 + 1 },
+  (_, i) => 0xfe00 + i,
+);
 
 ///// CJK switchable between emoji and text symbol
 
@@ -475,7 +465,7 @@ interface StatementBuildInfo {
 
 interface VariableNames {
   isCjk: string;
-  isSvsFollowingCjk: string;
+  isNonEmojiGeneralUseVs: string;
   isWideIfEawUnassigned: string;
   emojisDerivedFromCjk: string;
   cjkSymbolsSwitchableToEmoji: string;
@@ -483,7 +473,7 @@ interface VariableNames {
 
 const snakeCase: VariableNames = {
   isCjk: "is_cjk",
-  isSvsFollowingCjk: "is_svs_following_cjk",
+  isNonEmojiGeneralUseVs: "is_non_emoji_general_use_vs",
   isWideIfEawUnassigned: "is_wide_if_eaw_unassigned",
   cjkSymbolsSwitchableToEmoji: "cjk_symbols_switchable_to_emoji",
   emojisDerivedFromCjk: "emojis_derived_from_cjk",
@@ -491,7 +481,7 @@ const snakeCase: VariableNames = {
 
 const camelCase: VariableNames = {
   isCjk: "isCjk",
-  isSvsFollowingCjk: "isSvsFollowingCjk",
+  isNonEmojiGeneralUseVs: "isNonEmojiGeneralUseVs",
   isWideIfEawUnassigned: "isWideIfEawUnassigned",
   cjkSymbolsSwitchableToEmoji: "cjkSymbolsSwitchableToEmoji",
   emojisDerivedFromCjk: "emojisDerivedFromCjk",
@@ -499,7 +489,7 @@ const camelCase: VariableNames = {
 
 const markdownCase: VariableNames = {
   isCjk: "CJK characters",
-  isSvsFollowingCjk: "Standard Variation Selectors following CJK code points",
+  isNonEmojiGeneralUseVs: "Non-emoji General-use Variation Selectors",
   isWideIfEawUnassigned:
     'EAW is treated as "W" if unassigned (defined by Unicode)',
   cjkSymbolsSwitchableToEmoji:
@@ -692,7 +682,7 @@ console.log();
 console.log(
   printRanges(
     rangesFromAscSortedValues(variationSelectorArray),
-    "isSvsFollowingCjk",
+    "isNonEmojiGeneralUseVs",
   ),
 );
 if (formatLang === "md") {

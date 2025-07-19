@@ -435,7 +435,7 @@ is_cjk = 0x1100 <= cp <= 0x11ff \
 
 </details>
 
-## Standard Variation Selectors following CJK code points
+## Non-emoji General-use Variation Selectors
 
 - U+FE00..U+FE02
 - U+FE0E
