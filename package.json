@@ -18,7 +18,7 @@
   ],
   "type": "module",
   "devDependencies": {
-    "@biomejs/biome": "2.0.4",
+    "@biomejs/biome": "2.1.2",
     "@rslib/core": "^0.4.1",
     "@types/jsdom": "^21.1.7",
     "@types/node": "^22.15.32",
