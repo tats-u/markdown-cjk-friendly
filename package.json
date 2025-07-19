@@ -11,6 +11,7 @@
     "lint:biome": "biome check",
     "fix": "run-s fix:*",
     "fix:biome": "biome check --write",
+    "postupdate:biome": "biome migrate --write",
     "print-ranges": "node --experimental-strip-types scripts/cjk-ranges.ts"
   },
   "workspaces": [
