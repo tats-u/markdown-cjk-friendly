@@ -437,8 +437,7 @@ is_cjk = 0x1100 <= cp <= 0x11ff \
 
 ## Non-emoji General-use Variation Selectors
 
-- U+FE00..U+FE02
-- U+FE0E
+- U+FE00..U+FE0E
 
 ## EAW is treated as "W" if unassigned (defined by Unicode)
 
