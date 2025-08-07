@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@astrojs/mdx": "^4.3.0",
-    "astro": "^5.8.0",
+    "astro": "^5.12.8",
     "remark-cjk-friendly": "workspace:^",
     "remark-cjk-friendly-gfm-strikethrough": "workspace:^"
   }
