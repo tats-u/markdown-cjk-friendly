@@ -146,7 +146,7 @@ This modification of the specification does not affect the other languages than 
 
 ## Example Configurations / <span lang="ja">設定例</span> / <span lang="zh-Hans-CN">示例配置</span> / <span lang="ko">예제 새플</span>
 
-### MDX (using `remark-cjk-frienly` family)
+### MDX (using `remark-cjk-friendly` family)
 
 - [Docusaurus](./demos/docusaurus/docusaurus.config.js)
 - [Astro](./demos/astro/astro.config.mjs)
