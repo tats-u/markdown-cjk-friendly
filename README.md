@@ -154,7 +154,7 @@ This modification of the specification does not affect the other languages than 
 
 ### `markdown-it` (using `markdown-it-cjk-friendly`)
 
-- [VitePress](./demos/vitepress/.vitepress/config.mjs)
+- [VitePress](./demos/vitepress/.vitepress/config.mjs) (enabled by default since v2.0.0-alpha.12)
 
 ## Which package(s) should I use? / <span lang="ja">どのパッケージを使うべきか</span> / <span lang="zh-Hans-CN">应该使用哪个包</span> / <span lang="ko">쓰었는 패키지를 사용해야 하나</span>
 
