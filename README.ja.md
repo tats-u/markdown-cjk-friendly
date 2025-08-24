@@ -1,8 +1,9 @@
 # Markdown packages in CommonMark revision candidate compatible with Chinese, Japanese, and Korean (CJK)
 
-> **English** | [日本語](./README.ja.md) | [한국어](./README.ko.md) | [简体中文](./README.zh-Hans.md)
+> [English](./README.md) | **日本語** | [한국어](./README.ko.md) | [简体中文](./README.zh-Hans.md)
 
-## Packages
+
+## パッケージ一覧
 
 - [`markdown-it-cjk-friendly`](./packages/markdown-it-cjk-friendly) [![Version](https://img.shields.io/npm/v/markdown-it-cjk-friendly)](https://npmjs.com/package/markdown-it-cjk-friendly) ![Node Current](https://img.shields.io/node/v/markdown-it-cjk-friendly) [![NPM Downloads](https://img.shields.io/npm/dm/markdown-it-cjk-friendly)](https://npmjs.com/package/markdown-it-cjk-friendly) [![NPM Last Update](https://img.shields.io/npm/last-update/markdown-it-cjk-friendly)](https://npmjs.com/package/markdown-it-cjk-friendly)
 - [`remark-cjk-friendly`](./packages/remark-cjk-friendly) [![Version](https://img.shields.io/npm/v/remark-cjk-friendly)](https://npmjs.com/package/remark-cjk-friendly) ![Node Current](https://img.shields.io/node/v/remark-cjk-friendly)
@@ -13,30 +14,30 @@
     - [`micromark-extension-cjk-friendly-gfm-strikethrough`](./packages/micromark-extension-cjk-friendly-gfm-strikethrough) [![Version](https://img.shields.io/npm/v/micromark-extension-cjk-friendly-gfm-strikethrough)](https://npmjs.com/package/micromark-extension-cjk-friendly-gfm-strikethrough) ![Node Current](https://img.shields.io/node/v/micromark-extension-cjk-friendly-gfm-strikethrough) [![NPM Downloads](https://img.shields.io/npm/dm/micromark-extension-cjk-friendly-gfm-strikethrough)](https://npmjs.com/package/micromark-extension-cjk-friendly-gfm-strikethrough) [![NPM Last Update](https://img.shields.io/npm/last-update/micromark-extension-cjk-friendly-gfm-strikethrough)](https://npmjs.com/package/micromark-extension-cjk-friendly-gfm-strikethrough)
 - ~~[`markdown-it-cj-friendly`](./packages/markdown-it-cj-friendly)~~ [![Version](https://img.shields.io/npm/v/markdown-it-cj-friendly)](https://npmjs.com/package/markdown-it-cj-friendly) [![NPM Downloads](https://img.shields.io/npm/dm/markdown-it-cj-friendly)](https://npmjs.com/package/markdown-it-cj-friendly) (Deprecated; switch to `markdown-it-cjk-friendly`)
 
-## Ports
+## 移植
 
-### As an extension
+### 拡張機能として
 
 - [Comrak](https://github.com/kivikakk/comrak)
   - [commonmarker](https://github.com/gjtorikian/commonmarker)
 
-## Planned
+## 予定
 
 - Tweak specifications
 - Port for non-JavaScript implementations
 
-## Specification
+## 規格書
 
-See [specification.md](specification.md).
+[specification.md](specification.md)（英語） を参照してください。
 
-### Documents for implementers
+### 実装者向け文書
 
 - [implementers-tips.md](implementers-tips.md) (English)
 - [ranges.md](ranges.md) (English)
 
-## Problem
+## 問題
 
-CommonMark has a problem that the following emphasis marks `**` are not recognized as emphasis marks in Japanese,Chinese, and Korean.
+CommonMarkには、日本語・中国語・韓国語内の次のような強調記号(`**`)が強調記号として認識されない問題があります。
 
 ```md
 **このアスタリスクは強調記号として認識されず、そのまま表示されます。**この文のせいで。
@@ -46,39 +47,51 @@ CommonMark has a problem that the following emphasis marks `**` are not recogniz
 **이 별표는 강조 표시로 인식되지 않고 그대로 표시됩니다(이 괄호 때문에)**이 문장 때문에.
 ```
 
-This problem occurs because the character just inside the `**` is a (Japanese or Chinese) punctuation mark (。) or parenthesis and the character just outside is not a space or punctuation mark.
+これが起こった原因は、終了側の`**`のすぐ内側が約物（。やカッコ）、かつ外側が約物や空白以外の文字であるためです。
 
-Of course, not only the end side but also the start side has the same issue.
+もちろん終了側だけでなく、開始側も同様の問題が存在します。
 
 CommonMark issue: https://github.com/commonmark/commonmark-spec/issues/650
 
-## Who should adopt this specifications instead of the original CommonMark or GFM?
+## 元のCommonMarkやGFMの代わりにこの仕様を採用べき人
 
-If you are an engineer who must handle Chinese, Japanese, and Korean content that cannot be fully supervised, it is strongly recommended to adopt this specification instead of plain CommonMark or GFM. "Cannot be fully supervised" refers to situations such as:
+もしエンジニアであるあなたが全てに監修を入れられない日本語・中国語・韓国語のコンテンツを扱わなければならない場合、素のCommonMarkやGFMではなく、この仕様を採用することを強く推奨します。「全てに監修を入れられない」というのは、例えば次のようなものを指します。
 
-1. When you need to display user-generated or AI-generated content as-is. For example:
-    
-    | ❌️ Plain CommonMark | ✅️ With this spec |
+1. ユーザまたはAIが作成したコンテンツをそのまま表示する必要がある場合。例えば：
+
+    | ❌️ 素のCommonMark | ✅️ 本規格 |
     |---|---|
     | 这是一个\*\*“会引起”<b>渲染错误的</b>“已知问题”<b>，当加重符号\*\*遇到某些中文标点时，可能就会出现</b>“识别不了”\*\*的情况。就如这句话展现的一样。| 这是一个<b>“会引起”</b>渲染错误的<b>“已知问题”</b>，当加重符号\*\*遇到某些中文标点时，可能就会出现<b>“识别不了”</b>的情况。就如这句话展现的一样。 |
 
-    Source: [CherryHQ/cherry-studio#4119](https://github.com/CherryHQ/cherry-studio/pull/4119)
+    来源: [CherryHQ/cherry-studio#4119](https://github.com/CherryHQ/cherry-studio/pull/4119)
 
-2. When many translators do not understand this CommonMark behavior, and you cannot provide real-time rendering previews similar to production, and `<strong>` tags are not allowed
-    - When using translation services like Crowdin or Transifex
-    - When the person responsible for translation quality is not an engineer or does not understand this CommonMark behavior
+2. 翻訳者に、このCommonMarkの仕様を理解していない人も多く、なおかつリアルタイムで本番同様の描画プレビューを提供できず、`<strong>`タグを許可していない場合
+    - 翻訳にCrowdin・Transifexなどの翻訳サービスを使っている場合
+    - 翻訳の品質に責任を負っている人が非エンジニアである、またはComonMarkのこの挙動を理解していない場合
 
-Additionally, if you are creating Markdown-related software or services primarily targeting Chinese, Japanese, or Korean users (or all of them), it is strongly recommended to adopt this specification.
+また、あなたが主に日本人・中国人・韓国人のいずれかまたは全てを対象としたMarkdown関連のソフトウェアやサービスを作成する場合も、この仕様を採用することを強く推奨します。
 
-## Compatibility with CommonMark
+### 1.の例（中国語）
 
-This specification is identical to CommonMark for all input except Chinese, Japanese, Korean, and (some emojis and symbols). The aforementioned plugins/extension packages guarantee that their Markdown implementations output the same HTML for all CommonMark test cases as of CommonMark 0.31.2.
+❌️素のCommonMark:
 
-## Compatibility with the other languages
+![plain CommonMark](https://github.com/user-attachments/assets/80bd3ffd-9416-4080-bc10-a408afef845b)
 
-This modification of the specification does not affect the other languages than Chinese, Japanese, and Korean. Even if your application or document has translations or content in other languages, it will not be affected, so please feel free to use the packages.
+✅️本規格:
 
-## Example Configurations
+![with this spec](https://github.com/user-attachments/assets/b2e159c5-3cae-495f-89c6-280ddb2926ce)
+
+Image source: [CherryHQ/cherry-studio#4119](https://github.com/CherryHQ/cherry-studio/pull/4119)
+
+## CommonMarkとの互換性
+
+本仕様は、日本語・中国語・韓国語・ごく一部の絵文字や記号以外の入力に対してはCommonMarkと同一です。上記のプラグイン/拡張パッケージは、CommonMark 0.31.2時点の全てのCommonMarkテストケースでMarkdown実装が同じHTMLを出力することを保証しています。
+
+## 他言語との互換性
+
+この仕様変更提案は、日本語・中国語・韓国語以外の言語には影響しません。アプリケーションやドキュメントに他言語の翻訳やコンテンツが含まれていても影響はありませんので、安心してパッケージをご利用ください。
+
+## 設定例
 
 ### MDX (using `remark-cjk-friendly` family)
 
@@ -90,11 +103,11 @@ This modification of the specification does not affect the other languages than 
 
 - [VitePress (v1.x)](./demos/vitepress/.vitepress/config.mjs) (built-in and enabled by default since v2.0.0-alpha.12)
 
-## Which package(s) should I use?
+## どのパッケージを使うべきか
 
-If you're using `remark`, `markdown-it`, or `micromark` directly, you should use the corresponding packages whose names start with the name of the package you're using.
+`remark`・`markdown-it`・`micromark`を直接使っている場合は、そのパッケージの名前から始まるパッケージを使ってください。
 
-If you don't know which package to use because you're not using `remark`, `markdown-it`, or `micromark` directly, you can follow the flowchart below.
+`remark`・`markdown-it`・`micromark`を直接は使っていないのでどのパッケージを使うべきか不明な場合は、下記のフローチャートを参考にしてください。
 
 ```mermaid
 flowchart TD
@@ -113,11 +126,11 @@ remarkGfm --"Yes"--> remarkBoth
 remarkGfm --"No"--> remarkBase([remark-cjk-friendly])
 ```
 
-## Contributing
+## 貢献
 
-### Submit an issue or PR
+### Issue・PRの投稿
 
-Please submit an issue or PR in English or Japanese. English is recommended.
+Issue・PRは英語か日本語で投稿してください。英語を推奨します。
 
 ### Build
 
