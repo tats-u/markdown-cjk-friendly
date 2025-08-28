@@ -13,7 +13,8 @@
     "fix": "run-s fix:*",
     "fix:biome": "biome check --write",
     "postupdate:biome": "biome migrate --write",
-    "print-ranges": "node --experimental-strip-types scripts/cjk-ranges.ts"
+    "print-ranges": "node --experimental-strip-types scripts/cjk-ranges.ts",
+    "bench:all": "vitest bench"
   },
   "workspaces": [
     "packages/*"
@@ -21,6 +22,7 @@
   "type": "module",
   "devDependencies": {
     "@biomejs/biome": "2.1.2",
+    "@codspeed/vitest-plugin": "^4.0.1",
     "@types/jsdom": "^21.1.7",
     "@types/mustache": "^4.2.6",
     "@types/node": "catalog:",
