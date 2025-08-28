@@ -27,3 +27,8 @@ jobs:
         run: node --run lint:postbuild
       - name: Test
         run: node --run test
+      - name: Run benchmarks
+        uses: CodSpeedHQ/action@v3
+        with:
+          run: node --run bench:all
+          token: ${{ secrets.CODSPEED_TOKEN }}
