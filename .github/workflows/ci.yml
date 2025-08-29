@@ -27,8 +27,34 @@ jobs:
         run: node --run lint:postbuild
       - name: Test
         run: node --run test
+      - name: Save built packages
+        uses: actions/upload-artifact@v3
+        with:
+          name: built-packages
+          path: packages/*/dist
+  bench:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    needs: build
+    strategy:
+      matrix:
+        shard: ["1/5","2/5","3/5","4/5","5/5"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22.x'
+          registry-url: 'https://registry.npmjs.org'
+      - uses: pnpm/action-setup@v4
+        with:
+          run_install: true
+      - name: Restore built packages
+        uses: actions/download-artifact@v3
+        with:
+          name: built-packages
       - name: Run benchmarks
         uses: CodSpeedHQ/action@v3
         with:
-          run: node --run bench:all
+          run: pnpm vitest bench --run --shard=${{ matrix.shard }}
           token: ${{ secrets.CODSPEED_TOKEN }}
