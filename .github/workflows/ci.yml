@@ -11,7 +11,7 @@ jobs:
     permissions:
       contents: read
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - uses: actions/setup-node@v4
         with:
           node-version: '22.x'
@@ -28,7 +28,7 @@ jobs:
       - name: Test
         run: node --run test
       - name: Save built packages
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: built-packages
           path: packages/*/dist
@@ -41,7 +41,7 @@ jobs:
       matrix:
         shard: ["1/5","2/5","3/5","4/5","5/5"]
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - uses: actions/setup-node@v4
         with:
           node-version: '22.x'
@@ -50,7 +50,7 @@ jobs:
         with:
           run_install: true
       - name: Restore built packages
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: built-packages
       - name: Run benchmarks
