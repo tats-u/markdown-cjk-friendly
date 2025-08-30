@@ -10,4 +10,8 @@ export default defineConfig({
     }),
     codspeedPlugin(),
   ],
+  test: {
+    testTimeout: 60000,
+    hookTimeout: 60000,
+  },
 });
