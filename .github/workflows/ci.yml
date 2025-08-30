@@ -46,7 +46,7 @@ jobs:
         with:
           run_install: true
       - name: Build
-        run: node --run build
+        run: node --run build:lib
       - name: Run benchmarks
         uses: CodSpeedHQ/action@v3
         with:
