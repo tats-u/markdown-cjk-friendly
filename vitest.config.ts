@@ -4,10 +4,10 @@ import { defineConfig } from "vitest/config";
 
 export default defineConfig({
   plugins: [
-    codspeedPlugin(),
     AutoImport({
       imports: ["vitest"],
       dts: true, // generate TypeScript declaration
     }),
+    codspeedPlugin(),
   ],
 });
