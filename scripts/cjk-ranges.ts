@@ -15,7 +15,7 @@ const getUrlBase = {
     return `${unicodePublic}${version}.0/ucd/`;
   },
   ucdEmoji(version: string) {
-    return `${unicodePublic}UCD/${version}/emoji/`;
+    return `${unicodePublic}${version}.0/ucd/emoji/`;
   },
   emoji(version: string) {
     return `${unicodePublic}emoji/${version}/`;
@@ -36,7 +36,10 @@ const getDataUrl = {
     return `${getUrlBase.emoji(version)}emoji-sequences.txt`;
   },
   emojiVariationSequences(version: string) {
-    return `${getUrlBase.ucd(version)}emoji/emoji-variation-sequences.txt`;
+    return `${getUrlBase.ucdEmoji(version)}emoji-variation-sequences.txt`;
+  },
+  emojiData(version: string) {
+    return `${getUrlBase.ucdEmoji(version)}emoji-data.txt`;
   },
 } as const;
 
@@ -244,19 +247,16 @@ const hangulRanges = mapFilter(dataStore.scripts, (line) => {
   return null;
 }).toArray();
 
-const singleCodePointEmojiRanges = mapFilter(
-  dataStore.emojiSequences,
-  (line) => {
-    // Don't include "ABCD FE0F    ;"
-    const re = /^([0-9A-F]+)(?:\.\.([0-9A-F]+))?\s+;/.exec(line);
-    if (re) {
-      const first = Number.parseInt(re[1], 16);
-      const last = re[2] ? Number.parseInt(re[2], 16) : first;
-      return { first, last } as const;
-    }
-    return null;
-  },
-).toArray();
+const singleCodePointEmojiRanges = mapFilter(dataStore.emojiData, (line) => {
+  const reResult =
+    /^([0-9A-F]+)(?:\.\.([0-9A-F]+))? +; +Emoji_Presentation /.exec(line);
+  if (reResult) {
+    const first = Number.parseInt(reResult[1], 16);
+    const last = reResult[2] ? Number.parseInt(reResult[2], 16) : first;
+    return { first, last } as Range;
+  }
+  return null;
+}).toArray();
 
 const isCjkTable: (boolean | null)[] = Array.from(
   { length: 0x110000 },
