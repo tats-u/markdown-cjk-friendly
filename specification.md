@@ -12,7 +12,7 @@ A <a href="#cjk-character" id="cjk-character">CJK character</a> is a [character]
 
 - Meets _both_ of the following criteria:
   - [UAX #11 East Asian Width](https://www.unicode.org/reports/tr11/) category is either `W`, `F`, or `H`
-  - Not in [RGI emoji set](https://www.unicode.org/reports/tr51/#def_rgi_set) (i.e. is not [fully-qualified emoji](https://www.unicode.org/reports/tr51/#def_fully_qualified_emoji)) defined in [UTS #51 Unicode Emoji](https://www.unicode.org/reports/tr51/#def_qualified_emoji_character)
+  - Not [default emoji presentation character](https://www.unicode.org/reports/tr51/#def_emoji_presentation) (substantially equivalent to: is not in [RGI emoji set](https://www.unicode.org/reports/tr51/#def_rgi_set) or is not [fully-qualified emoji](https://www.unicode.org/reports/tr51/#def_fully_qualified_emoji)) defined in [UTS #51 Unicode Emoji](https://www.unicode.org/reports/tr51/#def_qualified_emoji_character)
 - [UAX #24 Unicode Script Property](https://www.unicode.org/reports/tr24/) is Hangul
 
 An <a href="#ideographic-variation-selector" id="ideographic-variation-selector">Ideographic Variation Selector</a> is a [character](https://spec.commonmark.org/0.31.2/#character) in the Variation Selectors Supplement Block (U+E0100–U+E01EF).
