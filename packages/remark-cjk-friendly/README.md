@@ -75,14 +75,14 @@ Additionally, if you are creating Markdown-related software or services primaril
 
 <span lang="ja">また、あなたが主に日本人・中国人・韓国人のいずれかまたは全てを対象としたMarkdown関連のソフトウェアやサービスを作成する場合も、このパッケージを使う（この仕様を採用する）ことを強く推奨します。</span>
 
-<span lang="zh">如果作为工程师的您必须处理无法全面监督的中文、日文和韩文内容，强烈建议使用这个包装（采用此规范，而不是普通的CommonMark或GFM）。"无法全面监督"指的是以下情况：</span>
+<span lang="zh-Hans-CN">如果作为工程师的您必须处理无法全面监督的中文、日文和韩文内容，强烈建议使用这个包装（采用此规范，而不是普通的CommonMark或GFM）。"无法全面监督"指的是以下情况：</span>
 
-1. <span lang="zh">当需要按原样显示用户生成或AI生成的内容时</span>
-2. <span lang="zh">当许多翻译人员不理解这个CommonMark行为，而且无法提供类似生产环境的实时渲染预览，并且不允许使用`<strong>`标签时</span>
-    - <span lang="zh">当使用Crowdin或Transifex等翻译服务时</span>
-    - <span lang="zh">当负责翻译质量的人不是工程师或不理解这个CommonMark行为时</span>
+1. <span lang="zh-Hans-CN">当需要按原样显示用户生成或AI生成的内容时</span>
+2. <span lang="zh-Hans-CN">当许多翻译人员不理解这个CommonMark行为，而且无法提供类似生产环境的实时渲染预览，并且不允许使用`<strong>`标签时</span>
+    - <span lang="zh-Hans-CN">当使用Crowdin或Transifex等翻译服务时</span>
+    - <span lang="zh-Hans-CN">当负责翻译质量的人不是工程师或不理解这个CommonMark行为时</span>
 
-<span lang="zh">此外，如果您正在创建主要面向中国人、日本人或韩国人（或全部）的Markdown相关软件或服务，也强烈建议采用此规范。</span>
+<span lang="zh-Hans-CN">此外，如果您正在创建主要面向中国人、日本人或韩国人（或全部）的Markdown相关软件或服务，也强烈建议采用此规范。</span>
 
 <span lang="ko">엔지니어로서 완전히 감독할 수 없는 일본어, 중국어, 한국어 콘텐츠를 다뤄야 하는 경우, 이 패키지를 사용하세요 (일반 CommonMark나 GFM 대신 이 사양을 채택할 것을 강력히 권장합니다). "완전히 감독할 수 없는"이란 다음과 같은 상황을 의미합니다:</span>
 
