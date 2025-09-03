@@ -1,6 +1,6 @@
 # Markdown packages in CommonMark revision candidate compatible with Chinese, Japanese, and Korean (CJK)
 
-## Packages / <span lang="ja">パッケージ一覧</span> / <span lang="zh-Hans-CN">包裹</span> / <span lang="ko">패키지 목록</span>
+## Packages / <span lang="ja">パッケージ一覧</span> / <span lang="zh-Hans-CN">相关的包</span> / <span lang="ko">패키지 목록</span>
 
 - [`markdown-it-cjk-friendly`](./packages/markdown-it-cjk-friendly) [![Version](https://img.shields.io/npm/v/markdown-it-cjk-friendly)](https://npmjs.com/package/markdown-it-cjk-friendly) ![Node Current](https://img.shields.io/node/v/markdown-it-cjk-friendly) [![NPM Downloads](https://img.shields.io/npm/dm/markdown-it-cjk-friendly)](https://npmjs.com/package/markdown-it-cjk-friendly) [![NPM Last Update](https://img.shields.io/npm/last-update/markdown-it-cjk-friendly)](https://npmjs.com/package/markdown-it-cjk-friendly)
 - [`remark-cjk-friendly`](./packages/remark-cjk-friendly) [![Version](https://img.shields.io/npm/v/remark-cjk-friendly)](https://npmjs.com/package/remark-cjk-friendly) ![Node Current](https://img.shields.io/node/v/remark-cjk-friendly)
@@ -18,7 +18,7 @@
 - [Comrak](https://github.com/kivikakk/comrak)
   - [commonmarker](https://github.com/gjtorikian/commonmarker)
 
-## Planned / <span lang="ja">予定</span> / <span lang="zh-Hans-CN">计划</span> / <span lang="ko">예정</span>
+## Planned / <span lang="ja">予定</span> / <span lang="zh-Hans-CN">未来的改进</span> / <span lang="ko">예정</span>
 
 - Tweak specifications
 - Port for non-JavaScript implementations
@@ -33,7 +33,7 @@ See [specification.md](specification.md).
 
 <span lang="ko">[specification.md](specification.md)（영어）를 참고해 주시기 바라요.</span>
 
-### Documents for implementers / <span lang="ja">実装者向け文書</span> / <span lang="zh-Hans-CN">实施者文件</span> / <span lang="ko">구현자를 위한 문서</span>
+### Documents for implementers / <span lang="ja">実装者向け文書</span> / <span lang="zh-Hans-CN">实现文档</span> / <span lang="ko">구현자를 위한 문서</span>
 
 - [implementers-tips.md](implementers-tips.md) (English)
 - [ranges.md](ranges.md) (English)
@@ -94,14 +94,14 @@ Additionally, if you are creating Markdown-related software or services primaril
 
 <span lang="ja">また、あなたが主に日本人・中国人・韓国人のいずれかまたは全てを対象としたMarkdown関連のソフトウェアやサービスを作成する場合も、この仕様を採用することを強く推奨します。</span>
 
-<span lang="zh">如果作为工程师的您必须处理无法全面监督的中文、日文和韩文内容，强烈建议采用此规范，而不是普通的CommonMark或GFM。"无法全面监督"指的是以下情况：</span>
+<span lang="zh-Hans-CN">如果作为工程师的您必须处理无法全面监督的中文、日文和韩文内容，强烈建议采用此规范，而不是普通的CommonMark或GFM。"无法全面监督"指的是以下情况：</span>
 
-1. <span lang="zh">当需要按原样显示用户生成或AI生成的内容时</span>
-2. <span lang="zh">当许多翻译人员不理解这个CommonMark行为，而且无法提供类似生产环境的实时渲染预览，并且不允许使用`<strong>`标签时</span>
-    - <span lang="zh">当使用Crowdin或Transifex等翻译服务时</span>
-    - <span lang="zh">当负责翻译质量的人不是工程师或不理解这个CommonMark行为时</span>
+1. <span lang="zh-Hans-CN">当需要按原样显示用户生成或AI生成的内容时</span>
+2. <span lang="zh-Hans-CN">当许多翻译人员不理解这个CommonMark行为，而且无法提供类似生产环境的实时渲染预览，并且不允许使用`<strong>`标签时</span>
+    - <span lang="zh-Hans-CN">当使用Crowdin或Transifex等翻译服务时</span>
+    - <span lang="zh-Hans-CN">当负责翻译质量的人不是工程师或不理解这个CommonMark行为时</span>
 
-<span lang="zh">此外，如果您正在创建主要面向中国人、日本人或韩国人（或全部）的Markdown相关软件或服务，也强烈建议采用此规范。</span>
+<span lang="zh-Hans-CN">此外，如果您正在创建主要面向中国人、日本人或韩国人（或全部）的Markdown相关软件或服务，也强烈建议采用此规范。</span>
 
 <span lang="ko">엔지니어로서 완전히 감독할 수 없는 한국어, 일본어, 중국어 콘텐츠를 다뤄야 하는 경우, 일반 CommonMark나 GFM 대신 이 사양을 채택할 것을 강력히 권장합니다. "완전히 감독할 수 없는"이란 다음과 같은 상황을 의미합니다:</span>
 
@@ -162,7 +162,7 @@ If you're using `remark`, `markdown-it`, or `micromark` directly, you should use
 
 <span lang="ja">`remark`・`markdown-it`・`micromark`を直接使っている場合は、そのパッケージの名前から始まるパッケージを使ってください。</span>
 
-<span lang="zh-Hans-CN">如果您因为直接使用 `remark`、`markdown-it` 或 `micromark` 而不知道该使用哪个包，可以参考下面的流程图。</span>
+<span lang="zh-Hans-CN">如果您直接使用`remark`、`markdown-it`或`micromark`，则您正在使用的包的名称开头的相应包是正确的。</span>
 
 <span lang="ko">`remark`, `markdown-it`, `micromark`를 직접 사용하지 않아서 어떤 패키지를 사용해야 하나에는 그녀의 패키지를 사용해야 하나요.</span>
 
@@ -170,7 +170,7 @@ If you don't know which package to use because you're not using `remark`, `markd
 
 <span lang="ja">`remark`・`markdown-it`・`micromark`を直接は使っていないのでどのパッケージを使うべきか不明な場合は、下記のフローチャートを参考にしてください。</span>
 
-<span lang="zh-Hans-CN">如果您因为没有直接使用 `remark`、`markdown-it` 或 `micromark` 而不知道该使用哪个包，可以参考下面的流程图。</span>
+<span lang="zh-Hans-CN">如果您因为没有直接使用`remark`、`markdown-it`或`micromark`而不知道该使用哪个包，可以参考下面的流程图。</span>
 
 <span lang="ko">`remark`, `markdown-it`, `micromark`를 직접 사용하지 않아서 어떤 패키지를 사용해야 할지 모르는 경우에는 아래의 순서도를 참고해 주시기 바랍니다.</span>
 
@@ -193,13 +193,13 @@ remarkGfm --"No"--> remarkBase([remark-cjk-friendly])
 
 ## Contributing / <span lang="ja">貢献</span> / <span lang="zh-Hans-CN">贡献</span> / <span lang="ko">기여</span>
 
-### Submit an issue or PR / <span lang="ja">Issue・PRの投稿</span> / <span lang="zh-Hans-CN">提出一个 issue 或 PR</span> / <span lang="ko">이슈 및 PR 제출</span>
+### Submit an issue or PR / <span lang="ja">Issue・PRの投稿</span> / <span lang="zh-Hans-CN">提出一个issue或PR</span> / <span lang="ko">이슈 및 PR 제출</span>
 
 Please submit an issue or PR in English or Japanese. English is recommended.
 
 <span lang="ja">Issue・PRは英語か日本語で投稿してください。英語を推奨します。</span>
 
-<span lang="zh-Hans-CN">请用英语或日语提交问题或 PR。建议使用英语。</span>
+<span lang="zh-Hans-CN">请用英语或日语提交问题或PR。建议使用英语。</span>
 
 <span lang="ko">이슈나 PR은 영어 또는 일본어로 제출해 주시기 바랍니다. 영어를 권장합니다.</span>
 
