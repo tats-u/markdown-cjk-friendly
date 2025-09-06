@@ -1,4 +1,10 @@
 packages:
-  - 'packages/*'
-  - 'integration_tests'
-  - 'demos/*'
+  - packages/*
+  - integration_tests
+  - demos/*
+onlyBuiltDependencies:
+  - '@swc/core'
+  - core-js
+  - core-js-pure
+  - esbuild
+  - sharp
