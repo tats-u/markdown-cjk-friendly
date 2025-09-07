@@ -69,8 +69,8 @@ See [implementers-tips.md](implementers-tips.md).
 | East Asian Width | https://www.unicode.org/Public/UCD/latest/ucd/EastAsianWidth.txt | https://www.unicode.org/Public/16.0.0/ucd/EastAsianWidth.txt |
 | Script | https://www.unicode.org/Public/UCD/latest/ucd/Scripts.txt | https://www.unicode.org/Public/16.0.0/ucd/Scripts.txt |
 | Block | https://www.unicode.org/Public/UCD/latest/ucd/Blocks.txt | https://www.unicode.org/Public/16.0.0/ucd/Blocks.txt |
-| Characters followed by Standard Variation Selector | https://www.unicode.org/Public/UCD/latest/ucd/StandardizedVariants.txt | https://www.unicode.org/Public/16.0.0/ucd/StandardizedVariants.txt |
+| Characters followed by Non-emoji General-use Variation Selector Variation Selector | https://www.unicode.org/Public/UCD/latest/ucd/StandardizedVariants.txt | https://www.unicode.org/Public/16.0.0/ucd/StandardizedVariants.txt |
 | Characters followed by U+FE0E/U+FE0F | https://unicode.org/Public/UCD/latest/ucd/emoji/emoji-variation-sequences.txt | https://unicode.org/Public/16.0.0/ucd/emoji/emoji-variation-sequences.txt |
 | Fully-qualified Emojis (without ZWJ) | https://unicode.org/Public/emoji/latest/emoji-sequences.txt | https://unicode.org/Public/16.0.0/emoji/emoji-sequences.txt |
 | Emoji qualification test | https://unicode.org/Public/emoji/latest/emoji-test.txt | https://unicode.org/Public/16.0.0/emoji/emoji-test.txt |
-| Characters that can be emoji (Useless) | https://www.unicode.org/Public/UCD/latest/ucd/emoji/emoji-data.txt | https://www.unicode.org/Public/16.0.0/ucd/emoji/emoji-data.txt |
+| Default emoji presentation characters | https://www.unicode.org/Public/UCD/latest/ucd/emoji/emoji-data.txt | https://www.unicode.org/Public/16.0.0/ucd/emoji/emoji-data.txt |
