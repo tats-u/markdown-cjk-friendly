@@ -18,6 +18,13 @@ const getUrlBase = {
     return `${unicodePublic}${version}.0/ucd/emoji/`;
   },
   emoji(version: string) {
+    const versionNumber = Number(version);
+    // NaN = latest 
+    if (!Number.isNaN(versionNumber) && versionNumber >= 17) {
+      // https://unicode.org/Public/17.0.0/
+      // https://unicode.org/Public/emoji/
+      return `${unicodePublic}${version}.0/emoji/`;
+    }
     return `${unicodePublic}emoji/${version}/`;
   },
 } as const;
