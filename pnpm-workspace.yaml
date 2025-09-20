@@ -8,3 +8,4 @@ onlyBuiltDependencies:
   - core-js-pure
   - esbuild
   - sharp
+minimumReleaseAge: 1440
