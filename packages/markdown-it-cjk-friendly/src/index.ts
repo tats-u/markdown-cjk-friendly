@@ -60,7 +60,7 @@ function nonEmojiGeneralUseVS(uc: number) {
   return uc >= 0xfe00 && uc <= 0xfe0e;
 }
 
-export default function markdownItCjFriendlyPlugin(md: MarkdownIt): void {
+function markdownItCjFriendlyPlugin(md: MarkdownIt): void {
   const PreviousState = md.inline.State;
 
   class CjFriendlyState extends PreviousState {
@@ -153,3 +153,5 @@ export default function markdownItCjFriendlyPlugin(md: MarkdownIt): void {
 
   md.inline.State = CjFriendlyState;
 }
+
+export default markdownItCjFriendlyPlugin;
