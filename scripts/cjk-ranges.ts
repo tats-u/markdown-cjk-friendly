@@ -19,7 +19,7 @@ const getUrlBase = {
   },
   emoji(version: string) {
     const versionNumber = Number(version);
-    // NaN = latest 
+    // NaN = latest
     if (!Number.isNaN(versionNumber) && versionNumber >= 17) {
       // https://unicode.org/Public/17.0.0/
       // https://unicode.org/Public/emoji/
