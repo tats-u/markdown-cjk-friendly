@@ -59,10 +59,10 @@ node --run print-ranges -- -h
 - U+FFE0..U+FFE6 (￠..￦)
 - U+FFE8..U+FFEE (￨..￮)
 - U+16FE0..U+16FE4 (𖿠..𖿤)
-- U+16FF0..U+16FF1 (𖿰..𖿱)
-- U+17000..U+187F7 (𗀀..𘟷)
-- U+18800..U+18CD5 (𘠀..𘳕)
-- U+18CFF..U+18D08 (𘳿..𘴈)
+- U+16FF0..U+16FF6 (𖿰..𖿶)
+- U+17000..U+18CD5 (𗀀..𘳕)
+- U+18CFF..U+18D1E (𘳿..𘴞)
+- U+18D80..U+18DF2 (𘶀..𘷲)
 - U+1AFF0..U+1AFF3 (𚿰..𚿳)
 - U+1AFF5..U+1AFFB (𚿵..𚿻)
 - U+1AFFD..U+1AFFE (𚿽..𚿾)
@@ -124,10 +124,10 @@ const bool is_cjk = 0x1100 <= cp && cp <= 0x11ff
   || 0xffe0 <= cp && cp <= 0xffe6
   || 0xffe8 <= cp && cp <= 0xffee
   || 0x16fe0 <= cp && cp <= 0x16fe4
-  || 0x16ff0 <= cp && cp <= 0x16ff1
-  || 0x17000 <= cp && cp <= 0x187f7
-  || 0x18800 <= cp && cp <= 0x18cd5
-  || 0x18cff <= cp && cp <= 0x18d08
+  || 0x16ff0 <= cp && cp <= 0x16ff6
+  || 0x17000 <= cp && cp <= 0x18cd5
+  || 0x18cff <= cp && cp <= 0x18d1e
+  || 0x18d80 <= cp && cp <= 0x18df2
   || 0x1aff0 <= cp && cp <= 0x1aff3
   || 0x1aff5 <= cp && cp <= 0x1affb
   || 0x1affd <= cp && cp <= 0x1affe
@@ -192,10 +192,10 @@ const isCjk = 0x1100 <= cp && cp <= 0x11ff
   || 0xffe0 <= cp && cp <= 0xffe6
   || 0xffe8 <= cp && cp <= 0xffee
   || 0x16fe0 <= cp && cp <= 0x16fe4
-  || 0x16ff0 <= cp && cp <= 0x16ff1
-  || 0x17000 <= cp && cp <= 0x187f7
-  || 0x18800 <= cp && cp <= 0x18cd5
-  || 0x18cff <= cp && cp <= 0x18d08
+  || 0x16ff0 <= cp && cp <= 0x16ff6
+  || 0x17000 <= cp && cp <= 0x18cd5
+  || 0x18cff <= cp && cp <= 0x18d1e
+  || 0x18d80 <= cp && cp <= 0x18df2
   || 0x1aff0 <= cp && cp <= 0x1aff3
   || 0x1aff5 <= cp && cp <= 0x1affb
   || 0x1affd <= cp && cp <= 0x1affe
@@ -222,7 +222,7 @@ const isCjk = 0x1100 <= cp && cp <= 0x11ff
 regexp version
 
 ```js
-const isCjkRegex = /^[\u1100-\u11ff\u20a9\u2329-\u232a\u2630-\u2637\u268a-\u268f\u2e80-\u2e99\u2e9b-\u2ef3\u2f00-\u2fd5\u2ff0-\u303e\u3041-\u3096\u3099-\u30ff\u3105-\u312f\u3131-\u318e\u3190-\u31e5\u31ef-\u321e\u3220-\u3247\u3250-\ua48c\ua490-\ua4c6\ua960-\ua97c\uac00-\ud7a3\ud7b0-\ud7c6\ud7cb-\ud7fb\uf900-\ufaff\ufe10-\ufe19\ufe30-\ufe52\ufe54-\ufe66\ufe68-\ufe6b\uff01-\uffbe\uffc2-\uffc7\uffca-\uffcf\uffd2-\uffd7\uffda-\uffdc\uffe0-\uffe6\uffe8-\uffee\u{16fe0}-\u{16fe4}\u{16ff0}-\u{16ff1}\u{17000}-\u{187f7}\u{18800}-\u{18cd5}\u{18cff}-\u{18d08}\u{1aff0}-\u{1aff3}\u{1aff5}-\u{1affb}\u{1affd}-\u{1affe}\u{1b000}-\u{1b122}\u{1b132}\u{1b150}-\u{1b152}\u{1b155}\u{1b164}-\u{1b167}\u{1b170}-\u{1b2fb}\u{1d300}-\u{1d356}\u{1d360}-\u{1d376}\u{1f200}\u{1f202}\u{1f210}-\u{1f219}\u{1f21b}-\u{1f22e}\u{1f230}-\u{1f231}\u{1f237}\u{1f23b}\u{1f240}-\u{1f248}\u{1f260}-\u{1f265}\u{20000}-\u{3fffd}]/u;
+const isCjkRegex = /^[\u1100-\u11ff\u20a9\u2329-\u232a\u2630-\u2637\u268a-\u268f\u2e80-\u2e99\u2e9b-\u2ef3\u2f00-\u2fd5\u2ff0-\u303e\u3041-\u3096\u3099-\u30ff\u3105-\u312f\u3131-\u318e\u3190-\u31e5\u31ef-\u321e\u3220-\u3247\u3250-\ua48c\ua490-\ua4c6\ua960-\ua97c\uac00-\ud7a3\ud7b0-\ud7c6\ud7cb-\ud7fb\uf900-\ufaff\ufe10-\ufe19\ufe30-\ufe52\ufe54-\ufe66\ufe68-\ufe6b\uff01-\uffbe\uffc2-\uffc7\uffca-\uffcf\uffd2-\uffd7\uffda-\uffdc\uffe0-\uffe6\uffe8-\uffee\u{16fe0}-\u{16fe4}\u{16ff0}-\u{16ff6}\u{17000}-\u{18cd5}\u{18cff}-\u{18d1e}\u{18d80}-\u{18df2}\u{1aff0}-\u{1aff3}\u{1aff5}-\u{1affb}\u{1affd}-\u{1affe}\u{1b000}-\u{1b122}\u{1b132}\u{1b150}-\u{1b152}\u{1b155}\u{1b164}-\u{1b167}\u{1b170}-\u{1b2fb}\u{1d300}-\u{1d356}\u{1d360}-\u{1d376}\u{1f200}\u{1f202}\u{1f210}-\u{1f219}\u{1f21b}-\u{1f22e}\u{1f230}-\u{1f231}\u{1f237}\u{1f23b}\u{1f240}-\u{1f248}\u{1f260}-\u{1f265}\u{20000}-\u{3fffd}]/u;
 ```
 
 </details>
@@ -268,10 +268,10 @@ let is_cjk = matches!(
       | 0xffe0..=0xffe6
       | 0xffe8..=0xffee
       | 0x16fe0..=0x16fe4
-      | 0x16ff0..=0x16ff1
-      | 0x17000..=0x187f7
-      | 0x18800..=0x18cd5
-      | 0x18cff..=0x18d08
+      | 0x16ff0..=0x16ff6
+      | 0x17000..=0x18cd5
+      | 0x18cff..=0x18d1e
+      | 0x18d80..=0x18df2
       | 0x1aff0..=0x1aff3
       | 0x1aff5..=0x1affb
       | 0x1affd..=0x1affe
@@ -338,10 +338,10 @@ var isCjk =
     or >= 0xffe0 and <= 0xffe6
     or >= 0xffe8 and <= 0xffee
     or >= 0x16fe0 and <= 0x16fe4
-    or >= 0x16ff0 and <= 0x16ff1
-    or >= 0x17000 and <= 0x187f7
-    or >= 0x18800 and <= 0x18cd5
-    or >= 0x18cff and <= 0x18d08
+    or >= 0x16ff0 and <= 0x16ff6
+    or >= 0x17000 and <= 0x18cd5
+    or >= 0x18cff and <= 0x18d1e
+    or >= 0x18d80 and <= 0x18df2
     or >= 0x1aff0 and <= 0x1aff3
     or >= 0x1aff5 and <= 0x1affb
     or >= 0x1affd and <= 0x1affe
@@ -406,10 +406,10 @@ is_cjk = 0x1100 <= cp <= 0x11ff \
     or 0xffe0 <= cp <= 0xffe6 \
     or 0xffe8 <= cp <= 0xffee \
     or 0x16fe0 <= cp <= 0x16fe4 \
-    or 0x16ff0 <= cp <= 0x16ff1 \
-    or 0x17000 <= cp <= 0x187f7 \
-    or 0x18800 <= cp <= 0x18cd5 \
-    or 0x18cff <= cp <= 0x18d08 \
+    or 0x16ff0 <= cp <= 0x16ff6 \
+    or 0x17000 <= cp <= 0x18cd5 \
+    or 0x18cff <= cp <= 0x18d1e \
+    or 0x18d80 <= cp <= 0x18df2 \
     or 0x1aff0 <= cp <= 0x1aff3 \
     or 0x1aff5 <= cp <= 0x1affb \
     or 0x1affd <= cp <= 0x1affe \
@@ -442,7 +442,7 @@ is_cjk = 0x1100 <= cp <= 0x11ff \
 ## EAW is treated as "W" if unassigned (defined by Unicode)
 
 > [!NOTE]
-> The following result is extracted from https://www.unicode.org/Public/16.0.0/ucd/EastAsianWidth.txt. It is slightly different from https://www.unicode.org/reports/tr11/#Unassigned. U+2FFFE, U+2FFFF, U+3FFFE, and U+3FFFF are missing, but [they are "Noncharacter"](https://www.unicode.org/versions/Unicode16.0.0/core-spec/chapter-23/#G19653), not ["Unassigned" (or "Reserved")](https://www.unicode.org/glossary/#reserved_code_point). This shows that we do not have to care about whether they are included in the list of CJK code points or not. To simplify the ranges, U+2FFFE and U+2FFFF are merged to U+20000–U+2FFFD here.
+> The following result is extracted from https://www.unicode.org/Public/17.0.0/ucd/EastAsianWidth.txt. It is slightly different from https://www.unicode.org/reports/tr11/#Unassigned. U+2FFFE, U+2FFFF, U+3FFFE, and U+3FFFF are missing, but [they are "Noncharacter"](https://www.unicode.org/versions/Unicode17.0.0/core-spec/chapter-23/#G19653), not ["Unassigned" (or "Reserved")](https://www.unicode.org/glossary/#reserved_code_point). This shows that we do not have to care about whether they are included in the list of CJK code points or not. To simplify the ranges, U+2FFFE and U+2FFFF are merged to U+20000–U+2FFFD here.
 
 - U+3400..U+4DBF (㐀..䶿)
 - U+4E00..U+9FFF (一..鿿)
