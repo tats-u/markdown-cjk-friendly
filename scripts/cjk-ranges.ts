@@ -220,6 +220,25 @@ function* mapFilter<T, U>(it: Iterable<T>, fn: (value: T) => null | U) {
   }
 }
 
+function* coalesceAdjacentRanges<T extends { first: number; last: number }>(
+  it: Iterable<T>,
+) {
+  let range: T | null = null;
+  for (const value of it) {
+    if (range === null) {
+      range = value;
+    } else if (range.last + 1 === value.first) {
+      range.last = value.last;
+    } else {
+      yield range;
+      range = value;
+    }
+  }
+  if (range !== null) {
+    yield range;
+  }
+}
+
 ///// data transformation /////
 
 function isCjkEawType(type: string) {
@@ -269,33 +288,40 @@ const isCjkTable: (boolean | null)[] = Array.from(
   { length: 0x110000 },
   (_) => null,
 );
-const unassignedAsCjkRanges: Range[] = mapFilter(
-  dataStore.eastAsianWidth,
-  function (this: { preambleEnded: boolean }, line: string) {
-    if (this.preambleEnded) {
+const unassignedAsCjkRanges: Range[] = coalesceAdjacentRanges(
+  mapFilter(
+    dataStore.eastAsianWidth,
+    function (this: { preambleEnded: boolean }, line: string) {
+      if (this.preambleEnded) {
+        return null;
+      }
+      if (/^[0-9A-Fa-f]/.test(line)) {
+        this.preambleEnded = true;
+        return null;
+      }
+
+      if (line[0] !== "#") {
+        return null;
+      }
+
+      // No default type declarations other than "W" as of Unicode 16
+      const reResult = /(?:^#|:)\s+U\+([0-9A-F]+)\.\.U\+([0-9A-F]+)$/.exec(
+        line,
+      );
+      if (reResult) {
+        const first = Number.parseInt(reResult[1], 16);
+        const last = Number.parseInt(reResult[2], 16);
+
+        // U+2FFFE & U+2FFFF are Noncharacter; their EAW are undefined
+        return {
+          first,
+          last: last === 0x2fffd ? 0x2ffff : last,
+        } satisfies Range;
+      }
+
       return null;
-    }
-    if (/^[0-9A-Fa-f]/.test(line)) {
-      this.preambleEnded = true;
-      return null;
-    }
-
-    if (line[0] !== "#") {
-      return null;
-    }
-
-    // No default type declarations other than "W" as of Unicode 16
-    const reResult = /(?:^#|:)\s+U\+([0-9A-F]+)\.\.U\+([0-9A-F]+)$/.exec(line);
-    if (reResult) {
-      const first = Number.parseInt(reResult[1], 16);
-      const last = Number.parseInt(reResult[2], 16);
-
-      // U+2FFFE & U+2FFFF are Noncharacter; their EAW are undefined
-      return { first, last: last === 0x2fffd ? 0x2ffff : last } satisfies Range;
-    }
-
-    return null;
-  }.bind({ preambleEnded: false }),
+    }.bind({ preambleEnded: false }),
+  ),
 ).toArray();
 
 const textSwitchableEmojis: number[] = mapFilter(
