@@ -1,7 +1,7 @@
 import { markdownLineEndingOrSpace } from "micromark-util-character";
 import { codes, constants } from "micromark-util-symbol";
 import type { Code } from "micromark-util-types";
-import { isNonEmojiGeneralUseVS, isUnicodeWhitespace } from "./categoryUtil.ts";
+import { isNonEmojiGeneralUseVS, isUnicodeWhitespace } from "./categoryUtil.js";
 import {
   cjkOrIvs,
   isCjkAmbiguousPunctuation,
