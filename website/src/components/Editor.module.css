@@ -1,0 +1,73 @@
+.editorAndPreviewWrapper {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr;
+  gap: 1rem;
+  container: editor / size;
+}
+
+.editorControlWrapper {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto minmax(0, 1fr);
+  gap: 1rem;
+  overflow-y: auto;
+}
+
+.editor {
+  width: 100%;
+  overflow-y: auto;
+  min-height: 0px;
+  max-width: 100%;
+}
+
+.previewWrapper {
+  padding: 1rem;
+  overflow-y: auto;
+  display: grid;
+  min-height: 0px;
+  grid-template-rows: auto minmax(0, 1fr);
+}
+
+/* Required for scrolling the preview and source screens. */
+@container editor (min-height: 0) {
+  .previewWrapper {
+    height: 100cqh;
+  }
+}
+
+.resultContainer {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto auto minmax(0, 1fr) auto;
+  min-height: 0px;
+}
+
+.resultContainer:is(
+    :has(.markdownBody:nth-of-type(2)),
+    :has(.markdownSource:nth-of-type(2))
+  ) {
+  grid-template-rows: auto auto minmax(0, 1fr) auto minmax(0, 1fr);
+}
+
+.markdownBody {
+  overflow: auto;
+  min-height: 0px;
+}
+
+.markdownSource {
+  margin: 0px;
+  overflow: auto;
+  min-height: 0px;
+
+  & > code {
+    min-height: 0px;
+  }
+}
+
+.controls {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 1rem;
+}

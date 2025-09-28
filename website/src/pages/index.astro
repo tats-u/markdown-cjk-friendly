@@ -1,0 +1,49 @@
+---
+// biome-ignore lint/correctness/noUnusedImports: False positive
+import Editor from "../components/Editor";
+---
+
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+    <meta name="color-scheme" content="light dark"/>
+		<title>CJK Friendly Emphasis Demo</title>
+	</head>
+	<body>
+    <div class="root">
+      <h1>CJK Friendly Emphasis Demo</h1>
+      <Editor client:load />
+    </div>
+	</body>
+  <style is:global>
+    body, html {
+      height: 100dvh;
+      margin: 0;
+      overflow-y: hidden;
+    }
+    * {
+      box-sizing: border-box;
+    }
+    :root {
+      font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Helvetica, Arial, sans-serif;
+    }
+  </style>
+  <style>
+    .root {
+      display: grid;
+      grid-template-columns: 1fr;
+      grid-template-rows: auto 1fr;
+      height: calc(100dvh - 2rem);
+      max-height: calc(100dvh - 2rem);
+      margin: 1rem;
+      overflow: hidden;
+    }
+    h1 {
+      font-size: 2rem;
+      margin: 1rem 0;
+    }
+  </style>
+</html>

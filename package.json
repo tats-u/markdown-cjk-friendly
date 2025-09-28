@@ -4,6 +4,7 @@
     "build": "pnpm -r build",
     "test:lib": "pnpm -r test:lib",
     "build:lib": "pnpm -r build:lib",
+    "build:website": "pnpm -r build:website",
     "lint": "run-s lint:prebuild lint:postbuild",
     "lint:prebuild": "run-s lint:biome",
     "lint:postbuild": "run-s lint:type",

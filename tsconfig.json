@@ -10,5 +10,6 @@
     "resolveJsonModule": true,
     "moduleResolution": "bundler",
     "useDefineForClassFields": true
-  }
+  },
+  "exclude": ["website"]
 }

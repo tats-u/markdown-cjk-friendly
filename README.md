@@ -38,6 +38,10 @@ See [specification.md](specification.md).
 - [implementers-tips.md](implementers-tips.md) (English)
 - [ranges.md](ranges.md) (English)
 
+## Demo / <span lang="ja">デモ</span> / <span lang="zh-Hans-CN">演示</span> / <span lang="ko">데모</span>
+
+https://tats-u.github.io/markdown-cjk-friendly
+
 ## Problem / <span lang="ja">問題</span> / <span lang="zh-Hans-CN">问题</span> / <span lang="ko">문제점</span>
 
 CommonMark has a problem that the following emphasis marks `**` are not recognized as emphasis marks in Japanese,Chinese, and Korean.

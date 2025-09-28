@@ -2,6 +2,7 @@ packages:
   - packages/*
   - integration_tests
   - demos/*
+  - website
 onlyBuiltDependencies:
   - '@swc/core'
   - core-js

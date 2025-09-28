@@ -27,3 +27,21 @@ jobs:
         run: node --run lint:postbuild
       - name: Test
         run: node --run test
+      - name: Build website
+        run: node --run build:website
+      - name: Upload website artifacts
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: website/dist
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+  update-website:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+    needs: build
+    steps:
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@v4
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
