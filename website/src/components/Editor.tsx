@@ -120,12 +120,11 @@ const Editor = () => {
     const engine = url.searchParams.get("engine");
     if (engine) {
       const engineLower = engine.toLowerCase();
-      switch (engineLower) {
+      switch (engineLower as MarkdownProcessorName) {
         case "markdown-it":
-          setEngine("markdown-it");
-          break;
         case "micromark":
-          setEngine("micromark");
+          setEngine(engineLower as MarkdownProcessorName);
+          break;
       }
     }
   });
