@@ -4,6 +4,7 @@ import { micromark } from "micromark";
 import { cjkFriendlyExtension } from "micromark-extension-cjk-friendly";
 import { gfmStrikethroughCjkFriendly } from "micromark-extension-cjk-friendly-gfm-strikethrough";
 import { gfm } from "micromark-extension-gfm";
+import { OcMarkgithub2 } from "solid-icons/oc";
 import {
   type Accessor,
   createMemo,
@@ -160,6 +161,14 @@ const Editor = () => {
           <button type="button" onClick={handleCopyPermalink}>
             Copy permalink
           </button>
+          <a
+            class={styles.gitHubLink}
+            href="https://github.com/tats-u/markdown-cjk-friendly"
+            target="_blank"
+            rel="noopener"
+          >
+            <OcMarkgithub2 />
+          </a>
         </div>
         <textarea
           class={styles.editor}

@@ -16,6 +16,7 @@
     "micromark-extension-cjk-friendly": "workspace:^",
     "micromark-extension-cjk-friendly-gfm-strikethrough": "workspace:^",
     "micromark-extension-gfm": "^3.0.0",
+    "solid-icons": "^1.1.0",
     "solid-js": "^1.9.9"
   },
   "devDependencies": {

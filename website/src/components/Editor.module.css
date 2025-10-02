@@ -71,3 +71,13 @@
   flex-wrap: wrap;
   gap: 1rem;
 }
+
+a.gitHubLink:any-link {
+  text-decoration: none;
+  color: inherit;
+}
+
+.gitHubLink {
+  display: inline-flex;
+  align-items: center;
+}
