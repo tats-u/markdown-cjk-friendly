@@ -147,6 +147,7 @@ const Editor = () => {
             onChange={(e) =>
               setEngine(e.currentTarget.value as unknown as typeof engine)
             }
+            value={engine()}
           >
             <option value="micromark">micromark</option>
             <option value="markdown-it">markdown-it</option>
