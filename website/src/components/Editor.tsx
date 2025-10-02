@@ -72,6 +72,8 @@ const Editor = () => {
       url.searchParams.delete("src");
       url.searchParams.delete("s16");
     }
+    url.searchParams.set("gfm", Number(gfmEnabled()).toString());
+    url.searchParams.set("engine", engine());
     window.history.replaceState(null, "", url.href);
     navigator.clipboard.writeText(window.location.href);
   }
@@ -98,6 +100,33 @@ const Editor = () => {
       );
       setMarkdown(decoded);
       setTextareaMarkdown(decoded);
+    }
+    const gfm = url.searchParams.get("gfm");
+    if (gfm) {
+      const gfmLower = gfm.toLowerCase();
+      switch (gfmLower) {
+        case "false":
+        case "off":
+        case "no":
+        case "f":
+        case "n":
+        case "0":
+          setGfmEnabled(false);
+          break;
+        default:
+          setGfmEnabled(true);
+      }
+    }
+    const engine = url.searchParams.get("engine");
+    if (engine) {
+      const engineLower = engine.toLowerCase();
+      switch (engineLower) {
+        case "markdown-it":
+          setEngine("markdown-it");
+          break;
+        case "micromark":
+          setEngine("micromark");
+      }
     }
   });
 
