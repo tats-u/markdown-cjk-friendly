@@ -166,6 +166,8 @@ const Editor = () => {
             href="https://github.com/tats-u/markdown-cjk-friendly"
             target="_blank"
             rel="noopener"
+            aria-label="GitHub"
+            title="GitHub repository"
           >
             <OcMarkgithub2 />
           </a>
