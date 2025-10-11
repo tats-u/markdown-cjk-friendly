@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "@astrojs/solid-js": "^5.1.1",
-    "astro": "^5.13.10",
+    "astro": "^5.14.3",
     "astro-relative-links": "^0.4.2",
     "markdown-it": "^14.1.0",
     "markdown-it-cjk-friendly": "workspace:^",
