@@ -18,6 +18,7 @@
 
 - [Comrak](https://github.com/kivikakk/comrak)
   - [commonmarker](https://github.com/gjtorikian/commonmarker)
+  - [GitLab Flavored Markdown (gitlab-glfm-markdown gem)](https://gitlab.com/gitlab-org/ruby/gems/gitlab-glfm-markdown) ([dingus](https://gitlab-org.gitlab.io/ruby/gems/gitlab-glfm-markdown/))
 
 ## Planned / <span lang="ja">予定</span> / <span lang="zh-Hans-CN">未来的改进</span> / <span lang="ko">예정</span>
 
