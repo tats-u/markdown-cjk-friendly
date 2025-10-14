@@ -3,7 +3,7 @@ import markdownItCjkFriendlyPlugin from "markdown-it-cjk-friendly";
 import { micromark } from "micromark";
 import { cjkFriendlyExtension } from "micromark-extension-cjk-friendly";
 import { gfmStrikethroughCjkFriendly } from "micromark-extension-cjk-friendly-gfm-strikethrough";
-import { gfm } from "micromark-extension-gfm";
+import { gfm, gfmHtml } from "micromark-extension-gfm";
 import { OcMarkgithub2 } from "solid-icons/oc";
 import {
   type Accessor,
@@ -200,6 +200,7 @@ const extensionsWithGfm = [
   ...extensionsWithGfmNoCjkFriendly,
   gfmStrikethroughCjkFriendly(),
 ];
+const gfmHtmlExtensions = [gfmHtml()];
 
 type MarkdownToHTMLRenderer = (markdown: string) => string;
 type GfmPlainRendererSet = {
@@ -286,7 +287,11 @@ function createMicromarkRenderer(
     : cjkFriendly
       ? extensionsWithoutGfm
       : null;
-  return (md: string) => micromark(md, { extensions });
+  return (md: string) =>
+    micromark(md, {
+      extensions,
+      htmlExtensions: gfm ? gfmHtmlExtensions : null,
+    });
 }
 
 const MarkdownBody = ({ markdown }: { markdown: Accessor<string> }) => (
