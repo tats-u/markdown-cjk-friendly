@@ -53,6 +53,22 @@
 .markdownBody {
   overflow: auto;
   min-height: 0px;
+
+  /* Minimal styling for Markdown previews */
+  table {
+    border-collapse: collapse;
+  }
+
+  td,
+  th {
+    border: 1px solid;
+    padding: 0.5em;
+  }
+
+  pre {
+    border: 1px solid;
+    padding: 1em;
+  }
 }
 
 .markdownSource {
