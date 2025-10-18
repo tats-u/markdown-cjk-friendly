@@ -151,7 +151,7 @@ importers:
         specifier: ^1.1.0
         version: 1.1.0
       micromark-extension-cjk-friendly-util:
-        specifier: workspace:^
+        specifier: 'workspace:'
         version: link:../micromark-extension-cjk-friendly-util
       micromark-util-chunked:
         specifier: ^2.0.1
@@ -181,6 +181,9 @@ importers:
       get-east-asian-width:
         specifier: ^1.3.0
         version: 1.3.0
+      micromark-extension-cjk-friendly-util:
+        specifier: 'workspace:'
+        version: link:../micromark-extension-cjk-friendly-util
       micromark-util-character:
         specifier: ^2.1.1
         version: 2.1.1
@@ -198,11 +201,8 @@ importers:
         specifier: ^4.0.2
         version: 4.0.2
       micromark-extension-cjk-friendly:
-        specifier: workspace:^
+        specifier: 'workspace:'
         version: link:../micromark-extension-cjk-friendly
-      micromark-extension-cjk-friendly-util:
-        specifier: workspace:^
-        version: link:../micromark-extension-cjk-friendly-util
       micromark-extension-gfm:
         specifier: ^3.0.0
         version: 3.0.0
@@ -232,7 +232,7 @@ importers:
         specifier: ^4.0.0
         version: 4.0.4
       micromark-extension-cjk-friendly:
-        specifier: workspace:^
+        specifier: 'workspace:'
         version: link:../micromark-extension-cjk-friendly
     devDependencies:
       '@mdx-js/mdx':
@@ -263,7 +263,7 @@ importers:
         specifier: ^4.0.0
         version: 4.0.4
       micromark-extension-cjk-friendly-gfm-strikethrough:
-        specifier: workspace:^
+        specifier: 'workspace:'
         version: link:../micromark-extension-cjk-friendly-gfm-strikethrough
     devDependencies:
       '@mdx-js/mdx':
@@ -276,7 +276,7 @@ importers:
         specifier: ^15.0.1
         version: 15.0.1
       remark-cjk-friendly:
-        specifier: workspace:^
+        specifier: 'workspace:'
         version: link:../remark-cjk-friendly
       remark-gfm:
         specifier: ^4.0.1
@@ -3517,9 +3517,6 @@ packages:
 
   '@types/react-router@5.1.20':
     resolution: {integrity: sha512-jGjmu/ZqS7FjSH6owMcD5qpq19+1RS9DeVRqfl1FeBMxTDQAGwlMWOcs52NDoXaNKyG3d1cYQFMs9rCrb88o9Q==}
-
-  '@types/react@19.1.13':
-    resolution: {integrity: sha512-hHkbU/eoO3EG5/MZkuFSKmYqPbSVk5byPFa3e7y/8TybHiLMACgI8seVYlicwk7H5K/rI2px9xrQp/C+AUDTiQ==}
 
   '@types/react@19.1.8':
     resolution: {integrity: sha512-AwAfQ2Wa5bCx9WP8nZL2uMZWod7J7/JSplxbTmBQ5ms6QpqNYm672H0Vu9ZVKVngQ+ii4R/byguVEUZQyeg44g==}
@@ -10903,7 +10900,7 @@ snapshots:
       '@docusaurus/utils': 3.8.1(@swc/core@1.11.29(@swc/helpers@0.5.17))(esbuild@0.25.5)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@docusaurus/utils-common': 3.8.1(@swc/core@1.11.29(@swc/helpers@0.5.17))(esbuild@0.25.5)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@types/history': 4.7.11
-      '@types/react': 19.1.13
+      '@types/react': 19.2.2
       '@types/react-router-config': 5.0.11
       clsx: 2.1.1
       parse-numeric-range: 1.3.0
@@ -12718,10 +12715,6 @@ snapshots:
     dependencies:
       '@types/history': 4.7.11
       '@types/react': 19.2.2
-
-  '@types/react@19.1.13':
-    dependencies:
-      csstype: 3.1.3
 
   '@types/react@19.1.8':
     dependencies:

@@ -49,7 +49,7 @@
     "lint:type": "tsc --noEmit"
   },
   "dependencies": {
-    "micromark-extension-cjk-friendly": "workspace:^"
+    "micromark-extension-cjk-friendly": "workspace:"
   },
   "devDependencies": {
     "@mdx-js/mdx": "^3.1.0",
