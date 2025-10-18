@@ -37,9 +37,10 @@ const Editor = () => {
     let shortestB64Buffer = u8Buffer;
     if (u8Buffer.length >= markdown.length * 2) {
       const u16Buffer = Uint8Array.from(
+        // Split a supplementary character into two surrogate code units on purpose
         Iterator.from(markdown.split("")).flatMap((char) => {
-          // biome-ignore lint/style/noNonNullAssertion: not empty
-          const c = char.codePointAt(0)!;
+          // `char` is just an UTF-16 code unit, so use charAt instead of codePointAt
+          const c = char.charCodeAt(0);
           // Little endian
           return [c & 255, c >> 8];
         }),
