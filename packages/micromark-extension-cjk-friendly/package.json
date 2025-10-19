@@ -1,6 +1,6 @@
 {
   "name": "micromark-extension-cjk-friendly",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "type": "module",
   "exports": {
     ".": {
@@ -50,7 +50,7 @@
   },
   "dependencies": {
     "devlop": "^1.1.0",
-    "micromark-extension-cjk-friendly-util": "workspace:",
+    "micromark-extension-cjk-friendly-util": "workspace:*",
     "micromark-util-chunked": "^2.0.1",
     "micromark-util-resolve-all": "^2.0.1",
     "micromark-util-symbol": "^2.0.1"
