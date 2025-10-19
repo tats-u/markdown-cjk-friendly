@@ -35,10 +35,8 @@
   "scripts": {
     "build": "tsdown",
     "build:lib": "tsdown",
-    "build:rslib": "rslib build",
     "dev": "tsdown --watch",
     "dev:lib": "tsdown --watch",
-    "dev:rslib": "rslib build --watch",
     "test": "vitest run",
     "test:lib": "vitest run",
     "test:up": "vitest -u",
