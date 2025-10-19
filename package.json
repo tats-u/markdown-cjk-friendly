@@ -30,7 +30,7 @@
     "tsdown": "^0.14.2",
     "typescript": "^5.8.3",
     "unplugin-auto-import": "^19.3.0",
-    "vitest": "^3.2.4"
+    "vitest": "^4.0.0-beta.18"
   },
   "packageManager": "pnpm@10.18.3",
   "pnpm": {
