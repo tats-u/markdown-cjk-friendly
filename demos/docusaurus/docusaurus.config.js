@@ -43,7 +43,7 @@ const config = {
   markdown: {
     hooks: {
       onBrokenMarkdownLinks: "warn",
-    }
+    },
   },
 
   // Even if you don't use internationalization, you can use this field to set
