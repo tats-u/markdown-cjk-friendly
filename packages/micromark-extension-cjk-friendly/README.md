@@ -99,13 +99,13 @@ Additionally, if you are creating Markdown-related software or services primaril
 
 ## Runtime Requirements / <span lang="ja">実行環境の要件</span> / <span lang="zh-Hans-CN">运行环境要求</span> / <span lang="ko">업데이트 전략</span>
 
-This package is ESM-only. It requires Node.js 16 or later.
+This package is ESM-only. It requires Node.js 18 or later. (I have only tested it on 20 and later. There is no factor that would prevent it from working on 18, but I do not guarantee its operation on 18.)
 
-<span lang="ja">本パッケージはESM専用です。Node.js 16以上が必要です。</span>
+<span lang="ja">本パッケージはESM専用です。Node.js 18以上が必要です。（動作検証は20以降でのみ行っています。18での動作を妨げる要因はありませんが、動作の保証はありません）</span>
 
-<span lang="zh-Hans-CN">此包仅支持ESM。需要Node.js 16或更高版本。</span>
+<span lang="zh-Hans-CN">此包仅支持ESM。需要Node.js 18或更高版本。（我只测试了20及以后的版本。没有因素会阻止它在18上工作，但我不保证在18上的操作。）</span>
 
-<span lang="ko">이 패키지는 ESM만 사용을 위한 패키지입니다. Node.js 16或更高版本가 필요입니다.</span>
+<span lang="ko">본 패키지는 ESM 전용입니다. Node.js 18 이상이 필요합니다. (동작 검증은 20 이후 버전에서만 수행했습니다. 18에서 동작을 방해하는 요인은 없으나, 동작을 보장하지는 않습니다)</span>
 
 ## Installation / <span lang="ja">インストール</span> / <span lang="zh-Hans-CN">安装</span> / <span lang="ko">설치</span>
 
