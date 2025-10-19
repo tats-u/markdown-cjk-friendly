@@ -6,5 +6,5 @@ export default defineConfig({
   platform: "neutral",
   splitting: false,
   dts: true,
-  target: "es2021",
+  target: "es2022",
 });
