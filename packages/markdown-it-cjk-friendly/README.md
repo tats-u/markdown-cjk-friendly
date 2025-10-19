@@ -46,6 +46,10 @@ Of course, not only the end side but also the start side has the same issue.
 
 CommonMark issue: https://github.com/commonmark/commonmark-spec/issues/650
 
+## Demo / <span lang="ja">デモ</span> / <span lang="zh-Hans-CN">演示</span> / <span lang="ko">데모</span>
+
+https://tats-u.github.io/markdown-cjk-friendly
+
 ## When should I use this? / <span lang="ja">このパッケージを使うべき場合</span> / <span lang="zh-Hans-CN">何时使用此包</span> / <span lang="ko">이 패키지를 사용하는 시저</span>
 
 If you are an engineer who must handle Chinese, Japanese, and Korean content that cannot be fully supervised, it is strongly recommended to use this package (adopt this specification instead of plain CommonMark or GFM). "Cannot be fully supervised" refers to situations such as:
