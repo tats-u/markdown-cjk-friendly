@@ -151,7 +151,7 @@ importers:
         specifier: ^1.1.0
         version: 1.1.0
       micromark-extension-cjk-friendly-util:
-        specifier: 'workspace:'
+        specifier: workspace:*
         version: link:../micromark-extension-cjk-friendly-util
       micromark-util-chunked:
         specifier: ^2.0.1
@@ -182,7 +182,7 @@ importers:
         specifier: ^1.3.0
         version: 1.3.0
       micromark-extension-cjk-friendly-util:
-        specifier: 'workspace:'
+        specifier: workspace:*
         version: link:../micromark-extension-cjk-friendly-util
       micromark-util-character:
         specifier: ^2.1.1
@@ -201,7 +201,7 @@ importers:
         specifier: ^4.0.2
         version: 4.0.2
       micromark-extension-cjk-friendly:
-        specifier: 'workspace:'
+        specifier: workspace:*
         version: link:../micromark-extension-cjk-friendly
       micromark-extension-gfm:
         specifier: ^3.0.0
@@ -232,7 +232,7 @@ importers:
         specifier: ^4.0.0
         version: 4.0.4
       micromark-extension-cjk-friendly:
-        specifier: 'workspace:'
+        specifier: workspace:*
         version: link:../micromark-extension-cjk-friendly
     devDependencies:
       '@mdx-js/mdx':
@@ -263,7 +263,7 @@ importers:
         specifier: ^4.0.0
         version: 4.0.4
       micromark-extension-cjk-friendly-gfm-strikethrough:
-        specifier: 'workspace:'
+        specifier: workspace:*
         version: link:../micromark-extension-cjk-friendly-gfm-strikethrough
     devDependencies:
       '@mdx-js/mdx':
@@ -276,7 +276,7 @@ importers:
         specifier: ^15.0.1
         version: 15.0.1
       remark-cjk-friendly:
-        specifier: 'workspace:'
+        specifier: workspace:*
         version: link:../remark-cjk-friendly
       remark-gfm:
         specifier: ^4.0.1
