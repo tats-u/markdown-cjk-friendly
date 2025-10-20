@@ -66,8 +66,16 @@
   }
 
   pre {
-    border: 1px solid;
+    background-color: #aaaaaa33;
     padding: 1em;
+    border-radius: 0.2em;
+  }
+
+  :not(pre) > code {
+    padding: 0.2em;
+    border-radius: 0.4em;
+    background-color: #bbbbbb66;
+    font-size: 0.9em;
   }
 }
 
