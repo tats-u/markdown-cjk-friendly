@@ -270,7 +270,9 @@ function createMarkdownItRenderer(
   cjkFriendly: boolean,
   gfm: boolean,
 ): MarkdownToHTMLRenderer {
-  const md = gfm ? markdownIt({ html: true }) : markdownIt("commonmark");
+  const md = gfm
+    ? markdownIt({ html: true, linkify: true })
+    : markdownIt("commonmark");
   if (cjkFriendly) {
     md.use(markdownItCjkFriendlyPlugin);
   }
