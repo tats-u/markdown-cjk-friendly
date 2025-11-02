@@ -6,13 +6,15 @@ export interface MarkdownConvertSettings {
   cjkFriendly: boolean;
 }
 
-export type MarkdownConvertResult = {
-  success: true;
-  html: string;
-} | {
-  success: false;
-  error: unknown;
-};
+export type MarkdownConvertResult =
+  | {
+      success: true;
+      html: string;
+    }
+  | {
+      success: false;
+      error: unknown;
+    };
 
 function convert(
   source: string,
@@ -21,7 +23,10 @@ function convert(
   engine: MarkdownProcessorName,
 ): void {
   const renderer = getRenderer(engine, cjkFriendly, gfm);
-  self.postMessage({ success: true, html: renderer(source) } as MarkdownConvertResult);
+  self.postMessage({
+    success: true,
+    html: renderer(source),
+  } as MarkdownConvertResult);
 }
 
 self.addEventListener(

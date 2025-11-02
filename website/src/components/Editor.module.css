@@ -83,10 +83,6 @@
   margin: 0px;
   overflow: auto;
   min-height: 0px;
-
-  & > code {
-    min-height: 0px;
-  }
 }
 
 .controls {
