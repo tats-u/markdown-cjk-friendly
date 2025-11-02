@@ -13,6 +13,7 @@ import {
   onMount,
   Show,
 } from "solid-js";
+import { type ResultPerOne, runBench } from "../workers/bench";
 import styles from "./Editor.module.css";
 
 type MarkdownProcessorName = "micromark" | "markdown-it";
@@ -21,10 +22,21 @@ const [markdown, setMarkdown] = createSignal("");
 const [gfmEnabled, setGfmEnabled] = createSignal(true);
 const [engine, setEngine] = createSignal<MarkdownProcessorName>("micromark");
 const [showSource, setShowSource] = createSignal(false);
+const [cjkFriendlyTime, setCjkFriendlyTime] = createSignal<
+  ResultPerOne | undefined
+>(undefined);
+const [nonCJKFriendlyTime, setNonCJKFriendlyTime] = createSignal<
+  ResultPerOne | undefined
+>(undefined);
+function resetBenchResult() {
+  setCjkFriendlyTime(undefined);
+  setNonCJKFriendlyTime(undefined);
+}
 
 const Editor = () => {
   const gfmCheckBoxId = createUniqueId();
   const [textareaMarkdown, setTextareaMarkdown] = createSignal("");
+  const [isBenchmarking, setIsBenchmarking] = createSignal(false);
 
   const u8Encoder = new TextEncoder();
 
@@ -78,6 +90,21 @@ const Editor = () => {
     url.searchParams.set("engine", engine());
     window.history.replaceState(null, "", url.href);
     navigator.clipboard.writeText(window.location.href);
+  }
+
+  async function handleBenchmark() {
+    try {
+      setIsBenchmarking(true);
+      const { cjkFriendly, noCjkFriendly } = await runBench(
+        markdown(),
+        gfmEnabled(),
+        engine(),
+      );
+      setCjkFriendlyTime(cjkFriendly);
+      setNonCJKFriendlyTime(noCjkFriendly);
+    } finally {
+      setIsBenchmarking(false);
+    }
   }
 
   onMount(() => {
@@ -141,26 +168,40 @@ const Editor = () => {
               type="checkbox"
               id={gfmCheckBoxId}
               checked={gfmEnabled()}
-              onInput={(e) => setGfmEnabled(e.currentTarget.checked)}
+              onInput={(e) => {
+                setGfmEnabled(e.currentTarget.checked);
+                resetBenchResult();
+              }}
             />
           </div>
           <select
-            onChange={(e) =>
-              setEngine(e.currentTarget.value as unknown as typeof engine)
-            }
+            onChange={(e) => {
+              setEngine(e.currentTarget.value as unknown as typeof engine);
+              resetBenchResult();
+            }}
             value={engine()}
           >
             <option value="micromark">micromark</option>
             <option value="markdown-it">markdown-it</option>
           </select>
           <select
-            onChange={(e) => setShowSource(e.currentTarget.value === "source")}
+            onChange={(e) => {
+              setShowSource(e.currentTarget.value === "source");
+              resetBenchResult();
+            }}
           >
             <option value="render">Render</option>
             <option value="source">Source</option>
           </select>
           <button type="button" onClick={handleCopyPermalink}>
             Copy permalink
+          </button>
+          <button
+            type="button"
+            onClick={handleBenchmark}
+            disabled={isBenchmarking()}
+          >
+            Benchmark
           </button>
           <a
             class={styles.gitHubLink}
@@ -185,8 +226,12 @@ const Editor = () => {
             )
               return;
             setMarkdown(e.currentTarget.value);
+            resetBenchResult();
           }}
-          onCompositionEnd={(e) => setMarkdown(e.currentTarget.value)}
+          onCompositionEnd={(e) => {
+            setMarkdown(e.currentTarget.value);
+            resetBenchResult();
+          }}
         />
       </div>
       <Preview />
@@ -328,8 +373,13 @@ function formatTime(ms: number) {
   return `${ms.toFixed(1)}ms`;
 }
 
-function ShowTime({ getMs }: { getMs: Accessor<number> }) {
-  return <>(Time: {formatTime(getMs())})</>;
+function ShowTime({ result }: { result: Accessor<ResultPerOne> }) {
+  const { mean, sd } = result();
+  return (
+    <>
+      (Time: {formatTime(mean)}±{formatTime(sd)})
+    </>
+  );
 }
 
 const Preview = () => {
@@ -338,68 +388,64 @@ const Preview = () => {
     const gfmValue = gfmEnabled();
     const engineValue = engine();
     if (markdownValue === "") {
-      return { html: "", time: undefined };
+      return "";
     }
     const renderer = getRenderer(engineValue, true, gfmValue);
-    const start = performance.now();
     const html = renderer(markdownValue);
-    const end = performance.now();
-    return { html, time: end - start };
+    return html;
   });
   const nonCJKFriendlyHTML = createMemo(() => {
     const markdownValue = markdown();
     const gfmValue = gfmEnabled();
     const engineValue = engine();
     if (markdownValue === "") {
-      return { html: "", time: undefined };
+      return "";
     }
     const renderer = getRenderer(engineValue, false, gfmValue);
 
-    const start = performance.now();
     const html = renderer(markdownValue);
-    const end = performance.now();
-    return { html, time: end - start };
+    return html;
   });
   return (
     <div class={styles.resultContainer}>
       <p>Result:</p>
       <Show
-        when={cjkFriendlyHTML().html !== ""}
+        when={cjkFriendlyHTML() !== ""}
         fallback={<p>Converted HTML is displayed here.</p>}
       >
         <p>
           With this specification
-          <Show when={cjkFriendlyHTML().time !== undefined}>
+          <Show when={cjkFriendlyTime() !== undefined}>
             {" "}
             {/** biome-ignore lint/style/noNonNullAssertion: when above */}
-            <ShowTime getMs={() => cjkFriendlyHTML().time!} />
+            <ShowTime result={() => cjkFriendlyTime()!} />
           </Show>
           :
         </p>
-        <MarkdownBody markdown={() => cjkFriendlyHTML().html} />
+        <MarkdownBody markdown={() => cjkFriendlyHTML()} />
         <Show
-          when={cjkFriendlyHTML().html !== nonCJKFriendlyHTML().html}
+          when={cjkFriendlyHTML() !== nonCJKFriendlyHTML()}
           fallback={
             <p>
               The output is identical even without this specification.
-              <Show when={cjkFriendlyHTML().time !== undefined}>
+              <Show when={cjkFriendlyTime() !== undefined}>
                 {" "}
                 {/** biome-ignore lint/style/noNonNullAssertion: when above */}
-                <ShowTime getMs={() => nonCJKFriendlyHTML().time!} />
+                <ShowTime result={() => cjkFriendlyTime()!} />
               </Show>
             </p>
           }
         >
           <p>
             Without this specification
-            <Show when={nonCJKFriendlyHTML().time !== undefined}>
+            <Show when={nonCJKFriendlyTime() !== undefined}>
               {" "}
               {/** biome-ignore lint/style/noNonNullAssertion: when above */}
-              <ShowTime getMs={() => nonCJKFriendlyHTML().time!} />
+              <ShowTime result={() => nonCJKFriendlyTime()!} />
             </Show>
             :
           </p>
-          <MarkdownBody markdown={() => nonCJKFriendlyHTML().html} />
+          <MarkdownBody markdown={() => nonCJKFriendlyHTML()} />
         </Show>
       </Show>
     </div>
