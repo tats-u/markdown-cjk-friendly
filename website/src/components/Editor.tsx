@@ -320,10 +320,10 @@ const Preview = () => {
           fallback={
             <p>
               The output is identical even without this specification.
-              <Show when={cjkFriendlyTime() !== undefined}>
+              <Show when={nonCJKFriendlyTime() !== undefined}>
                 {" "}
                 {/** biome-ignore lint/style/noNonNullAssertion: when above */}
-                <ShowTime result={() => cjkFriendlyTime()!} />
+                <ShowTime result={() => nonCJKFriendlyTime()!} />
               </Show>
             </p>
           }
