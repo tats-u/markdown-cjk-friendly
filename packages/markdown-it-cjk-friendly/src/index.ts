@@ -63,7 +63,7 @@ function nonEmojiGeneralUseVS(uc: number) {
 export default function markdownItCjkFriendlyPlugin(md: MarkdownIt): void {
   const PreviousState = md.inline.State;
 
-  class CjFriendlyState extends PreviousState {
+  class CjkFriendlyState extends PreviousState {
     override scanDelims(start: number, canSplitWord: boolean) {
       const max = this.posMax;
       const marker = this.src.charCodeAt(start);
@@ -151,5 +151,5 @@ export default function markdownItCjkFriendlyPlugin(md: MarkdownIt): void {
     }
   }
 
-  md.inline.State = CjFriendlyState;
+  md.inline.State = CjkFriendlyState;
 }
