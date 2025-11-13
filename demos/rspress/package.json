@@ -9,9 +9,9 @@
   "dependencies": {
     "remark-cjk-friendly": "workspace:^",
     "remark-cjk-friendly-gfm-strikethrough": "workspace:^",
-    "rspress": "^1.44.0"
+    "rspress": "^1.46.1"
   },
   "devDependencies": {
-    "@types/node": "^22.15.21"
+    "@types/node": "^22.19.1"
   }
 }

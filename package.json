@@ -22,15 +22,15 @@
   "devDependencies": {
     "@biomejs/biome": "2.1.2",
     "@types/jsdom": "^21.1.7",
-    "@types/node": "^22.15.32",
+    "@types/node": "^22.19.1",
     "jsdom": "^26.1.0",
     "npm-run-all2": "^8.0.4",
     "tsdown": "^0.14.2",
-    "typescript": "^5.8.3",
+    "typescript": "^5.9.3",
     "unplugin-auto-import": "^19.3.0",
     "vitest": "^3.2.4"
   },
-  "packageManager": "pnpm@10.18.3",
+  "packageManager": "pnpm@10.22.0",
   "pnpm": {
     "overrides": {
       "refractor@3.6.0>prismjs": "^1.30.0",

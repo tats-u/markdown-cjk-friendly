@@ -45,7 +45,7 @@
     "lint:type": "tsc --noEmit"
   },
   "dependencies": {
-    "get-east-asian-width": "^1.3.0",
+    "get-east-asian-width": "^1.4.0",
     "micromark-util-character": "^2.1.1",
     "micromark-util-symbol": "^2.0.1"
   },

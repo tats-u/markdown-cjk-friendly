@@ -8,7 +8,7 @@
     "test:watch": "vitest watch"
   },
   "dependencies": {
-    "vitepress": "^1.6.3",
-    "markdown-it-cjk-friendly": "workspace:^"
+    "markdown-it-cjk-friendly": "workspace:^",
+    "vitepress": "^1.6.4"
   }
 }
