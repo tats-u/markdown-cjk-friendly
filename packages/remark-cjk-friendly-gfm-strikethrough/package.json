@@ -50,14 +50,14 @@
     "micromark-extension-cjk-friendly-gfm-strikethrough": "workspace:*"
   },
   "devDependencies": {
-    "@mdx-js/mdx": "^3.1.1",
-    "rehype-stringify": "10.0.1",
-    "remark": "^15.0.1",
+    "@mdx-js/mdx": "catalog:",
+    "rehype-stringify": "catalog:",
+    "remark": "catalog:",
     "remark-cjk-friendly": "workspace:*",
-    "remark-gfm": "^4.0.1",
-    "remark-parse": "^11.0.0",
-    "remark-rehype": "^11.1.2",
-    "unified": "^11.0.5"
+    "remark-gfm": "catalog:",
+    "remark-parse": "catalog:",
+    "remark-rehype": "catalog:",
+    "unified": "catalog:"
   },
   "peerDependencies": {
     "@types/mdast": "^4.0.0",

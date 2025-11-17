@@ -45,19 +45,19 @@
     "lint:type": "tsc --noEmit"
   },
   "dependencies": {
-    "devlop": "^1.1.0",
-    "get-east-asian-width": "^1.4.0",
+    "devlop": "catalog:",
+    "get-east-asian-width": "catalog:",
     "micromark-extension-cjk-friendly-util": "workspace:*",
     "micromark-util-character": "^2.1.1",
-    "micromark-util-chunked": "^2.0.1",
-    "micromark-util-resolve-all": "^2.0.1",
-    "micromark-util-symbol": "^2.0.1"
+    "micromark-util-chunked": "catalog:",
+    "micromark-util-resolve-all": "catalog:",
+    "micromark-util-symbol": "catalog:"
   },
   "devDependencies": {
-    "micromark": "^4.0.2",
+    "micromark": "catalog:",
     "micromark-extension-cjk-friendly": "workspace:*",
-    "micromark-extension-gfm": "^3.0.0",
-    "micromark-util-types": "^2.0.2"
+    "micromark-extension-gfm": "catalog:",
+    "micromark-util-types": "catalog:"
   },
   "peerDependencies": {
     "micromark": "^4.0.0",

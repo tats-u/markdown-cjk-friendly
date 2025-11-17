@@ -9,8 +9,8 @@
     "test:watch": "vitest watch"
   },
   "dependencies": {
-    "@astrojs/mdx": "^4.3.10",
-    "astro": "^5.15.8",
+    "@astrojs/mdx": "catalog:",
+    "astro": "catalog:",
     "remark-cjk-friendly": "workspace:^",
     "remark-cjk-friendly-gfm-strikethrough": "workspace:^"
   }
