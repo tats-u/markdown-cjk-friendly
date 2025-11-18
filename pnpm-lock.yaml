@@ -12,6 +12,9 @@ catalogs:
     '@mdx-js/mdx':
       specifier: ^3.1.1
       version: 3.1.1
+    '@types/markdown-it':
+      specifier: ^14.1.2
+      version: 14.1.2
     '@types/node':
       specifier: ^24.10.1
       version: 24.10.1
@@ -183,7 +186,7 @@ importers:
   packages/markdown-it-cj-friendly:
     devDependencies:
       '@types/markdown-it':
-        specifier: ^14.1.2
+        specifier: 'catalog:'
         version: 14.1.2
       markdown-it:
         specifier: 'catalog:'
@@ -196,7 +199,7 @@ importers:
         version: 1.4.0
     devDependencies:
       '@types/markdown-it':
-        specifier: ^14.1.2
+        specifier: 'catalog:'
         version: 14.1.2
       markdown-it:
         specifier: 'catalog:'
@@ -388,7 +391,7 @@ importers:
         version: 5.1.0
     devDependencies:
       '@types/markdown-it':
-        specifier: ^14.1.2
+        specifier: 'catalog:'
         version: 14.1.2
       '@types/node':
         specifier: 'catalog:'
