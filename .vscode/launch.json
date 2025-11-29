@@ -1,0 +1,28 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "chrome",
+      "request": "launch",
+      "name": "Launch Chrome to preview website",
+      "url": "http://localhost:4321",
+      "webRoot": "${workspaceFolder}"
+    },
+    {
+      "command": "./node_modules/.bin/astro dev",
+      "name": "Website development server",
+      "request": "launch",
+      "type": "node-terminal",
+      "cwd": "${workspaceFolder}\\website"
+    }
+  ],
+  "compounds": [
+    {
+      "name": "Website (Chrome)",
+      "configurations": [
+        "Launch Chrome to preview website",
+        "Website development server"
+      ]
+    }
+  ]
+}
