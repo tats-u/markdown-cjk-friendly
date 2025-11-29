@@ -20,7 +20,7 @@ node --run print-ranges -- -h
 
 ## Unicode Version
 
-16
+17
 
 ## CJK characters
 

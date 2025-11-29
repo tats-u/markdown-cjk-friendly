@@ -1,7 +1,8 @@
 import { createWriteStream } from "node:fs";
-import { mkdir, readFile, stat } from "node:fs/promises";
+import { mkdir, readFile, stat, writeFile } from "node:fs/promises";
 import path, { basename } from "node:path";
 import { posix } from "node:path/posix";
+import { exit } from "node:process";
 import { Stream } from "node:stream";
 import { fileURLToPath } from "node:url";
 import { parseArgs } from "node:util";
@@ -139,7 +140,15 @@ const args = parseArgs({
 
 if (args.values.help) {
   const nodeMajorVersion = Number(process.version.slice(1).split(".", 1)[0]);
-  const tsWithoutFlag = nodeMajorVersion >= 23;
+  const tsWithoutFlag =
+    nodeMajorVersion >= 23 ||
+    (nodeMajorVersion === 22 &&
+      (() => {
+        const minorVersion = Number(
+          process.version.replace(/^[^.]+\.([^.]+)\..*$/, "$1"),
+        );
+        return minorVersion >= 18;
+      })());
   console.log(
     `Usage: ${basename(process.argv[0])} ${tsWithoutFlag ? "" : "--experimental-strip-types "}${process.argv[1]} [-u <unicode-version>] [-l <output-type>]
 
@@ -158,6 +167,7 @@ Supporting output types:
   rs   Rust (Alias: rust)
   cs   C# (C# 9 or later) (Alias: csharp, c#)
   py   Python (Alias: python)
+  ranges.md Updates ranges.md
 
 Note:
   - for C, stdbool.h is required for C99, C11, and C17 (unnecessary for C23 and later)
@@ -531,7 +541,15 @@ const markdownCase: VariableNames = {
     "(for discussion for the future) Emojis derived from CJK symbols (can be switched to text symbol by U+FE0E)",
 };
 
-type FormatBaseLanguage = "rust" | "c" | "js" | "cs" | "py" | "md" | "js-regex";
+type FormatBaseLanguage =
+  | "rust"
+  | "c"
+  | "js"
+  | "cs"
+  | "py"
+  | "md"
+  | "js-regex"
+  | "mdNoHeader";
 type Language = FormatBaseLanguage | "java" | "cpp" | "ts";
 
 function toJsRegexEscape(cp: number) {
@@ -599,6 +617,18 @@ const formatType = new Map<FormatBaseLanguage, StatementBuildInfo>([
     },
   ],
   [
+    "mdNoHeader",
+    {
+      prefix: () => "- ",
+      suffix: "",
+      joiner: "\n- ",
+      single: (cp) =>
+        `U+${cp.toString(16).toUpperCase().padStart(4, "0")} (${String.fromCodePoint(cp)})`,
+      range: (first, last) =>
+        `U+${first.toString(16).toUpperCase().padStart(4, "0")}..U+${last.toString(16).toUpperCase().padStart(4, "0")} (${String.fromCodePoint(first)}..${String.fromCodePoint(last)})`,
+    },
+  ],
+  [
     "js",
     {
       prefix: (variableName) => `${variableName} = `,
@@ -631,6 +661,7 @@ const variableNamesMap = new Map<Language, VariableNames>([
   ["js-regex", camelCase],
   ["py", snakeCase],
   ["md", markdownCase],
+  ["mdNoHeader", markdownCase],
 ]);
 
 const newVariableMap = new Map<Language, (variableName: string) => string>([
@@ -643,6 +674,7 @@ const newVariableMap = new Map<Language, (variableName: string) => string>([
   ["ts", (v) => `const ${v}: boolean`],
   ["py", (v) => v],
   ["md", (v) => v],
+  ["mdNoHeader", (v) => v],
 ]);
 
 const langAlias = new Map<string, Language>([
@@ -687,8 +719,74 @@ function getPrintRanges({ format, variableNames, newVariable }: FormatSet) {
 
 ///// output /////
 
+async function updateRangesMd() {
+  function getFormatSet(
+    baseLang: FormatBaseLanguage,
+    lang?: Language,
+  ): FormatSet {
+    // biome-ignore-start lint/style/noNonNullAssertion: not interfered by users
+    const variableNames = variableNamesMap.get(lang ?? baseLang)!;
+    const newVariable = newVariableMap.get(lang ?? baseLang)!;
+    const format = formatType.get(baseLang)!;
+    // biome-ignore-end lint/style/noNonNullAssertion: not interfered by users
+
+    return { format, variableNames, newVariable };
+  }
+  const { default: Mustache } = await import("mustache");
+  const template = await readFile(
+    path.resolve(import.meta.dirname, "templates", "ranges.template.md"),
+    "utf-8",
+  );
+  const isCjkRanges = rangesFromNullableBooleanArray(isCjkTable);
+  const content = {
+    unicodeVersion: () =>
+      unicodeVersion?.endsWith(".0")
+        ? unicodeVersion.replace(/\.0$/, "")
+        : unicodeVersion,
+    unicodeVersionWithPatch: () => {
+      // biome-ignore lint/style/noNonNullAssertion: already set when called
+      const dotCount = unicodeVersion!.split(".").length;
+      switch (dotCount) {
+        case 1:
+          return `${unicodeVersion}.0.0`;
+        case 2:
+          return `${unicodeVersion}.0`;
+        default:
+          return unicodeVersion;
+      }
+    },
+    isCjk: {
+      md: () =>
+        getPrintRanges(getFormatSet("mdNoHeader"))(isCjkRanges, "isCjk"),
+      js: () => getPrintRanges(getFormatSet("js"))(isCjkRanges, "isCjk"),
+      rust: () => getPrintRanges(getFormatSet("rust"))(isCjkRanges, "isCjk"),
+      c: () => getPrintRanges(getFormatSet("c"))(isCjkRanges, "isCjk"),
+      cs: () => getPrintRanges(getFormatSet("cs"))(isCjkRanges, "isCjk"),
+      py: () => getPrintRanges(getFormatSet("py"))(isCjkRanges, "isCjk"),
+    },
+    isCjkRegexp: {
+      "js-regex": () =>
+        getPrintRanges(getFormatSet("js-regex"))(isCjkRanges, "isCjk"),
+    },
+    emojisDerivedFromCjk: () =>
+      getPrintRanges(getFormatSet("mdNoHeader"))(
+        rangesFromAscSortedValues(emojisDerivedFromCjkSymbols),
+        "emojisDerivedFromCjk",
+      ),
+  };
+  await writeFile(
+    path.resolve(import.meta.dirname, "..", "ranges.md"),
+    Mustache.render(template, content),
+    "utf-8",
+  );
+}
+
 let lang =
   (args.values["output-lang"]?.toLowerCase() as Language | undefined) ?? "md";
+if ((lang as string) === "ranges.md") {
+  await updateRangesMd();
+  exit(0);
+}
 lang = langAlias.get(lang) ?? lang;
 let formatLang =
   // @ts-expect-error
