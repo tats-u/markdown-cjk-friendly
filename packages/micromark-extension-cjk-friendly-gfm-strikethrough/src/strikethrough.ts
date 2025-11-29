@@ -17,6 +17,7 @@ import { resolveAll } from "micromark-util-resolve-all";
 import { codes, constants, types } from "micromark-util-symbol";
 import type {
   Code,
+  Construct,
   Effects,
   Event,
   Extension,
@@ -46,8 +47,8 @@ export function gfmStrikethroughCjkFriendly(
 ): Extension {
   const options_ = options || {};
   let single = options_.singleTilde;
-  const tokenizer = {
-    name: "strikethrough" as TokenType,
+  const tokenizer: Construct = {
+    name: "strikethrough",
     tokenize: tokenizeStrikethrough,
     resolveAll: resolveAllStrikethrough,
   };
