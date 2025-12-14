@@ -26,8 +26,8 @@
     "@types/node": "catalog:",
     "jsdom": "^26.1.0",
     "mustache": "^4.2.0",
-    "npm-run-all2": "^8.0.4",
-    "tsdown": "^0.14.2",
+    "npm-run-all2": "catalog:",
+    "tsdown": "catalog:",
     "typescript": "^5.9.3",
     "unplugin-auto-import": "^19.3.0",
     "vitest": "^3.2.4"

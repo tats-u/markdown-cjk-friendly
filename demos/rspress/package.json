@@ -9,7 +9,7 @@
   "dependencies": {
     "remark-cjk-friendly": "workspace:^",
     "remark-cjk-friendly-gfm-strikethrough": "workspace:^",
-    "rspress": "^1.46.1"
+    "rspress": "^1.47.0"
   },
   "devDependencies": {
     "@types/node": "catalog:"

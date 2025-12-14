@@ -5,11 +5,11 @@ packages:
   - website
 
 catalog:
-  '@astrojs/mdx': ^4.3.10
+  '@astrojs/mdx': ^4.3.13
   '@mdx-js/mdx': ^3.1.1
   '@types/markdown-it': ^14.1.2
-  '@types/node': ^24.10.1
-  astro: ^5.15.9
+  '@types/node': ^24.10.3
+  astro: ^5.16.5
   devlop: ^1.1.0
   get-east-asian-width: ^1.4.0
   markdown-it: ^14.1.0
@@ -19,11 +19,13 @@ catalog:
   micromark-util-resolve-all: ^2.0.1
   micromark-util-symbol: ^2.0.1
   micromark-util-types: ^2.0.2
+  npm-run-all2: ^8.0.4
   rehype-stringify: ^10.0.1
   remark: ^15.0.1
   remark-gfm: ^4.0.1
   remark-parse: ^11.0.0
   remark-rehype: ^11.1.2
+  tsdown: ^0.17.3
   unified: ^11.0.5
 
 minimumReleaseAge: 1440
