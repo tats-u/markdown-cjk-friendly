@@ -127,7 +127,6 @@ const Editor = () => {
       setMarkdown(decoded);
       setTextareaMarkdown(decoded);
     } else if (textareaRef) {
-      console.log(`textareaRef.value: ${textareaRef.value}`);
       setTextareaMarkdown(textareaRef.value);
       setMarkdown(textareaRef.value);
     }
