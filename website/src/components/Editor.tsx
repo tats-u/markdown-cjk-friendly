@@ -35,6 +35,8 @@ const Editor = () => {
 
   const u8Encoder = new TextEncoder();
 
+  let textareaRef: HTMLTextAreaElement | undefined;
+
   function handleCopyPermalink() {
     const markdown = textareaMarkdown();
     if (!markdown) return;
@@ -124,6 +126,10 @@ const Editor = () => {
       );
       setMarkdown(decoded);
       setTextareaMarkdown(decoded);
+    } else if (textareaRef) {
+      console.log(`textareaRef.value: ${textareaRef.value}`);
+      setTextareaMarkdown(textareaRef.value);
+      setMarkdown(textareaRef.value);
     }
     const gfm = url.searchParams.get("gfm");
     if (gfm) {
@@ -212,6 +218,7 @@ const Editor = () => {
         <textarea
           class={styles.editor}
           value={textareaMarkdown()}
+          ref={textareaRef}
           onInput={(e) => {
             setTextareaMarkdown(e.currentTarget.value);
             if (
