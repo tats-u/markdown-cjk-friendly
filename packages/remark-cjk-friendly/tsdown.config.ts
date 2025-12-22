@@ -7,8 +7,5 @@ export default defineConfig({
   // splitting: false,
   dts: true,
   target: "es2022",
-  outputOptions: {
-    inlineDynamicImports: true,
-  },
   unbundle: true,
 });
