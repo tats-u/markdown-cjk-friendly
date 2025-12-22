@@ -6,7 +6,7 @@ export interface MarkdownConvertSettings {
   cjkFriendly: boolean;
 }
 
-export type MarkdownConvertResult =
+export type MarkdownConvertResult = { src: string } & (
   | {
       success: true;
       html: string;
@@ -14,7 +14,8 @@ export type MarkdownConvertResult =
   | {
       success: false;
       error: unknown;
-    };
+    }
+);
 
 function convert(
   source: string,
@@ -24,6 +25,7 @@ function convert(
 ): void {
   const renderer = getRenderer(engine, cjkFriendly, gfm);
   self.postMessage({
+    src: source,
     success: true,
     html: renderer(source),
   } as MarkdownConvertResult);
@@ -36,7 +38,11 @@ self.addEventListener(
       const [source, { cjkFriendly, gfm, engine }] = e.data;
       convert(source, cjkFriendly, gfm, engine);
     } catch (err) {
-      self.postMessage({ success: false, error: err } as MarkdownConvertResult);
+      self.postMessage({
+        src: e.data[0],
+        success: false,
+        error: err,
+      } as MarkdownConvertResult);
     }
   },
 );
