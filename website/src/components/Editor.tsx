@@ -7,8 +7,7 @@ import {
   onMount,
   Show,
 } from "solid-js";
-import type { BenchResult, ResultPerOne } from "../workers/bench";
-import BenchmarkWorker from "../workers/benchmarker.worker?worker";
+import { type ResultPerOne, runBench } from "../workers/bench";
 import { getRenderer } from "../workers/markdownRenderer";
 import styles from "./Editor.module.css";
 
@@ -93,20 +92,11 @@ const Editor = () => {
   async function handleBenchmark() {
     try {
       setIsBenchmarking(true);
-      const benchWorker = new BenchmarkWorker();
-      const { cjkFriendly, noCjkFriendly } = await (new Promise((resolve) => {
-        benchWorker.postMessage([
-          markdown(),
-          {
-            gfm: gfmEnabled(),
-            engine: engine(),
-          },
-        ]);
-        benchWorker.addEventListener("message", (e) => {
-          resolve(e.data);
-        });
-      }) as Promise<BenchResult>);
-      benchWorker.terminate();
+      const { cjkFriendly, noCjkFriendly } = await runBench(
+        markdown(),
+        gfmEnabled(),
+        engine(),
+      );
       setCjkFriendlyTime(cjkFriendly);
       setNonCJKFriendlyTime(noCjkFriendly);
     } finally {

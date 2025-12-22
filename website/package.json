@@ -22,7 +22,6 @@
   },
   "devDependencies": {
     "@types/markdown-it": "catalog:",
-    "@types/node": "catalog:",
-    "vite": "^7.3.0"
+    "@types/node": "catalog:"
   }
 }
