@@ -3,14 +3,13 @@
 import { createRequire } from "node:module";
 import solidJs from "@astrojs/solid-js";
 import { defineConfig } from "astro/config";
-import relativeLinks from "astro-relative-links";
 import { normalizePath } from "vite";
 
 const require = createRequire(import.meta.url);
 
 // https://astro.build/config
 export default defineConfig({
-  integrations: [solidJs(), relativeLinks()],
+  integrations: [solidJs()],
   vite: {
     resolve: {
       alias: {
@@ -21,4 +20,5 @@ export default defineConfig({
       },
     },
   },
+  base: process?.env.WEBSITE_BASE_PATH || undefined,
 });

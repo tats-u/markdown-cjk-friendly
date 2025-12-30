@@ -9,7 +9,6 @@
   "dependencies": {
     "@astrojs/solid-js": "^5.1.3",
     "astro": "catalog:",
-    "astro-relative-links": "^0.4.2",
     "markdown-it": "catalog:",
     "markdown-it-cjk-friendly": "workspace:^",
     "micromark": "catalog:",
