@@ -182,6 +182,7 @@ const Editor = () => {
                 setGfmEnabled(e.currentTarget.checked);
                 resetBenchResult();
               }}
+              disabled={isBenchmarking()}
             />
           </div>
           <select
@@ -190,6 +191,7 @@ const Editor = () => {
               resetBenchResult();
             }}
             value={engine()}
+            disabled={isBenchmarking()}
           >
             <option value="micromark">micromark</option>
             <option value="markdown-it">markdown-it</option>
@@ -211,7 +213,7 @@ const Editor = () => {
             onClick={handleBenchmark}
             disabled={isBenchmarking()}
           >
-            Benchmark
+            Benchmark<Show when={isBenchmarking()}>ing…</Show>
           </button>
           <a
             class={styles.gitHubLink}
@@ -228,6 +230,7 @@ const Editor = () => {
           class={styles.editor}
           value={textareaMarkdown()}
           ref={textareaRef}
+          readOnly={isBenchmarking()}
           onInput={(e) => {
             setTextareaMarkdown(e.currentTarget.value);
             if (
