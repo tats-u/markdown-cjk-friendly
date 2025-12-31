@@ -119,6 +119,7 @@ const Editor = () => {
     const src = url.searchParams.get("src");
     const b64u8 = url.searchParams.get("sc8");
     const b64u16 = url.searchParams.get("s16");
+    const bench = url.searchParams.get("bench");
     if (src) {
       setMarkdown(decodeURIComponent(src));
       setTextareaMarkdown(decodeURIComponent(src));
@@ -165,6 +166,9 @@ const Editor = () => {
           setEngine(engineLower as MarkdownProcessorName);
           break;
       }
+    }
+    if (bench) {
+      handleBenchmark();
     }
   });
 
