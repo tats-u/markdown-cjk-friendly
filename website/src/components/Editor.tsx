@@ -234,7 +234,8 @@ const Editor = () => {
           class={styles.editor}
           value={textareaMarkdown()}
           ref={textareaRef}
-          readOnly={isBenchmarking()}
+          // without `|| undefined`, converted from boolean to string and becomes always read-only
+          readonly={isBenchmarking() || undefined}
           onInput={(e) => {
             setTextareaMarkdown(e.currentTarget.value);
             if (
