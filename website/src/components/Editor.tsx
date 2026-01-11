@@ -100,6 +100,8 @@ const Editor = () => {
       setIsBenchmarking(true);
       setCjkFriendlyBenchFailure(null);
       setNonCJKFriendlyBenchFailure(null);
+      setCjkFriendlyTime(undefined);
+      setNonCJKFriendlyTime(undefined);
       const benchWorker = new BenchmarkWorker();
       const result = await (new Promise((resolve) => {
         benchWorker.postMessage([
