@@ -17,3 +17,52 @@
 - The East Asian Width of unassigned characters (e.g. U+3097) is undefined. You should follow the [guideline by Unicode](https://www.unicode.org/reports/tr11/#Unassigned). Note that U+2FFFE–U+2FFFF and U+2FFFE–U+2FFFF are Noncharacter, not Reserved (Unassigned). The East Asian Width of Noncharacter does not seem to be mentioned in the specifications of the East Asian Width property. Therefore, you can treat them as `W` to join two product terms for U+20000–U+2FFFD and U+30000–U+3FFFD.
 - The Unicode category of Ideographic Variation Selector and Standard Variation Selector is `Mn`, not `P` or `S`. It means there is no [Unicode punctuation character](https://spec.commonmark.org/0.31.2/#unicode-punctuation-character) or [non-CJK punctuation character](#non-cjk-punctuation-character) that is also Standard Variation Selector or Ideographic Variation Selector.
 - You do not have to care about the existence of continuous Standard Variation Selector or Ideographic Variation Selector, or Ideographic Variation Selector preceded by `*`. It is up to you implementers to decide how to treat them.
+
+## Emphasis Marker Start/End Conditions
+
+| CM | Out | M | In | End | Start |
+|----------|-------|---|-------|-----|-------|
+| ✅️ | `␣` | `*` | `␣` | ❌️ | ❌️ |
+| ✅️ | `␣` | `*` | `"` | ❌️ | ✅️ |
+| ✅️ | `␣` | `*` | `a` | ❌️ | ✅️ |
+| ❌️ | `␣` | `*` | `～` | ❌️ | ✅️ |
+| ❌️ | `␣` | `*` | `字` | ❌️ | ✅️ |
+| ✅️ | `␣` | `_` | `␣` | ❌️ | ❌️ |
+| ✅️ | `␣` | `_` | `"` | ❌️ | ✅️ |
+| ✅️ | `␣` | `_` | `a` | ❌️ | ✅️ |
+| ❌️ | `␣` | `_` | `～` | ❌️ | ✅️ |
+| ❌️ | `␣` | `_` | `字` | ❌️ | ✅️ |
+| ✅️ | `"` | `*` | `"` | ✅️ | ✅️ |
+| ✅️ | `"` | `*` | `a` | ❌️ | ✅️ |
+| ❌️ | `"` | `*` | `字` | ✅️ | ✅️ |
+| ❌️ | `～` | `*` | `a` | ✅️ | ✅️ |
+| ✅️ | `"` | `_` | `"` | ✅️ | ✅️ |
+| ✅️ | `"` | `_` | `a` | ❌️ | ✅️ |
+| ❌️ | `"` | `_` | `字` | ❌️ | ✅️ |
+| ❌️ | `～` | `_` | `a` | ❌️ | ✅️ |
+| ✅️ | `a` | `*` | `a` | ✅️ | ✅️ |
+| ✅️ | `a` | `_` | `a` | ❌️ | ❌️ |
+
+**Legend:**
+
+| Symbol/Term | Meaning |
+|-------------|---------|
+| **CM** | ✅️ = CommonMark, ❌️ = CJK Friendly Emphasis only |
+| **Out** | Character outside (before the marker) |
+| **M** | Marker symbol |
+| **In** | Character inside (after the marker) |
+| **End** | Whether the marker can end a range |
+| **Start** | Whether the marker can start a range |
+
+| Character | Meaning | Alt Punctuation |
+|----------|---------|----------------|
+| `␣` | Unicode whitespace character | N/A |
+| `"` | Non-CJK punctuation (in CommonMark, includes CJK characters) | `(`, `)` |
+| `a` | Non-CJK character (in CommonMark, includes CJK characters) | N/A |
+| `～` | CJK punctuation | `「`, `」` |
+| `字` | CJK character |
+
+The above table implies:
+
+- If a marker is adjacent to Unicode whitespace characters, whether the marker can start/end a range does _not_ depend on whether the adjacent characters are punctuation or CJK characters.
+- If a marker is `_`, whether the marker can start/end a range does _not_ depend on whether the adjacent characters are CJK characters.
