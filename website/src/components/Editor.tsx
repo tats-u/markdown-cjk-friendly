@@ -308,10 +308,10 @@ function formatTime(ms: number) {
 }
 
 function ShowTime({ result }: { result: Accessor<ResultPerOne> }) {
-  const { mean, sd } = result();
+  const { mean, sem } = result();
   return (
     <>
-      (Time: {formatTime(mean)}±{formatTime(sd)})
+      (Time: {formatTime(mean)}±{formatTime(sem)})
     </>
   );
 }

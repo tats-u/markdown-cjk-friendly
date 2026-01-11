@@ -2,8 +2,14 @@ import { Bench, type TaskResult } from "tinybench";
 import { getRenderer, type MarkdownProcessorName } from "./markdownRenderer";
 
 export interface ResultPerOne {
+  /**
+   * samples mean/average (estimate of the population mean)
+   */
   mean: number;
-  sd: number;
+  /**
+   * standard error of the mean
+   */
+  sem: number;
 }
 
 export type BenchResult = CompletedBenchResult | FailedBenchResult;
@@ -61,11 +67,11 @@ export async function runBench(
     success: true,
     cjkFriendly: {
       mean: cjkFriendlyResult.latency.mean,
-      sd: cjkFriendlyResult.latency.sd,
+      sem: cjkFriendlyResult.latency.sem,
     },
     noCjkFriendly: {
       mean: noCjkFriendlyResult.latency.mean,
-      sd: noCjkFriendlyResult.latency.sd,
+      sem: noCjkFriendlyResult.latency.sem,
     },
   };
 }
