@@ -5,6 +5,7 @@ import {
   isPunctChar,
   isWhiteSpace,
 } from "markdown-it/lib/common/utils.mjs";
+import type { Scanned } from "markdown-it/lib/rules_inline/state_inline.mjs";
 
 function isEmoji(uc: number) {
   return /^\p{Emoji_Presentation}/u.test(String.fromCodePoint(uc));
@@ -64,7 +65,7 @@ export default function markdownItCjkFriendlyPlugin(md: MarkdownIt): void {
   const PreviousState = md.inline.State;
 
   class CjkFriendlyState extends PreviousState {
-    override scanDelims(start: number, canSplitWord: boolean) {
+    override scanDelims(start: number, canSplitWord: boolean): Scanned {
       const max = this.posMax;
       const marker = this.src.charCodeAt(start);
 
@@ -90,44 +91,49 @@ export default function markdownItCjkFriendlyPlugin(md: MarkdownIt): void {
       // biome-ignore lint/style/noNonNullAssertion: always in range thanks to pos < max
       const nextChar = pos < max ? this.src.codePointAt(pos)! : 0x20;
 
-      // We don't consider a sequence of an ideographic VS followed by a general-purpose VS
-      const isLastCJKChar =
-        twoPrevChar !== null
-          ? is2PreviousCjk(twoPrevChar, lastChar)
-          : isPreviousCjk(lastChar);
-      const isNextCJKChar = isNextCjk(nextChar);
+      // We don't consider a sequence of an Unicode whitespace followed by a general-use VS
+      const isLastWhiteSpace = isWhiteSpace(lastMainChar);
+      const isNextWhiteSpace = isWhiteSpace(nextChar);
+
+      // Fast path for the most cases adjacent to whitespaces (no need to check for CJK characters)
+      if (isLastWhiteSpace || isNextWhiteSpace) {
+        return {
+          can_open: !isNextWhiteSpace,
+          can_close: !isLastWhiteSpace,
+          length: count,
+        };
+      }
 
       const isLastPunctChar =
         isMdAsciiPunct(lastMainChar) ||
         isPunctChar(String.fromCodePoint(lastMainChar));
       const isNextPunctChar =
         isMdAsciiPunct(nextChar) || isPunctChar(String.fromCodePoint(nextChar));
-      const isLastNonCjkPunctChar = isLastPunctChar && !isLastCJKChar;
-      const isNextNonCjkPunctChar = isNextPunctChar && !isNextCJKChar;
 
-      // We don't consider a sequence of an Unicode whitespace followed by a general-use VS
-      const isLastWhiteSpace = isWhiteSpace(lastMainChar);
-      const isNextWhiteSpace = isWhiteSpace(nextChar);
+      // Fast path for `_`
+      let left_flanking = isLastPunctChar;
+      let right_flanking = isNextPunctChar;
 
-      const left_flanking =
-        !isNextWhiteSpace &&
-        (!isNextNonCjkPunctChar ||
-          isLastNonCjkPunctChar ||
-          isLastWhiteSpace ||
-          isLastCJKChar);
-      const right_flanking =
-        !isLastWhiteSpace &&
-        (!isLastNonCjkPunctChar ||
-          isNextWhiteSpace ||
-          isNextNonCjkPunctChar ||
-          isNextCJKChar);
+      if (canSplitWord) {
+        // Slow path for `*`
 
-      const can_open =
-        left_flanking && (canSplitWord || !right_flanking || isLastPunctChar);
-      const can_close =
-        right_flanking && (canSplitWord || !left_flanking || isNextPunctChar);
+        const isEitherCJKChar =
+          // We don't consider a sequence of an ideographic VS followed by a general-purpose VS
+          isNextCjk(nextChar) ||
+          // isPreviousCjk (more complex than isNextCjk as for now, so place it last)
+          (twoPrevChar !== null
+            ? is2PreviousCjk(twoPrevChar, lastChar)
+            : isPreviousCjk(lastChar));
 
-      return { can_open, can_close, length: count };
+        left_flanking ||= isEitherCJKChar || !isNextPunctChar;
+        right_flanking ||= isEitherCJKChar || !isLastPunctChar;
+      }
+
+      return {
+        can_open: left_flanking,
+        can_close: right_flanking,
+        length: count,
+      };
 
       function getLastCharCode(str: string, pos: number): [number, number] {
         // treat beginning of the line as a whitespace
