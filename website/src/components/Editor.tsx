@@ -24,6 +24,11 @@ const [cjkFriendlyTime, setCjkFriendlyTime] = createSignal<
 const [nonCJKFriendlyTime, setNonCJKFriendlyTime] = createSignal<
   ResultPerOne | undefined
 >(undefined);
+const [cjkFriendlyBenchFailure, setCjkFriendlyBenchFailure] = createSignal<
+  string | null
+>(null);
+const [nonCJKFriendlyBenchFailure, setNonCJKFriendlyBenchFailure] =
+  createSignal<string | null>(null);
 function resetBenchResult() {
   setCjkFriendlyTime(undefined);
   setNonCJKFriendlyTime(undefined);
@@ -93,8 +98,10 @@ const Editor = () => {
   async function handleBenchmark() {
     try {
       setIsBenchmarking(true);
+      setCjkFriendlyBenchFailure(null);
+      setNonCJKFriendlyBenchFailure(null);
       const benchWorker = new BenchmarkWorker();
-      const { cjkFriendly, noCjkFriendly } = await (new Promise((resolve) => {
+      const result = await (new Promise((resolve) => {
         benchWorker.postMessage([
           markdown(),
           {
@@ -107,8 +114,17 @@ const Editor = () => {
         });
       }) as Promise<BenchResult>);
       benchWorker.terminate();
-      setCjkFriendlyTime(cjkFriendly);
-      setNonCJKFriendlyTime(noCjkFriendly);
+      if (result.success) {
+        setCjkFriendlyTime(result.cjkFriendly);
+        setNonCJKFriendlyTime(result.noCjkFriendly);
+      } else {
+        setCjkFriendlyBenchFailure(
+          result.cjkFriendly !== "completed" ? result.cjkFriendly : null,
+        );
+        setNonCJKFriendlyBenchFailure(
+          result.noCjkFriendly !== "completed" ? result.noCjkFriendly : null,
+        );
+      }
     } finally {
       setIsBenchmarking(false);
     }
@@ -331,10 +347,15 @@ const Preview = () => {
       >
         <p>
           With this specification
-          <Show when={cjkFriendlyTime() !== undefined}>
-            {" "}
-            {/** biome-ignore lint/style/noNonNullAssertion: when above */}
-            <ShowTime result={() => cjkFriendlyTime()!} />
+          <Show
+            when={cjkFriendlyBenchFailure() === null}
+            fallback={` (bench ${cjkFriendlyBenchFailure()})`}
+          >
+            <Show when={cjkFriendlyTime() !== undefined}>
+              {" "}
+              {/** biome-ignore lint/style/noNonNullAssertion: when above */}
+              <ShowTime result={() => cjkFriendlyTime()!} />
+            </Show>
           </Show>
           :
         </p>
@@ -354,10 +375,15 @@ const Preview = () => {
         >
           <p>
             Without this specification
-            <Show when={nonCJKFriendlyTime() !== undefined}>
-              {" "}
-              {/** biome-ignore lint/style/noNonNullAssertion: when above */}
-              <ShowTime result={() => nonCJKFriendlyTime()!} />
+            <Show
+              when={nonCJKFriendlyBenchFailure() === null}
+              fallback={` (bench ${nonCJKFriendlyBenchFailure()})`}
+            >
+              <Show when={nonCJKFriendlyTime() !== undefined}>
+                {" "}
+                {/** biome-ignore lint/style/noNonNullAssertion: when above */}
+                <ShowTime result={() => nonCJKFriendlyTime()!} />
+              </Show>
             </Show>
             :
           </p>

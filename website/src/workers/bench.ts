@@ -1,4 +1,4 @@
-import { Bench } from "tinybench";
+import { Bench, type TaskResult } from "tinybench";
 import { getRenderer, type MarkdownProcessorName } from "./markdownRenderer";
 
 export interface ResultPerOne {
@@ -6,7 +6,16 @@ export interface ResultPerOne {
   sd: number;
 }
 
-export interface BenchResult {
+export type BenchResult = CompletedBenchResult | FailedBenchResult;
+
+export interface FailedBenchResult {
+  success: false;
+  cjkFriendly: TaskResult["state"];
+  noCjkFriendly: TaskResult["state"];
+}
+
+export interface CompletedBenchResult {
+  success: true;
   cjkFriendly: ResultPerOne;
   noCjkFriendly: ResultPerOne;
 }
@@ -33,18 +42,30 @@ export async function runBench(
     Iterator.from(bench.tasks).map((t) => [t.name, t.result]),
   );
   // biome-ignore lint/style/noNonNullAssertion: key always exists
-  const cjkFriendlyResult = resultsMap.get("cjk-friendly")!.latency;
+  const cjkFriendlyResult = resultsMap.get("cjk-friendly")!;
   // biome-ignore lint/style/noNonNullAssertion: key always exists
-  const noCjkFriendlyResult = resultsMap.get("no-cjk-friendly")!.latency;
+  const noCjkFriendlyResult = resultsMap.get("no-cjk-friendly")!;
+
+  if (
+    cjkFriendlyResult.state !== "completed" ||
+    noCjkFriendlyResult.state !== "completed"
+  ) {
+    return {
+      success: false,
+      cjkFriendly: cjkFriendlyResult.state,
+      noCjkFriendly: noCjkFriendlyResult.state,
+    };
+  }
 
   return {
+    success: true,
     cjkFriendly: {
-      mean: cjkFriendlyResult.mean,
-      sd: cjkFriendlyResult.sd,
+      mean: cjkFriendlyResult.latency.mean,
+      sd: cjkFriendlyResult.latency.sd,
     },
     noCjkFriendly: {
-      mean: noCjkFriendlyResult.mean,
-      sd: noCjkFriendlyResult.sd,
+      mean: noCjkFriendlyResult.latency.mean,
+      sd: noCjkFriendlyResult.latency.sd,
     },
   };
 }

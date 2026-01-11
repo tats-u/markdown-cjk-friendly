@@ -17,7 +17,7 @@
     "micromark-extension-gfm": "catalog:",
     "solid-icons": "^1.1.0",
     "solid-js": "^1.9.10",
-    "tinybench": "^5.1.0"
+    "tinybench": "^6.0.0"
   },
   "devDependencies": {
     "@types/markdown-it": "catalog:",
