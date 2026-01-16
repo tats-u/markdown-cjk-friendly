@@ -233,7 +233,7 @@ const Editor = () => {
           <button
             type="button"
             onClick={handleBenchmark}
-            disabled={isBenchmarking()}
+            disabled={isBenchmarking() || textareaMarkdown() === ""}
           >
             Benchmark<Show when={isBenchmarking()}>ing…</Show>
           </button>
