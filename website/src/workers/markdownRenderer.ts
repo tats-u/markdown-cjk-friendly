@@ -1,3 +1,7 @@
+import {
+  createMarkdownExit,
+  type PluginSimple as MarkdownExitPluginSimple,
+} from "markdown-exit";
 import markdownIt from "markdown-it";
 import markdownItCjkFriendlyPlugin from "markdown-it-cjk-friendly";
 import { micromark } from "micromark";
@@ -5,7 +9,10 @@ import { cjkFriendlyExtension } from "micromark-extension-cjk-friendly";
 import { gfmStrikethroughCjkFriendly } from "micromark-extension-cjk-friendly-gfm-strikethrough";
 import { gfm, gfmHtml } from "micromark-extension-gfm";
 
-export type MarkdownProcessorName = "micromark" | "markdown-it";
+export type MarkdownProcessorName =
+  | "micromark"
+  | "markdown-it"
+  | "markdown-exit";
 
 const extensionsWithoutGfm = [cjkFriendlyExtension()];
 const extensionsWithGfmNoCjkFriendly = [gfm()];
@@ -50,6 +57,16 @@ const rendererStore: RendererStore = {
       plain: undefined,
     },
   },
+  "markdown-exit": {
+    cjkFriendly: {
+      gfm: undefined,
+      plain: undefined,
+    },
+    noFriendly: {
+      gfm: undefined,
+      plain: undefined,
+    },
+  },
 };
 
 function createMarkdownItRenderer(
@@ -83,6 +100,20 @@ function createMicromarkRenderer(
     });
 }
 
+function createMarkdownExitRenderer(
+  cjkFriendly: boolean,
+  gfm: boolean,
+): MarkdownToHTMLRenderer {
+  const md = gfm
+    ? createMarkdownExit({ html: false, linkify: true })
+    : createMarkdownExit("commonmark");
+  if (cjkFriendly) {
+    // markdown-exit is compatible with markdown-it
+    md.use(markdownItCjkFriendlyPlugin as unknown as MarkdownExitPluginSimple);
+  }
+  return (source: string) => md.render(source);
+}
+
 function createRenderer(
   engine: MarkdownProcessorName,
   cjkFriendly: boolean,
@@ -90,6 +121,9 @@ function createRenderer(
 ): MarkdownToHTMLRenderer {
   if (engine === "markdown-it") {
     return createMarkdownItRenderer(cjkFriendly, gfm);
+  }
+  if (engine === "markdown-exit") {
+    return createMarkdownExitRenderer(cjkFriendly, gfm);
   }
   return createMicromarkRenderer(cjkFriendly, gfm);
 }

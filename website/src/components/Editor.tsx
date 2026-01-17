@@ -12,7 +12,7 @@ import BenchmarkWorker from "../workers/benchmarker.worker?worker";
 import { getRenderer } from "../workers/markdownRenderer";
 import styles from "./Editor.module.css";
 
-type MarkdownProcessorName = "micromark" | "markdown-it";
+type MarkdownProcessorName = "micromark" | "markdown-it" | "markdown-exit";
 
 const [markdown, setMarkdown] = createSignal("");
 const [gfmEnabled, setGfmEnabled] = createSignal(true);
@@ -181,6 +181,7 @@ const Editor = () => {
       switch (engineLower as MarkdownProcessorName) {
         case "markdown-it":
         case "micromark":
+        case "markdown-exit":
           setEngine(engineLower as MarkdownProcessorName);
           break;
       }
@@ -217,6 +218,7 @@ const Editor = () => {
           >
             <option value="micromark">micromark</option>
             <option value="markdown-it">markdown-it</option>
+            <option value="markdown-exit">markdown-exit</option>
           </select>
           <select
             onChange={(e) => {
