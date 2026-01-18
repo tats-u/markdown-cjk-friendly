@@ -91,7 +91,7 @@ export default function markdownItCjkFriendlyPlugin(md: MarkdownIt): void {
       // biome-ignore lint/style/noNonNullAssertion: always in range thanks to pos < max
       const nextChar = pos < max ? this.src.codePointAt(pos)! : 0x20;
 
-      // We don't consider a sequence of an Unicode whitespace followed by a general-use VS
+      // We don't consider a sequence of a Unicode whitespace followed by a general-use VS
       const isLastWhiteSpace = isWhiteSpace(lastMainChar);
       const isNextWhiteSpace = isWhiteSpace(nextChar);
 

@@ -4,10 +4,10 @@ import { type classifyCharacter, constantsEx } from "./classifyCharacter.js";
 type Category = ReturnType<typeof classifyCharacter>;
 
 /**
- * `true` if the code point represents an [Unicode whitespace character](https://spec.commonmark.org/0.31.2/#unicode-whitespace-character).
+ * `true` if the code point represents a [Unicode whitespace character](https://spec.commonmark.org/0.31.2/#unicode-whitespace-character).
  *
  * @param category the return value of `classifyCharacter`.
- * @returns `true` if the code point represents an Unicode whitespace character
+ * @returns `true` if the code point represents a Unicode whitespace character
  */
 export function isUnicodeWhitespace(category: Category): boolean {
   return Boolean(category & constants.characterGroupWhitespace);
@@ -69,7 +69,7 @@ export function isNonEmojiGeneralUseVS(category: Category): boolean {
 }
 
 /**
- * `true` if the code point represents an [Unicode whitespace character](https://spec.commonmark.org/0.31.2/#unicode-whitespace-character) or an [Unicode punctuation character](https://spec.commonmark.org/0.31.2/#unicode-punctuation-character).
+ * `true` if the code point represents a [Unicode whitespace character](https://spec.commonmark.org/0.31.2/#unicode-whitespace-character) or a [Unicode punctuation character](https://spec.commonmark.org/0.31.2/#unicode-punctuation-character).
  *
  * @param category the return value of `classifyCharacter`.
  * @returns `true` if the code point represents a space or punctuation
