@@ -57,9 +57,9 @@ A <a href="#right-flanking-delimiter-run" id="right-flanking-delimiter-run">righ
 
 <!--  -->
 
-2\. A single `_` character [can open emphasis](https://spec.commonmark.org/0.31.2/#can-open-emphasis) iff it is part of a [left-flanking delimiter run](#left-flanking-delimiter-run) and either (a) not part of a [right-flanking delimiter run](#right-flanking-delimiter-run) or (b) part of a [right-flanking delimiter run](#right-flanking-delimiter-run) preceded by a***n*** [Unicode punctuation ***sequence***](#unicode-punctuation-sequence).
+2\. A single `_` character [can open emphasis](https://spec.commonmark.org/0.31.2/#can-open-emphasis) iff it is part of a [left-flanking delimiter run](#left-flanking-delimiter-run) and either (a) not part of a [right-flanking delimiter run](#right-flanking-delimiter-run) or (b) part of a [right-flanking delimiter run](#right-flanking-delimiter-run) preceded by a [Unicode punctuation ***sequence***](#unicode-punctuation-sequence).
 
-6\. A double `__` can [open strong emphasis](https://spec.commonmark.org/0.31.2/#can-open-strong-emphasis) iff it is part of a [left-flanking delimiter run](#left-flanking-delimiter-run) and either (a) not part of a [right-flanking delimiter run](#right-flanking-delimiter-run) or (b) part of a [right-flanking delimiter run](#right-flanking-delimiter-run) preceded by a***n*** [Unicode punctuation ***sequence***](#unicode-punctuation-sequence).
+6\. A double `__` can [open strong emphasis](https://spec.commonmark.org/0.31.2/#can-open-strong-emphasis) iff it is part of a [left-flanking delimiter run](#left-flanking-delimiter-run) and either (a) not part of a [right-flanking delimiter run](#right-flanking-delimiter-run) or (b) part of a [right-flanking delimiter run](#right-flanking-delimiter-run) preceded by a [Unicode punctuation ***sequence***](#unicode-punctuation-sequence).
 
 ## Tips for Implementers
 
