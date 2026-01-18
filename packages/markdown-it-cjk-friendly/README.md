@@ -21,7 +21,7 @@ CommonMark has a problem that the following emphasis marks `**` are not recogniz
 
 <span lang="zh-Hans-CN">CommonMark存在以下问题：在中文、日语和韩语文本中，强调标记`**`不会被识别为强调标记。</span>
 
-<span lang="ko">CommonMark는 일본어와 중국어에서 다음과 같은 강조 표시 `**`가 강조 표시로 인식되지 않는 문제가 있습니다.</span>
+<span lang="ko">CommonMark는 한국어, 일본어, 중국어에서 다음과 같은 강조 표시 `**`가 강조 표시로 인식되지 않는 문제가 있습니다.</span>
 
 ```md
 **このアスタリスクは強調記号として認識されず、そのまま表示されます。**この文のせいで。
