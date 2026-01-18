@@ -8,9 +8,9 @@ A [remark](https://github.com/remarkjs/remark) plugin to make GitHub Flavored Ma
 
 <span lang="zh-Hans-CN">一个 [remark](https://github.com/remarkjs/remark) 插件，用于使 GitHub Flavored Markdown（GFM）的删除线标记（`~~`）能够正确支持中文、日语和韩语文本。</span>
 
-<span lang="ko">GitHub Flavored Markdown(GFM)의 취소선 기호(`~~`)를 한국어, 중국어, 일본어와 호환되도록 만드는 [remark](https://github.com/remarkjs/remark) 플러그인</span>
+<span lang="ko">GitHub Flavored Markdown(GFM)의 취소선 기호(`~~`)를 한국어, 일본어, 중국어와 호환되도록 만드는 [remark](https://github.com/remarkjs/remark) 플러그인.</span>
 
-## Problem / <span lang="ja">問題</span> / <span lang="zh-Hans-CN">问题</span> / <span lang="ko">문제점</span>
+## Problem / <span lang="ja">問題</span> / <span lang="zh-Hans-CN">问题</span> / <span lang="ko">문제</span>
 
 CommonMark has a problem that the following emphasis marks `**` are not recognized as emphasis marks in Japanese, Chinese, and Korean.
 
@@ -18,7 +18,7 @@ CommonMark has a problem that the following emphasis marks `**` are not recogniz
 
 <span lang="zh-Hans-CN">CommonMark存在以下问题：在中文、日语和韩语文本中，强调标记`**`不会被识别为强调标记。</span>
 
-<span lang="ko">CommonMark는 일본어와 중국어에서 다음과 같은 강조 표시 `**`가 강조 표시로 인식되지 않는 문제가 있습니다.</span>
+<span lang="ko">CommonMark는 한국어, 일본어, 중국어에서 다음과 같은 강조 표시 `**`가 강조 표시로 인식되지 않는 문제가 있습니다.</span>
 
 ```md
 **このアスタリスクは強調記号として認識されず、そのまま表示されます。**この文のせいで。
@@ -54,7 +54,7 @@ This behavior is also applied to the strikethrough (`~~`) in GFM.
 
 <span lang="ko">이 동작은 GFM의 취소선(`~~`)에도 해당됩니다.</span>
 
-## Runtime Requirements / <span lang="ja">実行環境の要件</span> / <span lang="zh-Hans-CN">运行环境要求</span> / <span lang="ko">업데이트 전략</span>
+## Runtime Requirements / <span lang="ja">実行環境の要件</span> / <span lang="zh-Hans-CN">运行环境要求</span> / <span lang="ko">런타임 요구 사항</span>
 
 This package is ESM-only. It requires Node.js 18 or later. (I have only tested it on 20 and later. There is no factor that would prevent it from working on 18, but I do not guarantee its operation on 18.)
 
@@ -84,7 +84,7 @@ If you use another package manager, please replace `npm install` with the comman
 
 <span lang="zh-Hans-CN">如果使用其他包管理器，请将 `npm install` 替换为当时包管理器的命令（例如：`pnpm add`、`yarn add`）。</span>
 
-<span lang="ko">다른 패키지 매니저를 사용하는 경우 `npm install`을 해당 패키지 매니저의 명령어(예: `pnpm add`, `yarn add`)로 바꾸어 주세요.</span>
+<span lang="ko">npm이 아닌 다른 패키지 매니저를 사용하는 경우 `npm install`을 해당 패키지 매니저의 명령어(예: `pnpm add`, `yarn add`)로 바꿔 주세요.</span>
 
 ## Usage / <span lang="ja">使い方</span> / <span lang="zh-Hans-CN">用法</span> / <span lang="ko">사용법</span>
 
@@ -132,7 +132,7 @@ For MDX, add `remarkCjkFriendlyGfmStrikethrough` to the `remarkPlugins` array in
 
 <span lang="zh-Hans-CN">对于 MDX，将 `remarkCjkFriendlyGfmStrikethrough` 添加到配置对象的 `remarkPlugins` 数组中。</span>
 
-<span lang="ko">MDX의 경우, `remarkCjkFriendlyGfmStrikethrough`를 `remarkPlugins` 배열에 추가해주세요.</span>
+<span lang="ko">MDX의 경우 설정 객체의 `remarkPlugins` 배열에 `remarkCjkFriendlyGfmStrikethrough`를 추가해 주세요.</span>
 
 ```js
 const someMdxConfig = {
@@ -148,7 +148,7 @@ const someMdxConfig = {
 >
 > <span lang="zh-Hans-CN">将 `remarkCjkFriendlyGfmStrikethrough` 放在 `remarkGfm` 后面，否则 `remarkCjkFriendlyGfmStrikethrough` 将无法工作。</span>
 >
-> <span lang="ko">`remarkCjkFriendlyGfmStrikethrough`는 `remarkGfm` 사이에 배치해야 합니다. 쓰면 `remarkCjkFriendlyGfmStrikethrough`는 작동하지 않습니다.</span>
+> <span lang="ko">`remarkCjkFriendlyGfmStrikethrough`는 `remarkGfm` 뒤에 배치해야 합니다. 그렇게 하지 않으면 `remarkCjkFriendlyGfmStrikethrough`가 작동하지 않습니다.</span>
 
 In [Rspress](https://rspress.dev/guide/basic/use-mdx#disabling-the-rust-version-compiler) and [Next.js (`@next/mdx`)](https://nextjs.org/docs/pages/building-your-application/configuring/mdx#using-the-rust-based-mdx-compiler-experimental), you will probably need to set `mdxRs` to `false` to make Rspress use a JavaScript-based and monkey-patchable parser.
 
@@ -156,7 +156,7 @@ In [Rspress](https://rspress.dev/guide/basic/use-mdx#disabling-the-rust-version-
 
 <span lang="zh-CN">在[Rspress](https://rspress.dev/zh/guide/basic/use-mdx#%E5%85%B3%E9%97%AD-rust-%E7%89%88%E6%9C%AC%E7%BC%96%E8%AF%91%E5%99%A8)和[Next.js(`@next/mdx`)](https://nextjs.org/docs/pages/building-your-application/configuring/mdx#using-the-rust-based-mdx-compiler-experimental)中，您可能需要将`mdxRs`设置为`false`，以使Rspress使用基于JavaScript且可进行猴子补丁的解析器。</span>
 
-<span lang="ko">[Rspress](https://rspress.dev/guide/basic/use-mdx#disabling-the-rust-version-compiler)와 [Next.js(`@next/mdx`)](https://nextjs.org/docs/pages/building-your-application/configuring/mdx#using-the-rust-based-mdx-compiler-experimental)에서는 `mdxRs`를 `false`로 설정하여 Rspress가 JavaScript 기반이며 몽키 패치가 가능한 파서를 사용하도록 해야 할 것 같습니다.</span>
+<span lang="ko">[Rspress](https://rspress.dev/guide/basic/use-mdx#disabling-the-rust-version-compiler)와 [Next.js(`@next/mdx`)](https://nextjs.org/docs/pages/building-your-application/configuring/mdx#using-the-rust-based-mdx-compiler-experimental)에서는 `mdxRs`를 `false`로 설정하여 Rspress가 JavaScript 기반이며 몽키 패치가 가능한 파서를 사용하도록 해야 할 수 있습니다.</span>
 
 ## Compatibility with the other languages / <span lang="ja">他言語との互換性</span> / <span lang="zh-Hans-CN">与其他语言的兼容性</span> / <span lang="ko">다른 언어와의 호환성</span>
 
@@ -166,9 +166,9 @@ This modification of the specification does not affect the other languages than 
 
 <span lang="zh-Hans-CN">除中文、日文和韩文外，建议的规范变更不会影响其他语言。请放心使用此软件包，因为如果您的应用程序或文档包含其他语言的翻译或内容，也不会受到影响。我保证，即使使用此软件包，remark 仍然会为 0.29.0.gfm.13 版本的所有 cmark-gfm 测试用例输出相同的 HTML。</span>
 
-<span lang="ko">이번 사양 변경 제안은 한국어, 중국어, 일본어 이외의 언어에는 영향을 미치지 않습니다. 애플리케이션이나 문서에 다른 언어의 번역이나 콘텐츠가 포함되어 있어도 영향을 받지 않으므로 안심하고 본 패키지를 사용하시기 바랍니다. 본 패키지를 사용해도 0.29.0.gfm.13 기준 cmark-gfm.13의 모든 테스트 케이스에서 mark가 동일한 HTML을 출력하도록 보장합니다.</span>
+<span lang="ko">이 사양 변경 제안은 한국어, 일본어, 중국어 이외의 언어에는 영향을 미치지 않습니다. 애플리케이션이나 문서에 다른 언어의 번역이나 콘텐츠가 포함되어 있어도 영향을 받지 않으므로 안심하고 본 패키지를 사용하시기 바랍니다. 본 패키지를 사용해도 0.29.0.gfm.13 기준 cmark-gfm.13의 모든 테스트 케이스에서 mark가 동일한 HTML을 출력하도록 보장합니다.</span>
 
-## Specification / <span lang="ja">規格書</span> / <span lang="zh-Hans-CN">规范</span> / <span lang="ko">규정서</span>
+## Specification / <span lang="ja">規格書</span> / <span lang="zh-Hans-CN">规范</span> / <span lang="ko">설명서</span>
 
 The condition for `~~` to be recognized as a strikeout is the same as the condition for `**` to be recognized as emphasis in the following CommonMark specification amendment suggestion:
 
