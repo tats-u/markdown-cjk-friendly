@@ -4,7 +4,7 @@
 
 An utility library package for [micromark-extension-cjk-friendly](https://npmjs.com/package/micromark-extension-cjk-friendly), which is internally used by [remark-cjk-friendly](https://npmjs.com/package/remark-cjk-friendly), and its related packages.
 
-## Problem / <span lang="ja">問題</span> / <span lang="zh-Hans-CN">问题</span> / <span lang="ko">문제점</span>
+## Problem / <span lang="ja">問題</span> / <span lang="zh-Hans-CN">问题</span> / <span lang="ko">문제</span>
 
 CommonMark has a problem that the following emphasis marks `**` are not recognized as emphasis marks in Japanese, Chinese, and Korean.
 
@@ -12,7 +12,7 @@ CommonMark has a problem that the following emphasis marks `**` are not recogniz
 
 <span lang="zh-Hans-CN">CommonMark存在以下问题：在中文、日语和韩语文本中，强调标记`**`不会被识别为强调标记。</span>
 
-<span lang="ko">CommonMark는 일본어와 중국어에서 다음과 같은 강조 표시 `**`가 강조 표시로 인식되지 않는 문제가 있습니다.</span>
+<span lang="ko">CommonMark는 한국어, 일본어, 중국어에서 다음과 같은 강조 표시 `**`가 강조 표시로 인식되지 않는 문제가 있습니다.</span>
 
 ```md
 **このアスタリスクは強調記号として認識されず、そのまま表示されます。**この文のせいで。
@@ -40,7 +40,7 @@ Of course, not only the end side but also the start side has the same issue.
 
 CommonMark issue: https://github.com/commonmark/commonmark-spec/issues/650
 
-## Runtime Requirements / <span lang="ja">実行環境の要件</span> / <span lang="zh-Hans-CN">运行环境要求</span> / <span lang="ko">업데이트 전략</span>
+## Runtime Requirements / <span lang="ja">実行環境の要件</span> / <span lang="zh-Hans-CN">运行环境要求</span> / <span lang="ko">런타임 요구 사항</span>
 
 This package is ESM-only. It requires Node.js 18 or later. (I have only tested it on 20 and later. There is no factor that would prevent it from working on 18, but I do not guarantee its operation on 18.)
 
@@ -70,7 +70,7 @@ If you use another package manager, please replace `npm install` with the comman
 
 <span lang="zh-Hans-CN">如果使用其他包管理器，请将 `npm install` 替换为当时包管理器的命令（例如：`pnpm add`、`yarn add`）。</span>
 
-<span lang="ko">다른 패키지 매니저를 사용하는 경우 `npm install`을 해당 패키지 매니저의 명령어(예: `pnpm add`, `yarn add`)로 바꾸어 주세요.</span>
+<span lang="ko">npm이 아닌 다른 패키지 매니저를 사용하는 경우 `npm install`을 해당 패키지 매니저의 명령어(예: `pnpm add`, `yarn add`)로 바꿔 주세요.</span>
 
 ## Usage / <span lang="ja">使い方</span> / <span lang="zh-Hans-CN">用法</span> / <span lang="ko">사용법</span>
 
@@ -89,7 +89,7 @@ This package provides a function and a namespace based on the original micromark
 
 Also, this package provides some utility functions to check whether a character belongs to the category defined in the specification (e.g. CJK character), or to help you fetch the Unicode Code Point of a character around the emphasis mark.
 
-## Specification / <span lang="ja">規格書</span> / <span lang="zh-Hans-CN">规范</span> / <span lang="ko">규정서</span>
+## Specification / <span lang="ja">規格書</span> / <span lang="zh-Hans-CN">规范</span> / <span lang="ko">설명서</span>
 
 https://github.com/tats-u/markdown-cjk-friendly/blob/main/specification.md (English)
 

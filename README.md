@@ -14,7 +14,7 @@
 
 ## Ports / <span lang="ja">移植</span> / <span lang="zh-Hans-CN">移植</span> / <span lang="ko">이식</span>
 
-### As an extension / <span lang="ja">拡張機能として</span> / <span lang="zh-Hans-CN">作为扩展</span> / <span lang="ko">패키지로 만들기</span>
+### As an extension / <span lang="ja">拡張機能として</span> / <span lang="zh-Hans-CN">作为扩展</span> / <span lang="ko">확장 기능</span>
 
 - [Comrak](https://github.com/kivikakk/comrak)
   - [commonmarker](https://github.com/gjtorikian/commonmarker)
@@ -26,7 +26,7 @@
 - Tweak specifications
 - Port for non-JavaScript implementations
 
-## Specification / <span lang="ja">規格書</span> / <span lang="zh-Hans-CN">规范</span> / <span lang="ko">규정서</span>
+## Specification / <span lang="ja">規格書</span> / <span lang="zh-Hans-CN">规范</span> / <span lang="ko">설명서</span>
 
 See [specification.md](specification.md).
 
@@ -34,7 +34,7 @@ See [specification.md](specification.md).
 
 <span lang="zh-Hans-CN">参考 [specification.md](specification.md)（英文）。</span>
 
-<span lang="ko">[specification.md](specification.md)（영어）를 참고해 주시기 바라요.</span>
+<span lang="ko">[specification.md](specification.md)(영어)를 참고해 주시기 바랍니다.</span>
 
 ### Documents for implementers / <span lang="ja">実装者向け文書</span> / <span lang="zh-Hans-CN">实现文档</span> / <span lang="ko">구현자를 위한 문서</span>
 
@@ -45,7 +45,7 @@ See [specification.md](specification.md).
 
 https://tats-u.github.io/markdown-cjk-friendly
 
-## Problem / <span lang="ja">問題</span> / <span lang="zh-Hans-CN">问题</span> / <span lang="ko">문제점</span>
+## Problem / <span lang="ja">問題</span> / <span lang="zh-Hans-CN">问题</span> / <span lang="ko">문제</span>
 
 CommonMark has a problem that the following emphasis marks `**` are not recognized as emphasis marks in Japanese,Chinese, and Korean.
 
@@ -53,7 +53,7 @@ CommonMark has a problem that the following emphasis marks `**` are not recogniz
 
 <span lang="zh-Hans-CN">CommonMark存在以下问题：在中文、日语和韩语文本中，强调标记`**`不会被识别为强调标记。</span>
 
-<span lang="ko">CommonMark는 일본어와 중국어에서 다음과 같은 강조 표시 `**`가 강조 표시로 인식되지 않는 문제가 있습니다.</span>
+<span lang="ko">CommonMark는 한국어, 일본어, 중국어에서 다음과 같은 강조 표시 `**`가 강조 표시로 인식되지 않는 문제가 있습니다.</span>
 
 ```md
 **このアスタリスクは強調記号として認識されず、そのまま表示されます。**この文のせいで。
@@ -81,7 +81,7 @@ Of course, not only the end side but also the start side has the same issue.
 
 CommonMark issue: https://github.com/commonmark/commonmark-spec/issues/650
 
-## Who should adopt this specifications instead of the original CommonMark or GFM? / <span lang="ja">元のCommonMarkやGFMの代わりにこの仕様を採用べき人</span> / <span lang="zh-Hans-CN">谁应该采用这个规范而不是原始的CommonMark或GFM？</span> / <span lang="ko">누가 원래의 CommonMark나 GFM 대신 이 사양을 채택해야 하는가?</span>
+## Who should adopt this specifications instead of the original CommonMark or GFM? / <span lang="ja">元のCommonMarkやGFMの代わりにこの仕様を採用べき人</span> / <span lang="zh-Hans-CN">谁应该采用这个规范而不是原始的CommonMark或GFM？</span> / <span lang="ko">누가 원래의 CommonMark나 GFM 대신 이 사양을 채택해야 하는가</span>
 
 If you are an engineer who must handle Chinese, Japanese, and Korean content that cannot be fully supervised, it is strongly recommended to adopt this specification instead of plain CommonMark or GFM. "Cannot be fully supervised" refers to situations such as:
 
@@ -97,7 +97,7 @@ Additionally, if you are creating Markdown-related software or services primaril
 1. <span lang="ja">ユーザまたはAIが作成したコンテンツをそのまま表示する必要がある場合</span>
 2. <span lang="ja">翻訳者に、このCommonMarkの仕様を理解していない人も多く、なおかつリアルタイムで本番同様の描画プレビューを提供できず、`<strong>`タグを許可していない場合</span>
     - <span lang="ja">翻訳にCrowdin・Transifexなどの翻訳サービスを使っている場合</span>
-    - <span lang="ja">翻訳の品質に責任を負っている人が非エンジニアである、またはComonMarkのこの挙動を理解していない場合</span>
+    - <span lang="ja">翻訳の品質に責任を負っている人が非エンジニアである、またはCommonMarkのこの挙動を理解していない場合</span>
 
 <span lang="ja">また、あなたが主に日本人・中国人・韓国人のいずれかまたは全てを対象としたMarkdown関連のソフトウェアやサービスを作成する場合も、この仕様を採用することを強く推奨します。</span>
 
@@ -110,22 +110,22 @@ Additionally, if you are creating Markdown-related software or services primaril
 
 <span lang="zh-Hans-CN">此外，如果您正在创建主要面向中国人、日本人或韩国人（或全部）的Markdown相关软件或服务，也强烈建议采用此规范。</span>
 
-<span lang="ko">엔지니어로서 완전히 감독할 수 없는 한국어, 일본어, 중국어 콘텐츠를 다뤄야 하는 경우, 일반 CommonMark나 GFM 대신 이 사양을 채택할 것을 강력히 권장합니다. "완전히 감독할 수 없는"이란 다음과 같은 상황을 의미합니다:</span>
+<span lang="ko">엔지니어로서 완전히 감독할 수 없는 한국어, 일본어, 중국어 콘텐츠를 다뤄야 하는 경우 일반 CommonMark나 GFM 대신 이 사양을 채택할 것을 강력히 권장합니다. '완전히 감독할 수 없는'이란 다음과 같은 상황을 의미합니다.</span>
 
 1. <span lang="ko">사용자 또는 AI가 생성한 콘텐츠를 그대로 표시해야 하는 경우</span>
-2. <span lang="ko">많은 번역자가 이 CommonMark 동작을 이해하지 못하고, 실시간으로 실제 환경과 유사한 렌더링 미리보기를 제공할 수 없으며, `<strong>` 태그가 허용되지 않는 경우</span>
+2. <span lang="ko">많은 번역자가 CommonMark의 동작을 이해하지 못하고, 실시간으로 실제 환경과 유사한 렌더링 미리보기를 제공할 수 없으며, `<strong>` 태그가 허용되지 않는 경우</span>
     - <span lang="ko">Crowdin이나 Transifex 같은 번역 서비스를 사용하는 경우</span>
-    - <span lang="ko">번역 품질에 책임을 지는 사람이 엔지니어가 아니거나 이 CommonMark 동작을 이해하지 못하는 경우</span>
+    - <span lang="ko">번역 품질에 책임을 지는 사람이 엔지니어가 아니거나 CommonMark의 동작을 이해하지 못하는 경우</span>
 
-<span lang="ko">또한, 주로 한국어, 일본어, 중국어 사용자(또는 모두)를 대상으로 하는 Markdown 관련 소프트웨어나 서비스를 만들고 있다면, 이 사양을 채택할 것을 강력히 권장합니다.</span>
+<span lang="ko">또한, 주로 한국어, 일본어, 중국어 사용자(또는 모두)를 대상으로 하는 Markdown 관련 소프트웨어나 서비스를 만들고 있다면 이 사양을 채택할 것을 강력히 권장합니다.</span>
 
-### Example of 1. (Chinese) / <span lang="ja">1.の例（中国語）</span> / <span lang="zh-Hans-CN">1.的例子</span> / <span lang="ko">1.의 예제(한국어)</span>:
+### Example of 1. (Chinese) / <span lang="ja">1.の例（中国語）</span> / <span lang="zh-Hans-CN">1.的例子</span> / <span lang="ko">1.의 예시(중국어)</span>:
 
 ❌️Plain CommonMark / <span lang="ja">素のCommonMark</span> / <span lang="zh-Hans-CN">原生CommonMark</span> / <span lang="ko">기본 CommonMark</span>:
 
 ![plain CommonMark](https://github.com/user-attachments/assets/80bd3ffd-9416-4080-bc10-a408afef845b)
 
-✅️With this spec / <span lang="ja">本規格</span> / <span lang="zh-Hans-CN">这个规范</span> / <span lang="ko">이 사양을 채택하는 경우</span>:
+✅️With this spec / <span lang="ja">本規格</span> / <span lang="zh-Hans-CN">这个规范</span> / <span lang="ko">이 사양</span>:
 
 ![with this spec](https://github.com/user-attachments/assets/b2e159c5-3cae-495f-89c6-280ddb2926ce)
 
@@ -139,7 +139,7 @@ This specification is identical to CommonMark for all input except Chinese, Japa
 
 <span lang="zh-Hans-CN">除中文、日文、韩文和（少数表情符号和符号）之外的所有输入，本规范与CommonMark完全相同。上述插件/扩展包保证其Markdown实现在CommonMark 0.31.2的所有测试用例中输出相同的HTML。</span>
 
-<span lang="ko">본 사양은 한국어, 중국어, 일본어 및 (일부 이모티콘과 기호)를 제외한 모든 입력에 대해 CommonMark와 동일합니다. 앞서 언급된 플러그인/확장 패키지는 CommonMark 0.31.2 기준의 모든 CommonMark 테스트 케이스에서 동일한 HTML을 출력하는 Markdown 구현을 보장합니다.</span>
+<span lang="ko">본 사양은 한국어, 일본어, 중국어 및 일부 이모티콘과 기호를 제외한 모든 입력에 대해 CommonMark와 동일합니다. 앞서 언급된 플러그인/확장 패키지는 CommonMark 0.31.2 기준의 모든 CommonMark 테스트 케이스에서 동일한 HTML을 출력하는 Markdown 구현을 보장합니다.</span>
 
 ## Compatibility with the other languages / <span lang="ja">他言語との互換性</span> / <span lang="zh-Hans-CN">与其他语言的兼容性</span> / <span lang="ko">다른 언어와의 호환성</span>
 
@@ -149,9 +149,9 @@ This modification of the specification does not affect the other languages than 
 
 <span lang="zh-Hans-CN">除中文、日文和韩文外，建议的规范变更不会影响其他语言。请放心使用该软件包，因为如果您的应用程序或文档包含其他语言的翻译或内容，也不会受到影响。</span>
 
-<span lang="ko">이번 사양 변경 제안은 일본어, 중국어, 한국어 이외의 언어에는 영향을 미치지 않습니다. 애플리케이션이나 문서에 다른 언어의 번역이나 콘텐츠가 포함되어 있어도 영향을 받지 않으므로 안심하고 패키지를 사용하시기 바랍니다.</span>
+<span lang="ko">이 사양 변경 제안은 한국어, 일본어, 중국어 이외의 언어에는 영향을 미치지 않습니다. 애플리케이션이나 문서에 다른 언어의 번역이나 콘텐츠가 포함되어 있어도 영향을 받지 않으므로 안심하고 패키지를 사용하시기 바랍니다.</span>
 
-## Example Configurations / <span lang="ja">設定例</span> / <span lang="zh-Hans-CN">示例配置</span> / <span lang="ko">예제 새플</span>
+## Example Configurations / <span lang="ja">設定例</span> / <span lang="zh-Hans-CN">示例配置</span> / <span lang="ko">설정 예시</span>
 
 ### MDX (using `remark-cjk-friendly` family)
 
@@ -163,7 +163,7 @@ This modification of the specification does not affect the other languages than 
 
 - [VitePress (v1.x)](./demos/vitepress/.vitepress/config.mjs) (built-in and enabled by default since v2.0.0-alpha.12)
 
-## Which package(s) should I use? / <span lang="ja">どのパッケージを使うべきか</span> / <span lang="zh-Hans-CN">应该使用哪个包</span> / <span lang="ko">쓰었는 패키지를 사용해야 하나</span>
+## Which package(s) should I use? / <span lang="ja">どのパッケージを使うべきか</span> / <span lang="zh-Hans-CN">应该使用哪个包</span> / <span lang="ko">어떤 패키지를 사용해야 하는가</span>
 
 If you're using `remark`, `markdown-it`, or `micromark` directly, you should use the corresponding packages whose names start with the name of the package you're using.
 
@@ -171,7 +171,7 @@ If you're using `remark`, `markdown-it`, or `micromark` directly, you should use
 
 <span lang="zh-Hans-CN">如果您直接使用`remark`、`markdown-it`或`micromark`，则您正在使用的包的名称开头的相应包是正确的。</span>
 
-<span lang="ko">`remark`, `markdown-it`, `micromark`를 직접 사용하지 않아서 어떤 패키지를 사용해야 하나에는 그녀의 패키지를 사용해야 하나요.</span>
+<span lang="ko">`remark`, `markdown-it`, `micromark`를 직접 사용하는 경우에는 그 패키지의 이름으로 시작하는 패키지를 사용해 주시기 바랍니다.</span>
 
 If you don't know which package to use because you're not using `remark`, `markdown-it`, or `micromark` directly, you can follow the flowchart below.
 
@@ -179,7 +179,7 @@ If you don't know which package to use because you're not using `remark`, `markd
 
 <span lang="zh-Hans-CN">如果您因为没有直接使用`remark`、`markdown-it`或`micromark`而不知道该使用哪个包，可以参考下面的流程图。</span>
 
-<span lang="ko">`remark`, `markdown-it`, `micromark`를 직접 사용하지 않아서 어떤 패키지를 사용해야 할지 모르는 경우에는 아래의 순서도를 참고해 주시기 바랍니다.</span>
+<span lang="ko">`remark`, `markdown-it`, `micromark`를 직접 사용하지 않아서 어떤 패키지를 사용해야 하는지 모르는 경우에는 아래의 순서도를 참고해 주시기 바랍니다.</span>
 
 ```mermaid
 flowchart TD

@@ -8,7 +8,7 @@ A [micromark](https://github.com/micromark/micromark) extension to make Markdown
 
 <span lang="zh-Hans-CN">一个 [micromark](https://github.com/micromark/micromark) 扩展，用于使 CommonMark 的强调标记(`**`)能够正确支持中文、日语和韩语文本。</span>
 
-<span lang="ko">CommonMark의 강조 표시(`**`) 를 한국어, 중국어, 일본어와 호환되도록 만드는 [micromark](https://github.com/micromark/micromark) 확장</span>
+<span lang="ko">CommonMark의 강조 표시(`**`) 를 한국어, 일본어, 중국어와 호환되도록 만드는 [micromark](https://github.com/micromark/micromark) 확장</span>
 
 > [!NOTE]
 > This package does not support the strikethrough syntax (`~~`) in GFM (GitHub Flavored Markdown). If you want to support it, please use [`micromark-extension-cjk-friendly-gfm-strikethrough`](https://npmjs.com/package/micromark-extension-cjk-friendly-gfm-strikethrough) along with this package.
@@ -19,7 +19,7 @@ A [micromark](https://github.com/micromark/micromark) extension to make Markdown
 >
 > <span lang="ko">이 패키지는 GitHub Flavored Markdown(GFM)의 취소선(`~~`)을 지원하지 않습니다. 지원하고 싶은 경우에는 [`micromark-extension-cjk-friendly-gfm-strikethrough`](https://npmjs.com/package/micromark-extension-cjk-friendly-gfm-strikethrough)를 함께 사용해 주세요.</span>
 
-## Problem / <span lang="ja">問題</span> / <span lang="zh-Hans-CN">问题</span> / <span lang="ko">문제점</span>
+## Problem / <span lang="ja">問題</span> / <span lang="zh-Hans-CN">问题</span> / <span lang="ko">문제</span>
 
 CommonMark has a problem that the following emphasis marks `**` are not recognized as emphasis marks in Japanese, Chinese, and Korean.
 
@@ -75,7 +75,7 @@ Additionally, if you are creating Markdown-related software or services primaril
 1. <span lang="ja">ユーザまたはAIが作成したコンテンツをそのまま表示する必要がある場合</span>
 2. <span lang="ja">翻訳者に、このCommonMarkの仕様を理解していない人も多く、なおかつリアルタイムで本番同様の描画プレビューを提供できず、`<strong>`タグを許可していない場合</span>
     - <span lang="ja">翻訳にCrowdin・Transifexなどの翻訳サービスを使っている場合</span>
-    - <span lang="ja">翻訳の品質に責任を負っている人が非エンジニアである、またはComonMarkのこの挙動を理解していない場合</span>
+    - <span lang="ja">翻訳の品質に責任を負っている人が非エンジニアである、またはCommonMarkのこの挙動を理解していない場合</span>
 
 <span lang="ja">また、あなたが主に日本人・中国人・韓国人のいずれかまたは全てを対象としたMarkdown関連のソフトウェアやサービスを作成する場合も、このパッケージを使う（この仕様を採用する）ことを強く推奨します。</span>
 
@@ -88,16 +88,16 @@ Additionally, if you are creating Markdown-related software or services primaril
 
 <span lang="zh-Hans-CN">此外，如果您正在创建主要面向中国人、日本人或韩国人（或全部）的Markdown相关软件或服务，也强烈建议采用此规范。</span>
 
-<span lang="ko">엔지니어로서 완전히 감독할 수 없는 일본어, 중국어, 한국어 콘텐츠를 다뤄야 하는 경우, 이 패키지를 사용하세요 (일반 CommonMark나 GFM 대신 이 사양을 채택할 것을 강력히 권장합니다). "완전히 감독할 수 없는"이란 다음과 같은 상황을 의미합니다:</span>
+<span lang="ko">엔지니어로서 완전히 감독할 수 없는 일본어, 중국어, 한국어 콘텐츠를 다뤄야 하는 경우 이 패키지를 사용(일반 CommonMark나 GFM 대신 이 사양을 채택)할 것을 강력히 권장합니다. '완전히 감독할 수 없는'이란 다음과 같은 상황을 의미합니다.</span>
 
 1. <span lang="ko">사용자 또는 AI가 생성한 콘텐츠를 그대로 표시해야 하는 경우</span>
-2. <span lang="ko">많은 번역자가 이 CommonMark 동작을 이해하지 못하고, 실시간으로 실제 환경과 유사한 렌더링 미리보기를 제공할 수 없으며, `<strong>` 태그가 허용되지 않는 경우</span>
+2. <span lang="ko">많은 번역자가 CommonMark 동작을 이해하지 못하고, 실시간으로 실제 환경과 유사한 렌더링 미리보기를 제공할 수 없으며, `<strong>` 태그가 허용되지 않는 경우</span>
     - <span lang="ko">Crowdin이나 Transifex 같은 번역 서비스를 사용하는 경우</span>
-    - <span lang="ko">번역 품질에 책임을 지는 사람이 엔지니어가 아니거나 이 CommonMark 동작을 이해하지 못하는 경우</span>
+    - <span lang="ko">번역 품질에 책임을 지는 사람이 엔지니어가 아니거나 CommonMark 동작을 이해하지 못하는 경우</span>
 
-<span lang="ko">또한, 주로 일본어, 중국어, 한국어 사용자(또는 모두)를 대상으로 하는 Markdown 관련 소프트웨어나 서비스를 만들고 있다면, 이 패키지를 사용하세요 (이 사양을 채택할 것을 강력히 권장합니다).</span>
+<span lang="ko">또한, 주로 한국어, 일본어, 중국어 사용자(또는 모두)를 대상으로 하는 Markdown 관련 소프트웨어나 서비스를 만들고 있다면 이 패키지를 사용(이 사양을 채택)할 것을 강력히 권장합니다.</span>
 
-## Runtime Requirements / <span lang="ja">実行環境の要件</span> / <span lang="zh-Hans-CN">运行环境要求</span> / <span lang="ko">업데이트 전략</span>
+## Runtime Requirements / <span lang="ja">実行環境の要件</span> / <span lang="zh-Hans-CN">运行环境要求</span> / <span lang="ko">런타임 요구 사항</span>
 
 This package is ESM-only. It requires Node.js 18 or later. (I have only tested it on 20 and later. There is no factor that would prevent it from working on 18, but I do not guarantee its operation on 18.)
 
@@ -127,7 +127,7 @@ If you use another package manager, please replace `npm install` with the comman
 
 <span lang="zh-Hans-CN">如果使用其他包管理器，请将 `npm install` 替换为当时包管理器的命令（例如：`pnpm add`、`yarn add`）。</span>
 
-<span lang="ko">다른 패키지 매니저를 사용하는 경우 `npm install`을 해당 패키지 매니저의 명령어(예: `pnpm add`, `yarn add`)로 바꾸어 주세요.</span>
+<span lang="ko">npm이 아닌 다른 패키지 매니저를 사용하는 경우 `npm install`을 해당 패키지 매니저의 명령어(예: `pnpm add`, `yarn add`)로 바꿔 주세요.</span>
 
 ## Usage / <span lang="ja">使い方</span> / <span lang="zh-Hans-CN">用法</span> / <span lang="ko">사용법</span>
 
@@ -137,7 +137,7 @@ Import `micromark` and `micromark-extension-cjk-friendly`, and use the extension
 
 <span lang="zh-Hans-CN">通过 `micromark` 和 `micromark-extension-cjk-friendly` 导入，然后使用扩展如下：</span>
 
-<span lang="ko">`micromark`와 `micromark-extension-cjk-friendly`를 임포트하고 다음과 같이 확장을 사용하세요.</span>
+<span lang="ko">`micromark`와 `micromark-extension-cjk-friendly`를 가져오고 다음과 같이 확장을 사용하세요.</span>
 
 ```js
 import { micromark } from "micromark";
@@ -162,9 +162,9 @@ This modification of the specification does not affect the other languages than 
 
 <span lang="zh-Hans-CN">除中文、日文和韩文外，建议的规范变更不会影响其他语言。请放心使用此软件包，因为如果您的应用程序或文档包含其他语言的翻译或内容，也不会受到影响。我保证，即使使用此软件包（修正建议），micromark 仍然会为 0.31.2 版本的所有 CommonMark 测试用例输出相同的 HTML。</span>
 
-<span lang="ko">이번 사양 변경 제안은 한국어, 중국어, 일본어 이외의 언어에는 영향을 미치지 않습니다. 애플리케이션이나 문서에 다른 언어의 번역이나 콘텐츠가 포함되어 있어도 영향을 받지 않으므로 안심하고 본 패키지를 사용하시기 바랍니다. 본 패키지(수정안)를 사용해도 0.31.2 시점의 모든 CommonMark 테스트케이스에서 micromark가 동일한 HTML을 출력하는 것을 보장합니다.</span>
+<span lang="ko">이 사양 변경 제안은 한국어, 일본어, 중국어 이외의 언어에는 영향을 미치지 않습니다. 애플리케이션이나 문서에 다른 언어의 번역이나 콘텐츠가 포함되어 있어도 영향을 받지 않으므로 안심하고 본 패키지를 사용하시기 바랍니다. 본 패키지(수정안)를 사용해도 0.31.2 시점의 모든 CommonMark 테스트케이스에서 micromark가 동일한 HTML을 출력하는 것을 보장합니다.</span>
 
-## Specification / <span lang="ja">規格書</span> / <span lang="zh-Hans-CN">规范</span> / <span lang="ko">규정서</span>
+## Specification / <span lang="ja">規格書</span> / <span lang="zh-Hans-CN">规范</span> / <span lang="ko">설명서</span>
 
 https://github.com/tats-u/markdown-cjk-friendly/blob/main/specification.md (English)
 

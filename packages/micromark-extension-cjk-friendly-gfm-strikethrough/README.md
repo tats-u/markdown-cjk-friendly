@@ -8,9 +8,9 @@ A [micromark](https://github.com/micromark/micromark) extension to make GitHub F
 
 <span lang="zh-Hans-CN">一个 [micromark](https://github.com/micromark/micromark) 扩展，用于使 GitHub Flavored Markdown（GFM）的删除线标记（`~~`）能够正确支持中文、日语和韩语文本。</span>
 
-<span lang="ko">GitHub Flavored Markdown(GFM)의 취소선 기호(`~~`)를 한국어, 중국어, 일본어와 호환되도록 만드는 [micromark](https://github.com/micromark/micromark) 확장</span>
+<span lang="ko">GitHub Flavored Markdown(GFM)의 취소선 기호(`~~`)를 한국어, 일본어, 중국어와 호환되도록 만드는 [micromark](https://github.com/micromark/micromark) 확장.</span>
 
-## Problem / <span lang="ja">問題</span> / <span lang="zh-Hans-CN">问题</span> / <span lang="ko">문제점</span>
+## Problem / <span lang="ja">問題</span> / <span lang="zh-Hans-CN">问题</span> / <span lang="ko">문제</span>
 
 CommonMark has a problem that the following emphasis marks `**` are not recognized as emphasis marks in Japanese, Chinese, and Korean.
 
@@ -18,7 +18,7 @@ CommonMark has a problem that the following emphasis marks `**` are not recogniz
 
 <span lang="zh-Hans-CN">CommonMark存在以下问题：在中文、日语和韩语文本中，强调标记`**`不会被识别为强调标记。</span>
 
-<span lang="ko">CommonMark는 일본어와 중국어에서 다음과 같은 강조 표시 `**`가 강조 표시로 인식되지 않는 문제가 있습니다.</span>
+<span lang="ko">CommonMark는 한국어, 일본어, 중국어에서 다음과 같은 강조 표시 `**`가 강조 표시로 인식되지 않는 문제가 있습니다.</span>
 
 ```md
 **このアスタリスクは強調記号として認識されず、そのまま表示されます。**この文のせいで。
@@ -54,7 +54,7 @@ This behavior is also applied to the strikethrough (`~~`) in GFM.
 
 <span lang="ko">이 동작은 GFM의 취소선(`~~`)에도 해당됩니다.</span>
 
-## Runtime Requirements / <span lang="ja">実行環境の要件</span> / <span lang="zh-Hans-CN">运行环境要求</span> / <span lang="ko">업데이트 전략</span>
+## Runtime Requirements / <span lang="ja">実行環境の要件</span> / <span lang="zh-Hans-CN">运行环境要求</span> / <span lang="ko">런타임 요구 사항</span>
 
 This package is ESM-only. It requires Node.js 18 or later. (I have only tested it on 20 and later. There is no factor that would prevent it from working on 18, but I do not guarantee its operation on 18.)
 
@@ -84,7 +84,7 @@ If you use another package manager, please replace `npm install` with the comman
 
 <span lang="zh-Hans-CN">如果使用其他包管理器，请将 `npm install` 替换为当时包管理器的命令（例如：`pnpm add`、`yarn add`）。</span>
 
-<span lang="ko">다른 패키지 매니저를 사용하는 경우 `npm install`을 해당 패키지 매니저의 명령어(예: `pnpm add`, `yarn add`)로 바꾸어 주세요.</span>
+<span lang="ko">npm이 아닌 다른 패키지 매니저를 사용하는 경우 `npm install`을 해당 패키지 매니저의 명령어(예: `pnpm add`, `yarn add`)로 바꿔 주세요.</span>
 
 ## Usage / <span lang="ja">使い方</span> / <span lang="zh-Hans-CN">用法</span> / <span lang="ko">사용법</span>
 
@@ -94,7 +94,7 @@ Import `micromark` and `micromark-extension-cjk-friendly-strikethrough`, and use
 
 <span lang="zh-Hans-CN">通过 `micromark` 和 `micromark-extension-cjk-friendly-strikethrough` 导入，然后使用扩展如下：</span>
 
-<span lang="ko">`micromark`와 `micromark-extension-cjk-friendly-strikethrough`를 임포트하고 다음과 같이 확장을 사용하세요.</span>
+<span lang="ko">`micromark`와 `micromark-extension-cjk-friendly-strikethrough`를 가져오고 다음과 같이 확장을 사용하세요.</span>
 
 ```js
 import { micromark } from "micromark";
@@ -122,7 +122,7 @@ const htmlString = micromark(
 >
 > <span lang="ko">`gfmStrikethroughCjkFriendly()`는 `gfm()` 후에 입력하면서 작동합니다. 이는 `gfmStrikethroughCjkFriendly()`는 작동하지 않습니다.</span>
 
-## Specification / <span lang="ja">規格書</span> / <span lang="zh-Hans-CN">规范</span> / <span lang="ko">규정서</span>
+## Specification / <span lang="ja">規格書</span> / <span lang="zh-Hans-CN">规范</span> / <span lang="ko">설명서</span>
 
 The condition for `~~` to be recognized as a strikeout is the same as the condition for `**` to be recognized as emphasis in the following CommonMark specification amendment suggestion:
 
