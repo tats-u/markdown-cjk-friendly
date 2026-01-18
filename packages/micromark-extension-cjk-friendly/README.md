@@ -8,7 +8,7 @@ A [micromark](https://github.com/micromark/micromark) extension to make Markdown
 
 <span lang="zh-Hans-CN">一个 [micromark](https://github.com/micromark/micromark) 扩展，用于使 CommonMark 的强调标记(`**`)能够正确支持中文、日语和韩语文本。</span>
 
-<span lang="ko">CommonMark의 강조 표시(`**`) 를 한국어, 일본어, 중국어와 호환되도록 만드는 [micromark](https://github.com/micromark/micromark) 확장</span>
+<span lang="ko">CommonMark의 강조 표시(`**`) 를 한국어, 일본어, 중국어와 호환되도록 만드는 [micromark](https://github.com/micromark/micromark) 확장.</span>
 
 > [!NOTE]
 > This package does not support the strikethrough syntax (`~~`) in GFM (GitHub Flavored Markdown). If you want to support it, please use [`micromark-extension-cjk-friendly-gfm-strikethrough`](https://npmjs.com/package/micromark-extension-cjk-friendly-gfm-strikethrough) along with this package.
