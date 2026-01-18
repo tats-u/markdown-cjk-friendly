@@ -29,6 +29,9 @@ An <a href="#unicode-punctuation-sequence" id="unicode-punctuation-sequence">Uni
 
 A <a href="#cjk-ambiguous-punctuation-sequence" id="cjk-ambiguous-punctuation-sequence">CJK ambiguous punctuation sequence</a> is a [Standardized Variation Sequence](https://www.unicode.org/glossary/#standardized_variation_sequence) whose description in `StandardizedVariants.txt` [(the latest version)](https://www.unicode.org/Public/UCD/latest/ucd/StandardizedVariants.txt) contains a word "fullwidth form", whose first character is an [Unicode punctuation character](https://spec.commonmark.org/0.31.2/#unicode-punctuation-character), and the [UAX #11 East Asian Width](https://www.unicode.org/reports/tr11/) category of whose first character is `A`.
 
+> [!NOTE]
+> - [The Sibe form of quotation marks added in Unicode 17](https://www.unicode.org/L2/L2025/25028-vs3-sibe-quotation-marks.pdf) are vertical only and come with a space, so they are not CJK ambiguous punctuation sequences.
+
 A <a href="#cjk-punctuation-sequence" id="cjk-punctuation-sequence">CJK punctuation sequence</a> is a [CJK punctuation character](#cjk-punctuation-character), a [CJK ambiguous punctuation sequence](#cjk-ambiguous-punctuation-sequence), or a sequence of 2 [characters](https://spec.commonmark.org/0.31.2/#character) where the first one is [CJK punctuation character](#cjk-punctuation-character) and the second one is [Non-emoji General-use Variation Selector](#non-emoji-general-use-variation-selector).
 
 A <a href="#non-cjk-punctuation-sequence" id="non-cjk-punctuation-sequence">Non-CJK punctuation sequence</a> is a [Non-CJK punctuation character](#non-cjk-punctuation-character) or a sequence of 2 [characters](https://spec.commonmark.org/0.31.2/#character) where the first one is [Non-CJK punctuation character](#non-cjk-punctuation-character) and the second one is [Non-emoji General-use Variation Selector](#non-emoji-general-use-variation-selector).
