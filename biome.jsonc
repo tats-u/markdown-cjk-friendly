@@ -36,5 +36,11 @@
     "formatter": {
       "quoteStyle": "double"
     }
+  },
+  "css": {
+    "parser": {
+      "cssModules": true,
+      "allowWrongLineComments": true
+    }
   }
 }
