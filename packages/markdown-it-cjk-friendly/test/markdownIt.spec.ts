@@ -58,6 +58,67 @@ describe("markdown-it-cjk-friendly", () => {
     expect(result).toMatchSnapshot();
   });
 
+  it("** around pseudo-emoji (CJK symbols that are also unqualified-emoji) is converted to <strong>", async () => {
+    const result = md2Html(
+      await readFile(
+        new URL("../../../testcases/pseudo-emoji.md", import.meta.url),
+        "utf-8",
+      ),
+    );
+    for (const line of result.split(/\r?\n/)) {
+      expect(line).not.toMatch(/\*\*[^\n]+\*\*/);
+    }
+    expect(result).toMatchSnapshot();
+  });
+
+  it("** around CJK text presentation sequences is converted to <strong>", async () => {
+    const result = md2Html(
+      await readFile(
+        new URL(
+          "../../../testcases/text-presentation-sequence.md",
+          import.meta.url,
+        ),
+        "utf-8",
+      ),
+    );
+    for (const line of result.split(/\r?\n/)) {
+      expect(line).not.toMatch(/\*\*[^\n]+\*\*/);
+    }
+    expect(result).toMatchSnapshot();
+  });
+
+  it("** around emoji presentation sequences is not converted to <strong>", async () => {
+    const result = md2Html(
+      await readFile(
+        new URL(
+          "../../../testcases/emoji-presentation-sequence.md",
+          import.meta.url,
+        ),
+        "utf-8",
+      ),
+    );
+    for (const line of result.split(/\r?\n/)) {
+      expect(line).toMatch(/^$|\*\*[^\n]+\*\*/);
+    }
+    expect(result).toMatchSnapshot();
+  });
+
+  it("** around default emoji presentation character is not converted to <strong> (unless followed by text variation selector)", async () => {
+    const result = md2Html(
+      await readFile(
+        new URL(
+          "../../../testcases/emoji-default-presentation.md",
+          import.meta.url,
+        ),
+        "utf-8",
+      ),
+    );
+    for (const line of result.split(/\r?\n/)) {
+      expect(line).toMatch(/^$|\*\*[^\n]+\*\*/);
+    }
+    expect(result).toMatchSnapshot();
+  });
+
   it("recognizes non-BMP punctuation and symbols", async () => {
     const result = md2Html(
       await readFile(

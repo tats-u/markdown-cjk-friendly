@@ -7,54 +7,102 @@ import {
 } from "markdown-it/lib/common/utils.mjs";
 import type { Scanned } from "markdown-it/lib/rules_inline/state_inline.mjs";
 
-function isEmoji(uc: number) {
+function isDefaultEmoji(uc: number) {
   return /^\p{Emoji_Presentation}/u.test(String.fromCodePoint(uc));
+}
+
+function canBeEmoji(uc: number) {
+  return /^\p{Emoji}/u.test(String.fromCodePoint(uc));
 }
 
 /**
  * Check if `uc` is CJK. Deferred (returns `null`) if IVS.
  *
  * @param uc code point
- * @returns `true` if `uc` is CJK, `false` if not, `null` if IVS
+ * @returns 0: not CJK, 1: CJK, 2: possibly variation selector, 3: emoji or CJK
  */
-function isCjkBase(uc: number) {
-  if (uc < 0x1100) return false; // Fast path; see: https://www.unicode.org/Public/UCD/latest/ucd/Scripts.txt
+function isCjkBase(uc: number): 0 | 1 | 2 | 3 {
+  if (uc < 0x1100) return 0; // Fast path; see: https://www.unicode.org/Public/UCD/latest/ucd/Scripts.txt
   const eaw = eastAsianWidthType(uc);
   switch (eaw) {
     case "fullwidth":
     case "halfwidth":
-      return true; // never be emoji
+      return 1; // never be emoji
     case "wide":
-      return !isEmoji(uc);
+      return canBeEmoji(uc) ? 3 : 1;
     case "narrow":
-      return false;
+      return 0;
     case "ambiguous":
       // no Hangul as of Unicode 16
       // needs an additional check according to the distance from the emphasis
-      return null;
+      // variation selectors or ambiguous quotation marks followed by variation selectors
+      return 2;
     case "neutral":
       // 1160..11FF     ; N  # Lo   [160] HANGUL JUNGSEONG FILLER..HANGUL JONGSEONG SSANGNIEUN
-      return /^\p{sc=Hangul}/u.test(String.fromCodePoint(uc));
+      return /^\p{sc=Hangul}/u.test(String.fromCodePoint(uc)) ? 1 : 0;
   }
+}
+
+function isQuotationMark(uc: number) {
+  return uc === 0x2018 || uc === 0x2019 || uc === 0x201c || uc === 0x201d;
 }
 
 function is2PreviousCjk(uc: number, prev: number) {
-  // https://www.unicode.org/Public/16.0.0/ucd/StandardizedVariants.txt
-  // See {left,right}-justified fullwidth form in East Asian punctuation positional and width variants
-  return isCjkBase(uc) ?? (prev === 0xfe01 && isQuotationMark(uc));
-
-  function isQuotationMark(uc: number) {
-    return uc === 0x2018 || uc === 0x2019 || uc === 0x201c || uc === 0x201d;
+  switch (isCjkBase(uc)) {
+    case 1:
+      return true;
+    case 2:
+      // https://www.unicode.org/Public/16.0.0/ucd/StandardizedVariants.txt
+      // See {left,right}-justified fullwidth form in East Asian punctuation positional and width variants
+      return prev === 0xfe01 && isQuotationMark(uc);
+    case 3:
+      return !isDefaultEmoji(uc) || prev === 0xfe0e;
   }
+  return false;
 }
 
 function isPreviousCjk(uc: number) {
-  // IVS is Ambiguous
-  return isCjkBase(uc) ?? (0xe0100 <= uc && uc <= 0xe01ef);
+  switch (isCjkBase(uc)) {
+    case 1:
+      return true;
+    case 2:
+      // IVS is Ambiguous
+      return 0xe0100 <= uc && uc <= 0xe01ef;
+    case 3:
+      return !isDefaultEmoji(uc);
+  }
+  return false;
 }
 
-function isNextCjk(uc: number) {
-  return isCjkBase(uc) ?? false;
+function isNextCjk(uc: number, src: string, nextPos: number, max: number) {
+  switch (isCjkBase(uc)) {
+    case 1:
+      return true;
+    case 2: {
+      if (!isQuotationMark(uc)) return false;
+      const nextNext = getNextCharCode(
+        src,
+        nextPos + (uc > 0xffff ? 2 : 1),
+        max,
+      );
+      return nextNext === 0xfe01;
+    }
+    case 3: {
+      const nextNext = getNextCharCode(
+        src,
+        nextPos + (uc > 0xffff ? 2 : 1),
+        max,
+      );
+      return isDefaultEmoji(uc) ? nextNext === 0xfe0e : nextNext !== 0xfe0f;
+    }
+  }
+  return false;
+
+  function getNextCharCode(src: string, pos: number, max: number): number {
+    if (pos >= max) return 0x20;
+    const charCode = src.codePointAt(pos);
+    return charCode ?? 0x20;
+  }
 }
 
 function nonEmojiGeneralUseVS(uc: number) {
@@ -119,7 +167,7 @@ export default function markdownItCjkFriendlyPlugin(md: MarkdownIt): void {
 
         const isEitherCJKChar =
           // We don't consider a sequence of an ideographic VS followed by a general-purpose VS
-          isNextCjk(nextChar) ||
+          isNextCjk(nextChar, this.src, pos, max) ||
           // isPreviousCjk (more complex than isNextCjk as for now, so place it last)
           (twoPrevChar !== null
             ? is2PreviousCjk(twoPrevChar, lastChar)
