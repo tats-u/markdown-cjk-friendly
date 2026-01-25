@@ -14,6 +14,7 @@ import type { BenchResult, ResultPerOne } from "../workers/bench";
 import BenchmarkWorker from "../workers/benchmarker.worker?worker";
 import { getRenderer } from "../workers/markdownRenderer";
 import styles from "./Editor.module.css";
+import { diffChars } from "diff";
 
 type MarkdownProcessorName = "micromark" | "markdown-it" | "markdown-exit";
 
@@ -235,14 +236,14 @@ const Editor = () => {
             <option value="source">Source</option>
           </select>
           <div>
+            <label for={diffCheckBoxId}>Diff</label>
             <input
               type="checkbox"
               checked={showDiff()}
               onChange={(e) => setShowDiff(e.currentTarget.checked)}
-              disabled={isBenchmarking() || showSource()}
+              disabled={isBenchmarking()}
               id={diffCheckBoxId}
             />
-            <label for={diffCheckBoxId}>Diff</label>
           </div>
           <button type="button" onClick={handleCopyPermalink}>
             Copy permalink
@@ -361,6 +362,56 @@ const MarkdownDiff = (props: {
   );
 };
 
+const MarkdownSourceDiff = (props: {
+  withCjk: Accessor<string>;
+  withoutCjk: Accessor<string>;
+  cjkFriendlyTime: Accessor<ResultPerOne | undefined>;
+  nonCJKFriendlyTime: Accessor<ResultPerOne | undefined>;
+}) => {
+  const diff = createMemo(() => {
+    const diff = diffChars(props.withCjk(), props.withoutCjk());
+    return diff.map((part) => {
+      if (part.added) {
+        return <ins>{part.value}</ins>;
+      }
+      if (part.removed) {
+        return <del>{part.value}</del>;
+      }
+      return part.value;
+    });
+  });
+
+  return (
+    <>
+      <p>
+        <Show when={props.withCjk() !== props.withoutCjk()} fallback="Exact:">
+          <span class={styles.legendAdded}>Added</span> /{" "}
+          <span class={styles.legendRemoved}>Removed</span> by this
+          specification:
+        </Show>
+        <Show when={cjkFriendlyTime() || nonCJKFriendlyTime()}>
+          <br />
+          <Show when={cjkFriendlyTime()}>
+            {/** biome-ignore lint/style/noNonNullAssertion: guarded by left */}
+            with spec: {formatMeanAndSEM(cjkFriendlyTime()!)}
+          </Show>
+          <Show when={cjkFriendlyTime() && nonCJKFriendlyTime()}>{" / "}</Show>
+          <Show when={nonCJKFriendlyTime()}>
+            without spec:{" "}
+            {
+              // biome-ignore lint/style/noNonNullAssertion: guarded by left
+              formatMeanAndSEM(nonCJKFriendlyTime()!)
+            }
+          </Show>
+        </Show>
+      </p>
+      <pre class={clsx(styles.markdownSource, styles.markdownSourceDiff)}>
+        <code>{diff()}</code>
+      </pre>
+    </>
+  );
+};
+
 function stripTrailingZeros(str: string) {
   return str.replace(/\.?0+$/, "");
 }
@@ -419,14 +470,26 @@ const Preview = () => {
         fallback={<p>Converted HTML is displayed here.</p>}
       >
         <Show
-          when={!showDiff() || showSource()}
+          when={!showDiff()}
           fallback={
-            <MarkdownDiff
-              withCjk={() => cjkFriendlyHTML()}
-              withoutCjk={() => nonCJKFriendlyHTML()}
-              cjkFriendlyTime={cjkFriendlyTime}
-              nonCJKFriendlyTime={nonCJKFriendlyTime}
-            />
+            <Show
+              when={!showSource()}
+              fallback={
+                <MarkdownSourceDiff
+                  withCjk={() => cjkFriendlyHTML()}
+                  withoutCjk={() => nonCJKFriendlyHTML()}
+                  cjkFriendlyTime={cjkFriendlyTime}
+                  nonCJKFriendlyTime={nonCJKFriendlyTime}
+                />
+              }
+            >
+              <MarkdownDiff
+                withCjk={() => cjkFriendlyHTML()}
+                withoutCjk={() => nonCJKFriendlyHTML()}
+                cjkFriendlyTime={cjkFriendlyTime}
+                nonCJKFriendlyTime={nonCJKFriendlyTime}
+              />
+            </Show>
           }
         >
           <p>

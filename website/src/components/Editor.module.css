@@ -118,6 +118,19 @@ a.gitHubLink:any-link {
   background-color: var(--bg-color-diff-modified);
 }
 
+.markdownSourceDiff {
+  :is(ins, del) {
+    text-decoration: inherit;
+  }
+
+  ins {
+    background-color: var(--bg-color-diff-added);
+  }
+  del {
+    background-color: var(--bg-color-diff-removed);
+  }
+}
+
 .markdownDiff {
   :is(h1, h2, h3, h4, h5, h6, p, li, tr, pre):where(
       :not(
