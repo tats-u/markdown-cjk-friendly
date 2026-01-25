@@ -1,6 +1,9 @@
 ---
 // biome-ignore lint/correctness/noUnusedImports: False positive
 import Editor from "../components/Editor";
+
+const bundledVersionName =
+  import.meta.env.DEPLOYED_FROM_MAIN === "1" ? "main" : "dev";
 ---
 
 <html lang="en">
@@ -15,7 +18,7 @@ import Editor from "../components/Editor";
 	<body>
     <div class="root">
       <h1>CJK Friendly Emphasis Demo</h1>
-      <Editor client:load />
+      <Editor client:load bundledVersionName={bundledVersionName} />
     </div>
 	</body>
   <style is:global>

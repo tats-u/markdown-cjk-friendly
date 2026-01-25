@@ -7,6 +7,7 @@ import {
   createMemo,
   createSignal,
   createUniqueId,
+  For,
   onMount,
   Show,
 } from "solid-js";
@@ -35,13 +36,17 @@ const [cjkFriendlyBenchFailure, setCjkFriendlyBenchFailure] = createSignal<
 const [nonCJKFriendlyBenchFailure, setNonCJKFriendlyBenchFailure] =
   createSignal<string | null>(null);
 const [isBenchmarking, setIsBenchmarking] = createSignal(false);
+const [libVersion, setLibVersion] = createSignal("");
+const [libVersionCandidates, setLibVersionCandidates] = createSignal<string[]>(
+  [],
+);
 
 function resetBenchResult() {
   setCjkFriendlyTime(undefined);
   setNonCJKFriendlyTime(undefined);
 }
 
-const Editor = () => {
+const Editor = ({ bundledVersionName }: { bundledVersionName: string }) => {
   const gfmCheckBoxId = createUniqueId();
   const [textareaMarkdown, setTextareaMarkdown] = createSignal("");
 
@@ -139,6 +144,8 @@ const Editor = () => {
   }
 
   onMount(() => {
+    setLibVersion(bundledVersionName);
+    setLibVersionCandidates([bundledVersionName]);
     const url = new URL(window.location.href);
     const src = url.searchParams.get("src");
     const b64u8 = url.searchParams.get("sc8");
@@ -225,6 +232,23 @@ const Editor = () => {
             <option value="micromark">micromark</option>
             <option value="markdown-it">markdown-it</option>
             <option value="markdown-exit">markdown-exit</option>
+          </select>
+          <select
+            onChange={(e) => {
+              setLibVersion(e.currentTarget.value);
+              resetBenchResult();
+            }}
+            value={libVersion()}
+            disabled={isBenchmarking() || libVersionCandidates().length <= 1}
+          >
+            <Show
+              when={libVersionCandidates().length > 0}
+              fallback={<option value={""}>Loading…</option>}
+            >
+              <For each={libVersionCandidates()}>
+                {(version) => <option value={version}>{version}</option>}
+              </For>
+            </Show>
           </select>
           <button type="button" onClick={handleCopyPermalink}>
             Copy permalink
