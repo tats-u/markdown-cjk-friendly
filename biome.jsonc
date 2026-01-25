@@ -1,5 +1,5 @@
 {
-  "$schema": "https://biomejs.dev/schemas/2.1.2/schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.3.12/schema.json",
   "vcs": {
     "enabled": true,
     "clientKind": "git",
@@ -7,7 +7,7 @@
   },
   "files": {
     "ignoreUnknown": false,
-    "includes": ["**", "!**/auto-imports.d.ts", "!**/__snapshots__/**"]
+    "includes": ["**", "!**/auto-imports.d.ts", "!**/__snapshots__"]
   },
   "formatter": {
     "enabled": true,

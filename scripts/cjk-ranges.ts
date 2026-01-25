@@ -57,9 +57,9 @@ function mapObjValues<T extends string, U, V>(
   obj: { [key in T]: U },
   fn: (value: U) => V,
 ): { [key in T]: V } {
-  // @ts-ignore
+  // @ts-expect-error
   return Object.fromEntries(
-    // @ts-ignore
+    // @ts-expect-error
     Object.entries(obj).map(([key, value]) => [key, fn(value)]),
   );
 }
@@ -68,11 +68,9 @@ async function mapObjValuesAsync<T extends string, U, V>(
   obj: { [key in T]: U },
   fn: (value: U) => Promise<V>,
 ): Promise<{ [key in T]: V }> {
-  // @ts-ignore
   return Object.fromEntries(
-    // @ts-ignore
     await Promise.all(
-      // @ts-ignore
+      // @ts-expect-error
       Object.entries(obj).map(async ([key, value]) => [key, await fn(value)]),
     ),
   );
