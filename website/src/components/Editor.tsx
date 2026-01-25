@@ -419,7 +419,7 @@ const Preview = () => {
         fallback={<p>Converted HTML is displayed here.</p>}
       >
         <Show
-          when={!showDiff() && !showSource()}
+          when={!showDiff() || showSource()}
           fallback={
             <MarkdownDiff
               withCjk={() => cjkFriendlyHTML()}
