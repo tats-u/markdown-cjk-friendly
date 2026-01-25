@@ -368,7 +368,7 @@ const MarkdownSourceDiff = (props: {
   nonCJKFriendlyTime: Accessor<ResultPerOne | undefined>;
 }) => {
   const diff = createMemo(() => {
-    const diff = diffChars(props.withCjk(), props.withoutCjk());
+    const diff = diffChars(props.withoutCjk(), props.withCjk());
     return diff.map((part) => {
       if (part.added) {
         return <ins>{part.value}</ins>;
