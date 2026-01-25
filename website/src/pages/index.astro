@@ -3,7 +3,7 @@
 import Editor from "../components/Editor";
 
 const bundledVersionName =
-  import.meta.env.DEPLOYED_FROM_MAIN === "1" ? "main" : "dev";
+  process.env.DEPLOYED_FROM_MAIN === "1" ? "main" : "dev";
 ---
 
 <html lang="en">
