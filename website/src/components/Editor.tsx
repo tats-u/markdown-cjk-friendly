@@ -229,7 +229,6 @@ const Editor = () => {
           <select
             onChange={(e) => {
               setShowSource(e.currentTarget.value === "source");
-              resetBenchResult();
             }}
           >
             <option value="render">Render</option>
