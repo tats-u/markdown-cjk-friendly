@@ -1,4 +1,5 @@
 import clsx from "clsx";
+import { diffChars } from "diff";
 import { OcMarkgithub2 } from "solid-icons/oc";
 import {
   type Accessor,
@@ -14,7 +15,6 @@ import type { BenchResult, ResultPerOne } from "../workers/bench";
 import BenchmarkWorker from "../workers/benchmarker.worker?worker";
 import { getRenderer } from "../workers/markdownRenderer";
 import styles from "./Editor.module.css";
-import { diffChars } from "diff";
 
 type MarkdownProcessorName = "micromark" | "markdown-it" | "markdown-exit";
 
