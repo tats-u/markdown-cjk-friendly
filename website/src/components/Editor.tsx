@@ -34,6 +34,8 @@ const [cjkFriendlyBenchFailure, setCjkFriendlyBenchFailure] = createSignal<
 >(null);
 const [nonCJKFriendlyBenchFailure, setNonCJKFriendlyBenchFailure] =
   createSignal<string | null>(null);
+const [isBenchmarking, setIsBenchmarking] = createSignal(false);
+
 function resetBenchResult() {
   setCjkFriendlyTime(undefined);
   setNonCJKFriendlyTime(undefined);
@@ -41,9 +43,7 @@ function resetBenchResult() {
 
 const Editor = () => {
   const gfmCheckBoxId = createUniqueId();
-  const diffCheckBoxId = createUniqueId();
   const [textareaMarkdown, setTextareaMarkdown] = createSignal("");
-  const [isBenchmarking, setIsBenchmarking] = createSignal(false);
 
   const u8Encoder = new TextEncoder();
 
@@ -226,24 +226,6 @@ const Editor = () => {
             <option value="markdown-it">markdown-it</option>
             <option value="markdown-exit">markdown-exit</option>
           </select>
-          <select
-            onChange={(e) => {
-              setShowSource(e.currentTarget.value === "source");
-            }}
-          >
-            <option value="render">Render</option>
-            <option value="source">Source</option>
-          </select>
-          <div>
-            <label for={diffCheckBoxId}>Diff</label>
-            <input
-              type="checkbox"
-              checked={showDiff()}
-              onChange={(e) => setShowDiff(e.currentTarget.checked)}
-              disabled={isBenchmarking()}
-              id={diffCheckBoxId}
-            />
-          </div>
           <button type="button" onClick={handleCopyPermalink}>
             Copy permalink
           </button>
@@ -438,6 +420,7 @@ function formatMeanAndSEM(result: ResultPerOne) {
 }
 
 const Preview = () => {
+  const diffCheckBoxId = createUniqueId();
   const cjkFriendlyHTML = createMemo(() => {
     const markdownValue = markdown();
     const gfmValue = gfmEnabled();
@@ -463,7 +446,27 @@ const Preview = () => {
   });
   return (
     <div class={styles.resultContainer}>
-      <p>Result:</p>
+      <div class={styles.controls}>
+        <div>Result:</div>
+        <select
+          onChange={(e) => {
+            setShowSource(e.currentTarget.value === "source");
+          }}
+        >
+          <option value="render">Render</option>
+          <option value="source">Source</option>
+        </select>
+        <div>
+          <label for={diffCheckBoxId}>Diff</label>
+          <input
+            type="checkbox"
+            checked={showDiff()}
+            onChange={(e) => setShowDiff(e.currentTarget.checked)}
+            disabled={isBenchmarking()}
+            id={diffCheckBoxId}
+          />
+        </div>
+      </div>
       <Show
         when={cjkFriendlyHTML() !== ""}
         fallback={<p>Converted HTML is displayed here.</p>}
