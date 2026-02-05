@@ -1,6 +1,6 @@
 # Markdown packages in CommonMark revision candidate compatible with Chinese, Japanese, and Korean (CJK)
 
-[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/tats-u/markdown-cjk-friendly)
+[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/tats-u/markdown-cjk-friendly) [![CodSpeed Badge](https://img.shields.io/endpoint?url=https://codspeed.io/badge.json)](https://codspeed.io/tats-u/markdown-cjk-friendly?utm_source=badge)
 
 ## Packages / <span lang="ja">パッケージ一覧</span> / <span lang="zh-Hans-CN">相关的包</span> / <span lang="ko">패키지 목록</span>
 
