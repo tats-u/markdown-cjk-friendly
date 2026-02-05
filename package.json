@@ -34,11 +34,5 @@
     "unplugin-auto-import": "^19.3.0",
     "vitest": "^4.0.18"
   },
-  "packageManager": "pnpm@10.28.0",
-  "pnpm": {
-    "overrides": {
-      "refractor@3.6.0>prismjs": "^1.30.0",
-      "compression@1.8.0>on-headers": "1.1.0"
-    }
-  }
+  "packageManager": "pnpm@10.28.2"
 }

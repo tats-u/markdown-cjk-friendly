@@ -19,7 +19,7 @@
     "micromark-extension-cjk-friendly-gfm-strikethrough": "workspace:^",
     "micromark-extension-gfm": "catalog:",
     "solid-icons": "^1.1.0",
-    "solid-js": "^1.9.10",
+    "solid-js": "^1.9.11",
     "tinybench": "^6.0.0",
     "visual-dom-diff": "^0.7.3"
   },
