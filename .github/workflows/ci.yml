@@ -52,8 +52,26 @@ jobs:
         with:
           run: pnpm vitest bench --run --shard=${{ matrix.shard }}
           token: ${{ secrets.CODSPEED_TOKEN }}
+  build-website:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      pages: write
+    needs: build
+    steps:
+      - uses: actions/checkout@v5
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v5
+        with:
+          node-version: '24.x'
+          registry-url: 'https://registry.npmjs.org'
+      - uses: pnpm/action-setup@v4
+        with:
+          run_install: true
       - id: repository
         run: echo "name=${GITHUB_REPOSITORY#${GITHUB_REPOSITORY_OWNER}/}" >> $GITHUB_OUTPUT
+      - name: Build libraries
+        run: node --run build:lib
       - name: Build website
         run: node --run build:website
         env:
@@ -65,11 +83,11 @@ jobs:
           path: website/dist
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
   update-website:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-slim
     permissions:
       id-token: write
       pages: write
-    needs: build
+    needs: build-website
     steps:
       - name: Deploy
         id: deployment
