@@ -101,3 +101,58 @@ a.gitHubLink:any-link {
   display: inline-flex;
   align-items: center;
 }
+
+:root {
+  --bg-color-diff-added: light-dark(#cafbd5, #27662a);
+  --bg-color-diff-removed: light-dark(#fcc4c9, #7c2421);
+  --bg-color-diff-modified: light-dark(#fff4c9, #7c5a21);
+}
+
+.legendAdded {
+  background-color: var(--bg-color-diff-added);
+}
+.legendRemoved {
+  background-color: var(--bg-color-diff-removed);
+}
+.legendModified {
+  background-color: var(--bg-color-diff-modified);
+}
+
+.markdownSourceDiff {
+  :is(ins, del) {
+    text-decoration: inherit;
+  }
+
+  ins {
+    background-color: var(--bg-color-diff-added);
+  }
+  del {
+    background-color: var(--bg-color-diff-removed);
+  }
+}
+
+.markdownDiff {
+  :is(h1, h2, h3, h4, h5, h6, p, li, tr, pre):where(
+      :not(
+          :has(
+              :global(.vdd-added),
+              :global(.vdd-removed),
+              :global(.vdd-modified)
+            )
+        )
+    ) {
+    opacity: 0.4;
+  }
+  :global(.vdd-added) {
+    background-color: var(--bg-color-diff-added);
+    text-decoration: inherit;
+  }
+  :global(.vdd-removed) {
+    background-color: var(--bg-color-diff-removed);
+    text-decoration: inherit;
+  }
+  :global(.vdd-modified) {
+    background-color: var(--bg-color-diff-modified);
+    text-decoration: inherit;
+  }
+}

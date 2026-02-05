@@ -8,7 +8,7 @@ A [remark](https://github.com/remarkjs/remark) plugin to make Markdown emphasis 
 
 <span lang="zh-Hans-CN">一个 [remark](https://github.com/remarkjs/remark) 插件，用于使 CommonMark（和 MDX）的强调标记(`**`)能够正确支持中文、日语和韩语文本。</span>
 
-<span lang="ko">CommonMark(및 MDX)의 강조 표시(`**`)를 한국어, 중국어, 일본어와 호환되도록 만드는 [remark](https://github.com/remarkjs/remark) 플러그인</span>
+<span lang="ko">CommonMark(및 MDX)의 강조 표시(`**`)를 한국어, 일본어, 중국어와 호환되도록 만드는 [remark](https://github.com/remarkjs/remark) 플러그인.</span>
 
 > [!NOTE]
 > This package does not support the strikethrough syntax (`~~`) in GFM (GitHub Flavored Markdown). If you want to support it, please use [`remark-cjk-friendly-gfm-strikethrough`](https://npmjs.com/package/remark-cjk-friendly-gfm-strikethrough) along with this package.
@@ -19,7 +19,7 @@ A [remark](https://github.com/remarkjs/remark) plugin to make Markdown emphasis 
 >
 > <span lang="ko">이 패키지는 GitHub Flavored Markdown(GFM)의 취소선(`~~`)을 지원하지 않습니다. 지원하고 싶은 경우에는 [`remark-cjk-friendly-gfm-strikethrough`](https://npmjs.com/package/remark-cjk-friendly-gfm-strikethrough)를 함께 사용해 주세요.</span>
 
-## Problem / <span lang="ja">問題</span> / <span lang="zh-Hans-CN">问题</span> / <span lang="ko">문제점</span>
+## Problem / <span lang="ja">問題</span> / <span lang="zh-Hans-CN">问题</span> / <span lang="ko">문제</span>
 
 CommonMark has a problem that the following emphasis marks `**` are not recognized as emphasis marks in Japanese, Chinese, and Korean.
 
@@ -27,7 +27,7 @@ CommonMark has a problem that the following emphasis marks `**` are not recogniz
 
 <span lang="zh-Hans-CN">CommonMark存在以下问题：在中文、日语和韩语文本中，强调标记`**`不会被识别为强调标记。</span>
 
-<span lang="ko">CommonMark는 일본어와 중국어에서 다음과 같은 강조 표시 `**`가 강조 표시로 인식되지 않는 문제가 있습니다.</span>
+<span lang="ko">CommonMark는 한국어, 일본어, 중국어에서 다음과 같은 강조 표시 `**`가 강조 표시로 인식되지 않는 문제가 있습니다.</span>
 
 ```md
 **このアスタリスクは強調記号として認識されず、そのまま表示されます。**この文のせいで。
@@ -59,7 +59,7 @@ CommonMark issue: https://github.com/commonmark/commonmark-spec/issues/650
 
 https://tats-u.github.io/markdown-cjk-friendly
 
-## When should I use this? / <span lang="ja">このパッケージを使うべき場合</span> / <span lang="zh-Hans-CN">何时使用此包</span> / <span lang="ko">이 패키지를 사용하는 시저</span>
+## When should I use this? / <span lang="ja">このパッケージを使うべき場合</span> / <span lang="zh-Hans-CN">何时使用此包</span> / <span lang="ko">이 패키지를 사용해야 하는 경우</span>
 
 If you are an engineer who must handle Chinese, Japanese, and Korean content that cannot be fully supervised, it is strongly recommended to use this package (adopt this specification instead of plain CommonMark or GFM). "Cannot be fully supervised" refers to situations such as:
 
@@ -75,7 +75,7 @@ Additionally, if you are creating Markdown-related software or services primaril
 1. <span lang="ja">ユーザまたはAIが作成したコンテンツをそのまま表示する必要がある場合</span>
 2. <span lang="ja">翻訳者に、このCommonMarkの仕様を理解していない人も多く、なおかつリアルタイムで本番同様の描画プレビューを提供できず、`<strong>`タグを許可していない場合</span>
     - <span lang="ja">翻訳にCrowdin・Transifexなどの翻訳サービスを使っている場合</span>
-    - <span lang="ja">翻訳の品質に責任を負っている人が非エンジニアである、またはComonMarkのこの挙動を理解していない場合</span>
+    - <span lang="ja">翻訳の品質に責任を負っている人が非エンジニアである、またはCommonMarkのこの挙動を理解していない場合</span>
 
 <span lang="ja">また、あなたが主に日本人・中国人・韓国人のいずれかまたは全てを対象としたMarkdown関連のソフトウェアやサービスを作成する場合も、このパッケージを使う（この仕様を採用する）ことを強く推奨します。</span>
 
@@ -88,28 +88,28 @@ Additionally, if you are creating Markdown-related software or services primaril
 
 <span lang="zh-Hans-CN">此外，如果您正在创建主要面向中国人、日本人或韩国人（或全部）的Markdown相关软件或服务，也强烈建议采用此规范。</span>
 
-<span lang="ko">엔지니어로서 완전히 감독할 수 없는 일본어, 중국어, 한국어 콘텐츠를 다뤄야 하는 경우, 이 패키지를 사용하세요 (일반 CommonMark나 GFM 대신 이 사양을 채택할 것을 강력히 권장합니다). "완전히 감독할 수 없는"이란 다음과 같은 상황을 의미합니다:</span>
+<span lang="ko">엔지니어로서 완전히 감독할 수 없는 일본어, 중국어, 한국어 콘텐츠를 다뤄야 하는 경우 이 패키지를 사용(일반 CommonMark나 GFM 대신 이 사양을 채택)할 것을 강력히 권장합니다. '완전히 감독할 수 없는'이란 다음과 같은 상황을 의미합니다.</span>
 
 1. <span lang="ko">사용자 또는 AI가 생성한 콘텐츠를 그대로 표시해야 하는 경우</span>
-2. <span lang="ko">많은 번역자가 이 CommonMark 동작을 이해하지 못하고, 실시간으로 실제 환경과 유사한 렌더링 미리보기를 제공할 수 없으며, `<strong>` 태그가 허용되지 않는 경우</span>
+2. <span lang="ko">많은 번역자가 CommonMark의 동작을 이해하지 못하고, 실시간으로 실제 환경과 유사한 렌더링 미리보기를 제공할 수 없으며, `<strong>` 태그가 허용되지 않는 경우</span>
     - <span lang="ko">Crowdin이나 Transifex 같은 번역 서비스를 사용하는 경우</span>
-    - <span lang="ko">번역 품질에 책임을 지는 사람이 엔지니어가 아니거나 이 CommonMark 동작을 이해하지 못하는 경우</span>
+    - <span lang="ko">번역 품질에 책임을 지는 사람이 엔지니어가 아니거나 CommonMark의 동작을 이해하지 못하는 경우</span>
 
-<span lang="ko">또한, 주로 일본어, 중국어, 한국어 사용자(또는 모두)를 대상으로 하는 Markdown 관련 소프트웨어나 서비스를 만들고 있다면, 이 패키지를 사용하세요 (이 사양을 채택할 것을 강력히 권장합니다).</span>
+<span lang="ko">또한, 주로 한국어, 일본어, 중국어 사용자(또는 모두)를 대상으로 하는 Markdown 관련 소프트웨어나 서비스를 만들고 있다면 이 패키지를 사용(이 사양을 채택)할 것을 강력히 권장합니다.</span>
 
-### Example of 1. (Chinese) / <span lang="ja">1.の例（中国語）</span> / <span lang="zh-Hans-CN">1.的例子</span> / <span lang="ko">1.의 예제(한국어)</span>:
+### Example of 1. (Chinese) / <span lang="ja">1.の例（中国語）</span> / <span lang="zh-Hans-CN">1.的例子</span> / <span lang="ko">1.의 예시(중국어)</span>:
 
 ❌️Plain CommonMark / <span lang="ja">素のCommonMark</span> / <span lang="zh-Hans-CN">原生CommonMark</span> / <span lang="ko">기본 CommonMark</span>:
 
 ![plain CommonMark](https://github.com/user-attachments/assets/80bd3ffd-9416-4080-bc10-a408afef845b)
 
-✅️With this spec / <span lang="ja">本規格</span> / <span lang="zh-Hans-CN">这个规范</span> / <span lang="ko">이 사양을 채택하는 경우</span>:
+✅️With this spec / <span lang="ja">本規格</span> / <span lang="zh-Hans-CN">这个规范</span> / <span lang="ko">이 사양</span>:
 
 ![with this spec](https://github.com/user-attachments/assets/b2e159c5-3cae-495f-89c6-280ddb2926ce)
 
 Image source: [CherryHQ/cherry-studio#4119](https://github.com/CherryHQ/cherry-studio/pull/4119)
 
-## Runtime Requirements / <span lang="ja">実行環境の要件</span> / <span lang="zh-Hans-CN">运行环境要求</span> / <span lang="ko">업데이트 전략</span>
+## Runtime Requirements / <span lang="ja">実行環境の要件</span> / <span lang="zh-Hans-CN">运行环境要求</span> / <span lang="ko">런타임 요구 사항</span>
 
 This package is ESM-only. It requires Node.js 18 or later. (I have only tested it on 20 and later. There is no factor that would prevent it from working on 18, but I do not guarantee its operation on 18.)
 
@@ -139,7 +139,7 @@ If you use another package manager, please replace `npm install` with the comman
 
 <span lang="zh-Hans-CN">如果使用其他包管理器，请将 `npm install` 替换为当时包管理器的命令（例如：`pnpm add`、`yarn add`）。</span>
 
-<span lang="ko">다른 패키지 매니저를 사용하는 경우 `npm install`을 해당 패키지 매니저의 명령어(예: `pnpm add`, `yarn add`)로 바꾸어 주세요.</span>
+<span lang="ko">npm이 아닌 다른 패키지 매니저를 사용하는 경우 `npm install`을 해당 패키지 매니저의 명령어(예: `pnpm add`, `yarn add`)로 바꿔 주세요.</span>
 
 ## Usage / <span lang="ja">使い方</span> / <span lang="zh-Hans-CN">用法</span> / <span lang="ko">사용법</span>
 
@@ -176,7 +176,7 @@ For MDX, add `remarkCjkFriendly` to the `remarkPlugins` array in the config obje
 
 <span lang="zh-Hans-CN">对于 MDX，将 `remarkCjkFriendly` 添加到配置对象的 `remarkPlugins` 数组中。</span>
 
-<span lang="ko">MDX의 경우, `remarkCjkFriendly`를 `remarkPlugins` 배열에 추가해주세요.</span>
+<span lang="ko">MDX의 경우 설정 객체의 `remarkPlugins` 배열에 `remarkCjkFriendly`를 추가해 주세요.</span>
 
 ```js
 const someMdxConfig = {
@@ -191,7 +191,7 @@ In [Rspress](https://rspress.dev/guide/basic/use-mdx#disabling-the-rust-version-
 
 <span lang="zh-CN">在[Rspress](https://rspress.dev/zh/guide/basic/use-mdx#%E5%85%B3%E9%97%AD-rust-%E7%89%88%E6%9C%AC%E7%BC%96%E8%AF%91%E5%99%A8)和[Next.js(`@next/mdx`)](https://nextjs.org/docs/pages/building-your-application/configuring/mdx#using-the-rust-based-mdx-compiler-experimental)中，您可能需要将`mdxRs`设置为`false`，以使Rspress使用基于JavaScript且可进行猴子补丁的解析器。</span>
 
-<span lang="ko">[Rspress](https://rspress.dev/guide/basic/use-mdx#disabling-the-rust-version-compiler)와 [Next.js(`@next/mdx`)](https://nextjs.org/docs/pages/building-your-application/configuring/mdx#using-the-rust-based-mdx-compiler-experimental)에서는 `mdxRs`를 `false`로 설정하여 Rspress가 JavaScript 기반이며 몽키 패치가 가능한 파서를 사용하도록 해야 할 것 같습니다.</span>
+<span lang="ko">[Rspress](https://rspress.dev/guide/basic/use-mdx#disabling-the-rust-version-compiler)와 [Next.js(`@next/mdx`)](https://nextjs.org/docs/pages/building-your-application/configuring/mdx#using-the-rust-based-mdx-compiler-experimental)에서는 `mdxRs`를 `false`로 설정하여 Rspress가 JavaScript 기반이며 몽키 패치가 가능한 파서를 사용하도록 해야 할 수 있습니다.</span>
 
 ## Compatibility with the other languages / <span lang="ja">他言語との互換性</span> / <span lang="zh-Hans-CN">与其他语言的兼容性</span> / <span lang="ko">다른 언어와의 호환성</span>
 
@@ -201,9 +201,9 @@ This modification of the specification does not affect the other languages than 
 
 <span lang="zh-Hans-CN">除中文、日文和韩文外，建议的规范变更不会影响其他语言。请放心使用此软件包，因为如果您的应用程序或文档包含其他语言的翻译或内容，也不会受到影响。我保证，即使使用此软件包（修正建议），remark 仍然会为 0.31.2 版本的所有 CommonMark 测试用例输出相同的 HTML。</span>
 
-<span lang="ko">이번 사양 변경 제안은 한국어, 중국어, 일본어 이외의 언어에는 영향을 미치지 않습니다. 애플리케이션이나 문서에 다른 언어의 번역이나 콘텐츠가 포함되어 있어도 영향을 받지 않으므로 안심하고 본 패키지를 사용하시기 바랍니다. 본 패키지(수정안)를 사용해도 0.31.2 시점의 모든 CommonMark 테스트케이스에서 remark가 동일한 HTML을 출력하는 것을 보장합니다.</span>
+<span lang="ko">이 사양 변경 제안은 한국어, 일본어, 중국어 이외의 언어에는 영향을 미치지 않습니다. 애플리케이션이나 문서에 다른 언어의 번역이나 콘텐츠가 포함되어 있어도 영향을 받지 않으므로 안심하고 본 패키지를 사용하시기 바랍니다. 본 패키지(수정안)를 사용해도 0.31.2 시점의 모든 CommonMark 테스트 케이스에서 remark가 동일한 HTML을 출력하는 것을 보장합니다.</span>
 
-## Specification / <span lang="ja">規格書</span> / <span lang="zh-Hans-CN">规范</span> / <span lang="ko">규정서</span>
+## Specification / <span lang="ja">規格書</span> / <span lang="zh-Hans-CN">规范</span> / <span lang="ko">설명서</span>
 
 https://github.com/tats-u/markdown-cjk-friendly/blob/main/specification.md (English)
 

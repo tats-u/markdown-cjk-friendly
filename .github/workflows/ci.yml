@@ -58,6 +58,7 @@ jobs:
         run: node --run build:website
         env:
           WEBSITE_BASE_PATH: "/${{ steps.repository.outputs.name }}/"
+          DEPLOYED_FROM_MAIN: "1"
       - name: Upload website artifacts
         uses: actions/upload-pages-artifact@v4
         with:

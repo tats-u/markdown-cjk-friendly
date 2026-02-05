@@ -1,23 +1,29 @@
+import clsx from "clsx";
+import { diffChars } from "diff";
 import { OcMarkgithub2 } from "solid-icons/oc";
 import {
   type Accessor,
+  createEffect,
   createMemo,
   createSignal,
   createUniqueId,
+  For,
   onMount,
   Show,
 } from "solid-js";
+import { visualDomDiff } from "visual-dom-diff";
 import type { BenchResult, ResultPerOne } from "../workers/bench";
 import BenchmarkWorker from "../workers/benchmarker.worker?worker";
 import { getRenderer } from "../workers/markdownRenderer";
 import styles from "./Editor.module.css";
 
-type MarkdownProcessorName = "micromark" | "markdown-it";
+type MarkdownProcessorName = "micromark" | "markdown-it" | "markdown-exit";
 
 const [markdown, setMarkdown] = createSignal("");
 const [gfmEnabled, setGfmEnabled] = createSignal(true);
 const [engine, setEngine] = createSignal<MarkdownProcessorName>("micromark");
 const [showSource, setShowSource] = createSignal(false);
+const [showDiff, setShowDiff] = createSignal(false);
 const [cjkFriendlyTime, setCjkFriendlyTime] = createSignal<
   ResultPerOne | undefined
 >(undefined);
@@ -29,15 +35,20 @@ const [cjkFriendlyBenchFailure, setCjkFriendlyBenchFailure] = createSignal<
 >(null);
 const [nonCJKFriendlyBenchFailure, setNonCJKFriendlyBenchFailure] =
   createSignal<string | null>(null);
+const [isBenchmarking, setIsBenchmarking] = createSignal(false);
+const [libVersion, setLibVersion] = createSignal("");
+const [libVersionCandidates, setLibVersionCandidates] = createSignal<string[]>(
+  [],
+);
+
 function resetBenchResult() {
   setCjkFriendlyTime(undefined);
   setNonCJKFriendlyTime(undefined);
 }
 
-const Editor = () => {
+const Editor = ({ bundledVersionName }: { bundledVersionName: string }) => {
   const gfmCheckBoxId = createUniqueId();
   const [textareaMarkdown, setTextareaMarkdown] = createSignal("");
-  const [isBenchmarking, setIsBenchmarking] = createSignal(false);
 
   const u8Encoder = new TextEncoder();
 
@@ -133,6 +144,8 @@ const Editor = () => {
   }
 
   onMount(() => {
+    setLibVersion(bundledVersionName);
+    setLibVersionCandidates([bundledVersionName]);
     const url = new URL(window.location.href);
     const src = url.searchParams.get("src");
     const b64u8 = url.searchParams.get("sc8");
@@ -181,6 +194,7 @@ const Editor = () => {
       switch (engineLower as MarkdownProcessorName) {
         case "markdown-it":
         case "micromark":
+        case "markdown-exit":
           setEngine(engineLower as MarkdownProcessorName);
           break;
       }
@@ -217,15 +231,24 @@ const Editor = () => {
           >
             <option value="micromark">micromark</option>
             <option value="markdown-it">markdown-it</option>
+            <option value="markdown-exit">markdown-exit</option>
           </select>
           <select
             onChange={(e) => {
-              setShowSource(e.currentTarget.value === "source");
+              setLibVersion(e.currentTarget.value);
               resetBenchResult();
             }}
+            value={libVersion()}
+            disabled={isBenchmarking() || libVersionCandidates().length <= 1}
           >
-            <option value="render">Render</option>
-            <option value="source">Source</option>
+            <Show
+              when={libVersionCandidates().length > 0}
+              fallback={<option value={""}>Loading…</option>}
+            >
+              <For each={libVersionCandidates()}>
+                {(version) => <option value={version}>{version}</option>}
+              </For>
+            </Show>
           </select>
           <button type="button" onClick={handleCopyPermalink}>
             Copy permalink
@@ -233,7 +256,7 @@ const Editor = () => {
           <button
             type="button"
             onClick={handleBenchmark}
-            disabled={isBenchmarking()}
+            disabled={isBenchmarking() || textareaMarkdown() === ""}
           >
             Benchmark<Show when={isBenchmarking()}>ing…</Show>
           </button>
@@ -289,6 +312,111 @@ const MarkdownBody = ({ markdown }: { markdown: Accessor<string> }) => (
   </Show>
 );
 
+const MarkdownDiff = (props: {
+  withCjk: Accessor<string>;
+  withoutCjk: Accessor<string>;
+  cjkFriendlyTime: Accessor<ResultPerOne | undefined>;
+  nonCJKFriendlyTime: Accessor<ResultPerOne | undefined>;
+}) => {
+  let containerRef: HTMLDivElement | undefined;
+  const diff = createMemo(() => {
+    const templateWithCjk = document.createElement("template");
+    templateWithCjk.innerHTML = props.withCjk();
+    const templateWithoutCjk = document.createElement("template");
+    templateWithoutCjk.innerHTML = props.withoutCjk();
+
+    return visualDomDiff(templateWithoutCjk.content, templateWithCjk.content);
+  });
+  createEffect(() => {
+    if (containerRef) {
+      containerRef.innerHTML = "";
+      containerRef.appendChild(diff());
+    }
+  });
+
+  return (
+    <>
+      <p>
+        <Show when={props.withCjk() !== props.withoutCjk()} fallback="Exact:">
+          <span class={styles.legendAdded}>Added</span> /{" "}
+          <span class={styles.legendModified}>Modified</span> /{" "}
+          <span class={styles.legendRemoved}>Removed</span> by this
+          specification:
+        </Show>
+        <Show when={cjkFriendlyTime() || nonCJKFriendlyTime()}>
+          <br />
+          <Show when={cjkFriendlyTime()}>
+            {/** biome-ignore lint/style/noNonNullAssertion: guarded by left */}
+            with spec: {formatMeanAndSEM(cjkFriendlyTime()!)}
+          </Show>
+          <Show when={cjkFriendlyTime() && nonCJKFriendlyTime()}>{" / "}</Show>
+          <Show when={nonCJKFriendlyTime()}>
+            without spec:{" "}
+            {
+              // biome-ignore lint/style/noNonNullAssertion: guarded by left
+              formatMeanAndSEM(nonCJKFriendlyTime()!)
+            }
+          </Show>
+        </Show>
+      </p>
+      <div
+        class={clsx(styles.markdownBody, styles.markdownDiff)}
+        ref={containerRef}
+      />
+    </>
+  );
+};
+
+const MarkdownSourceDiff = (props: {
+  withCjk: Accessor<string>;
+  withoutCjk: Accessor<string>;
+  cjkFriendlyTime: Accessor<ResultPerOne | undefined>;
+  nonCJKFriendlyTime: Accessor<ResultPerOne | undefined>;
+}) => {
+  const diff = createMemo(() => {
+    const diff = diffChars(props.withoutCjk(), props.withCjk());
+    return diff.map((part) => {
+      if (part.added) {
+        return <ins>{part.value}</ins>;
+      }
+      if (part.removed) {
+        return <del>{part.value}</del>;
+      }
+      return part.value;
+    });
+  });
+
+  return (
+    <>
+      <p>
+        <Show when={props.withCjk() !== props.withoutCjk()} fallback="Exact:">
+          <span class={styles.legendAdded}>Added</span> /{" "}
+          <span class={styles.legendRemoved}>Removed</span> by this
+          specification:
+        </Show>
+        <Show when={cjkFriendlyTime() || nonCJKFriendlyTime()}>
+          <br />
+          <Show when={cjkFriendlyTime()}>
+            {/** biome-ignore lint/style/noNonNullAssertion: guarded by left */}
+            with spec: {formatMeanAndSEM(cjkFriendlyTime()!)}
+          </Show>
+          <Show when={cjkFriendlyTime() && nonCJKFriendlyTime()}>{" / "}</Show>
+          <Show when={nonCJKFriendlyTime()}>
+            without spec:{" "}
+            {
+              // biome-ignore lint/style/noNonNullAssertion: guarded by left
+              formatMeanAndSEM(nonCJKFriendlyTime()!)
+            }
+          </Show>
+        </Show>
+      </p>
+      <pre class={clsx(styles.markdownSource, styles.markdownSourceDiff)}>
+        <code>{diff()}</code>
+      </pre>
+    </>
+  );
+};
+
 function stripTrailingZeros(str: string) {
   return str.replace(/\.?0+$/, "");
 }
@@ -308,15 +436,15 @@ function formatTime(ms: number) {
 }
 
 function ShowTime({ result }: { result: Accessor<ResultPerOne> }) {
-  const { mean, sem } = result();
-  return (
-    <>
-      (Time: {formatTime(mean)}±{formatTime(sem)})
-    </>
-  );
+  return <>(Time: {formatMeanAndSEM(result())})</>;
+}
+
+function formatMeanAndSEM(result: ResultPerOne) {
+  return `${formatTime(result.mean)}±${formatTime(result.sem)}`;
 }
 
 const Preview = () => {
+  const diffCheckBoxId = createUniqueId();
   const cjkFriendlyHTML = createMemo(() => {
     const markdownValue = markdown();
     const gfmValue = gfmEnabled();
@@ -342,54 +470,98 @@ const Preview = () => {
   });
   return (
     <div class={styles.resultContainer}>
-      <p>Result:</p>
+      <div class={styles.controls}>
+        <div>Result:</div>
+        <select
+          onChange={(e) => {
+            setShowSource(e.currentTarget.value === "source");
+          }}
+        >
+          <option value="render">Render</option>
+          <option value="source">Source</option>
+        </select>
+        <div>
+          <label for={diffCheckBoxId}>Diff</label>
+          <input
+            type="checkbox"
+            checked={showDiff()}
+            onChange={(e) => setShowDiff(e.currentTarget.checked)}
+            disabled={isBenchmarking()}
+            id={diffCheckBoxId}
+          />
+        </div>
+      </div>
       <Show
         when={cjkFriendlyHTML() !== ""}
         fallback={<p>Converted HTML is displayed here.</p>}
       >
-        <p>
-          With this specification
-          <Show
-            when={cjkFriendlyBenchFailure() === null}
-            fallback={` (bench ${cjkFriendlyBenchFailure()})`}
-          >
-            <Show when={cjkFriendlyTime() !== undefined}>
-              {" "}
-              {/** biome-ignore lint/style/noNonNullAssertion: when above */}
-              <ShowTime result={() => cjkFriendlyTime()!} />
-            </Show>
-          </Show>
-          :
-        </p>
-        <MarkdownBody markdown={() => cjkFriendlyHTML()} />
         <Show
-          when={cjkFriendlyHTML() !== nonCJKFriendlyHTML()}
+          when={!showDiff()}
           fallback={
-            <p>
-              The output is identical even without this specification.
-              <Show when={nonCJKFriendlyTime() !== undefined}>
-                {" "}
-                {/** biome-ignore lint/style/noNonNullAssertion: when above */}
-                <ShowTime result={() => nonCJKFriendlyTime()!} />
-              </Show>
-            </p>
+            <Show
+              when={!showSource()}
+              fallback={
+                <MarkdownSourceDiff
+                  withCjk={() => cjkFriendlyHTML()}
+                  withoutCjk={() => nonCJKFriendlyHTML()}
+                  cjkFriendlyTime={cjkFriendlyTime}
+                  nonCJKFriendlyTime={nonCJKFriendlyTime}
+                />
+              }
+            >
+              <MarkdownDiff
+                withCjk={() => cjkFriendlyHTML()}
+                withoutCjk={() => nonCJKFriendlyHTML()}
+                cjkFriendlyTime={cjkFriendlyTime}
+                nonCJKFriendlyTime={nonCJKFriendlyTime}
+              />
+            </Show>
           }
         >
           <p>
-            Without this specification
+            With this specification
             <Show
-              when={nonCJKFriendlyBenchFailure() === null}
-              fallback={` (bench ${nonCJKFriendlyBenchFailure()})`}
+              when={cjkFriendlyBenchFailure() === null}
+              fallback={` (bench ${cjkFriendlyBenchFailure()})`}
             >
-              <Show when={nonCJKFriendlyTime() !== undefined}>
+              <Show when={cjkFriendlyTime() !== undefined}>
                 {" "}
                 {/** biome-ignore lint/style/noNonNullAssertion: when above */}
-                <ShowTime result={() => nonCJKFriendlyTime()!} />
+                <ShowTime result={() => cjkFriendlyTime()!} />
               </Show>
             </Show>
             :
           </p>
-          <MarkdownBody markdown={() => nonCJKFriendlyHTML()} />
+          <MarkdownBody markdown={() => cjkFriendlyHTML()} />
+          <Show
+            when={cjkFriendlyHTML() !== nonCJKFriendlyHTML()}
+            fallback={
+              <p>
+                The output is identical even without this specification.
+                <Show when={nonCJKFriendlyTime() !== undefined}>
+                  {" "}
+                  {/** biome-ignore lint/style/noNonNullAssertion: when above */}
+                  <ShowTime result={() => nonCJKFriendlyTime()!} />
+                </Show>
+              </p>
+            }
+          >
+            <p>
+              Without this specification
+              <Show
+                when={nonCJKFriendlyBenchFailure() === null}
+                fallback={` (bench ${nonCJKFriendlyBenchFailure()})`}
+              >
+                <Show when={nonCJKFriendlyTime() !== undefined}>
+                  {" "}
+                  {/** biome-ignore lint/style/noNonNullAssertion: when above */}
+                  <ShowTime result={() => nonCJKFriendlyTime()!} />
+                </Show>
+              </Show>
+              :
+            </p>
+            <MarkdownBody markdown={() => nonCJKFriendlyHTML()} />
+          </Show>
         </Show>
       </Show>
     </div>

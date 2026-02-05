@@ -1,6 +1,10 @@
 ---
-// biome-ignore lint/correctness/noUnusedImports: False positive
+// biome-ignore lint/correctness/noUnusedImports: https://biomejs.dev/internals/language-support/#linting-html-ish-languages
 import Editor from "../components/Editor";
+
+// biome-ignore lint/correctness/noUnusedVariables: https://biomejs.dev/internals/language-support/#linting-html-ish-languages
+const bundledVersionName =
+  process.env.DEPLOYED_FROM_MAIN === "1" ? "main" : "dev";
 ---
 
 <html lang="en">
@@ -15,7 +19,7 @@ import Editor from "../components/Editor";
 	<body>
     <div class="root">
       <h1>CJK Friendly Emphasis Demo</h1>
-      <Editor client:load />
+      <Editor client:load bundledVersionName={bundledVersionName} />
     </div>
 	</body>
   <style is:global>
