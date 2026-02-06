@@ -1,12 +1,13 @@
 {
   "name": "remark-cjk-friendly",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "type": "module",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
-    }
+    },
+    "./package.json": "./package.json"
   },
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
