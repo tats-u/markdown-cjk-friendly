@@ -18,6 +18,7 @@
     "micromark-extension-cjk-friendly": "workspace:^",
     "micromark-extension-cjk-friendly-gfm-strikethrough": "workspace:^",
     "micromark-extension-gfm": "catalog:",
+    "semver": "^7.7.4",
     "solid-icons": "^1.1.0",
     "solid-js": "^1.9.11",
     "tinybench": "^6.0.0",
@@ -26,6 +27,7 @@
   "devDependencies": {
     "@types/markdown-it": "catalog:",
     "@types/node": "catalog:",
+    "@types/semver": "^7.7.1",
     "vite": "^7.3.0"
   }
 }

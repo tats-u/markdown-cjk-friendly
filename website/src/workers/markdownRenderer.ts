@@ -8,6 +8,7 @@ import { micromark } from "micromark";
 import { cjkFriendlyExtension } from "micromark-extension-cjk-friendly";
 import { gfmStrikethroughCjkFriendly } from "micromark-extension-cjk-friendly-gfm-strikethrough";
 import { gfm, gfmHtml } from "micromark-extension-gfm";
+import type { LoadedPlugins } from "./pluginLoader";
 
 export type MarkdownProcessorName =
   | "micromark"
@@ -15,10 +16,10 @@ export type MarkdownProcessorName =
   | "markdown-exit";
 
 const extensionsWithoutGfm = [cjkFriendlyExtension()];
-const extensionsWithGfmNoCjkFriendly = [gfm()];
+const extensionsWithGfmInferior = [gfm()];
 const extensionsWithGfm = [
   ...extensionsWithoutGfm,
-  ...extensionsWithGfmNoCjkFriendly,
+  ...extensionsWithGfmInferior,
   gfmStrikethroughCjkFriendly(),
 ];
 const gfmHtmlExtensions = [gfmHtml()];
@@ -31,38 +32,38 @@ type GfmPlainRendererSet = {
 
 type RendererStore = {
   [key in MarkdownProcessorName]: {
-    cjkFriendly: GfmPlainRendererSet;
-    noFriendly: GfmPlainRendererSet;
+    superior: GfmPlainRendererSet;
+    inferior: GfmPlainRendererSet;
   };
 };
 
 const rendererStore: RendererStore = {
   micromark: {
-    cjkFriendly: {
+    superior: {
       gfm: undefined,
       plain: undefined,
     },
-    noFriendly: {
+    inferior: {
       gfm: undefined,
       plain: undefined,
     },
   },
   "markdown-it": {
-    cjkFriendly: {
+    superior: {
       gfm: undefined,
       plain: undefined,
     },
-    noFriendly: {
+    inferior: {
       gfm: undefined,
       plain: undefined,
     },
   },
   "markdown-exit": {
-    cjkFriendly: {
+    superior: {
       gfm: undefined,
       plain: undefined,
     },
-    noFriendly: {
+    inferior: {
       gfm: undefined,
       plain: undefined,
     },
@@ -70,27 +71,27 @@ const rendererStore: RendererStore = {
 };
 
 function createMarkdownItRenderer(
-  cjkFriendly: boolean,
+  superior: boolean,
   gfm: boolean,
 ): MarkdownToHTMLRenderer {
   const md = gfm
     ? markdownIt({ html: false, linkify: true })
     : markdownIt("commonmark");
-  if (cjkFriendly) {
+  if (superior) {
     md.use(markdownItCjkFriendlyPlugin);
   }
   return (source: string) => md.render(source);
 }
 
 function createMicromarkRenderer(
-  cjkFriendly: boolean,
+  superior: boolean,
   gfm: boolean,
 ): MarkdownToHTMLRenderer {
   const extensions = gfm
-    ? cjkFriendly
+    ? superior
       ? extensionsWithGfm
-      : extensionsWithGfmNoCjkFriendly
-    : cjkFriendly
+      : extensionsWithGfmInferior
+    : superior
       ? extensionsWithoutGfm
       : null;
   return (md: string) =>
@@ -101,13 +102,13 @@ function createMicromarkRenderer(
 }
 
 function createMarkdownExitRenderer(
-  cjkFriendly: boolean,
+  superior: boolean,
   gfm: boolean,
 ): MarkdownToHTMLRenderer {
   const md = gfm
     ? createMarkdownExit({ html: false, linkify: true })
     : createMarkdownExit("commonmark");
-  if (cjkFriendly) {
+  if (superior) {
     // markdown-exit is compatible with markdown-it
     md.use(markdownItCjkFriendlyPlugin as unknown as MarkdownExitPluginSimple);
   }
@@ -116,30 +117,85 @@ function createMarkdownExitRenderer(
 
 function createRenderer(
   engine: MarkdownProcessorName,
-  cjkFriendly: boolean,
+  superior: boolean,
   gfm: boolean,
 ): MarkdownToHTMLRenderer {
   if (engine === "markdown-it") {
-    return createMarkdownItRenderer(cjkFriendly, gfm);
+    return createMarkdownItRenderer(superior, gfm);
   }
   if (engine === "markdown-exit") {
-    return createMarkdownExitRenderer(cjkFriendly, gfm);
+    return createMarkdownExitRenderer(superior, gfm);
   }
-  return createMicromarkRenderer(cjkFriendly, gfm);
+  return createMicromarkRenderer(superior, gfm);
 }
 
 export function getRenderer(
   engine: MarkdownProcessorName,
-  cjkFriendly: boolean,
+  superior: boolean,
   gfm: boolean,
 ): MarkdownToHTMLRenderer {
-  const target: GfmPlainRendererSet = cjkFriendly
-    ? rendererStore[engine].cjkFriendly
-    : rendererStore[engine].noFriendly;
+  const target: GfmPlainRendererSet = superior
+    ? rendererStore[engine].superior
+    : rendererStore[engine].inferior;
   if (gfm) {
-    target.gfm ??= createRenderer(engine, cjkFriendly, true);
+    target.gfm ??= createRenderer(engine, superior, true);
     return target.gfm;
   }
-  target.plain ??= createRenderer(engine, cjkFriendly, false);
+  target.plain ??= createRenderer(engine, superior, false);
   return target.plain;
+}
+
+const versionedRendererCache = new Map<string, MarkdownToHTMLRenderer>();
+
+export function createSuperiorRendererFromPlugins(
+  engine: MarkdownProcessorName,
+  isGfm: boolean,
+  plugins: LoadedPlugins,
+  version: string,
+): MarkdownToHTMLRenderer {
+  const cacheKey = `${engine}:${version}:${isGfm}`;
+  const cached = versionedRendererCache.get(cacheKey);
+  if (cached) return cached;
+
+  let renderer: MarkdownToHTMLRenderer;
+
+  if (
+    (engine === "markdown-it" || engine === "markdown-exit") &&
+    plugins.type === "markdown-it"
+  ) {
+    if (engine === "markdown-exit") {
+      const md = isGfm
+        ? createMarkdownExit({ html: false, linkify: true })
+        : createMarkdownExit("commonmark");
+      md.use(plugins.plugin as unknown as MarkdownExitPluginSimple);
+      renderer = (source: string) => md.render(source);
+    } else {
+      const md = isGfm
+        ? markdownIt({ html: false, linkify: true })
+        : markdownIt("commonmark");
+      md.use(plugins.plugin);
+      renderer = (source: string) => md.render(source);
+    }
+  } else if (engine === "micromark" && plugins.type === "micromark") {
+    const extensions = isGfm
+      ? [
+          plugins.cjkFriendlyExt,
+          gfm(),
+          ...(plugins.gfmStrikethroughCjkFriendlyExt
+            ? [plugins.gfmStrikethroughCjkFriendlyExt()]
+            : []),
+        ]
+      : [plugins.cjkFriendlyExt];
+    renderer = (md: string) =>
+      micromark(md, {
+        extensions,
+        htmlExtensions: isGfm ? gfmHtmlExtensions : null,
+      });
+  } else {
+    // Fallback: use bundled renderer
+    renderer = createRenderer(engine, true, isGfm);
+  }
+
+  versionedRendererCache.set(cacheKey, renderer);
+  return renderer;
 }

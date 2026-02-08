@@ -1,10 +1,12 @@
 import clsx from "clsx";
 import { diffChars } from "diff";
+import { gt } from "semver";
 import { OcMarkgithub2 } from "solid-icons/oc";
 import {
   type Accessor,
   createEffect,
   createMemo,
+  createResource,
   createSignal,
   createUniqueId,
   For,
@@ -14,45 +16,84 @@ import {
 import { visualDomDiff } from "visual-dom-diff";
 import type { BenchResult, ResultPerOne } from "../workers/bench";
 import BenchmarkWorker from "../workers/benchmarker.worker?worker";
-import { getRenderer } from "../workers/markdownRenderer";
+import {
+  getRenderer,
+  createSuperiorRendererFromPlugins,
+} from "../workers/markdownRenderer";
+import {
+  loadPlugins,
+  type LoadedPlugins,
+  type MarkdownEngineFamily,
+} from "../workers/pluginLoader";
 import styles from "./Editor.module.css";
 
-type MarkdownProcessorName = "micromark" | "markdown-it" | "markdown-exit";
+type MarkdownProcessorName = MarkdownEngineFamily | "markdown-exit";
 
 const [markdown, setMarkdown] = createSignal("");
 const [gfmEnabled, setGfmEnabled] = createSignal(true);
 const [engine, setEngine] = createSignal<MarkdownProcessorName>("micromark");
 const [showSource, setShowSource] = createSignal(false);
 const [showDiff, setShowDiff] = createSignal(false);
-const [cjkFriendlyTime, setCjkFriendlyTime] = createSignal<
-  ResultPerOne | undefined
->(undefined);
-const [nonCJKFriendlyTime, setNonCJKFriendlyTime] = createSignal<
-  ResultPerOne | undefined
->(undefined);
-const [cjkFriendlyBenchFailure, setCjkFriendlyBenchFailure] = createSignal<
+const [superiorTime, setSuperiorTime] = createSignal<ResultPerOne | undefined>(
+  undefined,
+);
+const [inferiorTime, setInferiorTime] = createSignal<ResultPerOne | undefined>(
+  undefined,
+);
+const [superiorBenchFailure, setSuperiorBenchFailure] = createSignal<
   string | null
 >(null);
-const [nonCJKFriendlyBenchFailure, setNonCJKFriendlyBenchFailure] =
-  createSignal<string | null>(null);
+const [inferiorBenchFailure, setInferiorBenchFailure] = createSignal<
+  string | null
+>(null);
 const [isBenchmarking, setIsBenchmarking] = createSignal(false);
-const [libVersion, setLibVersion] = createSignal("");
-const [libVersionCandidates, setLibVersionCandidates] = createSignal<string[]>(
-  [],
-);
+const [libVersionSuperior, setLibVersionSuperior] = createSignal("");
+const [libVersionCandidatesSuperior, setLibVersionCandidatesSuperior] =
+  createSignal<string[]>([]);
+const [pluginLoadError, setPluginLoadError] = createSignal<string | null>(null);
 
-function resetBenchResult() {
-  setCjkFriendlyTime(undefined);
-  setNonCJKFriendlyTime(undefined);
+let bundledVersionName = "";
+
+function toCjkFriendlyPackageName(engine: MarkdownEngineFamily) {
+  switch (engine) {
+    case "markdown-it":
+      return "markdown-it-cjk-friendly";
+    case "micromark":
+      return "micromark-extension-cjk-friendly";
+  }
 }
 
-const Editor = ({ bundledVersionName }: { bundledVersionName: string }) => {
+function markdownEngineFamily(): MarkdownEngineFamily {
+  const eg = engine();
+  switch (eg) {
+    case "markdown-exit":
+      return "markdown-it";
+  }
+  return eg;
+}
+
+interface NPMVersionsInfo {
+  tags: {
+    next: string;
+    latest: string;
+  } & Record<string, string>;
+  versions: string[];
+}
+
+function resetBenchResult() {
+  setSuperiorTime(undefined);
+  setInferiorTime(undefined);
+}
+
+const Editor = (props: { bundledVersionName: string }) => {
+  bundledVersionName = props.bundledVersionName;
   const gfmCheckBoxId = createUniqueId();
   const [textareaMarkdown, setTextareaMarkdown] = createSignal("");
 
   const u8Encoder = new TextEncoder();
 
   let textareaRef: HTMLTextAreaElement | undefined;
+  const fetchedVersionsInfo = new Map<MarkdownProcessorName, NPMVersionsInfo>();
 
   function handleCopyPermalink() {
     const markdown = textareaMarkdown();
@@ -102,6 +143,12 @@ const Editor = ({ bundledVersionName }: { bundledVersionName: string }) => {
     }
     url.searchParams.set("gfm", Number(gfmEnabled()).toString());
     url.searchParams.set("engine", engine());
+    const ver = libVersionSuperior();
+    if (ver && ver !== bundledVersionName) {
+      url.searchParams.set("ver", ver);
+    } else {
+      url.searchParams.delete("ver");
+    }
     window.history.replaceState(null, "", url.href);
     navigator.clipboard.writeText(window.location.href);
   }
@@ -109,10 +156,10 @@ const Editor = ({ bundledVersionName }: { bundledVersionName: string }) => {
   async function handleBenchmark() {
     try {
       setIsBenchmarking(true);
-      setCjkFriendlyBenchFailure(null);
-      setNonCJKFriendlyBenchFailure(null);
-      setCjkFriendlyTime(undefined);
-      setNonCJKFriendlyTime(undefined);
+      setSuperiorBenchFailure(null);
+      setInferiorBenchFailure(null);
+      setSuperiorTime(undefined);
+      setInferiorTime(undefined);
       const benchWorker = new BenchmarkWorker();
       const result = await (new Promise((resolve) => {
         benchWorker.postMessage([
@@ -120,6 +167,8 @@ const Editor = ({ bundledVersionName }: { bundledVersionName: string }) => {
           {
             gfm: gfmEnabled(),
             engine: engine(),
+            version: libVersionSuperior(),
+            bundledVersionName,
           },
         ]);
         benchWorker.addEventListener("message", (e) => {
@@ -128,14 +177,14 @@ const Editor = ({ bundledVersionName }: { bundledVersionName: string }) => {
       }) as Promise<BenchResult>);
       benchWorker.terminate();
       if (result.success) {
-        setCjkFriendlyTime(result.cjkFriendly);
-        setNonCJKFriendlyTime(result.noCjkFriendly);
+        setSuperiorTime(result.superior);
+        setInferiorTime(result.inferior);
       } else {
-        setCjkFriendlyBenchFailure(
-          result.cjkFriendly !== "completed" ? result.cjkFriendly : null,
+        setSuperiorBenchFailure(
+          result.superior !== "completed" ? result.superior : null,
         );
-        setNonCJKFriendlyBenchFailure(
-          result.noCjkFriendly !== "completed" ? result.noCjkFriendly : null,
+        setInferiorBenchFailure(
+          result.inferior !== "completed" ? result.inferior : null,
         );
       }
     } finally {
@@ -144,8 +193,6 @@ const Editor = ({ bundledVersionName }: { bundledVersionName: string }) => {
   }
 
   onMount(() => {
-    setLibVersion(bundledVersionName);
-    setLibVersionCandidates([bundledVersionName]);
     const url = new URL(window.location.href);
     const src = url.searchParams.get("src");
     const b64u8 = url.searchParams.get("sc8");
@@ -199,9 +246,52 @@ const Editor = ({ bundledVersionName }: { bundledVersionName: string }) => {
           break;
       }
     }
+    const ver = url.searchParams.get("ver");
+    if (ver) {
+      setLibVersionSuperior(ver);
+    }
     if (bench) {
       handleBenchmark();
     }
+  });
+  createEffect(async () => {
+    const engineFamily = markdownEngineFamily();
+
+    let packageVersionsInfo = fetchedVersionsInfo.get(engineFamily);
+    if (!packageVersionsInfo) {
+      setLibVersionCandidatesSuperior([]);
+
+      try {
+        packageVersionsInfo = (await (
+          await fetch(
+            `https://data.jsdelivr.com/v1/package/npm/${toCjkFriendlyPackageName(engineFamily)}`,
+          )
+        ).json()) as NPMVersionsInfo;
+        fetchedVersionsInfo.set(engineFamily, packageVersionsInfo);
+      } catch {
+        setLibVersionSuperior(bundledVersionName);
+        setLibVersionCandidatesSuperior([bundledVersionName]);
+        return;
+      }
+    }
+    const latestVersion = packageVersionsInfo.tags.latest;
+    let nextVersion: string | null = packageVersionsInfo.tags.next;
+    const candidates = [latestVersion];
+    if (gt(nextVersion, latestVersion)) {
+      candidates.push(nextVersion);
+    } else {
+      nextVersion = null;
+    }
+    candidates.push(bundledVersionName);
+    candidates.push(
+      ...packageVersionsInfo.versions.filter(
+        (v) => v !== latestVersion && v !== nextVersion,
+      ),
+    );
+    setLibVersionCandidatesSuperior(candidates);
+    setLibVersionSuperior((v) =>
+      v === bundledVersionName ? bundledVersionName : latestVersion,
+    );
   });
 
   return (
@@ -235,17 +325,19 @@ const Editor = ({ bundledVersionName }: { bundledVersionName: string }) => {
           </select>
           <select
             onChange={(e) => {
-              setLibVersion(e.currentTarget.value);
+              setLibVersionSuperior(e.currentTarget.value);
               resetBenchResult();
             }}
-            value={libVersion()}
-            disabled={isBenchmarking() || libVersionCandidates().length <= 1}
+            value={libVersionSuperior()}
+            disabled={
+              isBenchmarking() || libVersionCandidatesSuperior().length <= 1
+            }
           >
             <Show
-              when={libVersionCandidates().length > 0}
+              when={libVersionCandidatesSuperior().length > 0}
               fallback={<option value={""}>Loading…</option>}
             >
-              <For each={libVersionCandidates()}>
+              <For each={libVersionCandidatesSuperior()}>
                 {(version) => <option value={version}>{version}</option>}
               </For>
             </Show>
@@ -313,19 +405,19 @@ const MarkdownBody = ({ markdown }: { markdown: Accessor<string> }) => (
 );
 
 const MarkdownDiff = (props: {
-  withCjk: Accessor<string>;
-  withoutCjk: Accessor<string>;
-  cjkFriendlyTime: Accessor<ResultPerOne | undefined>;
-  nonCJKFriendlyTime: Accessor<ResultPerOne | undefined>;
+  superior: Accessor<string>;
+  inferior: Accessor<string>;
+  superiorTime: Accessor<ResultPerOne | undefined>;
+  inferiorTime: Accessor<ResultPerOne | undefined>;
 }) => {
   let containerRef: HTMLDivElement | undefined;
   const diff = createMemo(() => {
-    const templateWithCjk = document.createElement("template");
-    templateWithCjk.innerHTML = props.withCjk();
-    const templateWithoutCjk = document.createElement("template");
-    templateWithoutCjk.innerHTML = props.withoutCjk();
+    const templateSuperior = document.createElement("template");
+    templateSuperior.innerHTML = props.superior();
+    const templateInferior = document.createElement("template");
+    templateInferior.innerHTML = props.inferior();
 
-    return visualDomDiff(templateWithoutCjk.content, templateWithCjk.content);
+    return visualDomDiff(templateInferior.content, templateSuperior.content);
   });
   createEffect(() => {
     if (containerRef) {
@@ -337,24 +429,24 @@ const MarkdownDiff = (props: {
   return (
     <>
       <p>
-        <Show when={props.withCjk() !== props.withoutCjk()} fallback="Exact:">
+        <Show when={props.superior() !== props.inferior()} fallback="Exact:">
           <span class={styles.legendAdded}>Added</span> /{" "}
           <span class={styles.legendModified}>Modified</span> /{" "}
           <span class={styles.legendRemoved}>Removed</span> by this
           specification:
         </Show>
-        <Show when={cjkFriendlyTime() || nonCJKFriendlyTime()}>
+        <Show when={superiorTime() || inferiorTime()}>
           <br />
-          <Show when={cjkFriendlyTime()}>
+          <Show when={superiorTime()}>
             {/** biome-ignore lint/style/noNonNullAssertion: guarded by left */}
-            with spec: {formatMeanAndSEM(cjkFriendlyTime()!)}
+            with spec: {formatMeanAndSEM(superiorTime()!)}
           </Show>
-          <Show when={cjkFriendlyTime() && nonCJKFriendlyTime()}>{" / "}</Show>
-          <Show when={nonCJKFriendlyTime()}>
+          <Show when={superiorTime() && inferiorTime()}>{" / "}</Show>
+          <Show when={inferiorTime()}>
             without spec:{" "}
             {
               // biome-ignore lint/style/noNonNullAssertion: guarded by left
-              formatMeanAndSEM(nonCJKFriendlyTime()!)
+              formatMeanAndSEM(inferiorTime()!)
             }
           </Show>
         </Show>
@@ -368,13 +460,13 @@ const MarkdownDiff = (props: {
 };
 
 const MarkdownSourceDiff = (props: {
-  withCjk: Accessor<string>;
-  withoutCjk: Accessor<string>;
-  cjkFriendlyTime: Accessor<ResultPerOne | undefined>;
-  nonCJKFriendlyTime: Accessor<ResultPerOne | undefined>;
+  superior: Accessor<string>;
+  inferior: Accessor<string>;
+  superiorTime: Accessor<ResultPerOne | undefined>;
+  inferiorTime: Accessor<ResultPerOne | undefined>;
 }) => {
   const diff = createMemo(() => {
-    const diff = diffChars(props.withoutCjk(), props.withCjk());
+    const diff = diffChars(props.inferior(), props.superior());
     return diff.map((part) => {
       if (part.added) {
         return <ins>{part.value}</ins>;
@@ -389,23 +481,23 @@ const MarkdownSourceDiff = (props: {
   return (
     <>
       <p>
-        <Show when={props.withCjk() !== props.withoutCjk()} fallback="Exact:">
+        <Show when={props.superior() !== props.inferior()} fallback="Exact:">
           <span class={styles.legendAdded}>Added</span> /{" "}
           <span class={styles.legendRemoved}>Removed</span> by this
           specification:
         </Show>
-        <Show when={cjkFriendlyTime() || nonCJKFriendlyTime()}>
+        <Show when={superiorTime() || inferiorTime()}>
           <br />
-          <Show when={cjkFriendlyTime()}>
+          <Show when={superiorTime()}>
             {/** biome-ignore lint/style/noNonNullAssertion: guarded by left */}
-            with spec: {formatMeanAndSEM(cjkFriendlyTime()!)}
+            with spec: {formatMeanAndSEM(superiorTime()!)}
           </Show>
-          <Show when={cjkFriendlyTime() && nonCJKFriendlyTime()}>{" / "}</Show>
-          <Show when={nonCJKFriendlyTime()}>
+          <Show when={superiorTime() && inferiorTime()}>{", "}</Show>
+          <Show when={inferiorTime()}>
             without spec:{" "}
             {
               // biome-ignore lint/style/noNonNullAssertion: guarded by left
-              formatMeanAndSEM(nonCJKFriendlyTime()!)
+              formatMeanAndSEM(inferiorTime()!)
             }
           </Show>
         </Show>
@@ -445,18 +537,63 @@ function formatMeanAndSEM(result: ResultPerOne) {
 
 const Preview = () => {
   const diffCheckBoxId = createUniqueId();
-  const cjkFriendlyHTML = createMemo(() => {
+
+  const [plugins] = createResource(
+    () => ({
+      version: libVersionSuperior(),
+      engineFamily: markdownEngineFamily(),
+    }),
+    async (source): Promise<LoadedPlugins | undefined> => {
+      if (!source.version) return undefined;
+      try {
+        setPluginLoadError(null);
+        const result = await loadPlugins(
+          source.engineFamily as MarkdownEngineFamily,
+          source.version,
+          bundledVersionName,
+        );
+        return result;
+      } catch (e) {
+        setPluginLoadError(
+          e instanceof Error ? e.message : "Failed to load plugin",
+        );
+        return undefined;
+      }
+    },
+  );
+
+  const superiorHTML = createMemo(() => {
     const markdownValue = markdown();
     const gfmValue = gfmEnabled();
     const engineValue = engine();
     if (markdownValue === "") {
       return "";
     }
-    const renderer = getRenderer(engineValue, true, gfmValue);
-    const html = renderer(markdownValue);
-    return html;
+    const loadedPlugins = plugins();
+    if (plugins.loading || !loadedPlugins) {
+      return undefined;
+    }
+    const version = libVersionSuperior();
+    try {
+      if (version === bundledVersionName) {
+        const renderer = getRenderer(engineValue, true, gfmValue);
+        return renderer(markdownValue);
+      }
+      const renderer = createSuperiorRendererFromPlugins(
+        engineValue,
+        gfmValue,
+        loadedPlugins,
+        version,
+      );
+      return renderer(markdownValue);
+    } catch (e) {
+      setPluginLoadError(
+        e instanceof Error ? e.message : "Failed to load plugin",
+      );
+      return "";
+    }
   });
-  const nonCJKFriendlyHTML = createMemo(() => {
+  const inferiorHTML = createMemo(() => {
     const markdownValue = markdown();
     const gfmValue = gfmEnabled();
     const engineValue = engine();
@@ -492,9 +629,24 @@ const Preview = () => {
         </div>
       </div>
       <Show
-        when={cjkFriendlyHTML() !== ""}
-        fallback={<p>Converted HTML is displayed here.</p>}
+        when={pluginLoadError() === null}
+        fallback={<p>Error loading plugin: {pluginLoadError()}</p>}
       >
+        <Show
+          when={superiorHTML() !== undefined}
+          fallback={
+            <Show
+              when={markdown() !== ""}
+              fallback={<p>Converted HTML is displayed here.</p>}
+            >
+              <p>Loading plugin…</p>
+            </Show>
+          }
+        >
+          <Show
+            when={superiorHTML() !== ""}
+            fallback={<p>Converted HTML is displayed here.</p>}
+          >
         <Show
           when={!showDiff()}
           fallback={
@@ -502,18 +654,18 @@ const Preview = () => {
               when={!showSource()}
               fallback={
                 <MarkdownSourceDiff
-                  withCjk={() => cjkFriendlyHTML()}
-                  withoutCjk={() => nonCJKFriendlyHTML()}
-                  cjkFriendlyTime={cjkFriendlyTime}
-                  nonCJKFriendlyTime={nonCJKFriendlyTime}
+                  superior={() => superiorHTML() as string}
+                  inferior={() => inferiorHTML()}
+                  superiorTime={superiorTime}
+                  inferiorTime={inferiorTime}
                 />
               }
             >
               <MarkdownDiff
-                withCjk={() => cjkFriendlyHTML()}
-                withoutCjk={() => nonCJKFriendlyHTML()}
-                cjkFriendlyTime={cjkFriendlyTime}
-                nonCJKFriendlyTime={nonCJKFriendlyTime}
+                superior={() => superiorHTML() as string}
+                inferior={() => inferiorHTML()}
+                superiorTime={superiorTime}
+                inferiorTime={inferiorTime}
               />
             </Show>
           }
@@ -521,27 +673,27 @@ const Preview = () => {
           <p>
             With this specification
             <Show
-              when={cjkFriendlyBenchFailure() === null}
-              fallback={` (bench ${cjkFriendlyBenchFailure()})`}
+              when={superiorBenchFailure() === null}
+              fallback={` (bench ${superiorBenchFailure()})`}
             >
-              <Show when={cjkFriendlyTime() !== undefined}>
+              <Show when={superiorTime() !== undefined}>
                 {" "}
                 {/** biome-ignore lint/style/noNonNullAssertion: when above */}
-                <ShowTime result={() => cjkFriendlyTime()!} />
+                <ShowTime result={() => superiorTime()!} />
               </Show>
             </Show>
             :
           </p>
-          <MarkdownBody markdown={() => cjkFriendlyHTML()} />
+          <MarkdownBody markdown={() => superiorHTML() as string} />
           <Show
-            when={cjkFriendlyHTML() !== nonCJKFriendlyHTML()}
+            when={superiorHTML() !== inferiorHTML()}
             fallback={
               <p>
                 The output is identical even without this specification.
-                <Show when={nonCJKFriendlyTime() !== undefined}>
+                <Show when={inferiorTime() !== undefined}>
                   {" "}
                   {/** biome-ignore lint/style/noNonNullAssertion: when above */}
-                  <ShowTime result={() => nonCJKFriendlyTime()!} />
+                  <ShowTime result={() => inferiorTime()!} />
                 </Show>
               </p>
             }
@@ -549,19 +701,21 @@ const Preview = () => {
             <p>
               Without this specification
               <Show
-                when={nonCJKFriendlyBenchFailure() === null}
-                fallback={` (bench ${nonCJKFriendlyBenchFailure()})`}
+                when={inferiorBenchFailure() === null}
+                fallback={` (bench ${inferiorBenchFailure()})`}
               >
-                <Show when={nonCJKFriendlyTime() !== undefined}>
+                <Show when={inferiorTime() !== undefined}>
                   {" "}
                   {/** biome-ignore lint/style/noNonNullAssertion: when above */}
-                  <ShowTime result={() => nonCJKFriendlyTime()!} />
+                  <ShowTime result={() => inferiorTime()!} />
                 </Show>
               </Show>
               :
             </p>
-            <MarkdownBody markdown={() => nonCJKFriendlyHTML()} />
+            <MarkdownBody markdown={() => inferiorHTML()} />
           </Show>
+        </Show>
+      </Show>
         </Show>
       </Show>
     </div>
