@@ -1,8 +1,12 @@
 import { eastAsianWidthType } from "get-east-asian-width";
 import type { Code } from "micromark-util-types";
 
-function isEmoji(uc: number) {
+function isDefaultEmoji(uc: number) {
   return /^\p{Emoji_Presentation}/u.test(String.fromCodePoint(uc));
+}
+
+function canBeEmoji(uc: number) {
+  return /^\p{Emoji}/u.test(String.fromCodePoint(uc));
 }
 
 /**
@@ -22,7 +26,7 @@ export function cjkOrIvs(uc: Code): boolean | null {
     case "halfwidth":
       return true; // never be emoji
     case "wide":
-      return !isEmoji(uc);
+      return !isDefaultEmoji(uc);
     case "narrow":
       return false;
     case "ambiguous":
@@ -118,4 +122,29 @@ function regexCheck(regex: RegExp): (code: Code) => boolean {
   function check(code: Code): boolean {
     return code !== null && code > -1 && regex.test(String.fromCodePoint(code));
   }
+}
+
+/**
+ * Check the emoji capability of a "wide" EAW character.
+ *
+ * @param uc code point
+ * @returns 0 if not a wide emoji-capable character, 1 if default emoji (Emoji_Presentation), 2 if emoji-capable but not default emoji
+ */
+export function wideEmojiCapability(uc: Code): 0 | 1 | 2 {
+  if (!uc) return 0;
+  if (eastAsianWidthType(uc) !== "wide") return 0;
+  if (!canBeEmoji(uc)) return 0;
+  return isDefaultEmoji(uc) ? 1 : 2;
+}
+
+/**
+ * Check whether the character code represents a CJK ambiguous punctuation base character (quotation mark).
+ *
+ * A CJK ambiguous punctuation base character is one of `'`, `'`, `"`, or `"`.
+ * When followed by U+FE01, it forms a CJK ambiguous punctuation sequence.
+ */
+export function isQuotationMark(code: Code): boolean {
+  return (
+    code === 0x2018 || code === 0x2019 || code === 0x201c || code === 0x201d
+  );
 }
