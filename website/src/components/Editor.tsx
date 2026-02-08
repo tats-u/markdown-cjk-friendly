@@ -17,12 +17,12 @@ import { visualDomDiff } from "visual-dom-diff";
 import type { BenchResult, ResultPerOne } from "../workers/bench";
 import BenchmarkWorker from "../workers/benchmarker.worker?worker";
 import {
-  getRenderer,
   createSuperiorRendererFromPlugins,
+  getRenderer,
 } from "../workers/markdownRenderer";
 import {
-  loadPlugins,
   type LoadedPlugins,
+  loadPlugins,
   type MarkdownEngineFamily,
 } from "../workers/pluginLoader";
 import styles from "./Editor.module.css";
@@ -647,75 +647,75 @@ const Preview = () => {
             when={superiorHTML() !== ""}
             fallback={<p>Converted HTML is displayed here.</p>}
           >
-        <Show
-          when={!showDiff()}
-          fallback={
             <Show
-              when={!showSource()}
+              when={!showDiff()}
               fallback={
-                <MarkdownSourceDiff
-                  superior={() => superiorHTML() as string}
-                  inferior={() => inferiorHTML()}
-                  superiorTime={superiorTime}
-                  inferiorTime={inferiorTime}
-                />
+                <Show
+                  when={!showSource()}
+                  fallback={
+                    <MarkdownSourceDiff
+                      superior={() => superiorHTML() as string}
+                      inferior={() => inferiorHTML()}
+                      superiorTime={superiorTime}
+                      inferiorTime={inferiorTime}
+                    />
+                  }
+                >
+                  <MarkdownDiff
+                    superior={() => superiorHTML() as string}
+                    inferior={() => inferiorHTML()}
+                    superiorTime={superiorTime}
+                    inferiorTime={inferiorTime}
+                  />
+                </Show>
               }
             >
-              <MarkdownDiff
-                superior={() => superiorHTML() as string}
-                inferior={() => inferiorHTML()}
-                superiorTime={superiorTime}
-                inferiorTime={inferiorTime}
-              />
-            </Show>
-          }
-        >
-          <p>
-            With this specification
-            <Show
-              when={superiorBenchFailure() === null}
-              fallback={` (bench ${superiorBenchFailure()})`}
-            >
-              <Show when={superiorTime() !== undefined}>
-                {" "}
-                {/** biome-ignore lint/style/noNonNullAssertion: when above */}
-                <ShowTime result={() => superiorTime()!} />
-              </Show>
-            </Show>
-            :
-          </p>
-          <MarkdownBody markdown={() => superiorHTML() as string} />
-          <Show
-            when={superiorHTML() !== inferiorHTML()}
-            fallback={
               <p>
-                The output is identical even without this specification.
-                <Show when={inferiorTime() !== undefined}>
-                  {" "}
-                  {/** biome-ignore lint/style/noNonNullAssertion: when above */}
-                  <ShowTime result={() => inferiorTime()!} />
+                With this specification
+                <Show
+                  when={superiorBenchFailure() === null}
+                  fallback={` (bench ${superiorBenchFailure()})`}
+                >
+                  <Show when={superiorTime() !== undefined}>
+                    {" "}
+                    {/** biome-ignore lint/style/noNonNullAssertion: when above */}
+                    <ShowTime result={() => superiorTime()!} />
+                  </Show>
                 </Show>
+                :
               </p>
-            }
-          >
-            <p>
-              Without this specification
+              <MarkdownBody markdown={() => superiorHTML() as string} />
               <Show
-                when={inferiorBenchFailure() === null}
-                fallback={` (bench ${inferiorBenchFailure()})`}
+                when={superiorHTML() !== inferiorHTML()}
+                fallback={
+                  <p>
+                    The output is identical even without this specification.
+                    <Show when={inferiorTime() !== undefined}>
+                      {" "}
+                      {/** biome-ignore lint/style/noNonNullAssertion: when above */}
+                      <ShowTime result={() => inferiorTime()!} />
+                    </Show>
+                  </p>
+                }
               >
-                <Show when={inferiorTime() !== undefined}>
-                  {" "}
-                  {/** biome-ignore lint/style/noNonNullAssertion: when above */}
-                  <ShowTime result={() => inferiorTime()!} />
-                </Show>
+                <p>
+                  Without this specification
+                  <Show
+                    when={inferiorBenchFailure() === null}
+                    fallback={` (bench ${inferiorBenchFailure()})`}
+                  >
+                    <Show when={inferiorTime() !== undefined}>
+                      {" "}
+                      {/** biome-ignore lint/style/noNonNullAssertion: when above */}
+                      <ShowTime result={() => inferiorTime()!} />
+                    </Show>
+                  </Show>
+                  :
+                </p>
+                <MarkdownBody markdown={() => inferiorHTML()} />
               </Show>
-              :
-            </p>
-            <MarkdownBody markdown={() => inferiorHTML()} />
+            </Show>
           </Show>
-        </Show>
-      </Show>
         </Show>
       </Show>
     </div>

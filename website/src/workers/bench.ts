@@ -1,7 +1,7 @@
 import { Bench, type TaskResult } from "tinybench";
 import {
-  getRenderer,
   createSuperiorRendererFromPlugins,
+  getRenderer,
   type MarkdownProcessorName,
 } from "./markdownRenderer";
 import type { LoadedPlugins } from "./pluginLoader";
