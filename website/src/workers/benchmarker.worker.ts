@@ -22,7 +22,9 @@ self.addEventListener(
         version,
         bundledVersionName,
       );
-      self.postMessage(await runBench(source, sanitizedGfm, engine, plugins, version));
+      self.postMessage(
+        await runBench(source, sanitizedGfm, engine, plugins, version),
+      );
     } else {
       self.postMessage(await runBench(source, sanitizedGfm, engine));
     }
