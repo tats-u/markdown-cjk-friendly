@@ -42,3 +42,6 @@ overrides:
   compression@1.8.0>on-headers: 1.1.0
   refractor@3.6.0>prismjs: ^1.30.0
   vite@5.4.21>esbuild: ^0.25.0
+
+publicHoistPattern:
+  - decode-named-character-reference
