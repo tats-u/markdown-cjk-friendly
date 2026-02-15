@@ -15,6 +15,21 @@ export type MarkdownProcessorName =
   | "markdown-it"
   | "markdown-exit";
 
+const markdownProcessorNames = new Set<MarkdownProcessorName>([
+  "micromark",
+  "markdown-it",
+  "markdown-exit",
+]);
+
+export function normalizeMarkdownProcessorName(
+  engine: string,
+): MarkdownProcessorName {
+  if (markdownProcessorNames.has(engine as MarkdownProcessorName)) {
+    return engine as MarkdownProcessorName;
+  }
+  return "micromark";
+}
+
 const extensionsWithoutGfm = [cjkFriendlyExtension()];
 const extensionsWithGfmInferior = [gfm()];
 const extensionsWithGfm = [
@@ -130,40 +145,43 @@ function createRenderer(
 }
 
 export function getRenderer(
-  engine: MarkdownProcessorName,
+  engine: MarkdownProcessorName | string,
   superior: boolean,
   gfm: boolean,
 ): MarkdownToHTMLRenderer {
+  const normalizedEngine = normalizeMarkdownProcessorName(engine);
   const target: GfmPlainRendererSet = superior
-    ? rendererStore[engine].superior
-    : rendererStore[engine].inferior;
+    ? rendererStore[normalizedEngine].superior
+    : rendererStore[normalizedEngine].inferior;
   if (gfm) {
-    target.gfm ??= createRenderer(engine, superior, true);
+    target.gfm ??= createRenderer(normalizedEngine, superior, true);
     return target.gfm;
   }
-  target.plain ??= createRenderer(engine, superior, false);
+  target.plain ??= createRenderer(normalizedEngine, superior, false);
   return target.plain;
 }
 
 const versionedRendererCache = new Map<string, MarkdownToHTMLRenderer>();
 
 export function createSuperiorRendererFromPlugins(
-  engine: MarkdownProcessorName,
+  engine: MarkdownProcessorName | string,
   isGfm: boolean,
   plugins: LoadedPlugins,
   version: string,
 ): MarkdownToHTMLRenderer {
-  const cacheKey = `${engine}:${version}:${isGfm}`;
+  const normalizedEngine = normalizeMarkdownProcessorName(engine);
+  const cacheKey = `${normalizedEngine}:${version}:${isGfm}`;
   const cached = versionedRendererCache.get(cacheKey);
   if (cached) return cached;
 
   let renderer: MarkdownToHTMLRenderer;
 
   if (
-    (engine === "markdown-it" || engine === "markdown-exit") &&
+    (normalizedEngine === "markdown-it" ||
+      normalizedEngine === "markdown-exit") &&
     plugins.type === "markdown-it"
   ) {
-    if (engine === "markdown-exit") {
+    if (normalizedEngine === "markdown-exit") {
       const md = isGfm
         ? createMarkdownExit({ html: false, linkify: true })
         : createMarkdownExit("commonmark");
@@ -176,7 +194,7 @@ export function createSuperiorRendererFromPlugins(
       md.use(plugins.plugin);
       renderer = (source: string) => md.render(source);
     }
-  } else if (engine === "micromark" && plugins.type === "micromark") {
+  } else if (normalizedEngine === "micromark" && plugins.type === "micromark") {
     const extensions = isGfm
       ? [
           plugins.cjkFriendlyExt,
@@ -193,7 +211,7 @@ export function createSuperiorRendererFromPlugins(
       });
   } else {
     // Fallback: use bundled renderer
-    renderer = createRenderer(engine, true, isGfm);
+    renderer = createRenderer(normalizedEngine, true, isGfm);
   }
 
   versionedRendererCache.set(cacheKey, renderer);

@@ -1,3 +1,4 @@
+import { valid } from "semver";
 import { runBench } from "./bench";
 import type { MarkdownProcessorName } from "./markdownRenderer";
 import { loadPlugins, type MarkdownEngineFamily } from "./pluginLoader";
@@ -13,7 +14,8 @@ self.addEventListener(
   "message",
   async (e: MessageEvent<[string, MarkdownBenchSettings]>) => {
     const [source, { gfm, engine, version, bundledVersionName }] = e.data;
-    if (version && version !== bundledVersionName) {
+    const sanitizedGfm = Boolean(gfm);
+    if (version && version !== bundledVersionName && valid(version)) {
       const engineFamily: MarkdownEngineFamily =
         engine === "markdown-exit" ? "markdown-it" : engine;
       const plugins = await loadPlugins(
@@ -21,9 +23,11 @@ self.addEventListener(
         version,
         bundledVersionName,
       );
-      self.postMessage(await runBench(source, gfm, engine, plugins, version));
+      self.postMessage(
+        await runBench(source, sanitizedGfm, engine, plugins, version),
+      );
     } else {
-      self.postMessage(await runBench(source, gfm, engine));
+      self.postMessage(await runBench(source, sanitizedGfm, engine));
     }
   },
 );
