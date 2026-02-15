@@ -177,7 +177,8 @@ export function createSuperiorRendererFromPlugins(
   let renderer: MarkdownToHTMLRenderer;
 
   if (
-    (normalizedEngine === "markdown-it" || normalizedEngine === "markdown-exit") &&
+    (normalizedEngine === "markdown-it" ||
+      normalizedEngine === "markdown-exit") &&
     plugins.type === "markdown-it"
   ) {
     if (normalizedEngine === "markdown-exit") {
