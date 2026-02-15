@@ -38,8 +38,8 @@
   "scripts": {
     "build": "tsdown",
     "build:lib": "tsdown",
-    "dev": "tsdown --watch",
-    "dev:lib": "tsdown --watch",
+    "dev": "tsdown --watch --sourcemaps",
+    "dev:lib": "tsdown --watch --sourcemaps",
     "test": "vitest run",
     "test:lib": "vitest run",
     "test:up": "vitest -u",
