@@ -1,5 +1,122 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`remark-cjk-friendly > ** around CJK text presentation sequences is converted to <strong> (MDX) 1`] = `
+"import {Fragment as _Fragment, jsx as _jsx, jsxs as _jsxs} from "react/jsx-runtime";
+function _createMdxContent(props) {
+  const _components = {
+    p: "p",
+    strong: "strong",
+    ...props.components
+  };
+  return _jsxs(_Fragment, {
+    children: [_jsxs(_components.p, {
+      children: ["a", _jsx(_components.strong, {
+        children: "〰︎a"
+      }), "a"]
+    }), "\\n", _jsxs(_components.p, {
+      children: ["a", _jsx(_components.strong, {
+        children: "〽︎a"
+      }), "a"]
+    }), "\\n", _jsxs(_components.p, {
+      children: ["a", _jsx(_components.strong, {
+        children: "🈂︎a"
+      }), "a"]
+    }), "\\n", _jsxs(_components.p, {
+      children: ["a", _jsx(_components.strong, {
+        children: "🈷︎a"
+      }), "a"]
+    }), "\\n", _jsxs(_components.p, {
+      children: ["a", _jsx(_components.strong, {
+        children: "㊗︎a"
+      }), "a"]
+    }), "\\n", _jsxs(_components.p, {
+      children: ["a", _jsx(_components.strong, {
+        children: "㊙︎a"
+      }), "a"]
+    }), "\\n", _jsxs(_components.p, {
+      children: ["a", _jsx(_components.strong, {
+        children: "a〰︎"
+      }), "a"]
+    }), "\\n", _jsxs(_components.p, {
+      children: ["a", _jsx(_components.strong, {
+        children: "a〽︎"
+      }), "a"]
+    }), "\\n", _jsxs(_components.p, {
+      children: ["a", _jsx(_components.strong, {
+        children: "a🈂︎"
+      }), "a"]
+    }), "\\n", _jsxs(_components.p, {
+      children: ["a", _jsx(_components.strong, {
+        children: "a🈷︎"
+      }), "a"]
+    }), "\\n", _jsxs(_components.p, {
+      children: ["a", _jsx(_components.strong, {
+        children: "a㊗︎"
+      }), "a"]
+    }), "\\n", _jsxs(_components.p, {
+      children: ["a", _jsx(_components.strong, {
+        children: "a㊙︎"
+      }), "a"]
+    }), "\\n", _jsxs(_components.p, {
+      children: ["a", _jsx(_components.strong, {
+        children: "🈯︎a"
+      }), "a"]
+    }), "\\n", _jsxs(_components.p, {
+      children: ["a", _jsx(_components.strong, {
+        children: "a🈯︎"
+      }), "a"]
+    }), "\\n", _jsxs(_components.p, {
+      children: ["a", _jsx(_components.strong, {
+        children: "⭕︎a"
+      })]
+    }), "\\n", _jsxs(_components.p, {
+      children: ["a", _jsx(_components.strong, {
+        children: "a⭕︎"
+      }), "a"]
+    }), "\\n", _jsxs(_components.p, {
+      children: ["a", _jsx(_components.strong, {
+        children: "❌︎a"
+      }), "a"]
+    }), "\\n", _jsxs(_components.p, {
+      children: ["a", _jsx(_components.strong, {
+        children: "a❌︎"
+      }), "a"]
+    })]
+  });
+}
+export default function MDXContent(props = {}) {
+  const {wrapper: MDXLayout} = props.components || ({});
+  return MDXLayout ? _jsx(MDXLayout, {
+    ...props,
+    children: _jsx(_createMdxContent, {
+      ...props
+    })
+  }) : _createMdxContent(props);
+}
+"
+`;
+
+exports[`remark-cjk-friendly > ** around CJK text presentation sequences is converted to <strong> 1`] = `
+"<p>a<strong>〰︎a</strong>a</p>
+<p>a<strong>〽︎a</strong>a</p>
+<p>a<strong>🈂︎a</strong>a</p>
+<p>a<strong>🈷︎a</strong>a</p>
+<p>a<strong>㊗︎a</strong>a</p>
+<p>a<strong>㊙︎a</strong>a</p>
+<p>a<strong>a〰︎</strong>a</p>
+<p>a<strong>a〽︎</strong>a</p>
+<p>a<strong>a🈂︎</strong>a</p>
+<p>a<strong>a🈷︎</strong>a</p>
+<p>a<strong>a㊗︎</strong>a</p>
+<p>a<strong>a㊙︎</strong>a</p>
+<p>a<strong>🈯︎a</strong>a</p>
+<p>a<strong>a🈯︎</strong>a</p>
+<p>a<strong>⭕︎a</strong></p>
+<p>a<strong>a⭕︎</strong>a</p>
+<p>a<strong>❌︎a</strong>a</p>
+<p>a<strong>a❌︎</strong>a</p>"
+`;
+
 exports[`remark-cjk-friendly > ** around Kana/Han is converted to <strong> (MDX) 1`] = `
 "import {Fragment as _Fragment, jsx as _jsx, jsxs as _jsxs} from "react/jsx-runtime";
 function _createMdxContent(props) {
@@ -543,6 +660,103 @@ exports[`remark-cjk-friendly > ** around Korean is converted to <strong> 1`] = `
 <p><strong>(k)</strong>ᄏ</p>"
 `;
 
+exports[`remark-cjk-friendly > ** around default emoji presentation character is not converted to <strong> (MDX) (unless followed by text variation selector) 1`] = `
+"import {Fragment as _Fragment, jsx as _jsx, jsxs as _jsxs} from "react/jsx-runtime";
+function _createMdxContent(props) {
+  const _components = {
+    p: "p",
+    ...props.components
+  };
+  return _jsxs(_Fragment, {
+    children: [_jsx(_components.p, {
+      children: "a**🈯a**a"
+    }), "\\n", _jsx(_components.p, {
+      children: "a**a🈯**a"
+    }), "\\n", _jsx(_components.p, {
+      children: "a**⭕a**a"
+    }), "\\n", _jsx(_components.p, {
+      children: "a**a⭕**a"
+    }), "\\n", _jsx(_components.p, {
+      children: "a**❌a**a"
+    }), "\\n", _jsx(_components.p, {
+      children: "a**a❌**a"
+    }), "\\n", _jsx(_components.p, {
+      children: "a**🈯️a**a"
+    }), "\\n", _jsx(_components.p, {
+      children: "a**⭕️a**a"
+    }), "\\n", _jsx(_components.p, {
+      children: "a**❌️a**a"
+    })]
+  });
+}
+export default function MDXContent(props = {}) {
+  const {wrapper: MDXLayout} = props.components || ({});
+  return MDXLayout ? _jsx(MDXLayout, {
+    ...props,
+    children: _jsx(_createMdxContent, {
+      ...props
+    })
+  }) : _createMdxContent(props);
+}
+"
+`;
+
+exports[`remark-cjk-friendly > ** around default emoji presentation character is not converted to <strong> (unless followed by text variation selector) 1`] = `
+"<p>a**🈯a**a</p>
+<p>a**a🈯**a</p>
+<p>a**⭕a**a</p>
+<p>a**a⭕**a</p>
+<p>a**❌a**a</p>
+<p>a**a❌**a</p>
+<p>a**🈯️a**a</p>
+<p>a**⭕️a**a</p>
+<p>a**❌️a**a</p>"
+`;
+
+exports[`remark-cjk-friendly > ** around emoji presentation sequences is not converted to <strong> (MDX) 1`] = `
+"import {Fragment as _Fragment, jsx as _jsx, jsxs as _jsxs} from "react/jsx-runtime";
+function _createMdxContent(props) {
+  const _components = {
+    p: "p",
+    ...props.components
+  };
+  return _jsxs(_Fragment, {
+    children: [_jsx(_components.p, {
+      children: "a**〰️a**a"
+    }), "\\n", _jsx(_components.p, {
+      children: "a**〽️a**a"
+    }), "\\n", _jsx(_components.p, {
+      children: "a**🈂️a**a"
+    }), "\\n", _jsx(_components.p, {
+      children: "a**🈷️a**a"
+    }), "\\n", _jsx(_components.p, {
+      children: "a**㊗️a**a"
+    }), "\\n", _jsx(_components.p, {
+      children: "a**㊙️a**a"
+    })]
+  });
+}
+export default function MDXContent(props = {}) {
+  const {wrapper: MDXLayout} = props.components || ({});
+  return MDXLayout ? _jsx(MDXLayout, {
+    ...props,
+    children: _jsx(_createMdxContent, {
+      ...props
+    })
+  }) : _createMdxContent(props);
+}
+"
+`;
+
+exports[`remark-cjk-friendly > ** around emoji presentation sequences is not converted to <strong> 1`] = `
+"<p>a**〰️a**a</p>
+<p>a**〽️a**a</p>
+<p>a**🈂️a**a</p>
+<p>a**🈷️a**a</p>
+<p>a**㊗️a**a</p>
+<p>a**㊙️a**a</p>"
+`;
+
 exports[`remark-cjk-friendly > ** around pseudo-emoji (CJK symbols that are also unqualified-emoji) is converted to <strong> (MDX) 1`] = `
 "import {Fragment as _Fragment, jsx as _jsx, jsxs as _jsxs} from "react/jsx-runtime";
 function _createMdxContent(props) {
@@ -554,27 +768,51 @@ function _createMdxContent(props) {
   return _jsxs(_Fragment, {
     children: [_jsxs(_components.p, {
       children: ["a", _jsx(_components.strong, {
-        children: "〰"
+        children: "〰a"
       }), "a"]
     }), "\\n", _jsxs(_components.p, {
       children: ["a", _jsx(_components.strong, {
-        children: "〽"
+        children: "〽a"
       }), "a"]
     }), "\\n", _jsxs(_components.p, {
       children: ["a", _jsx(_components.strong, {
-        children: "🈂"
+        children: "🈂a"
       }), "a"]
     }), "\\n", _jsxs(_components.p, {
       children: ["a", _jsx(_components.strong, {
-        children: "🈷"
+        children: "🈷a"
       }), "a"]
     }), "\\n", _jsxs(_components.p, {
       children: ["a", _jsx(_components.strong, {
-        children: "㊗"
+        children: "㊗a"
       }), "a"]
     }), "\\n", _jsxs(_components.p, {
       children: ["a", _jsx(_components.strong, {
-        children: "㊙"
+        children: "㊙a"
+      }), "a"]
+    }), "\\n", _jsxs(_components.p, {
+      children: ["a", _jsx(_components.strong, {
+        children: "a〰"
+      }), "a"]
+    }), "\\n", _jsxs(_components.p, {
+      children: ["a", _jsx(_components.strong, {
+        children: "a〽"
+      }), "a"]
+    }), "\\n", _jsxs(_components.p, {
+      children: ["a", _jsx(_components.strong, {
+        children: "a🈂"
+      }), "a"]
+    }), "\\n", _jsxs(_components.p, {
+      children: ["a", _jsx(_components.strong, {
+        children: "a🈷"
+      }), "a"]
+    }), "\\n", _jsxs(_components.p, {
+      children: ["a", _jsx(_components.strong, {
+        children: "a㊗"
+      }), "a"]
+    }), "\\n", _jsxs(_components.p, {
+      children: ["a", _jsx(_components.strong, {
+        children: "a㊙"
       }), "a"]
     })]
   });
@@ -592,12 +830,18 @@ export default function MDXContent(props = {}) {
 `;
 
 exports[`remark-cjk-friendly > ** around pseudo-emoji (CJK symbols that are also unqualified-emoji) is converted to <strong> 1`] = `
-"<p>a<strong>〰</strong>a</p>
-<p>a<strong>〽</strong>a</p>
-<p>a<strong>🈂</strong>a</p>
-<p>a<strong>🈷</strong>a</p>
-<p>a<strong>㊗</strong>a</p>
-<p>a<strong>㊙</strong>a</p>"
+"<p>a<strong>〰a</strong>a</p>
+<p>a<strong>〽a</strong>a</p>
+<p>a<strong>🈂a</strong>a</p>
+<p>a<strong>🈷a</strong>a</p>
+<p>a<strong>㊗a</strong>a</p>
+<p>a<strong>㊙a</strong>a</p>
+<p>a<strong>a〰</strong>a</p>
+<p>a<strong>a〽</strong>a</p>
+<p>a<strong>a🈂</strong>a</p>
+<p>a<strong>a🈷</strong>a</p>
+<p>a<strong>a㊗</strong>a</p>
+<p>a<strong>a㊙</strong>a</p>"
 `;
 
 exports[`remark-cjk-friendly > Compatible with remark-gfm (1) 1`] = `

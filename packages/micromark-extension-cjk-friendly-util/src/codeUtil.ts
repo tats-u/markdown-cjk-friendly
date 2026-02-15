@@ -165,3 +165,27 @@ export function tryGetGenuineNextCode(
   }).codePointAt(0);
   return nextCandidate && nextCandidate >= 65_536 ? nextCandidate : code;
 }
+
+/**
+ * Try to get the [Unicode Code Point](https://www.unicode.org/glossary/#code_point) immediately after the next code point.
+ *
+ * @param nextCode the next code point. Should be greater than 65,535 if it represents a [Supplementary Character](https://www.unicode.org/glossary/#supplementary_character).
+ * @param nowPoint `this.now()` (`this` = `TokenizeContext`)
+ * @param sliceSerialize `this.sliceSerialize` (`this` = `TokenizeContext`)
+ * @returns the code point immediately after `nextCode`, or `null` if not found
+ */
+export function tryGetCodeAfterNext(
+  nextCode: Exclude<Code, null>,
+  nowPoint: Point,
+  sliceSerialize: TokenizeContext["sliceSerialize"],
+): Code {
+  const nextWidth = nextCode >= 65_536 ? 2 : 1;
+  const start = nowPoint._bufferIndex + nextWidth;
+  const buffer = sliceSerialize({
+    start: { ...nowPoint, _bufferIndex: start },
+    end: { ...nowPoint, _bufferIndex: start + 2 },
+  });
+  if (buffer.length === 0) return null;
+  const candidate = buffer.codePointAt(0);
+  return candidate !== undefined ? candidate : null;
+}

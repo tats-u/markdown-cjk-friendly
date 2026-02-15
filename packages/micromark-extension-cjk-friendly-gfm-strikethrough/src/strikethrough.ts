@@ -1,6 +1,7 @@
 import { ok as assert } from "devlop";
 import {
   classifyCharacter,
+  classifyFollowingCharacter,
   classifyPrecedingCharacter,
   isCjk,
   isCodeHighSurrogate,
@@ -9,6 +10,7 @@ import {
   isNonCjkPunctuation,
   isUnicodeWhitespace,
   TwoPreviousCode,
+  tryGetCodeAfterNext,
   tryGetGenuineNextCode,
   tryGetGenuinePreviousCode,
 } from "micromark-extension-cjk-friendly-util";
@@ -225,13 +227,21 @@ export function gfmStrikethroughCjkFriendly(
         : code;
 
       const after = classifyCharacter(next);
+      const afterPrimary =
+        next != null
+          ? classifyFollowingCharacter(
+              after,
+              () => tryGetCodeAfterNext(next, now(), sliceSerialize),
+              next,
+            )
+          : after;
 
       const beforeNonCjkPunctuation = isNonCjkPunctuation(beforePrimary);
       const beforeSpaceOrNonCjkPunctuation =
         beforeNonCjkPunctuation || isUnicodeWhitespace(beforePrimary);
-      const afterNonCjkPunctuation = isNonCjkPunctuation(after);
+      const afterNonCjkPunctuation = isNonCjkPunctuation(afterPrimary);
       const afterSpaceOrNonCjkPunctuation =
-        afterNonCjkPunctuation || isUnicodeWhitespace(after);
+        afterNonCjkPunctuation || isUnicodeWhitespace(afterPrimary);
       const beforeCjkOrIvs = isCjk(beforePrimary) || isIvs(before);
 
       token._open =
@@ -241,7 +251,7 @@ export function gfmStrikethroughCjkFriendly(
       token._close =
         !beforeSpaceOrNonCjkPunctuation ||
         (before === constants.attentionSideAfter &&
-          (afterSpaceOrNonCjkPunctuation || isCjk(after)));
+          (afterSpaceOrNonCjkPunctuation || isCjk(afterPrimary)));
       return ok(code);
     }
   }
