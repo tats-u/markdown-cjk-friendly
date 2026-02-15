@@ -1,9 +1,9 @@
 name: Regular CI
 on:
   push:
-      branches:
-        - "**"
-        - "!pr/*"
+    branches:
+      - main
+      - "nopr/*"
   pull_request:
 jobs:
   build:

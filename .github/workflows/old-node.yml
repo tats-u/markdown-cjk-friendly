@@ -1,9 +1,9 @@
 name: Regular CI (old Node.js)
 on:
   push:
-      branches:
-        - "**"
-        - "!pr/*"
+    branches:
+      - main
+      - "nopr/*"
   pull_request:
 jobs:
   build:
