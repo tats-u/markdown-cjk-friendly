@@ -1,5 +1,10 @@
 import { Bench, type TaskResult } from "tinybench";
-import { getRenderer, type MarkdownProcessorName } from "./markdownRenderer";
+import {
+  createSuperiorRendererFromPlugins,
+  getRenderer,
+  type MarkdownProcessorName,
+} from "./markdownRenderer";
+import type { LoadedPlugins } from "./pluginLoader";
 
 export interface ResultPerOne {
   /**
@@ -16,31 +21,36 @@ export type BenchResult = CompletedBenchResult | FailedBenchResult;
 
 export interface FailedBenchResult {
   success: false;
-  cjkFriendly: TaskResult["state"];
-  noCjkFriendly: TaskResult["state"];
+  superior: TaskResult["state"];
+  inferior: TaskResult["state"];
 }
 
 export interface CompletedBenchResult {
   success: true;
-  cjkFriendly: ResultPerOne;
-  noCjkFriendly: ResultPerOne;
+  superior: ResultPerOne;
+  inferior: ResultPerOne;
 }
 
 export async function runBench(
   src: string,
   isGfm: boolean,
   engine: MarkdownProcessorName,
+  plugins?: LoadedPlugins,
+  version?: string,
 ): Promise<BenchResult> {
   const bench = new Bench();
 
-  const cjkFriendlyRenderer = getRenderer(engine, true, isGfm);
-  const nonCJKFriendlyRenderer = getRenderer(engine, false, isGfm);
+  const superiorRenderer =
+    plugins && version
+      ? createSuperiorRendererFromPlugins(engine, isGfm, plugins, version)
+      : getRenderer(engine, true, isGfm);
+  const inferiorRenderer = getRenderer(engine, false, isGfm);
 
   bench.add("cjk-friendly", () => {
-    cjkFriendlyRenderer(src);
+    superiorRenderer(src);
   });
   bench.add("no-cjk-friendly", () => {
-    nonCJKFriendlyRenderer(src);
+    inferiorRenderer(src);
   });
 
   await bench.run();
@@ -48,30 +58,30 @@ export async function runBench(
     Iterator.from(bench.tasks).map((t) => [t.name, t.result]),
   );
   // biome-ignore lint/style/noNonNullAssertion: key always exists
-  const cjkFriendlyResult = resultsMap.get("cjk-friendly")!;
+  const superiorResult = resultsMap.get("cjk-friendly")!;
   // biome-ignore lint/style/noNonNullAssertion: key always exists
-  const noCjkFriendlyResult = resultsMap.get("no-cjk-friendly")!;
+  const inferiorResult = resultsMap.get("no-cjk-friendly")!;
 
   if (
-    cjkFriendlyResult.state !== "completed" ||
-    noCjkFriendlyResult.state !== "completed"
+    superiorResult.state !== "completed" ||
+    inferiorResult.state !== "completed"
   ) {
     return {
       success: false,
-      cjkFriendly: cjkFriendlyResult.state,
-      noCjkFriendly: noCjkFriendlyResult.state,
+      superior: superiorResult.state,
+      inferior: inferiorResult.state,
     };
   }
 
   return {
     success: true,
-    cjkFriendly: {
-      mean: cjkFriendlyResult.latency.mean,
-      sem: cjkFriendlyResult.latency.sem,
+    superior: {
+      mean: superiorResult.latency.mean,
+      sem: superiorResult.latency.sem,
     },
-    noCjkFriendly: {
-      mean: noCjkFriendlyResult.latency.mean,
-      sem: noCjkFriendlyResult.latency.sem,
+    inferior: {
+      mean: inferiorResult.latency.mean,
+      sem: inferiorResult.latency.sem,
     },
   };
 }

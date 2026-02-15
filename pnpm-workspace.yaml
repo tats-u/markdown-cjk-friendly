@@ -12,7 +12,7 @@ catalog:
   astro: ^5.17.1
   devlop: ^1.1.0
   get-east-asian-width: ^1.4.0
-  markdown-it: ^14.1.0
+  markdown-it: ^14.1.1
   micromark: ^4.0.2
   micromark-extension-gfm: ^3.0.0
   micromark-util-chunked: ^2.0.1

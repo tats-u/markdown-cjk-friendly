@@ -3,7 +3,7 @@ import { getRenderer, type MarkdownProcessorName } from "./markdownRenderer";
 export interface MarkdownConvertSettings {
   engine: MarkdownProcessorName;
   gfm: boolean;
-  cjkFriendly: boolean;
+  superior: boolean;
 }
 
 export type MarkdownConvertResult = { src: string } & (
@@ -19,11 +19,11 @@ export type MarkdownConvertResult = { src: string } & (
 
 function convert(
   source: string,
-  cjkFriendly: boolean,
+  superior: boolean,
   gfm: boolean,
   engine: MarkdownProcessorName,
 ): void {
-  const renderer = getRenderer(engine, cjkFriendly, gfm);
+  const renderer = getRenderer(engine, superior, gfm);
   self.postMessage({
     src: source,
     success: true,
@@ -35,8 +35,8 @@ self.addEventListener(
   "message",
   async (e: MessageEvent<[string, MarkdownConvertSettings]>) => {
     try {
-      const [source, { cjkFriendly, gfm, engine }] = e.data;
-      convert(source, cjkFriendly, gfm, engine);
+      const [source, { superior, gfm, engine }] = e.data;
+      convert(source, superior, gfm, engine);
     } catch (err) {
       self.postMessage({
         src: e.data[0],
