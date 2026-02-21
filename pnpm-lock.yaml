@@ -6,72 +6,9 @@ settings:
 
 catalogs:
   default:
-    '@astrojs/mdx':
-      specifier: ^4.3.13
-      version: 4.3.13
-    '@mdx-js/mdx':
-      specifier: ^3.1.1
-      version: 3.1.1
-    '@types/markdown-it':
-      specifier: ^14.1.2
-      version: 14.1.2
     '@types/node':
       specifier: ^24.10.4
-      version: 24.10.4
-    astro:
-      specifier: ^5.17.1
-      version: 5.17.3
-    devlop:
-      specifier: ^1.1.0
-      version: 1.1.0
-    get-east-asian-width:
-      specifier: ^1.4.0
-      version: 1.5.0
-    markdown-it:
-      specifier: ^14.1.1
-      version: 14.1.1
-    micromark:
-      specifier: ^4.0.2
-      version: 4.0.2
-    micromark-extension-gfm:
-      specifier: ^3.0.0
-      version: 3.0.0
-    micromark-util-chunked:
-      specifier: ^2.0.1
-      version: 2.0.1
-    micromark-util-resolve-all:
-      specifier: ^2.0.1
-      version: 2.0.1
-    micromark-util-symbol:
-      specifier: ^2.0.1
-      version: 2.0.1
-    micromark-util-types:
-      specifier: ^2.0.2
-      version: 2.0.2
-    npm-run-all2:
-      specifier: ^8.0.4
-      version: 8.0.4
-    rehype-stringify:
-      specifier: ^10.0.1
-      version: 10.0.1
-    remark:
-      specifier: ^15.0.1
-      version: 15.0.1
-    remark-gfm:
-      specifier: ^4.0.1
-      version: 4.0.1
-    remark-parse:
-      specifier: ^11.0.0
-      version: 11.0.0
-    remark-rehype:
-      specifier: ^11.1.2
-      version: 11.1.2
-    tsdown:
-      specifier: ^0.18.1
-      version: 0.18.4
-    unified:
-      specifier: ^11.0.5
-      version: 11.0.5
+      version: 24.10.13
 
 overrides:
   compression@1.8.0>on-headers: 1.1.0
@@ -3903,9 +3840,6 @@ packages:
   '@types/react-router@5.1.20':
     resolution: {integrity: sha512-jGjmu/ZqS7FjSH6owMcD5qpq19+1RS9DeVRqfl1FeBMxTDQAGwlMWOcs52NDoXaNKyG3d1cYQFMs9rCrb88o9Q==}
 
-  '@types/react@19.2.11':
-    resolution: {integrity: sha512-tORuanb01iEzWvMGVGv2ZDhYZVeRMrw453DCSAIn/5yvcSVnMoUMTyf33nQJLahYEnv9xqrTNbgz4qY5EfSh0g==}
-
   '@types/react@19.2.14':
     resolution: {integrity: sha512-ilcTH/UniCkMdtexkoCN0bI7pMcJDvmQFPvuPvmEaYA/NSfFTAgdUSLAoVjaRJm7+6PvcM+q1zYOwS4wTYMF9w==}
 
@@ -4211,8 +4145,8 @@ packages:
   ajv@6.12.6:
     resolution: {integrity: sha512-j3fVLgvTo527anyYyJOGTYJbG+vnnQYvE0m5mmkc1TK+nxAppkCLMIL0aZ4dblVCNoGShhm+kzE4ZUykBoMg4g==}
 
-  ajv@8.17.1:
-    resolution: {integrity: sha512-B/gBuNg5SiMTrPkC+A2+cW0RszwxYmn6VYxB/inlBStS5nx6xHIt/ehKRhIMhqusl7a8LjQoZnjCs5vhwxOQ1g==}
+  ajv@8.18.0:
+    resolution: {integrity: sha512-PlXPeEWMXMZ7sPYOHqmDyCJzcfNrUr3fGNKtezX14ykXOEIvyK81d+qydx89KY5O71FKMPaQ2vBfBFI5NHR63A==}
 
   algoliasearch-helper@3.27.0:
     resolution: {integrity: sha512-eNYchRerbsvk2doHOMfdS1/B6Tm70oGtu8mzQlrNzbCeQ8p1MjCW8t/BL6iZ5PD+cL5NNMgTMyMnmiXZ1sgmNw==}
@@ -11511,7 +11445,7 @@ snapshots:
 
   '@docusaurus/react-loadable@6.0.0(react@19.2.3)':
     dependencies:
-      '@types/react': 19.2.7
+      '@types/react': 19.2.14
       react: 19.2.3
 
   '@docusaurus/theme-classic@3.9.2(@docusaurus/faster@3.9.2(@docusaurus/types@3.9.2(@swc/core@1.15.8(@swc/helpers@0.5.18))(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(@swc/helpers@0.5.18))(@rspack/core@1.7.0(@swc/helpers@0.5.18))(@swc/core@1.15.8(@swc/helpers@0.5.18))(@types/react@19.2.14)(lightningcss@1.30.2)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(typescript@5.9.3)':
@@ -11569,7 +11503,7 @@ snapshots:
       '@docusaurus/utils': 3.9.2(@swc/core@1.15.8(@swc/helpers@0.5.18))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
       '@docusaurus/utils-common': 3.9.2(@swc/core@1.15.8(@swc/helpers@0.5.18))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
       '@types/history': 4.7.11
-      '@types/react': 19.2.11
+      '@types/react': 19.2.14
       '@types/react-router-config': 5.0.11
       clsx: 2.1.1
       parse-numeric-range: 1.3.0
@@ -13414,11 +13348,7 @@ snapshots:
   '@types/react-router@5.1.20':
     dependencies:
       '@types/history': 4.7.11
-      '@types/react': 19.2.7
-
-  '@types/react@19.2.11':
-    dependencies:
-      csstype: 3.2.3
+      '@types/react': 19.2.14
 
   '@types/react@19.2.14':
     dependencies:
@@ -13753,17 +13683,17 @@ snapshots:
       '@opentelemetry/api': 1.9.0
       zod: 4.3.6
 
-  ajv-formats@2.1.1(ajv@8.17.1):
+  ajv-formats@2.1.1(ajv@8.18.0):
     optionalDependencies:
-      ajv: 8.17.1
+      ajv: 8.18.0
 
   ajv-keywords@3.5.2(ajv@6.12.6):
     dependencies:
       ajv: 6.12.6
 
-  ajv-keywords@5.1.0(ajv@8.17.1):
+  ajv-keywords@5.1.0(ajv@8.18.0):
     dependencies:
-      ajv: 8.17.1
+      ajv: 8.18.0
       fast-deep-equal: 3.1.3
 
   ajv@6.12.6:
@@ -13773,7 +13703,7 @@ snapshots:
       json-schema-traverse: 0.4.1
       uri-js: 4.4.1
 
-  ajv@8.17.1:
+  ajv@8.18.0:
     dependencies:
       fast-deep-equal: 3.1.3
       fast-uri: 3.1.0
@@ -18845,9 +18775,9 @@ snapshots:
   schema-utils@4.3.3:
     dependencies:
       '@types/json-schema': 7.0.15
-      ajv: 8.17.1
-      ajv-formats: 2.1.1(ajv@8.17.1)
-      ajv-keywords: 5.1.0(ajv@8.17.1)
+      ajv: 8.18.0
+      ajv-formats: 2.1.1(ajv@8.18.0)
+      ajv-keywords: 5.1.0(ajv@8.18.0)
 
   scule@1.3.0: {}
 
