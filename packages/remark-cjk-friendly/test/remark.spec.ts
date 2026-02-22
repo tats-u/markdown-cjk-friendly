@@ -128,6 +128,54 @@ describe("remark-cjk-friendly", () => {
     expect(result).toMatchSnapshot();
   });
 
+  it("** around CJK text presentation sequences is converted to <strong>", async () => {
+    const result = await md2Html(
+      await readFile(
+        new URL(
+          "../../../testcases/text-presentation-sequence.md",
+          import.meta.url,
+        ),
+        "utf-8",
+      ),
+    );
+    for (const line of result.split(/\r?\n/)) {
+      expect(line).not.toMatch(/\*\*[^\n]+\*\*/);
+    }
+    expect(result).toMatchSnapshot();
+  });
+
+  it("** around emoji presentation sequences is not converted to <strong>", async () => {
+    const result = await md2Html(
+      await readFile(
+        new URL(
+          "../../../testcases/emoji-presentation-sequence.md",
+          import.meta.url,
+        ),
+        "utf-8",
+      ),
+    );
+    for (const line of result.split(/\r?\n/)) {
+      expect(line).toMatch(/^$|\*\*[^\n]+\*\*/);
+    }
+    expect(result).toMatchSnapshot();
+  });
+
+  it("** around default emoji presentation character is not converted to <strong> (unless followed by text variation selector)", async () => {
+    const result = await md2Html(
+      await readFile(
+        new URL(
+          "../../../testcases/emoji-default-presentation.md",
+          import.meta.url,
+        ),
+        "utf-8",
+      ),
+    );
+    for (const line of result.split(/\r?\n/)) {
+      expect(line).toMatch(/^$|\*\*[^\n]+\*\*/);
+    }
+    expect(result).toMatchSnapshot();
+  });
+
   it("Example Markdown in README", async () => {
     const readme = await readFile(
       new URL("../README.md", import.meta.url),
@@ -229,6 +277,54 @@ describe("remark-cjk-friendly", () => {
     );
     for (const line of result.split(/\r?\n/)) {
       expect(line).not.toContain("__");
+    }
+    expect(result).toMatchSnapshot();
+  });
+
+  it("** around CJK text presentation sequences is converted to <strong> (MDX)", async () => {
+    const result = await mdx2React(
+      await readFile(
+        new URL(
+          "../../../testcases/text-presentation-sequence.md",
+          import.meta.url,
+        ),
+        "utf-8",
+      ),
+    );
+    for (const line of result.split(/\r?\n/)) {
+      expect(line).not.toMatch(/\*\*[^\n]+\*\*/);
+    }
+    expect(result).toMatchSnapshot();
+  });
+
+  it("** around emoji presentation sequences is not converted to <strong> (MDX)", async () => {
+    const result = await mdx2React(
+      await readFile(
+        new URL(
+          "../../../testcases/emoji-presentation-sequence.md",
+          import.meta.url,
+        ),
+        "utf-8",
+      ),
+    );
+    for (const line of result.split(/\r?\n/)) {
+      expect(line).not.toContain(".strong,");
+    }
+    expect(result).toMatchSnapshot();
+  });
+
+  it("** around default emoji presentation character is not converted to <strong> (MDX) (unless followed by text variation selector)", async () => {
+    const result = await mdx2React(
+      await readFile(
+        new URL(
+          "../../../testcases/emoji-default-presentation.md",
+          import.meta.url,
+        ),
+        "utf-8",
+      ),
+    );
+    for (const line of result.split(/\r?\n/)) {
+      expect(line).not.toContain(".strong,");
     }
     expect(result).toMatchSnapshot();
   });

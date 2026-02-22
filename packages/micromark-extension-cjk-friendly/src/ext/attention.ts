@@ -1,6 +1,7 @@
 import { ok as assert } from "devlop";
 import {
   classifyCharacter,
+  classifyFollowingCharacter,
   classifyPrecedingCharacter,
   isCjk,
   isCjkOrIvs,
@@ -10,6 +11,7 @@ import {
   isSpaceOrPunctuation,
   isUnicodeWhitespace,
   TwoPreviousCode,
+  tryGetCodeAfterNext,
   tryGetGenuineNextCode,
   tryGetGenuinePreviousCode,
 } from "micromark-extension-cjk-friendly-util";
@@ -277,6 +279,14 @@ function tokenizeAttention(
       : code;
 
     const after = classifyCharacter(next);
+    const afterPrimary =
+      next != null
+        ? classifyFollowingCharacter(
+            after,
+            () => tryGetCodeAfterNext(next, now(), sliceSerialize),
+            next,
+          )
+        : after;
 
     // Always populated by defaults.
     assert(attentionMarkers, "expected `attentionMarkers` to be populated");
@@ -284,9 +294,9 @@ function tokenizeAttention(
     const beforeNonCjkPunctuation = isNonCjkPunctuation(beforePrimary);
     const beforeSpaceOrNonCjkPunctuation =
       beforeNonCjkPunctuation || isUnicodeWhitespace(beforePrimary);
-    const afterNonCjkPunctuation = isNonCjkPunctuation(after);
+    const afterNonCjkPunctuation = isNonCjkPunctuation(afterPrimary);
     const afterSpaceOrNonCjkPunctuation =
-      afterNonCjkPunctuation || isUnicodeWhitespace(after);
+      afterNonCjkPunctuation || isUnicodeWhitespace(afterPrimary);
     const beforeCjkOrIvs = isCjkOrIvs(beforePrimary);
 
     const open =
@@ -297,7 +307,7 @@ function tokenizeAttention(
     const close =
       !beforeSpaceOrNonCjkPunctuation ||
       (beforeNonCjkPunctuation &&
-        (afterSpaceOrNonCjkPunctuation || isCjk(after))) ||
+        (afterSpaceOrNonCjkPunctuation || isCjk(afterPrimary))) ||
       attentionMarkers.includes(previous);
 
     token._open = Boolean(
@@ -308,7 +318,7 @@ function tokenizeAttention(
     token._close = Boolean(
       marker === codes.asterisk
         ? close
-        : close && (isSpaceOrPunctuation(after) || !open),
+        : close && (isSpaceOrPunctuation(afterPrimary) || !open),
     );
     return ok(code);
   }

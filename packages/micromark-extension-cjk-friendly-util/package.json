@@ -1,6 +1,6 @@
 {
   "name": "micromark-extension-cjk-friendly-util",
-  "version": "3.0.1",
+  "version": "4.0.0-rc.0",
   "type": "module",
   "exports": {
     ".": {
