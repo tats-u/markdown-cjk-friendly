@@ -227,7 +227,10 @@ export default function markedCjkFriendly(): MarkedExtension {
             // should be reclassified as "Both" (Left or Right)
             let isCjkAdjacent = false;
             if (rMatch[1] || rMatch[2] || rMatch[3] || rMatch[4]) {
-              const charBefore = [...rMatch[0]][0];
+              const charBefore = String.fromCodePoint(
+                // biome-ignore lint/style/noNonNullAssertion: match[0] is always non-empty
+                rMatch[0].codePointAt(0)!,
+              );
               const afterPos = rMatch.index + rMatch[0].length;
               const charAfter =
                 afterPos < clippedMaskedSrc.length
@@ -259,7 +262,9 @@ export default function markedCjkFriendly(): MarkedExtension {
 
             // Remove extra characters. *a*** -> *a*
             rLength = Math.min(rLength, rLength + delimTotal + midDelimTotal);
-            const lastCharLength = [...rMatch[0]][0].length;
+            // biome-ignore lint/style/noNonNullAssertion: match[0] is always non-empty
+            const firstCp = rMatch[0].codePointAt(0)!;
+            const lastCharLength = firstCp > 0xffff ? 2 : 1;
             const raw = src.slice(
               0,
               lLength + rMatch.index + lastCharLength + rLength,

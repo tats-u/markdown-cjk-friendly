@@ -73,10 +73,7 @@ describe("marked-cjk-friendly", () => {
   it("process underscores around CJK punctuation", async () => {
     const result = md2Html(
       await readFile(
-        new URL(
-          "../../../testcases/underscore-cjk-punct.md",
-          import.meta.url,
-        ),
+        new URL("../../../testcases/underscore-cjk-punct.md", import.meta.url),
         "utf-8",
       ),
     );
