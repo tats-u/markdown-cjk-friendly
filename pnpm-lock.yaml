@@ -221,6 +221,12 @@ importers:
         specifier: 'catalog:'
         version: 14.1.1
 
+  packages/marked-cjk-friendly:
+    devDependencies:
+      marked:
+        specifier: ^17.0.0
+        version: 17.0.3
+
   packages/micromark-extension-cjk-friendly:
     dependencies:
       devlop:
@@ -6331,6 +6337,11 @@ packages:
     engines: {node: '>= 20'}
     hasBin: true
 
+  marked@17.0.3:
+    resolution: {integrity: sha512-jt1v2ObpyOKR8p4XaUJVk3YWRJ5n+i4+rjQopxvV32rSndTJXvIzuUdWWIy/1pFQMkQmvTXawzDNqOH/CUmx6A==}
+    engines: {node: '>= 20'}
+    hasBin: true
+
   math-intrinsics@1.1.0:
     resolution: {integrity: sha512-/IXtbwEk5HTPyEwyKX6hGkYXxM9nbj64B+ilVJnC/R6B0pH5G4V3b0pVbL7DBj4tkhBAppbQUlf6F6Xl9LHu1g==}
     engines: {node: '>= 0.4'}
@@ -11508,7 +11519,7 @@ snapshots:
 
   '@docusaurus/react-loadable@6.0.0(react@19.2.3)':
     dependencies:
-      '@types/react': 19.2.7
+      '@types/react': 19.2.14
       react: 19.2.3
 
   '@docusaurus/theme-classic@3.9.2(@docusaurus/faster@3.9.2(@docusaurus/types@3.9.2(@swc/core@1.15.8(@swc/helpers@0.5.18))(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(@swc/helpers@0.5.18))(@rspack/core@1.7.0(@swc/helpers@0.5.18))(@swc/core@1.15.8(@swc/helpers@0.5.18))(@types/react@19.2.14)(lightningcss@1.30.2)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(typescript@5.9.3)':
@@ -16269,6 +16280,8 @@ snapshots:
   markdown-table@3.0.4: {}
 
   marked@16.4.2: {}
+
+  marked@17.0.3: {}
 
   math-intrinsics@1.1.0: {}
 
