@@ -1,7 +1,7 @@
 import * as path from "node:path";
+import { defineConfig } from "@rspress/core";
 import remarkCjkFriendly from "remark-cjk-friendly";
 import remarkGfmStrikethroughCjkFriendly from "remark-cjk-friendly-gfm-strikethrough";
-import { defineConfig } from "rspress/config";
 
 export default defineConfig({
   root: path.join(__dirname, "docs"),

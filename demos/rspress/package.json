@@ -7,9 +7,9 @@
     "test:watch": "vitest watch"
   },
   "dependencies": {
+    "@rspress/core": "^2.0.0",
     "remark-cjk-friendly": "workspace:^",
-    "remark-cjk-friendly-gfm-strikethrough": "workspace:^",
-    "rspress": "^1.47.0"
+    "remark-cjk-friendly-gfm-strikethrough": "workspace:^"
   },
   "devDependencies": {
     "@types/node": "catalog:"
