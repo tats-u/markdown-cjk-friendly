@@ -23,8 +23,8 @@ export default defineConfig({
     search: false,
   },
   markdown: {
-    mdxRs: false, // IMPORTANT! This is mandatory for Rspress!
-    // Once you turn off `mdxRs`, you can add `remarkPlugins` and `rehypePlugins` like other remark-based site generators.
+    // mdxRs: false, // IMPORTANT! This is mandatory for Rspress 1.x! (you don't need to set this in Rspress 2.x because it is removed in 2.x)
+    // Once you turn off `mdxRs` in 1.x or upgrade Rspress to 2.x, you can add `remarkPlugins` and `rehypePlugins` like other remark-based site generators.
     remarkPlugins: [remarkCjkFriendly, remarkGfmStrikethroughCjkFriendly],
   },
 });
