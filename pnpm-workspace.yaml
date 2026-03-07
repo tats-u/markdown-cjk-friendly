@@ -29,6 +29,9 @@ catalog:
   unified: ^11.0.5
 
 minimumReleaseAge: 1440
+trustPolicy: no-downgrade
+trustPolicyIgnoreAfter: 43200
+blockExoticSubdeps: true
 
 onlyBuiltDependencies:
   - '@parcel/watcher'
