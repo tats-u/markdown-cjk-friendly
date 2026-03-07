@@ -1,0 +1,59 @@
+{
+  "name": "marked-cjk-friendly",
+  "version": "0.1.0",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist",
+    "LICENSE",
+    "README.md"
+  ],
+  "repository": {
+    "url": "https://github.com/tats-u/markdown-cjk-friendly"
+  },
+  "license": "MIT",
+  "author": "Tatsunori Uchino <tats.u@live.jp> (https://github.com/tats-u)",
+  "bugs": "https://github.com/tats-u/markdown-cjk-friendly/issues",
+  "keywords": [
+    "marked",
+    "marked-extension",
+    "markdown",
+    "japanese",
+    "chinese",
+    "korean",
+    "cjk"
+  ],
+  "description": "Marked.js extension to make Markdown emphasis (`**`) in CommonMark more friendly with Chinese, Japanese, and Korean (CJK)",
+  "sideEffects": false,
+  "scripts": {
+    "build": "tsdown",
+    "build:lib": "tsdown",
+    "dev": "tsdown --watch --sourcemaps",
+    "dev:lib": "tsdown --watch --sourcemaps",
+    "test": "vitest run",
+    "test:lib": "vitest run",
+    "test:up": "vitest -u",
+    "test:watch": "vitest watch",
+    "test:lib:watch": "vitest watch",
+    "bench": "vitest bench --run",
+    "bench:watch": "vitest bench",
+    "lint:type": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "marked": "^17.0.0"
+  },
+  "peerDependencies": {
+    "marked": ">=15.0.0"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
