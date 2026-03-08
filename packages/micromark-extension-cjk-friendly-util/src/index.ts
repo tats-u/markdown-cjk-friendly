@@ -9,6 +9,7 @@ export {
 } from "./categoryUtil.js";
 export {
   classifyCharacter,
+  classifyFollowingCharacter,
   classifyPrecedingCharacter,
   constantsEx,
 } from "./classifyCharacter.js";
@@ -16,6 +17,7 @@ export {
   isCodeHighSurrogate,
   isCodeLowSurrogate,
   TwoPreviousCode,
+  tryGetCodeAfterNext,
   tryGetCodeTwoBefore,
   tryGetGenuineNextCode,
   tryGetGenuinePreviousCode,

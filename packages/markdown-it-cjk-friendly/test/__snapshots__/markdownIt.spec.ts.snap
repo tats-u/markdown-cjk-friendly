@@ -1,5 +1,27 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`markdown-it-cjk-friendly > ** around CJK text presentation sequences is converted to <strong> 1`] = `
+"<p>a<strong>〰︎a</strong>a</p>
+<p>a<strong>〽︎a</strong>a</p>
+<p>a<strong>🈂︎a</strong>a</p>
+<p>a<strong>🈷︎a</strong>a</p>
+<p>a<strong>㊗︎a</strong>a</p>
+<p>a<strong>㊙︎a</strong>a</p>
+<p>a<strong>a〰︎</strong>a</p>
+<p>a<strong>a〽︎</strong>a</p>
+<p>a<strong>a🈂︎</strong>a</p>
+<p>a<strong>a🈷︎</strong>a</p>
+<p>a<strong>a㊗︎</strong>a</p>
+<p>a<strong>a㊙︎</strong>a</p>
+<p>a<strong>🈯︎a</strong>a</p>
+<p>a<strong>a🈯︎</strong>a</p>
+<p>a<strong>⭕︎a</strong></p>
+<p>a<strong>a⭕︎</strong>a</p>
+<p>a<strong>❌︎a</strong>a</p>
+<p>a<strong>a❌︎</strong>a</p>
+"
+`;
+
 exports[`markdown-it-cjk-friendly > ** around Kana/Han is converted to <strong> 1`] = `
 "<p>これは<strong>私のやりたかったこと。</strong>だからするの。</p>
 <p><strong><a href="./product-foo">製品ほげ</a></strong>と<strong><a href="./product-bar">製品ふが</a></strong>をお試しください</p>
@@ -99,13 +121,58 @@ exports[`markdown-it-cjk-friendly > ** around Korean is converted to <strong> 1`
 "
 `;
 
+exports[`markdown-it-cjk-friendly > ** around default emoji presentation character is not converted to <strong> (unless followed by text variation selector) 1`] = `
+"<p>a**🈯a**a</p>
+<p>a**a🈯**a</p>
+<p>a**⭕a**a</p>
+<p>a**a⭕**a</p>
+<p>a**❌a**a</p>
+<p>a**a❌**a</p>
+<p>a**🈯️a**a</p>
+<p>a**⭕️a**a</p>
+<p>a**❌️a**a</p>
+"
+`;
+
+exports[`markdown-it-cjk-friendly > ** around emoji presentation sequences is not converted to <strong> 1`] = `
+"<p>a**〰️a**a</p>
+<p>a**〽️a**a</p>
+<p>a**🈂️a**a</p>
+<p>a**🈷️a**a</p>
+<p>a**㊗️a**a</p>
+<p>a**㊙️a**a</p>
+"
+`;
+
 exports[`markdown-it-cjk-friendly > ** around pseudo-emoji (CJK symbols that are also unqualified-emoji) is converted to <strong> 1`] = `
-"<p>a<strong>〰</strong>a</p>
-<p>a<strong>〽</strong>a</p>
-<p>a<strong>🈂</strong>a</p>
-<p>a<strong>🈷</strong>a</p>
-<p>a<strong>㊗</strong>a</p>
-<p>a<strong>㊙</strong>a</p>
+"<p>a<strong>〰a</strong>a</p>
+<p>a<strong>〽a</strong>a</p>
+<p>a<strong>🈂a</strong>a</p>
+<p>a<strong>🈷a</strong>a</p>
+<p>a<strong>㊗a</strong>a</p>
+<p>a<strong>㊙a</strong>a</p>
+<p>a<strong>a〰</strong>a</p>
+<p>a<strong>a〽</strong>a</p>
+<p>a<strong>a🈂</strong>a</p>
+<p>a<strong>a🈷</strong>a</p>
+<p>a<strong>a㊗</strong>a</p>
+<p>a<strong>a㊙</strong>a</p>
+"
+`;
+
+exports[`markdown-it-cjk-friendly > ** around pseudo-emoji (CJK symbols that are also unqualified-emoji) is converted to <strong> 2`] = `
+"<p>a<strong>〰a</strong>a</p>
+<p>a<strong>〽a</strong>a</p>
+<p>a<strong>🈂a</strong>a</p>
+<p>a<strong>🈷a</strong>a</p>
+<p>a<strong>㊗a</strong>a</p>
+<p>a<strong>㊙a</strong>a</p>
+<p>a<strong>a〰</strong>a</p>
+<p>a<strong>a〽</strong>a</p>
+<p>a<strong>a🈂</strong>a</p>
+<p>a<strong>a🈷</strong>a</p>
+<p>a<strong>a㊗</strong>a</p>
+<p>a<strong>a㊙</strong>a</p>
 "
 `;
 
