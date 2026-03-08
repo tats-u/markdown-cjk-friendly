@@ -46,6 +46,8 @@ overrides:
   refractor@3.6.0>prismjs: ^1.30.0
   serve-handler@6.1.6>minimatch: ^3.1.3
   vite@5.4.21>esbuild: ^0.25.0
+  # Node 18 has been discarded since 7.x but not affected because 6.x is only used by example sites
+  serialize-javascript@^6: ^7.0.4
 
 publicHoistPattern:
   - decode-named-character-reference
