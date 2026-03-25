@@ -19,6 +19,21 @@ export default defineConfig({
         ),
       },
     },
+    plugins: [
+      {
+        name: "solid-icons-prerender-fix",
+        // solid-icons ships .jsx files that Node.js can't handle during prerendering
+        configEnvironment(name, _options) {
+          if (name === "prerender") {
+            return {
+              resolve: {
+                noExternal: true,
+              },
+            };
+          }
+        },
+      },
+    ],
   },
   base: process?.env.WEBSITE_BASE_PATH || undefined,
 });
