@@ -158,7 +158,7 @@ This modification of the specification does not affect the other languages than 
 
 - [Docusaurus](./demos/docusaurus/docusaurus.config.js)
 - [Astro](./demos/astro/astro.config.mjs)
-- [Rspress](./demos/rspress/rspress.config.ts)
+- [Rspress](./demos/rspress/rspress.config.ts) (built-in and enabled by default since [v2.0.5](https://github.com/web-infra-dev/rspress/releases/tag/v2.0.5))
 
 ### `markdown-it` (using `markdown-it-cjk-friendly`)
 
