@@ -3,6 +3,12 @@ packages:
   - integration_tests
   - demos/*
   - website
+
+auditConfig:
+  ignoreGhsas:
+    # Both come from VitePress 1.6, which is just an example.
+    - GHSA-4w7w-66w2-5vf9 # Vite 5 is too old (<6.4.2)
+    - GHSA-67mh-4wv8-2f99 # esbuild 0.21 is too old (<0.25.0)
 blockExoticSubdeps: true
 
 catalog:
@@ -11,7 +17,7 @@ catalog:
   '@rspress/core>remark-cjk-friendly': 'workspace:'
   '@rspress/core>remark-cjk-friendly-gfm-strikethrough': 'workspace:'
   '@types/markdown-it': ^14.1.2
-  '@types/node': ^24.10.4
+  '@types/node': ^24.12.2
   astro: ^6.0.8
   devlop: ^1.1.0
   get-east-asian-width: ^1.4.0
@@ -31,12 +37,6 @@ catalog:
   tsdown: ^0.18.1
   unified: ^11.0.5
 dedupePeers: true
-
-auditConfig:
-  ignoreGhsas:
-    # Both come from VitePress 1.6, which is just an example.
-    - GHSA-4w7w-66w2-5vf9 # Vite 5 is too old (<6.4.2)
-    - GHSA-67mh-4wv8-2f99 # esbuild 0.21 is too old (<0.25.0)
 
 minimumReleaseAge: 1440
 
