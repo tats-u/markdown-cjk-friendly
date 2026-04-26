@@ -1,5 +1,6 @@
 import clsx from "clsx";
 import { diffChars } from "diff";
+import DOMPurify from "dompurify";
 import { gt } from "semver";
 import { OcMarkgithub2 } from "solid-icons/oc";
 import {
@@ -404,9 +405,22 @@ const MarkdownBody = ({ markdown }: { markdown: Accessor<string> }) => (
       </pre>
     }
   >
-    <div class={styles.markdownBody} innerHTML={markdown()} />
+    {/* TODO: Prefer Element.setHTML() over innerHTML + DOMPurify once support is broad enough, including Safari. */}
+    {/* biome-ignore lint/security/noDangerouslySetInnerHtml: HTML is sanitized with DOMPurify immediately before injection */}
+    <div
+      class={styles.markdownBody}
+      innerHTML={sanitizeRenderedHtml(markdown())}
+    />
   </Show>
 );
+
+function sanitizeRenderedHtml(html: string) {
+  return DOMPurify.sanitize(html, {
+    USE_PROFILES: {
+      html: true,
+    },
+  });
+}
 
 const MarkdownDiff = (props: {
   superior: Accessor<string>;
@@ -417,9 +431,9 @@ const MarkdownDiff = (props: {
   let containerRef: HTMLDivElement | undefined;
   const diff = createMemo(() => {
     const templateSuperior = document.createElement("template");
-    templateSuperior.innerHTML = props.superior();
+    templateSuperior.innerHTML = sanitizeRenderedHtml(props.superior());
     const templateInferior = document.createElement("template");
-    templateInferior.innerHTML = props.inferior();
+    templateInferior.innerHTML = sanitizeRenderedHtml(props.inferior());
 
     return visualDomDiff(templateInferior.content, templateSuperior.content);
   });
