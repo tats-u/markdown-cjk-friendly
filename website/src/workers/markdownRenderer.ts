@@ -4,6 +4,8 @@ import {
 } from "markdown-exit";
 import markdownIt from "markdown-it";
 import markdownItCjkFriendlyPlugin from "markdown-it-cjk-friendly";
+import { Marked } from "marked";
+import markedCjkFriendly from "marked-cjk-friendly";
 import { micromark } from "micromark";
 import { cjkFriendlyExtension } from "micromark-extension-cjk-friendly";
 import { gfmStrikethroughCjkFriendly } from "micromark-extension-cjk-friendly-gfm-strikethrough";
@@ -11,11 +13,13 @@ import { gfm, gfmHtml } from "micromark-extension-gfm";
 import type { LoadedPlugins } from "./pluginLoader";
 
 export type MarkdownProcessorName =
+  | "marked"
   | "micromark"
   | "markdown-it"
   | "markdown-exit";
 
 const markdownProcessorNames = new Set<MarkdownProcessorName>([
+  "marked",
   "micromark",
   "markdown-it",
   "markdown-exit",
@@ -53,6 +57,16 @@ type RendererStore = {
 };
 
 const rendererStore: RendererStore = {
+  marked: {
+    superior: {
+      gfm: undefined,
+      plain: undefined,
+    },
+    inferior: {
+      gfm: undefined,
+      plain: undefined,
+    },
+  },
   micromark: {
     superior: {
       gfm: undefined,
@@ -98,6 +112,17 @@ function createMarkdownItRenderer(
   return (source: string) => md.render(source);
 }
 
+function createMarkedRenderer(
+  superior: boolean,
+  gfm: boolean,
+): MarkdownToHTMLRenderer {
+  const md = new Marked({ gfm });
+  if (superior) {
+    md.use(markedCjkFriendly());
+  }
+  return (source: string) => md.parse(source) as string;
+}
+
 function createMicromarkRenderer(
   superior: boolean,
   gfm: boolean,
@@ -135,6 +160,9 @@ function createRenderer(
   superior: boolean,
   gfm: boolean,
 ): MarkdownToHTMLRenderer {
+  if (engine === "marked") {
+    return createMarkedRenderer(superior, gfm);
+  }
   if (engine === "markdown-it") {
     return createMarkdownItRenderer(superior, gfm);
   }
@@ -176,7 +204,11 @@ export function createSuperiorRendererFromPlugins(
 
   let renderer: MarkdownToHTMLRenderer;
 
-  if (
+  if (normalizedEngine === "marked" && plugins.type === "marked") {
+    const md = new Marked({ gfm: isGfm });
+    md.use(plugins.plugin());
+    renderer = (source: string) => md.parse(source) as string;
+  } else if (
     (normalizedEngine === "markdown-it" ||
       normalizedEngine === "markdown-exit") &&
     plugins.type === "markdown-it"

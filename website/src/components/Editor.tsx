@@ -56,6 +56,8 @@ let bundledVersionName = "";
 
 function toCjkFriendlyPackageName(engine: MarkdownEngineFamily) {
   switch (engine) {
+    case "marked":
+      return "marked-cjk-friendly";
     case "markdown-it":
       return "markdown-it-cjk-friendly";
     case "micromark":
@@ -239,6 +241,7 @@ const Editor = (props: { bundledVersionName: string }) => {
     if (engine) {
       const engineLower = engine.toLowerCase();
       switch (engineLower as MarkdownProcessorName) {
+        case "marked":
         case "markdown-it":
         case "micromark":
         case "markdown-exit":
@@ -319,6 +322,7 @@ const Editor = (props: { bundledVersionName: string }) => {
             value={engine()}
             disabled={isBenchmarking()}
           >
+            <option value="marked">marked</option>
             <option value="micromark">micromark</option>
             <option value="markdown-it">markdown-it</option>
             <option value="markdown-exit">markdown-exit</option>

@@ -396,6 +396,12 @@ importers:
       markdown-it-cjk-friendly:
         specifier: workspace:^
         version: link:../packages/markdown-it-cjk-friendly
+      marked:
+        specifier: ^17.0.0
+        version: 17.0.3
+      marked-cjk-friendly:
+        specifier: workspace:^
+        version: link:../packages/marked-cjk-friendly
       micromark:
         specifier: 'catalog:'
         version: 4.0.2
