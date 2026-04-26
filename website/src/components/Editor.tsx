@@ -406,7 +406,6 @@ const MarkdownBody = ({ markdown }: { markdown: Accessor<string> }) => (
     }
   >
     {/* TODO: Prefer Element.setHTML() over innerHTML + DOMPurify once support is broad enough, including Safari. */}
-    {/* biome-ignore lint/security/noDangerouslySetInnerHtml: HTML is sanitized with DOMPurify immediately before injection */}
     <div
       class={styles.markdownBody}
       innerHTML={sanitizeRenderedHtml(markdown())}
@@ -416,9 +415,47 @@ const MarkdownBody = ({ markdown }: { markdown: Accessor<string> }) => (
 
 function sanitizeRenderedHtml(html: string) {
   return DOMPurify.sanitize(html, {
-    USE_PROFILES: {
-      html: true,
-    },
+    ALLOWED_TAGS: [
+      "a",
+      "blockquote",
+      "br",
+      "code",
+      "del",
+      "em",
+      "h1",
+      "h2",
+      "h3",
+      "h4",
+      "h5",
+      "h6",
+      "hr",
+      "img",
+      "input",
+      "li",
+      "ol",
+      "p",
+      "pre",
+      "strong",
+      "table",
+      "tbody",
+      "td",
+      "th",
+      "thead",
+      "tr",
+      "ul",
+    ],
+    ALLOWED_ATTR: [
+      "align",
+      "alt",
+      "checked",
+      "class",
+      "disabled",
+      "href",
+      "src",
+      "start",
+      "title",
+      "type",
+    ],
   });
 }
 
