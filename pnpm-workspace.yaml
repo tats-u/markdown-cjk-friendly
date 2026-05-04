@@ -40,13 +40,13 @@ dedupePeers: true
 
 minimumReleaseAge: 1440
 
-onlyBuiltDependencies:
-  - '@parcel/watcher'
-  - '@swc/core'
-  - core-js
-  - core-js-pure
-  - esbuild
-  - sharp
+allowBuilds:
+  '@parcel/watcher': true
+  '@swc/core': true
+  core-js: true
+  core-js-pure: true
+  esbuild: true
+  sharp: true
 
 overrides:
   compression@1.8.0>on-headers: 1.1.0
