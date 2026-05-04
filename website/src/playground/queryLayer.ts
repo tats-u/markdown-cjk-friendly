@@ -68,6 +68,7 @@ export function usePlaygroundVersionList(
     queryKey: ["playground", "versions", engineFamily()],
     queryFn: () => fetchPackageVersions(engineFamily()),
     staleTime: 1000 * 60 * 5,
+    retry: false,
   }));
 
   const candidates = createMemo(() => {
