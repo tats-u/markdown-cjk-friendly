@@ -20,6 +20,7 @@
   - [commonmarker](https://github.com/gjtorikian/commonmarker)
   - [GitLab Flavored Markdown (gitlab-glfm-markdown gem)](https://gitlab.com/gitlab-org/ruby/gems/gitlab-glfm-markdown) ([dingus](https://gitlab-org.gitlab.io/ruby/gems/gitlab-glfm-markdown/))
 - [goldmark-cjk-friendly](https://github.com/tats-u/goldmark-cjk-friendly) (Official port for [goldmark](https://github.com/yuin/goldmark))
+- [Markdig](https://github.com/xoofx/markdig)
 
 ## Planned / <span lang="ja">予定</span> / <span lang="zh-Hans-CN">未来的改进</span> / <span lang="ko">예정</span>
 
@@ -157,7 +158,7 @@ This modification of the specification does not affect the other languages than 
 
 - [Docusaurus](./demos/docusaurus/docusaurus.config.js)
 - [Astro](./demos/astro/astro.config.mjs)
-- [Rspress](./demos/rspress/rspress.config.ts)
+- [Rspress](./demos/rspress/rspress.config.ts) (built-in and enabled by default since [v2.0.5](https://github.com/web-infra-dev/rspress/releases/tag/v2.0.5))
 
 ### `markdown-it` (using `markdown-it-cjk-friendly`)
 

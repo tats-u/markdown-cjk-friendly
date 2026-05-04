@@ -30,6 +30,17 @@ export type LoadedPlugins =
   | MarkdownItPlugins
   | MicromarkPlugins;
 
+export function shouldLoadVersionedPlugins(
+  version: string,
+  bundledVersionName: string,
+) {
+  return version !== "" && version !== bundledVersionName;
+}
+
+export function getPluginErrorMessage(error: unknown) {
+  return error instanceof Error ? error.message : "Failed to load plugin";
+}
+
 const moduleCache = new Map<string, unknown>();
 
 function resolveExport(mod: unknown, key: string): unknown {

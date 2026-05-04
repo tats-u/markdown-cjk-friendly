@@ -17,6 +17,7 @@
 - The East Asian Width of unassigned characters (e.g. U+3097) is undefined. You should follow the [guideline by Unicode](https://www.unicode.org/reports/tr11/#Unassigned). Note that U+2FFFE–U+2FFFF and U+2FFFE–U+2FFFF are Noncharacter, not Reserved (Unassigned). The East Asian Width of Noncharacter does not seem to be mentioned in the specifications of the East Asian Width property. Therefore, you can treat them as `W` to join two product terms for U+20000–U+2FFFD and U+30000–U+3FFFD.
 - The Unicode category of Ideographic Variation Selector and Standard Variation Selector is `Mn`, not `P` or `S`. It means there is no [Unicode punctuation character](https://spec.commonmark.org/0.31.2/#unicode-punctuation-character) or [non-CJK punctuation character](#non-cjk-punctuation-character) that is also Standard Variation Selector or Ideographic Variation Selector.
 - You do not have to care about the existence of continuous Standard Variation Selector or Ideographic Variation Selector, or Ideographic Variation Selector preceded by `*`. It is up to you implementers to decide how to treat them.
+- The character two positions back is rarely referenced in real-world documents. Prioritize optimization in most cases where the character is not needed, even if it means adding some overhead to its retrieval. It should not be retrieved unless it is actually needed.
 
 ## Emphasis Marker Start/End Conditions
 

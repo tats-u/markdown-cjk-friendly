@@ -1,6 +1,6 @@
 ---
 // biome-ignore lint/correctness/noUnusedImports: https://biomejs.dev/internals/language-support/#linting-html-ish-languages
-import Editor from "../components/Editor";
+import Playground from "../components/Playground";
 
 // biome-ignore lint/correctness/noUnusedVariables: https://biomejs.dev/internals/language-support/#linting-html-ish-languages
 const bundledVersionName =
@@ -19,7 +19,7 @@ const bundledVersionName =
 	<body>
     <div class="root">
       <h1>CJK Friendly Emphasis Demo</h1>
-      <Editor client:load bundledVersionName={bundledVersionName} />
+      <Playground client:only="solid-js" bundledVersionName={bundledVersionName} />
     </div>
 	</body>
   <style is:global>

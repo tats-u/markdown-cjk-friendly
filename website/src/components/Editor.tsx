@@ -7,7 +7,6 @@ import {
   type Accessor,
   createEffect,
   createMemo,
-  createResource,
   createSignal,
   createUniqueId,
   For,
@@ -15,20 +14,23 @@ import {
   Show,
 } from "solid-js";
 import { visualDomDiff } from "visual-dom-diff";
-import type { BenchResult, ResultPerOne } from "../workers/bench";
+import {
+  usePlaygroundPluginQuery,
+  usePlaygroundVersionList,
+} from "../playground/queryLayer";
+import type { ResultPerOne } from "../workers/bench";
+import type { MarkdownBenchWorkerResult } from "../workers/benchmarker.worker";
 import BenchmarkWorker from "../workers/benchmarker.worker?worker";
 import {
   createSuperiorRendererFromPlugins,
   getRenderer,
+  type MarkdownProcessorName,
 } from "../workers/markdownRenderer";
 import {
-  type LoadedPlugins,
-  loadPlugins,
+  getPluginErrorMessage,
   type MarkdownEngineFamily,
 } from "../workers/pluginLoader";
 import styles from "./Editor.module.css";
-
-type MarkdownProcessorName = MarkdownEngineFamily | "markdown-exit";
 
 const [markdown, setMarkdown] = createSignal("");
 const [gfmEnabled, setGfmEnabled] = createSignal(true);
@@ -49,22 +51,6 @@ const [inferiorBenchFailure, setInferiorBenchFailure] = createSignal<
 >(null);
 const [isBenchmarking, setIsBenchmarking] = createSignal(false);
 const [libVersionSuperior, setLibVersionSuperior] = createSignal("");
-const [libVersionCandidatesSuperior, setLibVersionCandidatesSuperior] =
-  createSignal<string[]>([]);
-const [pluginLoadError, setPluginLoadError] = createSignal<string | null>(null);
-
-let bundledVersionName = "";
-
-function toCjkFriendlyPackageName(engine: MarkdownEngineFamily) {
-  switch (engine) {
-    case "marked":
-      return "marked-cjk-friendly";
-    case "markdown-it":
-      return "markdown-it-cjk-friendly";
-    case "micromark":
-      return "micromark-extension-cjk-friendly";
-  }
-}
 
 function markdownEngineFamily(): MarkdownEngineFamily {
   const eg = engine();
@@ -75,28 +61,63 @@ function markdownEngineFamily(): MarkdownEngineFamily {
   return eg;
 }
 
-interface NPMVersionsInfo {
-  tags: {
-    next: string;
-    latest: string;
-  } & Record<string, string>;
-  versions: string[];
-}
-
 function resetBenchResult() {
   setSuperiorTime(undefined);
   setInferiorTime(undefined);
 }
 
+function getRenderErrorMessage(error: unknown) {
+  return error instanceof Error ? error.message : "Failed to render preview";
+}
+
+type SuperiorPreviewState =
+  | {
+      kind: "placeholder";
+    }
+  | {
+      kind: "loading";
+      displayedHtml: string | undefined;
+      isFetching: boolean;
+    }
+  | {
+      kind: "ready";
+      html: string;
+      isFetching: boolean;
+    }
+  | {
+      kind: "plugin-error";
+      message: string;
+    }
+  | {
+      kind: "render-error";
+      message: string;
+    };
+
+function getRetainedPreviewHTML(previous: SuperiorPreviewState | undefined) {
+  if (!previous) {
+    return undefined;
+  }
+  switch (previous.kind) {
+    case "loading":
+      return previous.displayedHtml;
+    case "ready":
+      return previous.html;
+    default:
+      return undefined;
+  }
+}
+
 const Editor = (props: { bundledVersionName: string }) => {
-  bundledVersionName = props.bundledVersionName;
   const gfmCheckBoxId = createUniqueId();
   const [textareaMarkdown, setTextareaMarkdown] = createSignal("");
+  const versionList = usePlaygroundVersionList(
+    () => markdownEngineFamily(),
+    () => props.bundledVersionName,
+  );
 
   const u8Encoder = new TextEncoder();
 
   let textareaRef: HTMLTextAreaElement | undefined;
-  const fetchedVersionsInfo = new Map<MarkdownProcessorName, NPMVersionsInfo>();
 
   function handleCopyPermalink() {
     const markdown = textareaMarkdown();
@@ -118,17 +139,14 @@ const Editor = (props: { bundledVersionName: string }) => {
       useU16 = true;
       shortestB64Buffer = u16Buffer;
     }
-    // @ts-expect-error Not supported by Node.js
     const markdownBase64 = shortestB64Buffer.toBase64
-      ? // @ts-expect-error Not supported by Node.js
-        (shortestB64Buffer.toBase64({
+      ? shortestB64Buffer.toBase64({
           alphabet: "base64url",
           omitPadding: true,
-        }) as string)
+        })
       : "";
     const url = new URL(window.location.href);
     if (
-      // @ts-expect-error Not supported by Node.js
       !shortestB64Buffer.toBase64 ||
       percentEncodedMarkdown.length <= markdownBase64.length
     ) {
@@ -147,7 +165,7 @@ const Editor = (props: { bundledVersionName: string }) => {
     url.searchParams.set("gfm", Number(gfmEnabled()).toString());
     url.searchParams.set("engine", engine());
     const ver = libVersionSuperior();
-    if (ver && ver !== bundledVersionName) {
+    if (ver && ver !== props.bundledVersionName) {
       url.searchParams.set("ver", ver);
     } else {
       url.searchParams.delete("ver");
@@ -157,31 +175,51 @@ const Editor = (props: { bundledVersionName: string }) => {
   }
 
   async function handleBenchmark() {
+    let benchWorker: Worker | undefined;
     try {
       setIsBenchmarking(true);
       setSuperiorBenchFailure(null);
       setInferiorBenchFailure(null);
       setSuperiorTime(undefined);
       setInferiorTime(undefined);
-      const benchWorker = new BenchmarkWorker();
-      const result = await (new Promise((resolve) => {
-        benchWorker.postMessage([
-          markdown(),
-          {
-            gfm: gfmEnabled(),
-            engine: engine(),
-            version: libVersionSuperior(),
-            bundledVersionName,
-          },
-        ]);
-        benchWorker.addEventListener("message", (e) => {
-          resolve(e.data);
-        });
-      }) as Promise<BenchResult>);
-      benchWorker.terminate();
+      benchWorker = new BenchmarkWorker();
+      const result = await new Promise<MarkdownBenchWorkerResult>(
+        (resolve, reject) => {
+          const handleMessage = (
+            e: MessageEvent<MarkdownBenchWorkerResult>,
+          ) => {
+            cleanup();
+            resolve(e.data);
+          };
+          const handleError = (e: ErrorEvent) => {
+            cleanup();
+            reject(
+              e.error ?? new Error(e.message || "Benchmark worker failed"),
+            );
+          };
+          const cleanup = () => {
+            benchWorker?.removeEventListener("message", handleMessage);
+            benchWorker?.removeEventListener("error", handleError);
+          };
+          benchWorker?.addEventListener("message", handleMessage);
+          benchWorker?.addEventListener("error", handleError);
+          benchWorker?.postMessage([
+            markdown(),
+            {
+              gfm: gfmEnabled(),
+              engine: engine(),
+              version: libVersionSuperior(),
+              bundledVersionName: props.bundledVersionName,
+            },
+          ]);
+        },
+      );
       if (result.success) {
         setSuperiorTime(result.superior);
         setInferiorTime(result.inferior);
+      } else if ("error" in result) {
+        setSuperiorBenchFailure(result.error);
+        setInferiorBenchFailure(result.error);
       } else {
         setSuperiorBenchFailure(
           result.superior !== "completed" ? result.superior : null,
@@ -190,7 +228,13 @@ const Editor = (props: { bundledVersionName: string }) => {
           result.inferior !== "completed" ? result.inferior : null,
         );
       }
+    } catch (error) {
+      const message =
+        error instanceof Error ? error.message : "Benchmark worker failed";
+      setSuperiorBenchFailure(message);
+      setInferiorBenchFailure(message);
     } finally {
+      benchWorker?.terminate();
       setIsBenchmarking(false);
     }
   }
@@ -206,15 +250,13 @@ const Editor = (props: { bundledVersionName: string }) => {
       setTextareaMarkdown(decodeURIComponent(src));
     } else if (b64u8) {
       const decoded = new TextDecoder().decode(
-        // @ts-expect-error Not supported by Node.js
-        Uint8Array.fromBase64(b64u8, { alphabet: "base64url" }) as Uint8Array,
+        Uint8Array.fromBase64(b64u8, { alphabet: "base64url" }),
       );
       setMarkdown(decoded);
       setTextareaMarkdown(decoded);
     } else if (b64u16) {
       const decoded = new TextDecoder("utf-16le").decode(
-        // @ts-expect-error Not supported by Node.js
-        Uint8Array.fromBase64(b64u16, { alphabet: "base64url" }) as Uint8Array,
+        Uint8Array.fromBase64(b64u16, { alphabet: "base64url" }),
       );
       setMarkdown(decoded);
       setTextareaMarkdown(decoded);
@@ -258,43 +300,15 @@ const Editor = (props: { bundledVersionName: string }) => {
       handleBenchmark();
     }
   });
-  createEffect(async () => {
-    const engineFamily = markdownEngineFamily();
-
-    let packageVersionsInfo = fetchedVersionsInfo.get(engineFamily);
-    if (!packageVersionsInfo) {
-      setLibVersionCandidatesSuperior([]);
-
-      try {
-        packageVersionsInfo = (await (
-          await fetch(
-            `https://data.jsdelivr.com/v1/package/npm/${toCjkFriendlyPackageName(engineFamily)}`,
-          )
-        ).json()) as NPMVersionsInfo;
-        fetchedVersionsInfo.set(engineFamily, packageVersionsInfo);
-      } catch {
-        setLibVersionSuperior(bundledVersionName);
-        setLibVersionCandidatesSuperior([bundledVersionName]);
-        return;
-      }
+  createEffect(() => {
+    if (versionList.isPending()) {
+      return;
     }
-    const latestVersion = packageVersionsInfo.tags.latest;
-    let nextVersion: string | null = packageVersionsInfo.tags.next;
-    const candidates = [latestVersion];
-    if (gt(nextVersion, latestVersion)) {
-      candidates.push(nextVersion);
-    } else {
-      nextVersion = null;
-    }
-    candidates.push(bundledVersionName);
-    candidates.push(
-      ...packageVersionsInfo.versions.filter(
-        (v) => v !== latestVersion && v !== nextVersion,
-      ),
-    );
-    setLibVersionCandidatesSuperior(candidates);
-    setLibVersionSuperior((v) =>
-      v === bundledVersionName ? bundledVersionName : latestVersion,
+    const preferredVersion = versionList.preferredVersion();
+    setLibVersionSuperior((value) =>
+      value === props.bundledVersionName
+        ? props.bundledVersionName
+        : preferredVersion,
     );
   });
 
@@ -323,10 +337,10 @@ const Editor = (props: { bundledVersionName: string }) => {
             value={engine()}
             disabled={isBenchmarking()}
           >
-            <option value="marked">marked</option>
             <option value="micromark">micromark</option>
             <option value="markdown-it">markdown-it</option>
             <option value="markdown-exit">markdown-exit</option>
+            <option value="marked">marked</option>
           </select>
           <select
             onChange={(e) => {
@@ -334,15 +348,13 @@ const Editor = (props: { bundledVersionName: string }) => {
               resetBenchResult();
             }}
             value={libVersionSuperior()}
-            disabled={
-              isBenchmarking() || libVersionCandidatesSuperior().length <= 1
-            }
+            disabled={isBenchmarking() || versionList.candidates().length <= 1}
           >
             <Show
-              when={libVersionCandidatesSuperior().length > 0}
+              when={versionList.candidates().length > 0}
               fallback={<option value={""}>Loading…</option>}
             >
-              <For each={libVersionCandidatesSuperior()}>
+              <For each={versionList.candidates()}>
                 {(version) => <option value={version}>{version}</option>}
               </For>
             </Show>
@@ -391,7 +403,7 @@ const Editor = (props: { bundledVersionName: string }) => {
           }}
         />
       </div>
-      <Preview />
+      <Preview bundledVersionName={props.bundledVersionName} />
     </div>
   );
 };
@@ -590,62 +602,110 @@ function formatMeanAndSEM(result: ResultPerOne) {
   return `${formatTime(result.mean)}±${formatTime(result.sem)}`;
 }
 
-const Preview = () => {
+const Preview = (props: { bundledVersionName: string }) => {
   const diffCheckBoxId = createUniqueId();
+  const pluginsQuery = usePlaygroundPluginQuery(
+    () => markdownEngineFamily(),
+    () => libVersionSuperior(),
+    () => props.bundledVersionName,
+  );
 
-  const [plugins] = createResource(
-    () => ({
-      version: libVersionSuperior(),
-      engineFamily: markdownEngineFamily(),
-    }),
-    async (source): Promise<LoadedPlugins | undefined> => {
-      if (!source.version) return undefined;
+  const superiorPreview = createMemo(
+    (previous?: SuperiorPreviewState): SuperiorPreviewState => {
+      const retainedHtml = getRetainedPreviewHTML(previous);
+      const markdownValue = markdown();
+      if (markdownValue === "") {
+        return { kind: "placeholder" };
+      }
+      const gfmValue = gfmEnabled();
+      const engineValue = engine();
+      const version = libVersionSuperior();
+      if (!version) {
+        return {
+          kind: "loading",
+          displayedHtml: retainedHtml,
+          isFetching: false,
+        };
+      }
+      if (version === props.bundledVersionName) {
+        try {
+          const renderer = getRenderer(engineValue, true, gfmValue);
+          return {
+            kind: "ready",
+            html: renderer(markdownValue),
+            isFetching: false,
+          };
+        } catch (error) {
+          return {
+            kind: "render-error",
+            message: getRenderErrorMessage(error),
+          };
+        }
+      }
+      if (pluginsQuery.error) {
+        return {
+          kind: "plugin-error",
+          message: getPluginErrorMessage(pluginsQuery.error),
+        };
+      }
+      const loadedPlugins = pluginsQuery.data;
+      if (!loadedPlugins) {
+        return {
+          kind: "loading",
+          displayedHtml: retainedHtml,
+          isFetching: pluginsQuery.isFetching,
+        };
+      }
       try {
-        setPluginLoadError(null);
-        const result = await loadPlugins(
-          source.engineFamily as MarkdownEngineFamily,
-          source.version,
-          bundledVersionName,
+        const renderer = createSuperiorRendererFromPlugins(
+          engineValue,
+          gfmValue,
+          loadedPlugins,
+          version,
         );
-        return result;
-      } catch (e) {
-        setPluginLoadError(
-          e instanceof Error ? e.message : "Failed to load plugin",
-        );
-        return undefined;
+        return {
+          kind: "ready",
+          html: renderer(markdownValue),
+          isFetching: pluginsQuery.isFetching,
+        };
+      } catch (error) {
+        return {
+          kind: "render-error",
+          message: getRenderErrorMessage(error),
+        };
       }
     },
   );
-
   const superiorHTML = createMemo(() => {
-    const markdownValue = markdown();
-    const gfmValue = gfmEnabled();
-    const engineValue = engine();
-    if (markdownValue === "") {
-      return "";
+    const preview = superiorPreview();
+    switch (preview.kind) {
+      case "placeholder":
+        return "";
+      case "loading":
+        return preview.displayedHtml;
+      case "ready":
+        return preview.html;
+      default:
+        return undefined;
     }
-    const loadedPlugins = plugins();
-    if (plugins.loading || !loadedPlugins) {
-      return undefined;
-    }
-    const version = libVersionSuperior();
-    try {
-      if (version === bundledVersionName) {
-        const renderer = getRenderer(engineValue, true, gfmValue);
-        return renderer(markdownValue);
-      }
-      const renderer = createSuperiorRendererFromPlugins(
-        engineValue,
-        gfmValue,
-        loadedPlugins,
-        version,
-      );
-      return renderer(markdownValue);
-    } catch (e) {
-      setPluginLoadError(
-        e instanceof Error ? e.message : "Failed to load plugin",
-      );
-      return "";
+  });
+  const pluginErrorMessage = createMemo(() => {
+    const preview = superiorPreview();
+    return preview.kind === "plugin-error" ? preview.message : null;
+  });
+  const renderErrorMessage = createMemo(() => {
+    const preview = superiorPreview();
+    return preview.kind === "render-error" ? preview.message : null;
+  });
+  const isPreviewFetching = createMemo(() => {
+    const preview = superiorPreview();
+    switch (preview.kind) {
+      case "loading":
+        return preview.displayedHtml !== undefined;
+      case "ready":
+        return preview.isFetching;
+      default:
+        return false;
     }
   });
   const inferiorHTML = createMemo(() => {
@@ -684,90 +744,98 @@ const Preview = () => {
         </div>
       </div>
       <Show
-        when={pluginLoadError() === null}
-        fallback={<p>Error loading plugin: {pluginLoadError()}</p>}
+        when={pluginErrorMessage() === null}
+        fallback={<p>Error loading plugin: {pluginErrorMessage()}</p>}
       >
         <Show
-          when={superiorHTML() !== undefined}
-          fallback={
-            <Show
-              when={markdown() !== ""}
-              fallback={<p>Converted HTML is displayed here.</p>}
-            >
-              <p>Loading plugin…</p>
-            </Show>
-          }
+          when={renderErrorMessage() === null}
+          fallback={<p>Error rendering preview: {renderErrorMessage()}</p>}
         >
+          <Show when={isPreviewFetching()}>
+            <p>Updating plugin…</p>
+          </Show>
           <Show
-            when={superiorHTML() !== ""}
-            fallback={<p>Converted HTML is displayed here.</p>}
+            when={superiorHTML() !== undefined}
+            fallback={
+              <Show
+                when={markdown() !== ""}
+                fallback={<p>Converted HTML is displayed here.</p>}
+              >
+                <p>Loading plugin…</p>
+              </Show>
+            }
           >
             <Show
-              when={!showDiff()}
-              fallback={
-                <Show
-                  when={!showSource()}
-                  fallback={
-                    <MarkdownSourceDiff
+              when={superiorHTML() !== ""}
+              fallback={<p>Converted HTML is displayed here.</p>}
+            >
+              <Show
+                when={!showDiff()}
+                fallback={
+                  <Show
+                    when={!showSource()}
+                    fallback={
+                      <MarkdownSourceDiff
+                        superior={() => superiorHTML() as string}
+                        inferior={() => inferiorHTML()}
+                        superiorTime={superiorTime}
+                        inferiorTime={inferiorTime}
+                      />
+                    }
+                  >
+                    <MarkdownDiff
                       superior={() => superiorHTML() as string}
                       inferior={() => inferiorHTML()}
                       superiorTime={superiorTime}
                       inferiorTime={inferiorTime}
                     />
-                  }
-                >
-                  <MarkdownDiff
-                    superior={() => superiorHTML() as string}
-                    inferior={() => inferiorHTML()}
-                    superiorTime={superiorTime}
-                    inferiorTime={inferiorTime}
-                  />
-                </Show>
-              }
-            >
-              <p>
-                With this specification
-                <Show
-                  when={superiorBenchFailure() === null}
-                  fallback={` (bench ${superiorBenchFailure()})`}
-                >
-                  <Show when={superiorTime() !== undefined}>
-                    {" "}
-                    {/** biome-ignore lint/style/noNonNullAssertion: when above */}
-                    <ShowTime result={() => superiorTime()!} />
                   </Show>
-                </Show>
-                :
-              </p>
-              <MarkdownBody markdown={() => superiorHTML() as string} />
-              <Show
-                when={superiorHTML() !== inferiorHTML()}
-                fallback={
-                  <p>
-                    The output is identical even without this specification.
-                    <Show when={inferiorTime() !== undefined}>
-                      {" "}
-                      {/** biome-ignore lint/style/noNonNullAssertion: when above */}
-                      <ShowTime result={() => inferiorTime()!} />
-                    </Show>
-                  </p>
                 }
               >
                 <p>
-                  Without this specification
+                  With this specification
                   <Show
-                    when={inferiorBenchFailure() === null}
-                    fallback={` (bench ${inferiorBenchFailure()})`}
+                    when={superiorBenchFailure() === null}
+                    fallback={` (bench ${superiorBenchFailure()})`}
                   >
-                    <Show when={inferiorTime() !== undefined}>
+                    <Show when={superiorTime() !== undefined}>
                       {" "}
                       {/** biome-ignore lint/style/noNonNullAssertion: when above */}
-                      <ShowTime result={() => inferiorTime()!} />
+                      <ShowTime result={() => superiorTime()!} />
                     </Show>
                   </Show>
                   :
                 </p>
-                <MarkdownBody markdown={() => inferiorHTML()} />
+                <MarkdownBody markdown={() => superiorHTML() as string} />
+                <Show
+                  when={superiorHTML() !== inferiorHTML()}
+                  fallback={
+                    <p>
+                      The output is identical even without this specification.
+                      <Show when={inferiorTime() !== undefined}>
+                        {" "}
+                        {/** biome-ignore lint/style/noNonNullAssertion: when above */}
+                        <ShowTime result={() => inferiorTime()!} />
+                      </Show>
+                    </p>
+                  }
+                >
+                  <p>
+                    Without this specification
+                    <Show
+                      when={inferiorBenchFailure() === null}
+                      fallback={` (bench ${inferiorBenchFailure()})`}
+                    >
+                      <Show when={inferiorTime() !== undefined}>
+                        {" "}
+                        {/** biome-ignore lint/style/noNonNullAssertion: when above */}
+                        <ShowTime result={() => inferiorTime()!} />
+                      </Show>
+                    </Show>
+                    :
+                  </p>
+                  <MarkdownBody markdown={() => inferiorHTML()} />
+                </Show>
               </Show>
             </Show>
           </Show>
