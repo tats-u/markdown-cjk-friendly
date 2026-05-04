@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "@astrojs/solid-js": "^6.0.1",
+    "@tanstack/solid-query": "^5.100.8",
     "astro": "catalog:",
     "clsx": "^2.1.1",
     "diff": "^8.0.3",

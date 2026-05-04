@@ -375,6 +375,9 @@ importers:
       '@astrojs/solid-js':
         specifier: ^6.0.1
         version: 6.0.1(@types/node@24.12.2)(jiti@2.6.1)(lightningcss@1.32.0)(sass-embedded@1.96.0)(sass@1.96.0)(solid-js@1.9.11)(terser@5.44.1)
+      '@tanstack/solid-query':
+        specifier: ^5.100.8
+        version: 5.100.8(solid-js@1.9.11)
       astro:
         specifier: 'catalog:'
         version: 6.1.8(@azure/identity@4.13.0)(@types/node@24.12.2)(jiti@2.6.1)(lightningcss@1.32.0)(rollup@4.59.0)(sass-embedded@1.96.0)(sass@1.96.0)(terser@5.44.1)(typescript@5.9.3)
@@ -3518,6 +3521,14 @@ packages:
   '@szmarczak/http-timer@5.0.1':
     resolution: {integrity: sha512-+PmQX0PiAYPMeVYe237LJAYvOMYW1j2rH5YROyS3b4CTVJum34HfRvKvAzozHAQG0TnHNdUfY9nCeUyRAs//cw==}
     engines: {node: '>=14.16'}
+
+  '@tanstack/query-core@5.100.8':
+    resolution: {integrity: sha512-ceYwSFOqjPwET5TA6IOYxzxlGc0ekyH/gfOtWkP0PX43rzX9bxW48Iuw8KAduKCToi4rJAQ6nRy2kAe8gszdmg==}
+
+  '@tanstack/solid-query@5.100.8':
+    resolution: {integrity: sha512-P147zn3rTcGZNxBDsBfHujBU/NaNv/m7XUa19Iqe+qrNBkcgt2MU0x5B0O2KinpY0SaxktvHYzPNmKiO7UrsZQ==}
+    peerDependencies:
+      solid-js: ^1.6.0
 
   '@tybys/wasm-util@0.10.1':
     resolution: {integrity: sha512-9tTaPJLSiejZKx+Bmog4uSubteqTvFrVrURwkmHixBo0G4seD0zUxp98E1DzUBJxLQ3NPwXrGKDiVjwx/DpPsg==}
@@ -12489,6 +12500,13 @@ snapshots:
     dependencies:
       defer-to-connect: 2.0.1
 
+  '@tanstack/query-core@5.100.8': {}
+
+  '@tanstack/solid-query@5.100.8(solid-js@1.9.11)':
+    dependencies:
+      '@tanstack/query-core': 5.100.8
+      solid-js: 1.9.11
+
   '@tybys/wasm-util@0.10.1':
     dependencies:
       tslib: 2.8.1
@@ -18407,7 +18425,7 @@ snapshots:
 
   vitefu@1.1.3(vite@7.3.2):
     optionalDependencies:
-      vite: 7.3.2(@types/node@24.12.2)(jiti@2.6.1)(lightningcss@1.32.0)(sass-embedded@1.96.0)(sass@1.96.0)(terser@5.44.1)
+      vite: 7.3.2(@types/node@25.6.0)(jiti@2.6.1)(lightningcss@1.32.0)(sass-embedded@1.96.0)(sass@1.96.0)(terser@5.44.1)
 
   vitepress@1.6.4(@algolia/client-search@5.46.2)(@types/node@25.6.0)(axios@1.15.0)(lightningcss@1.32.0)(nprogress@0.2.0)(postcss@8.5.9)(react-dom@18.3.1)(react@18.3.1)(sass-embedded@1.96.0)(sass@1.96.0)(search-insights@2.17.3)(terser@5.44.1)(typescript@5.9.3):
     dependencies:
