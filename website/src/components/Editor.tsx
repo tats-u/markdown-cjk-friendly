@@ -1,7 +1,6 @@
 import clsx from "clsx";
 import { diffChars } from "diff";
 import DOMPurify from "dompurify";
-import { gt } from "semver";
 import { OcMarkgithub2 } from "solid-icons/oc";
 import {
   type Accessor,
