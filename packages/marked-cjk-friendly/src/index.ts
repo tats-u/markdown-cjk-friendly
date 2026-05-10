@@ -69,6 +69,8 @@ function buildRDelimUnd(
   );
 }
 
+// Builds the CJK-aware right-delimiter matcher for Marked's GFM strikethrough
+// tokenizer, analogous to the emphasis delimiter builders above.
 function buildRDelimDel(
   punct: string,
   punctSpace: string,
@@ -92,6 +94,8 @@ const cjkPunctSpace = `[\\s\\p{P}\\p{S}${CJK}]`;
 const cjkNotPunctSpace = `[^\\s\\p{P}\\p{S}${CJK}]`;
 // Keep `*` and `_` out of the punctuation-like classes for strikethrough so
 // `~~` flanking checks do not interfere with Marked's emphasis delimiters.
+// These variants mirror Marked's `punct`, `punctSpace`, and `notPunctSpace`
+// buckets for the GFM strikethrough right-delimiter matcher.
 const cjkDelPunct = `(?![*_])[\\p{P}\\p{S}${CJK}]`;
 const cjkDelPunctSpace = `(?![*_])[\\s\\p{P}\\p{S}${CJK}]`;
 const cjkDelNotPunctSpace = `(?:[^\\s\\p{P}\\p{S}${CJK}]|[*_])`;
