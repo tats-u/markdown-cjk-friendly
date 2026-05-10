@@ -32,9 +32,9 @@ function getVersionCandidates(
   bundledVersionName: string,
 ) {
   const latestVersion = packageVersionsInfo.tags.latest;
-  let nextVersion: string | null = packageVersionsInfo.tags.next;
+  let nextVersion: string | null = packageVersionsInfo.tags.next ?? null;
   const candidates = [latestVersion];
-  if (gt(nextVersion, latestVersion)) {
+  if (nextVersion && gt(nextVersion, latestVersion)) {
     candidates.push(nextVersion);
   } else {
     nextVersion = null;
@@ -100,6 +100,7 @@ export function usePlaygroundPluginQuery(
   engineFamily: Accessor<MarkdownEngineFamily>,
   version: Accessor<string>,
   bundledVersionName: Accessor<string>,
+  isVersionReady: Accessor<boolean>,
 ) {
   return useQuery(() => ({
     queryKey: [
@@ -109,7 +110,9 @@ export function usePlaygroundPluginQuery(
       version(),
       bundledVersionName(),
     ],
-    enabled: shouldLoadVersionedPlugins(version(), bundledVersionName()),
+    enabled:
+      isVersionReady() &&
+      shouldLoadVersionedPlugins(version(), bundledVersionName()),
     queryFn: (): Promise<LoadedPlugins> =>
       loadPlugins(engineFamily(), version(), bundledVersionName()),
     staleTime: Number.POSITIVE_INFINITY,

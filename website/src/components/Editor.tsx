@@ -310,6 +310,19 @@ const Editor = (props: { bundledVersionName: string }) => {
         : preferredVersion,
     );
   });
+  const isSelectedVersionReady = createMemo(() => {
+    const version = libVersionSuperior();
+    if (version === "") {
+      return false;
+    }
+    if (version === props.bundledVersionName) {
+      return true;
+    }
+    if (versionList.isPending()) {
+      return false;
+    }
+    return versionList.candidates().includes(version);
+  });
 
   return (
     <div class={styles.editorAndPreviewWrapper}>
@@ -402,7 +415,10 @@ const Editor = (props: { bundledVersionName: string }) => {
           }}
         />
       </div>
-      <Preview bundledVersionName={props.bundledVersionName} />
+      <Preview
+        bundledVersionName={props.bundledVersionName}
+        isSelectedVersionReady={isSelectedVersionReady}
+      />
     </div>
   );
 };
@@ -601,12 +617,16 @@ function formatMeanAndSEM(result: ResultPerOne) {
   return `${formatTime(result.mean)}±${formatTime(result.sem)}`;
 }
 
-const Preview = (props: { bundledVersionName: string }) => {
+const Preview = (props: {
+  bundledVersionName: string;
+  isSelectedVersionReady: Accessor<boolean>;
+}) => {
   const diffCheckBoxId = createUniqueId();
   const pluginsQuery = usePlaygroundPluginQuery(
     () => markdownEngineFamily(),
     () => libVersionSuperior(),
     () => props.bundledVersionName,
+    () => props.isSelectedVersionReady(),
   );
 
   const superiorPreview = createMemo(
