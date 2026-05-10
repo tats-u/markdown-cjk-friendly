@@ -69,10 +69,30 @@ function buildRDelimUnd(
   );
 }
 
+function buildRDelimDel(
+  punct: string,
+  punctSpace: string,
+  notPunctSpace: string,
+): RegExp {
+  return new RegExp(
+    "^[^~]+(?=[^~])" +
+      `|(?!~)${punct}(~~?)(?=[\\s]|$)` +
+      `|${notPunctSpace}(~~?)(?!~)(?=${punctSpace}|$)` +
+      `|(?!~)${punctSpace}(~~?)(?=${notPunctSpace})` +
+      `|[\\s](~~?)(?!~)(?=${punct})` +
+      `|(?!~)${punct}(~~?)(?!~)(?=${punct})` +
+      `|${notPunctSpace}(~~?)(?=${notPunctSpace})`,
+    "gu",
+  );
+}
+
 // Non-GFM CJK-modified patterns (no ~ exception)
 const cjkPunct = `[\\p{P}\\p{S}${CJK}]`;
 const cjkPunctSpace = `[\\s\\p{P}\\p{S}${CJK}]`;
 const cjkNotPunctSpace = `[^\\s\\p{P}\\p{S}${CJK}]`;
+const cjkDelPunct = `(?![*_])[\\p{P}\\p{S}${CJK}]`;
+const cjkDelPunctSpace = `(?![*_])[\\s\\p{P}\\p{S}${CJK}]`;
+const cjkDelNotPunctSpace = `(?:[^\\s\\p{P}\\p{S}${CJK}]|[*_])`;
 
 // GFM CJK-modified patterns (~ excluded from punct for em/strong)
 const cjkPunctGfm = `(?!~)[\\p{P}\\p{S}${CJK}]`;
@@ -95,8 +115,15 @@ const emStrongRDelimUndCjk = buildRDelimUnd(
   cjkPunctSpace,
   cjkNotPunctSpace,
 );
+const delRDelimCjk = buildRDelimDel(
+  cjkDelPunct,
+  cjkDelPunctSpace,
+  cjkDelNotPunctSpace,
+);
 
 interface InlineRules {
+  delLDelim: RegExp;
+  delRDelim: RegExp;
   emStrongLDelim: RegExp;
   emStrongRDelimAst: RegExp;
   emStrongRDelimUnd: RegExp;
@@ -108,6 +135,64 @@ interface TokenizerRules {
   other: {
     unicodeAlphaNumeric: RegExp;
   };
+}
+
+function isPrevCharCjk(
+  prevChar: string,
+  maskedSrc: string,
+  src: string,
+): boolean {
+  let prevIsCjk = punctuationCjk.test(prevChar);
+  if (!prevIsCjk && prevChar) {
+    const prevIdx = maskedSrc.length - src.length;
+    if (prevIdx >= 1) {
+      let idx = prevIdx - 1;
+      let code = maskedSrc.charCodeAt(idx);
+
+      if (code >= 0xfe00 && code <= 0xfe0e && idx >= 1) {
+        idx--;
+        code = maskedSrc.charCodeAt(idx);
+      }
+
+      if ((code & 0xfc00) === 0xdc00 && idx >= 1) {
+        const cp = maskedSrc.codePointAt(idx - 1);
+        if (cp !== undefined && cp > 0xffff) {
+          if (cp >= 0xe0100 && cp <= 0xe01ef) {
+            prevIsCjk = true;
+          } else {
+            prevIsCjk = cjkTest.test(String.fromCodePoint(cp));
+          }
+        }
+      } else {
+        prevIsCjk = cjkTest.test(String.fromCharCode(code));
+      }
+    }
+  }
+  return prevIsCjk;
+}
+
+function isCjkAdjacentToDelimiter(
+  rightMatch: RegExpExecArray,
+  clippedMaskedSrc: string,
+): boolean {
+  if (!(rightMatch[1] || rightMatch[2] || rightMatch[3] || rightMatch[4])) {
+    return false;
+  }
+
+  const charBefore = String.fromCodePoint(
+    // biome-ignore lint/style/noNonNullAssertion: rightMatch[0] is always non-empty
+    rightMatch[0].codePointAt(0)!,
+  );
+  const afterPos = rightMatch.index + rightMatch[0].length;
+  const charAfter =
+    afterPos < clippedMaskedSrc.length
+      ? String.fromCodePoint(
+          // biome-ignore lint/style/noNonNullAssertion: always in range
+          clippedMaskedSrc.codePointAt(afterPos)!,
+        )
+      : "";
+
+  return cjkTest.test(charBefore) || cjkTest.test(charAfter);
 }
 
 /**
@@ -144,39 +229,7 @@ export default function markedCjkFriendly(): MarkedExtension {
 
         const nextChar = match[1] || match[2] || "";
 
-        // Check previous character for CJK, including SMP and VS
-        // marked's prevChar may be a lone low surrogate for SMP chars;
-        // recover the full character from maskedSrc
-        let prevIsCjk = punctuationCjk.test(prevChar);
-        if (!prevIsCjk && prevChar) {
-          const prevIdx = maskedSrc.length - src.length;
-          if (prevIdx >= 1) {
-            let idx = prevIdx - 1;
-            let code = maskedSrc.charCodeAt(idx);
-
-            // Handle non-emoji general-use VS (U+FE00..U+FE0E):
-            // look through to the character before the VS
-            if (code >= 0xfe00 && code <= 0xfe0e && idx >= 1) {
-              idx--;
-              code = maskedSrc.charCodeAt(idx);
-            }
-
-            if ((code & 0xfc00) === 0xdc00 && idx >= 1) {
-              // Low surrogate → recover full SMP character
-              const cp = maskedSrc.codePointAt(idx - 1);
-              if (cp !== undefined && cp > 0xffff) {
-                // IVS (U+E0100..U+E01EF) is treated as CJK
-                if (cp >= 0xe0100 && cp <= 0xe01ef) {
-                  prevIsCjk = true;
-                } else {
-                  prevIsCjk = cjkTest.test(String.fromCodePoint(cp));
-                }
-              }
-            } else {
-              prevIsCjk = cjkTest.test(String.fromCharCode(code));
-            }
-          }
-        }
+        const prevIsCjk = isPrevCharCjk(prevChar, maskedSrc, src);
 
         // Original: !nextChar || !prevChar || punctuation.exec(prevChar)
         // CJK extension: also allow when prevChar or nextChar is CJK
@@ -225,23 +278,10 @@ export default function markedCjkFriendly(): MarkedExtension {
             // Check if CJK is adjacent to this delimiter
             // When CJK is adjacent, Left-only or Right-only
             // should be reclassified as "Both" (Left or Right)
-            let isCjkAdjacent = false;
-            if (rMatch[1] || rMatch[2] || rMatch[3] || rMatch[4]) {
-              const charBefore = String.fromCodePoint(
-                // biome-ignore lint/style/noNonNullAssertion: match[0] is always non-empty
-                rMatch[0].codePointAt(0)!,
-              );
-              const afterPos = rMatch.index + rMatch[0].length;
-              const charAfter =
-                afterPos < clippedMaskedSrc.length
-                  ? String.fromCodePoint(
-                      // biome-ignore lint/style/noNonNullAssertion: always in range
-                      clippedMaskedSrc.codePointAt(afterPos)!,
-                    )
-                  : "";
-              isCjkAdjacent =
-                cjkTest.test(charBefore) || cjkTest.test(charAfter);
-            }
+            const isCjkAdjacent = isCjkAdjacentToDelimiter(
+              rMatch,
+              clippedMaskedSrc,
+            );
 
             if ((rMatch[3] || rMatch[4]) && !isCjkAdjacent) {
               // found another Left Delim (no CJK → stays Left)
@@ -291,6 +331,88 @@ export default function markedCjkFriendly(): MarkedExtension {
             };
           }
         }
+        return undefined;
+      },
+      del(
+        this: {
+          rules: TokenizerRules;
+          lexer: { inlineTokens: (text: string) => Tokens.Generic[] };
+        },
+        src: string,
+        maskedSrc: string,
+        prevChar = "",
+      ): Tokens.Del | false | undefined {
+        const { rules } = this;
+
+        const match = rules.inline.delLDelim.exec(src);
+        if (!match) return false;
+
+        const nextChar = match[1] || "";
+        const prevIsCjk = isPrevCharCjk(prevChar, maskedSrc, src);
+
+        if (
+          !nextChar ||
+          !prevChar ||
+          rules.inline.punctuation.exec(prevChar) ||
+          prevIsCjk ||
+          cjkTest.test(nextChar)
+        ) {
+          const lLength = [...match[0]].length - 1;
+          let rDelim: string | undefined;
+          let rLength: number;
+          let delimTotal = lLength;
+
+          delRDelimCjk.lastIndex = 0;
+
+          const clippedMaskedSrc = maskedSrc.slice(-1 * src.length + lLength);
+
+          let rMatch: RegExpExecArray | null;
+          // biome-ignore lint/suspicious/noAssignInExpressions: following marked's pattern
+          while ((rMatch = delRDelimCjk.exec(clippedMaskedSrc)) != null) {
+            rDelim =
+              rMatch[1] ||
+              rMatch[2] ||
+              rMatch[3] ||
+              rMatch[4] ||
+              rMatch[5] ||
+              rMatch[6];
+
+            if (!rDelim) continue;
+
+            rLength = [...rDelim].length;
+            if (rLength !== lLength) continue;
+
+            const isCjkAdjacent = isCjkAdjacentToDelimiter(
+              rMatch,
+              clippedMaskedSrc,
+            );
+
+            if ((rMatch[3] || rMatch[4]) && !isCjkAdjacent) {
+              delimTotal += rLength;
+              continue;
+            }
+
+            delimTotal -= rLength;
+            if (delimTotal > 0) continue;
+
+            rLength = Math.min(rLength, rLength + delimTotal);
+            // biome-ignore lint/style/noNonNullAssertion: rMatch[0] is always non-empty
+            const firstCp = rMatch[0].codePointAt(0)!;
+            const lastCharLength = firstCp > 0xffff ? 2 : 1;
+            const raw = src.slice(
+              0,
+              lLength + rMatch.index + lastCharLength + rLength,
+            );
+            const text = raw.slice(lLength, -lLength);
+            return {
+              type: "del",
+              raw,
+              text,
+              tokens: this.lexer.inlineTokens(text),
+            };
+          }
+        }
+
         return undefined;
       },
     },

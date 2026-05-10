@@ -83,6 +83,30 @@ describe("marked-cjk-friendly", () => {
     expect(result).toMatchSnapshot();
   });
 
+  it("~~ around CJK is converted to <del>", async () => {
+    const result = md2Html(
+      await readFile(
+        new URL("../../../testcases/gfm-strikethrough.md", import.meta.url),
+        "utf-8",
+      ),
+    );
+    for (const line of result.split(/\r?\n/)) {
+      expect(line).not.toMatch(/~~[^\n]+~~/);
+    }
+    expect(result).toContain("<del>");
+    expect(result).toMatchSnapshot();
+  });
+
+  it("Output for non-CJK GFM strikethrough is the same as without this plugin", async () => {
+    const source = await readFile(
+      new URL("../../../testcases/gfm-non-cjk.md", import.meta.url),
+      "utf-8",
+    );
+    const result = md2Html(source);
+    expect(result).toContain("<del>");
+    expect(result).toEqual(md2HtmlOriginal(source));
+  });
+
   it("Example Markdown in README", async () => {
     const readme = await readFile(
       new URL("../README.md", import.meta.url),
