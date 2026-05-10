@@ -90,6 +90,8 @@ function buildRDelimDel(
 const cjkPunct = `[\\p{P}\\p{S}${CJK}]`;
 const cjkPunctSpace = `[\\s\\p{P}\\p{S}${CJK}]`;
 const cjkNotPunctSpace = `[^\\s\\p{P}\\p{S}${CJK}]`;
+// Keep `*` and `_` out of the punctuation-like classes for strikethrough so
+// `~~` flanking checks do not interfere with Marked's emphasis delimiters.
 const cjkDelPunct = `(?![*_])[\\p{P}\\p{S}${CJK}]`;
 const cjkDelPunctSpace = `(?![*_])[\\s\\p{P}\\p{S}${CJK}]`;
 const cjkDelNotPunctSpace = `(?:[^\\s\\p{P}\\p{S}${CJK}]|[*_])`;
@@ -137,6 +139,14 @@ interface TokenizerRules {
   };
 }
 
+/**
+ * Checks whether the character immediately before `src` should be treated as CJK.
+ *
+ * Marked passes `prevChar` as a single UTF-16 code unit, so supplementary-plane
+ * characters may arrive as a lone surrogate and variation sequences may point at
+ * the variation selector instead of the base character. Recover from `maskedSrc`
+ * when needed so CJK-aware flanking checks see the actual preceding code point.
+ */
 function isPrevCharCjk(
   prevChar: string,
   maskedSrc: string,
@@ -171,6 +181,13 @@ function isPrevCharCjk(
   return prevIsCjk;
 }
 
+/**
+ * Checks whether a matched right delimiter is immediately adjacent to CJK text.
+ *
+ * Marked classifies these matches as left-only, right-only, or both using regex
+ * groups. When CJK sits next to the delimiter, we treat the delimiter as "both"
+ * so GFM emphasis/strikethrough can close across CJK punctuation boundaries.
+ */
 function isCjkAdjacentToDelimiter(
   rightMatch: RegExpExecArray,
   clippedMaskedSrc: string,
