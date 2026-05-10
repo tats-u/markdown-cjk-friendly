@@ -57,7 +57,7 @@ import { Marked } from "marked";
 import markedCjkFriendly from "marked-cjk-friendly";
 
 const marked = new Marked(markedCjkFriendly());
-const html = marked.parse("**こんにちは。**ここ");
+const html = marked.parse("**この文は太字になりますか？**即便加入这句也可以吗？");
 ```
 
 Or using the `use` method:
@@ -67,7 +67,7 @@ import { marked } from "marked";
 import markedCjkFriendly from "marked-cjk-friendly";
 
 marked.use(markedCjkFriendly());
-const html = marked("**こんにちは。**ここ");
+const html = marked("**この文は太字になりますか？**即便加入这句也可以吗？");
 ```
 
 ## Compatibility with the other languages / <span lang="ja">他言語との互換性</span> / <span lang="zh-Hans-CN">与其他语言的兼容性</span> / <span lang="ko">다른 언어와의 호환성</span>
