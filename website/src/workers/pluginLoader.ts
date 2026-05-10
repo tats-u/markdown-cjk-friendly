@@ -1,11 +1,18 @@
 import markdownItCjkFriendlyPlugin from "markdown-it-cjk-friendly";
+import markedCjkFriendly from "marked-cjk-friendly";
 import { cjkFriendlyExtension } from "micromark-extension-cjk-friendly";
 import { gfmStrikethroughCjkFriendly } from "micromark-extension-cjk-friendly-gfm-strikethrough";
 
-export type MarkdownEngineFamily = "micromark" | "markdown-it";
+export type MarkdownEngineFamily = "marked" | "micromark" | "markdown-it";
 
 type MicromarkExtension = ReturnType<typeof cjkFriendlyExtension>;
 type MarkdownItPlugin = typeof markdownItCjkFriendlyPlugin;
+type MarkedPlugin = typeof markedCjkFriendly;
+
+export type MarkedPlugins = {
+  type: "marked";
+  plugin: MarkedPlugin;
+};
 
 export type MarkdownItPlugins = {
   type: "markdown-it";
@@ -18,7 +25,10 @@ export type MicromarkPlugins = {
   gfmStrikethroughCjkFriendlyExt: (() => MicromarkExtension) | null;
 };
 
-export type LoadedPlugins = MarkdownItPlugins | MicromarkPlugins;
+export type LoadedPlugins =
+  | MarkedPlugins
+  | MarkdownItPlugins
+  | MicromarkPlugins;
 
 export function shouldLoadVersionedPlugins(
   version: string,
@@ -60,6 +70,16 @@ function normalizeMarkdownItPlugin(mod: unknown): MarkdownItPlugin {
   throw new Error("Invalid markdown-it plugin module");
 }
 
+function normalizeMarkedPlugin(mod: unknown): MarkedPlugin {
+  const candidate = resolveDefault(mod) ?? mod;
+  if (typeof candidate === "function") return candidate as MarkedPlugin;
+  const nestedDefault = resolveDefault(candidate);
+  if (typeof nestedDefault === "function") {
+    return nestedDefault as MarkedPlugin;
+  }
+  throw new Error("Invalid marked plugin module");
+}
+
 function normalizeMicromarkExtension(
   mod: unknown,
   exportName: string,
@@ -97,6 +117,17 @@ async function loadMarkdownItPlugin(
     version,
   );
   return normalizeMarkdownItPlugin(mod);
+}
+
+async function loadMarkedPlugin(
+  version: string,
+  bundledVersionName: string,
+): Promise<MarkedPlugin> {
+  if (version === bundledVersionName) {
+    return markedCjkFriendly;
+  }
+  const mod = await importFromEsmRun<unknown>("marked-cjk-friendly", version);
+  return normalizeMarkedPlugin(mod);
 }
 
 async function loadMicromarkPlugins(
@@ -140,6 +171,10 @@ export async function loadPlugins(
   version: string,
   bundledVersionName: string,
 ): Promise<LoadedPlugins> {
+  if (engineFamily === "marked") {
+    const plugin = await loadMarkedPlugin(version, bundledVersionName);
+    return { type: "marked", plugin };
+  }
   if (engineFamily === "markdown-it") {
     const plugin = await loadMarkdownItPlugin(version, bundledVersionName);
     return { type: "markdown-it", plugin };

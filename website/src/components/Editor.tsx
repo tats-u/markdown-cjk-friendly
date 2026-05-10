@@ -1,5 +1,6 @@
 import clsx from "clsx";
 import { diffChars } from "diff";
+import DOMPurify from "dompurify";
 import { OcMarkgithub2 } from "solid-icons/oc";
 import {
   type Accessor,
@@ -282,6 +283,7 @@ const Editor = (props: { bundledVersionName: string }) => {
     if (engine) {
       const engineLower = engine.toLowerCase();
       switch (engineLower as MarkdownProcessorName) {
+        case "marked":
         case "markdown-it":
         case "micromark":
         case "markdown-exit":
@@ -337,6 +339,7 @@ const Editor = (props: { bundledVersionName: string }) => {
             <option value="micromark">micromark</option>
             <option value="markdown-it">markdown-it</option>
             <option value="markdown-exit">markdown-exit</option>
+            <option value="marked">marked</option>
           </select>
           <select
             onChange={(e) => {
@@ -413,9 +416,59 @@ const MarkdownBody = ({ markdown }: { markdown: Accessor<string> }) => (
       </pre>
     }
   >
-    <div class={styles.markdownBody} innerHTML={markdown()} />
+    {/* TODO: Prefer Element.setHTML() over innerHTML + DOMPurify once support is broad enough, including Safari. */}
+    <div
+      class={styles.markdownBody}
+      innerHTML={sanitizeRenderedHtml(markdown())}
+    />
   </Show>
 );
+
+function sanitizeRenderedHtml(html: string) {
+  return DOMPurify.sanitize(html, {
+    ALLOWED_TAGS: [
+      "a",
+      "blockquote",
+      "br",
+      "code",
+      "del",
+      "em",
+      "h1",
+      "h2",
+      "h3",
+      "h4",
+      "h5",
+      "h6",
+      "hr",
+      "img",
+      "input",
+      "li",
+      "ol",
+      "p",
+      "pre",
+      "strong",
+      "table",
+      "tbody",
+      "td",
+      "th",
+      "thead",
+      "tr",
+      "ul",
+    ],
+    ALLOWED_ATTR: [
+      "align",
+      "alt",
+      "checked",
+      "class",
+      "disabled",
+      "href",
+      "src",
+      "start",
+      "title",
+      "type",
+    ],
+  });
+}
 
 const MarkdownDiff = (props: {
   superior: Accessor<string>;
@@ -426,9 +479,9 @@ const MarkdownDiff = (props: {
   let containerRef: HTMLDivElement | undefined;
   const diff = createMemo(() => {
     const templateSuperior = document.createElement("template");
-    templateSuperior.innerHTML = props.superior();
+    templateSuperior.innerHTML = sanitizeRenderedHtml(props.superior());
     const templateInferior = document.createElement("template");
-    templateInferior.innerHTML = props.inferior();
+    templateInferior.innerHTML = sanitizeRenderedHtml(props.inferior());
 
     return visualDomDiff(templateInferior.content, templateSuperior.content);
   });

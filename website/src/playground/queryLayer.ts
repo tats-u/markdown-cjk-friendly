@@ -18,6 +18,8 @@ interface NPMVersionsInfo {
 
 function toCjkFriendlyPackageName(engine: MarkdownEngineFamily) {
   switch (engine) {
+    case "marked":
+      return "marked-cjk-friendly";
     case "markdown-it":
       return "markdown-it-cjk-friendly";
     case "micromark":
