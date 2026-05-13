@@ -18,7 +18,7 @@ catalog:
   '@rspress/core>remark-cjk-friendly-gfm-strikethrough': 'workspace:'
   '@types/markdown-it': ^14.1.2
   '@types/node': ^24.12.2
-  astro: ^6.0.8
+  astro: ^6.1.10
   devlop: ^1.1.0
   get-east-asian-width: ^1.4.0
   markdown-it: ^14.1.1
