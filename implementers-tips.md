@@ -74,3 +74,21 @@ The above table implies:
 
 - If a marker is adjacent to Unicode whitespace characters, whether the marker can start/end a range does _not_ depend on whether the adjacent characters are punctuation or CJK characters.
 - If a marker is `_`, whether the marker can start/end a range does _not_ depend on whether the adjacent characters are CJK characters.
+
+## Flowchart to suppress extra processes
+
+```mermaid
+flowchart TD
+    A["Is at least one of the adjacent characters a Unicode whitespace?"]
+    B["Determine flankingness"]
+    C["Retrieve the character two positions before if necessary,<br/>and identify the previous base character "]
+    D["Is the delimiter run <code>_</code>?"]
+    E["Check whether both adjacent &quot;character&quot;s are CJK characters"]
+
+    A -->|Yes| B
+    A -->|No| C
+    C --> D
+    D -->|Yes| B
+    D -->|No| E
+    E --> B
+```
