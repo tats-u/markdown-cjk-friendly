@@ -92,3 +92,37 @@ flowchart TD
     D -->|No| E
     E --> B
 ```
+
+## Logical expressions transformations
+
+### Whether the delimiter run is left-flanking
+
+```
+!after.space && (!(!after.cjk && after.punct) || (before.space || (!before.cjk && before.punct) || before.cjk || before.ideoVs))
+= !after.space && ((after.cjk || !after.punct) || (before.space || (!before.cjk && before.punct) || before.cjk && (before.punct || true) || before.ideoVs))
+= !after.space && (after.cjk || !after.punct || (before.space || (!before.cjk && before.punct) || (before.cjk && before.punct) || before.cjk || before.ideoVs))
+= !after.space && (!after.punct || before.space || (!before.cjk || before.cjk) && before.punct || after.cjk || before.cjk || before.ideoVs)
+= !after.space && (!after.punct || (before.space || before.punct) || (after.cjk || (before.cjk || before.ideoVs)))
+```
+
+c.f. CommonMark:
+
+```
+!after.space && (!after.punct || (before.space || before.punct))
+```
+
+### Whether the delimiter run is right-flanking
+
+```
+!before.space && (!(!before.cjk && before.punct) || (after.space || (!after.cjk && after.punct) || after.cjk))
+= !before.space && ((before.cjk || !before.punct) || (after.space || (!after.cjk && after.punct) || after.cjk && (after.punct || true)))
+= !before.space && (before.cjk || !before.punct || (after.space || (!after.cjk && after.punct) || (after.cjk && after.punct) || after.cjk))
+= !before.space && (!before.punct || after.space || (!after.cjk || after.cjk) && after.punct || before.cjk || after.cjk)
+= !before.space && (!before.punct || (after.space || after.punct) || (before.cjk || after.cjk))
+```
+
+c.f. CommonMark:
+
+```
+!before.space && (!before.punct || (after.space || after.punct))
+```
