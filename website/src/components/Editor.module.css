@@ -90,6 +90,13 @@
   flex-direction: row;
   flex-wrap: wrap;
   gap: 1rem;
+  align-items: center;
+}
+
+.updatingStatus {
+  margin-inline-start: auto;
+  font-style: italic;
+  opacity: 0.7;
 }
 
 a.gitHubLink:any-link {

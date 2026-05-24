@@ -761,6 +761,9 @@ const Preview = (props: {
             id={diffCheckBoxId}
           />
         </div>
+        <Show when={isPreviewFetching()}>
+          <span class={styles.updatingStatus}>Updating plugin…</span>
+        </Show>
       </div>
       <Show
         when={pluginErrorMessage() === null}
@@ -770,9 +773,6 @@ const Preview = (props: {
           when={renderErrorMessage() === null}
           fallback={<p>Error rendering preview: {renderErrorMessage()}</p>}
         >
-          <Show when={isPreviewFetching()}>
-            <p>Updating plugin…</p>
-          </Show>
           <Show
             when={superiorHTML() !== undefined}
             fallback={
