@@ -9,6 +9,7 @@ import {
   createSignal,
   createUniqueId,
   For,
+  onCleanup,
   onMount,
   Show,
 } from "solid-js";
@@ -117,6 +118,17 @@ const Editor = (props: { bundledVersionName: string }) => {
   const u8Encoder = new TextEncoder();
 
   let textareaRef: HTMLTextAreaElement | undefined;
+  let benchmarkWorker: Worker | undefined;
+
+  function getBenchmarkWorker() {
+    benchmarkWorker ??= new BenchmarkWorker();
+    return benchmarkWorker;
+  }
+
+  function resetBenchmarkWorker() {
+    benchmarkWorker?.terminate();
+    benchmarkWorker = undefined;
+  }
 
   function handleCopyPermalink() {
     const markdown = textareaMarkdown();
@@ -174,14 +186,13 @@ const Editor = (props: { bundledVersionName: string }) => {
   }
 
   async function handleBenchmark() {
-    let benchWorker: Worker | undefined;
     try {
       setIsBenchmarking(true);
       setSuperiorBenchFailure(null);
       setInferiorBenchFailure(null);
       setSuperiorTime(undefined);
       setInferiorTime(undefined);
-      benchWorker = new BenchmarkWorker();
+      const benchWorker = getBenchmarkWorker();
       const result = await new Promise<MarkdownBenchWorkerResult>(
         (resolve, reject) => {
           const handleMessage = (
@@ -192,6 +203,7 @@ const Editor = (props: { bundledVersionName: string }) => {
           };
           const handleError = (e: ErrorEvent) => {
             cleanup();
+            resetBenchmarkWorker();
             reject(
               e.error ?? new Error(e.message || "Benchmark worker failed"),
             );
@@ -233,10 +245,13 @@ const Editor = (props: { bundledVersionName: string }) => {
       setSuperiorBenchFailure(message);
       setInferiorBenchFailure(message);
     } finally {
-      benchWorker?.terminate();
       setIsBenchmarking(false);
     }
   }
+
+  onCleanup(() => {
+    resetBenchmarkWorker();
+  });
 
   onMount(() => {
     const url = new URL(window.location.href);
