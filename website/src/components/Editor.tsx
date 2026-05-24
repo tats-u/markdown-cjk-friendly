@@ -130,6 +130,10 @@ const Editor = (props: { bundledVersionName: string }) => {
     benchmarkWorker = undefined;
   }
 
+  onCleanup(() => {
+    resetBenchmarkWorker();
+  });
+
   function handleCopyPermalink() {
     const markdown = textareaMarkdown();
     if (!markdown) return;
@@ -248,10 +252,6 @@ const Editor = (props: { bundledVersionName: string }) => {
       setIsBenchmarking(false);
     }
   }
-
-  onCleanup(() => {
-    resetBenchmarkWorker();
-  });
 
   onMount(() => {
     const url = new URL(window.location.href);
