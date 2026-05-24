@@ -50,9 +50,8 @@ allowBuilds:
 
 overrides:
   compression@1.8.0>on-headers: 1.1.0
-  # Pin the version due to lack of provenance
-  react-render-to-markdown@^19: 19.0.1
   refractor@3.6.0>prismjs: ^1.30.0
+  react-render-to-markdown@>=19 <19.1.0: ^19.1.0
   # Node 18 has been discarded since 7.x but not affected because 6.x is only used by example sites
   serialize-javascript@^6: ^7.0.4
   serve-handler@6.1.6>minimatch: ^3.1.3
