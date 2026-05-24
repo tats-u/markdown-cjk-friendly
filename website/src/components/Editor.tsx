@@ -740,7 +740,10 @@ const Preview = (props: {
     return html;
   });
   return (
-    <div class={styles.resultContainer}>
+    <div
+      class={styles.resultContainer}
+      classList={{ [styles.resultContainerFetching]: isPreviewFetching() }}
+    >
       <div class={styles.controls}>
         <div>Result:</div>
         <select
@@ -761,10 +764,10 @@ const Preview = (props: {
             id={diffCheckBoxId}
           />
         </div>
-        <Show when={isPreviewFetching()}>
-          <span class={styles.updatingStatus}>Updating plugin…</span>
-        </Show>
       </div>
+      <Show when={isPreviewFetching()}>
+        <div class={styles.updatingOverlay}>Updating plugin…</div>
+      </Show>
       <Show
         when={pluginErrorMessage() === null}
         fallback={<p>Error loading plugin: {pluginErrorMessage()}</p>}
