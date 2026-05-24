@@ -47,9 +47,6 @@
 .resultContainerFetching > :not(.updatingOverlay) {
   opacity: 0.45;
   transition: opacity 0.2s ease;
-}
-
-.resultContainerFetching > :not(.updatingOverlay) {
   pointer-events: none;
 }
 
