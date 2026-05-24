@@ -40,7 +40,7 @@ For trivial changes where you can expect (nearly) identical results whether done
 > [!IMPORTANT]
 > These are tentative rules for now, and may be changed in the future.
 
-The maintainer(s) reserve(s) the right to ask for more information about the AI usage, or to reject your PR if the disclosure is insufficient or if they suspect that you (blatantly) violated these rules (up to e.g. the frequency of the PRs and the amount and quality of code in the PR). If you are violating the rules too badly, the maintainer(s) reserve(s) the right to block you.
+The maintainer(s) reserve(s) the right to ask for more information about the AI usage, or to reject your PR if the disclosure is insufficient or if they suspect that you (blatantly) violated these rules (depending on e.g. the frequency of the PRs and the amount and quality of code in the PR). If you are violating the rules too badly, the maintainer(s) reserve(s) the right to block you.
 
 ## Submit an issue or PR / <span lang="ja">Issue・PRの投稿</span> / <span lang="zh-Hans-CN">提出一个issue或PR</span> / <span lang="ko">이슈 및 PR 제출</span>
 
