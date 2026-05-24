@@ -202,29 +202,10 @@ remarkGfm --"No"--> remarkBase([remark-cjk-friendly])
 
 ## Contributing / <span lang="ja">貢献</span> / <span lang="zh-Hans-CN">贡献</span> / <span lang="ko">기여</span>
 
-### Submit an issue or PR / <span lang="ja">Issue・PRの投稿</span> / <span lang="zh-Hans-CN">提出一个issue或PR</span> / <span lang="ko">이슈 및 PR 제출</span>
+Please see [CONTRIBUTING.md](CONTRIBUTING.md).
 
-Please submit an issue or PR in English or Japanese. English is recommended.
+<span lang="ja">[CONTRIBUTING.md](CONTRIBUTING.md)を参照してください。</span>
 
-<span lang="ja">Issue・PRは英語か日本語で投稿してください。英語を推奨します。</span>
+<span lang="zh-Hans-CN">请参阅[CONTRIBUTING.md](CONTRIBUTING.md)。</span>
 
-<span lang="zh-Hans-CN">请用英语或日语提交问题或PR。建议使用英语。</span>
-
-<span lang="ko">이슈나 PR은 영어 또는 일본어로 제출해 주시기 바랍니다. 영어를 권장합니다.</span>
-
-### Build
-
-This repository adopts [PNPM](https://pnpm.io/) as a package manager.
-
-To build all packages, run:
-
-```bash
-pnpm i
-node --run build
-```
-
-To run tests, run:
-
-```bash
-node --run test
-```
+<span lang="ko">[CONTRIBUTING.md](CONTRIBUTING.md)를 참조해 주시기 바랍니다.</span>
