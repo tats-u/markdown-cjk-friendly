@@ -40,6 +40,9 @@ dedupePeers: true
 
 minimumReleaseAge: 1440
 
+minimumReleaseAgeExclude:
+  - markdown-it@14.2.0
+
 allowBuilds:
   '@parcel/watcher': true
   '@swc/core': true
@@ -60,3 +63,5 @@ publicHoistPattern:
   - decode-named-character-reference
 trustPolicy: no-downgrade
 trustPolicyIgnoreAfter: 43200
+trustPolicyExclude:
+  - tinyexec@1.2.1
