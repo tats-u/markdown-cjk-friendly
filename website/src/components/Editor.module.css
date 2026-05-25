@@ -41,6 +41,13 @@
   grid-template-columns: 1fr;
   grid-template-rows: auto auto minmax(0, 1fr) auto;
   min-height: 0px;
+  position: relative;
+}
+
+.resultContainerFetching > :not(.updatingOverlay) {
+  opacity: 0.45;
+  transition: opacity 0.2s ease;
+  pointer-events: none;
 }
 
 .resultContainer:is(
@@ -90,6 +97,19 @@
   flex-direction: row;
   flex-wrap: wrap;
   gap: 1rem;
+}
+
+.updatingOverlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+  text-align: center;
+  font-style: italic;
+  font-weight: 600;
+  background-color: light-dark(#ffffff80, #00000080);
 }
 
 a.gitHubLink:any-link {

@@ -755,7 +755,10 @@ const Preview = (props: {
     return html;
   });
   return (
-    <div class={styles.resultContainer}>
+    <div
+      class={styles.resultContainer}
+      classList={{ [styles.resultContainerFetching]: isPreviewFetching() }}
+    >
       <div class={styles.controls}>
         <div>Result:</div>
         <select
@@ -777,6 +780,9 @@ const Preview = (props: {
           />
         </div>
       </div>
+      <Show when={isPreviewFetching()}>
+        <div class={styles.updatingOverlay}>Updating plugin…</div>
+      </Show>
       <Show
         when={pluginErrorMessage() === null}
         fallback={<p>Error loading plugin: {pluginErrorMessage()}</p>}
@@ -785,9 +791,6 @@ const Preview = (props: {
           when={renderErrorMessage() === null}
           fallback={<p>Error rendering preview: {renderErrorMessage()}</p>}
         >
-          <Show when={isPreviewFetching()}>
-            <p>Updating plugin…</p>
-          </Show>
           <Show
             when={superiorHTML() !== undefined}
             fallback={
