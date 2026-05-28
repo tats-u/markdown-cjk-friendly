@@ -13,7 +13,8 @@
     "fix": "run-s fix:*",
     "fix:biome": "biome check --write",
     "postupdate:biome": "biome migrate --write",
-    "print-ranges": "node --experimental-strip-types scripts/cjk-ranges.ts",
+    "print-ranges": "node scripts/cjk-ranges.ts",
+    "release:tag": "node scripts/create-release-tags.ts",
     "bench:all": "vitest bench"
   },
   "workspaces": [
