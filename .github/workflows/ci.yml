@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - main
+      - next
       - "nopr/*"
   pull_request:
 jobs:

@@ -5,6 +5,9 @@
     "test:lib": "pnpm -r test:lib",
     "build:lib": "pnpm -r build:lib",
     "build:website": "pnpm -r build:website",
+    "changeset": "changeset",
+    "changeset:version": "node scripts/changeset-version.mjs",
+    "changeset:publish": "node scripts/changeset-publish.mjs",
     "lint": "run-s lint:prebuild lint:postbuild",
     "lint:prebuild": "run-s lint:biome",
     "lint:postbuild": "run-s lint:type",
@@ -22,6 +25,8 @@
   "type": "module",
   "devDependencies": {
     "@biomejs/biome": "2.3.12",
+    "@changesets/changelog-github": "^0.7.0",
+    "@changesets/cli": "^2.31.0",
     "@codspeed/vitest-plugin": "^5.3.0",
     "@types/jsdom": "^21.1.7",
     "@types/mustache": "^4.2.6",

@@ -1,5 +1,6 @@
 {
   "name": "markdown-it-cj-friendly",
+  "private": true,
   "version": "0.1.1",
   "type": "module",
   "exports": {

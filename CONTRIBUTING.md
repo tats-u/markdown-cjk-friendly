@@ -78,3 +78,13 @@ To run tests, run:
 ```bash
 node --run test
 ```
+
+## Add a changeset to a PR that affects publishable packages
+
+This repository uses Changesets for all publishable packages under `packages/` except `markdown-it-cj-friendly`. If your PR affects any of those packages, please add a changeset to the PR as follows:
+
+1. Add a changeset with `node --run changeset`.
+2. Choose major, minor, or patch according to https://semver.org/.
+3. Edit the created changeset and commit it together.
+
+Of course, if you are sure that your PR does not affect any packages, you do not need to add a changeset. (Please add a note in the PR summary.)
