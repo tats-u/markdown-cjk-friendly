@@ -1,16 +1,16 @@
 {
-  "name": "remark-cjk-friendly",
-  "version": "2.0.1",
+  "name": "mdast-util-to-markdown-cjk-friendly-gfm-strikethrough",
+  "version": "0.0.0",
   "type": "module",
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
-      "default": "./dist/index.js"
+      "types": "./dist/index.d.mts",
+      "default": "./dist/index.mjs"
     },
     "./package.json": "./package.json"
   },
-  "module": "./dist/index.js",
-  "types": "./dist/index.d.ts",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.mts",
   "files": [
     "dist",
     "LICENSE",
@@ -23,17 +23,15 @@
   "author": "Tatsunori Uchino <tats.u@live.jp> (https://github.com/tats-u)",
   "bugs": "https://github.com/tats-u/markdown-cjk-friendly/issues",
   "keywords": [
-    "remark-plugin",
-    "remark",
-    "markdown",
-    "japanese",
-    "chinese",
-    "korean",
-    "cjk",
+    "mdast-util",
     "mdast",
-    "unified"
+    "markdown",
+    "remark-stringify",
+    "strikethrough",
+    "gfm",
+    "cjk"
   ],
-  "description": "remark plugin to make Markdown emphasis (`**`) in CommonMark (and MDX) more friendly with Chinese, Japanese, and Korean (CJK)",
+  "description": "mdast-util-to-markdown extension package for GFM strikethrough in remark-cjk-friendly reverse serialization",
   "sideEffects": false,
   "scripts": {
     "build": "tsdown",
@@ -48,21 +46,13 @@
     "lint:type": "tsc --noEmit"
   },
   "dependencies": {
-    "mdast-util-to-markdown-cjk-friendly": "workspace:*",
-    "micromark-extension-cjk-friendly": "workspace:*"
-  },
-  "devDependencies": {
-    "@mdx-js/mdx": "catalog:",
-    "rehype-stringify": "catalog:",
-    "remark": "catalog:",
-    "remark-gfm": "catalog:",
-    "remark-parse": "catalog:",
-    "remark-rehype": "catalog:",
-    "unified": "catalog:"
+    "mdast-util-gfm-strikethrough": "^2.0.0",
+    "mdast-util-to-markdown": "^2.1.2",
+    "micromark-extension-cjk-friendly-util": "workspace:*",
+    "micromark-util-symbol": "catalog:"
   },
   "peerDependencies": {
-    "@types/mdast": "^4.0.0",
-    "unified": "^11.0.0"
+    "@types/mdast": "*"
   },
   "peerDependenciesMeta": {
     "@types/mdast": {
@@ -71,5 +61,9 @@
   },
   "engines": {
     "node": ">=18"
+  },
+  "devDependencies": {
+    "@types/mdast": "catalog:",
+    "mdast-util-from-markdown": "catalog:"
   }
 }

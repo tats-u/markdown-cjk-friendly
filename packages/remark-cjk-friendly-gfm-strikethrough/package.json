@@ -48,6 +48,7 @@
     "lint:type": "tsc --noEmit"
   },
   "dependencies": {
+    "mdast-util-to-markdown-cjk-friendly-gfm-strikethrough": "workspace:*",
     "micromark-extension-cjk-friendly-gfm-strikethrough": "workspace:*"
   },
   "devDependencies": {

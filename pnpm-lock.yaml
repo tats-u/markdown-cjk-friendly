@@ -16,6 +16,9 @@ catalogs:
     '@types/markdown-it':
       specifier: ^14.1.2
       version: 14.1.2
+    '@types/mdast':
+      specifier: ^4.0.4
+      version: 4.0.4
     '@types/node':
       specifier: ^24.12.2
       version: 24.12.2
@@ -31,6 +34,9 @@ catalogs:
     markdown-it:
       specifier: ^14.1.1
       version: 14.2.0
+    mdast-util-from-markdown:
+      specifier: ^2.0.3
+      version: 2.0.3
     micromark:
       specifier: ^4.0.2
       version: 4.0.2
@@ -238,6 +244,47 @@ importers:
         specifier: ^17.0.0
         version: 17.0.3
 
+  packages/mdast-util-to-markdown-cjk-friendly:
+    dependencies:
+      mdast-util-to-markdown:
+        specifier: ^2.1.2
+        version: 2.1.2
+      micromark-extension-cjk-friendly-util:
+        specifier: workspace:*
+        version: link:../micromark-extension-cjk-friendly-util
+      micromark-util-symbol:
+        specifier: 'catalog:'
+        version: 2.0.1
+    devDependencies:
+      '@types/mdast':
+        specifier: 'catalog:'
+        version: 4.0.4
+      mdast-util-from-markdown:
+        specifier: 'catalog:'
+        version: 2.0.3
+
+  packages/mdast-util-to-markdown-cjk-friendly-gfm-strikethrough:
+    dependencies:
+      mdast-util-gfm-strikethrough:
+        specifier: ^2.0.0
+        version: 2.0.0
+      mdast-util-to-markdown:
+        specifier: ^2.1.2
+        version: 2.1.2
+      micromark-extension-cjk-friendly-util:
+        specifier: workspace:*
+        version: link:../micromark-extension-cjk-friendly-util
+      micromark-util-symbol:
+        specifier: 'catalog:'
+        version: 2.0.1
+    devDependencies:
+      '@types/mdast':
+        specifier: 'catalog:'
+        version: 4.0.4
+      mdast-util-from-markdown:
+        specifier: 'catalog:'
+        version: 2.0.3
+
   packages/micromark-extension-cjk-friendly:
     dependencies:
       devlop:
@@ -324,6 +371,9 @@ importers:
       '@types/mdast':
         specifier: ^4.0.0
         version: 4.0.4
+      mdast-util-to-markdown-cjk-friendly:
+        specifier: workspace:*
+        version: link:../mdast-util-to-markdown-cjk-friendly
       micromark-extension-cjk-friendly:
         specifier: workspace:*
         version: link:../micromark-extension-cjk-friendly
@@ -355,6 +405,9 @@ importers:
       '@types/mdast':
         specifier: ^4.0.0
         version: 4.0.4
+      mdast-util-to-markdown-cjk-friendly-gfm-strikethrough:
+        specifier: workspace:*
+        version: link:../mdast-util-to-markdown-cjk-friendly-gfm-strikethrough
       micromark-extension-cjk-friendly-gfm-strikethrough:
         specifier: workspace:*
         version: link:../micromark-extension-cjk-friendly-gfm-strikethrough

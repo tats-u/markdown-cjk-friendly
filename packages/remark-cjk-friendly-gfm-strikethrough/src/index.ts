@@ -1,4 +1,5 @@
 import type { Root } from "mdast";
+import { cjkFriendlyGfmStrikethroughToMarkdown } from "mdast-util-to-markdown-cjk-friendly-gfm-strikethrough";
 import {
   gfmStrikethroughCjkFriendly,
   type Options,
@@ -16,10 +17,15 @@ export default function remarkGfmStrikethroughCjkFriendly(
 ): void {
   const data = (this as Processor<Root>).data() as {
     micromarkExtensions?: unknown[];
+    toMarkdownExtensions?: unknown[];
   };
   const micromarkExtensions =
     // biome-ignore lint/suspicious/noAssignInExpressions: base plugin (remark-gfm) already does this
     data.micromarkExtensions || (data.micromarkExtensions = []);
+  const toMarkdownExtensions =
+    // biome-ignore lint/suspicious/noAssignInExpressions: base plugin (remark-gfm) already does this
+    data.toMarkdownExtensions || (data.toMarkdownExtensions = []);
 
   micromarkExtensions.push(gfmStrikethroughCjkFriendly(options));
+  toMarkdownExtensions.push(cjkFriendlyGfmStrikethroughToMarkdown());
 }
