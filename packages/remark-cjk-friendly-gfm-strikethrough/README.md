@@ -88,12 +88,12 @@ This package is ESM-only. It requires Node.js 18 or later. (I have only tested i
 >
 > <span lang="zh-Hans-CN">此插件需要unified生态系统（remark和micromark）。如果您需要使用此插件，必须回退到基于JavaScript的unified/remark/micromark工具链。</span>
 >
-> <span lang="ko">이 플러그인은 Rust 기반 MDX 컴파일러（Sätteri）를 지원**하지 않습니다**. 여기에는 다음이 포함됩니다：</span>
+> <span lang="ko">이 플러그인은 Rust 기반 MDX 컴파일러(Sätteri)를 지원**하지 않습니다**. 여기에는 다음이 포함됩니다：</span>
 >
 > - <span lang="ko">`mdxRs` 옵션을 사용하는 `@next/mdx`</span>
 > - <span lang="ko">Rust 기반 Markdown/MDX 파싱을 사용하는 Rspack v1</span>
 >
-> <span lang="ko">이 플러그인은 unified 생태계（remark 및 micromark）가 필요합니다. 이 플러그인을 사용하려면 JavaScript 기반 unified/remark/micromark 툴체인으로 되돌려야 합니다.</span>
+> <span lang="ko">이 플러그인은 unified 생태계(remark 및 micromark)가 필요합니다. 이 플러그인을 사용하려면 JavaScript 기반 unified/remark/micromark 툴체인으로 되돌려야 합니다.</span>
 
 ## Installation / <span lang="ja">インストール</span> / <span lang="zh-Hans-CN">安装</span> / <span lang="ko">설치</span>
 
