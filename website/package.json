@@ -13,6 +13,7 @@
     "clsx": "^2.1.1",
     "diff": "^8.0.3",
     "dompurify": "3.4.1",
+    "lz-string": "^1.5.0",
     "markdown-exit": "1.0.0-beta.8",
     "markdown-it": "catalog:",
     "markdown-it-cjk-friendly": "workspace:^",

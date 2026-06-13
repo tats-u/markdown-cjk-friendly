@@ -1,6 +1,10 @@
 import clsx from "clsx";
 import { diffChars } from "diff";
 import DOMPurify from "dompurify";
+import {
+  compressToEncodedURIComponent,
+  decompressFromEncodedURIComponent,
+} from "lz-string";
 import { OcMarkgithub2 } from "solid-icons/oc";
 import {
   type Accessor,
@@ -154,28 +158,44 @@ const Editor = (props: { bundledVersionName: string }) => {
       useU16 = true;
       shortestB64Buffer = u16Buffer;
     }
-    const markdownBase64 = shortestB64Buffer.toBase64
-      ? shortestB64Buffer.toBase64({
-          alphabet: "base64url",
-          omitPadding: true,
-        })
-      : "";
+    const lzStringMarkdownBase64 = compressToEncodedURIComponent(markdown);
+    const markdownBase64 =
+      (Object.hasOwn?.(Uint8Array.prototype, "toBase64") ??
+      "toBase64" in Uint8Array.prototype)
+        ? shortestB64Buffer.toBase64({
+            alphabet: "base64url",
+            omitPadding: true,
+          })
+        : "";
     const url = new URL(window.location.href);
     if (
-      !shortestB64Buffer.toBase64 ||
+      !markdownBase64 ||
       percentEncodedMarkdown.length <= markdownBase64.length
     ) {
-      url.searchParams.set("src", percentEncodedMarkdown);
       url.searchParams.delete("sc8");
       url.searchParams.delete("s16");
-    } else if (useU16) {
-      url.searchParams.set("s16", markdownBase64);
-      url.searchParams.delete("sc8");
+      if (percentEncodedMarkdown.length <= lzStringMarkdownBase64.length) {
+        url.searchParams.set("src", percentEncodedMarkdown);
+        url.searchParams.delete("lzs");
+      } else {
+        url.searchParams.set("lzs", lzStringMarkdownBase64);
+        url.searchParams.delete("src");
+      }
+    } else if (lzStringMarkdownBase64.length < markdownBase64.length) {
+      url.searchParams.set("lzs", lzStringMarkdownBase64);
       url.searchParams.delete("src");
+      url.searchParams.delete("sc8");
+      url.searchParams.delete("s16");
     } else {
-      url.searchParams.set("sc8", markdownBase64);
       url.searchParams.delete("src");
-      url.searchParams.delete("s16");
+      url.searchParams.delete("lzs");
+      if (useU16) {
+        url.searchParams.set("s16", markdownBase64);
+        url.searchParams.delete("sc8");
+      } else {
+        url.searchParams.set("sc8", markdownBase64);
+        url.searchParams.delete("s16");
+      }
     }
     url.searchParams.set("gfm", Number(gfmEnabled()).toString());
     url.searchParams.set("engine", engine());
@@ -258,22 +278,36 @@ const Editor = (props: { bundledVersionName: string }) => {
     const src = url.searchParams.get("src");
     const b64u8 = url.searchParams.get("sc8");
     const b64u16 = url.searchParams.get("s16");
+    const lzs = url.searchParams.get("lzs");
     const bench = url.searchParams.get("bench");
+    // searchParams.has() is unnecessary since we need to handle empty strings as falsy values
     if (src) {
       setMarkdown(decodeURIComponent(src));
       setTextareaMarkdown(decodeURIComponent(src));
-    } else if (b64u8) {
-      const decoded = new TextDecoder().decode(
-        Uint8Array.fromBase64(b64u8, { alphabet: "base64url" }),
-      );
-      setMarkdown(decoded);
-      setTextareaMarkdown(decoded);
-    } else if (b64u16) {
-      const decoded = new TextDecoder("utf-16le").decode(
-        Uint8Array.fromBase64(b64u16, { alphabet: "base64url" }),
-      );
-      setMarkdown(decoded);
-      setTextareaMarkdown(decoded);
+    } else if (
+      Object.hasOwn?.(Uint8Array.prototype, "fromBase64") &&
+      (b64u8 || b64u16)
+    ) {
+      if (b64u8) {
+        const decoded = new TextDecoder().decode(
+          Uint8Array.fromBase64(b64u8, { alphabet: "base64url" }),
+        );
+        setMarkdown(decoded);
+        setTextareaMarkdown(decoded);
+      } else {
+        const decoded = new TextDecoder("utf-16le").decode(
+          // Type checker sucks, `as string` is shamefully necessary here
+          Uint8Array.fromBase64(b64u16 as string, { alphabet: "base64url" }),
+        );
+        setMarkdown(decoded);
+        setTextareaMarkdown(decoded);
+      }
+    } else if (lzs) {
+      const decompressed = decompressFromEncodedURIComponent(lzs);
+      if (decompressed) {
+        setMarkdown(decompressed);
+        setTextareaMarkdown(decompressed);
+      }
     } else if (textareaRef) {
       setTextareaMarkdown(textareaRef.value);
       setMarkdown(textareaRef.value);
