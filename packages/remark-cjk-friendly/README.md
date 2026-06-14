@@ -125,28 +125,28 @@ This package is ESM-only. It requires Node.js 18 or later. (I have only tested i
 > This plugin does **not** support Rust-based MDX compilers (Sätteri). This includes:
 >
 > - `@next/mdx` with the `mdxRs` option
-> - Rspack v1 with Rust-based Markdown/MDX parsing
+> - Rspress v1 with Rust-based Markdown/MDX parsing
 >
 > This plugin requires the unified ecosystem (remark and micromark). If you need to use this plugin, you must fall back to the JavaScript-based unified/remark/micromark toolchain.
 >
 > <span lang="ja">このプラグインは、RustベースのMDXコンパイラ（Sätteri）に対応**していません**。これには以下が含まれます：</span>
 >
 > - <span lang="ja">`mdxRs`オプションを使用した`@next/mdx`</span>
-> - <span lang="ja">RustベースのMarkdown/MDXパースを使用したRspack v1</span>
+> - <span lang="ja">RustベースのMarkdown/MDXパースを使用したRspress v1</span>
 >
 > <span lang="ja">このプラグインはunifiedエコシステム（remarkとmicromark）を必要とします。このプラグインを使用する場合は、JavaScriptベースのunified/remark/micromarkツールチェーンを使用する必要があります。</span>
 >
 > <span lang="zh-Hans-CN">此插件**不**支持基于Rust的MDX编译器（Sätteri）。这包括：</span>
 >
 > - <span lang="zh-Hans-CN">使用`mdxRs`选项的`@next/mdx`</span>
-> - <span lang="zh-Hans-CN">使用基于Rust的Markdown/MDX解析的Rspack v1</span>
+> - <span lang="zh-Hans-CN">使用基于Rust的Markdown/MDX解析的Rspress v1</span>
 >
 > <span lang="zh-Hans-CN">此插件需要unified生态系统（remark和micromark）。如果您需要使用此插件，必须回退到基于JavaScript的unified/remark/micromark工具链。</span>
 >
 > <span lang="ko">이 플러그인은 Rust 기반 MDX 컴파일러(Sätteri)를 지원**하지 않습니다**. 여기에는 다음이 포함됩니다：</span>
 >
 > - <span lang="ko">`mdxRs` 옵션을 사용하는 `@next/mdx`</span>
-> - <span lang="ko">Rust 기반 Markdown/MDX 파싱을 사용하는 Rspack v1</span>
+> - <span lang="ko">Rust 기반 Markdown/MDX 파싱을 사용하는 Rspress v1</span>
 >
 > <span lang="ko">이 플러그인은 unified 생태계(remark 및 micromark)가 필요합니다. 이 플러그인을 사용하려면 JavaScript 기반 unified/remark/micromark 툴체인으로 되돌려야 합니다.</span>
 
