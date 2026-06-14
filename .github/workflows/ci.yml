@@ -53,6 +53,7 @@ jobs:
         with:
           run: pnpm vitest bench --run --shard=${{ matrix.shard }}
           token: ${{ secrets.CODSPEED_TOKEN }}
+    if: ${{ !startsWith(github.head_ref, 'changeset-release/') }} 
   build-website:
     runs-on: ubuntu-latest
     permissions:
