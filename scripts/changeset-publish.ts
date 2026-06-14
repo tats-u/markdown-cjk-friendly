@@ -11,10 +11,15 @@ const preStatePath = path.join(repoRoot, ".changeset", "pre.json");
 const prereleaseTag = "next";
 const prereleaseBranch = "next";
 
-function run(command: string, args: readonly string[]) {
+function run(
+  command: string,
+  args: readonly string[],
+  env?: NodeJS.ProcessEnv,
+) {
   execFileSync(command, args, {
     cwd: repoRoot,
     stdio: "inherit",
+    env: env ? { ...process.env, ...env } : undefined,
   });
 }
 
@@ -60,7 +65,10 @@ if (branchName === prereleaseBranch) {
     );
   }
 
-  run("pnpm", ["exec", "changeset", "publish", "--tag", prereleaseTag]);
+  // Changeset CLI doesn't support the `--provenance` flag, so we should pass the environment variable `NPM_CONFIG_PROVENANCE` instead.
+  run("pnpm", ["exec", "changeset", "publish", "--tag", prereleaseTag], {
+    NPM_CONFIG_PROVENANCE: "true",
+  });
 } else {
   if (await fileExists(preStatePath)) {
     throw new Error(
@@ -68,5 +76,8 @@ if (branchName === prereleaseBranch) {
     );
   }
 
-  run("pnpm", ["exec", "changeset", "publish"]);
+  // Changeset CLI doesn't support the `--provenance` flag, so we should pass the environment variable `NPM_CONFIG_PROVENANCE` instead.
+  run("pnpm", ["exec", "changeset", "publish"], {
+    NPM_CONFIG_PROVENANCE: "true",
+  });
 }
