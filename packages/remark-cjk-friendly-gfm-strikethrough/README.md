@@ -150,13 +150,73 @@ const someMdxConfig = {
 >
 > <span lang="ko">`remarkCjkFriendlyGfmStrikethrough`는 `remarkGfm` 뒤에 배치해야 합니다. 그렇게 하지 않으면 `remarkCjkFriendlyGfmStrikethrough`가 작동하지 않습니다.</span>
 
-In [Rspress 1.x](https://v1.rspress.rs/guide/basic/use-mdx#disabling-the-rust-version-compiler) and [Next.js (`@next/mdx`)](https://nextjs.org/docs/pages/building-your-application/configuring/mdx#using-the-rust-based-mdx-compiler-experimental), you will probably need to set `mdxRs` to `false` to make Rspress use a JavaScript-based and monkey-patchable parser.
+This plugin is not compatible with Rust-based remark-compatible Markdown/MDX parsers, including the following:
 
-<span lang="ja">[Rspress 1.x](https://v1.rspress.rs/guide/basic/use-mdx#disabling-the-rust-version-compiler)と[Next.js（`@next/mdx`）](https://nextjs.org/docs/pages/building-your-application/configuring/mdx#using-the-rust-based-mdx-compiler-experimental)では、`mdxRs`を`false`に設定して、RspressにJavaScript製でモンキーパッチ可能なパーサを使わせる必要がおそらくあります。</span>
+- [mdx-rs](https://crates.io/crates/mdx-rs) crate
+- [@rspress/mdx-rs](https://github.com/web-infra-dev/mdx-rs) package
+- [Sätteri](https://satteri.bruits.org/)
 
-<span lang="zh-CN">在[Rspress 1.x](https://v1.rspress.rs/zh/guide/basic/use-mdx#%E5%85%B3%E9%97%AD-rust-%E7%89%88%E6%9C%AC%E7%BC%96%E8%AF%91%E5%99%A8)和[Next.js(`@next/mdx`)](https://nextjs.org/docs/pages/building-your-application/configuring/mdx#using-the-rust-based-mdx-compiler-experimental)中，您可能需要将`mdxRs`设置为`false`，以使Rspress使用基于JavaScript且可进行猴子补丁的解析器。</span>
+When using this plugin, you need to use the real remark parser that internally uses micromark, which is implemented in pure JavaScript and thus monkey-patchable, instead of these parsers. Here are well-known use cases. If applicable, please take the corresponding workaround.
 
-<span lang="ko">[Rspress 1.x](https://v1.rspress.rs/guide/basic/use-mdx#disabling-the-rust-version-compiler)와 [Next.js(`@next/mdx`)](https://nextjs.org/docs/pages/building-your-application/configuring/mdx#using-the-rust-based-mdx-compiler-experimental)에서는 `mdxRs`를 `false`로 설정하여 Rspress가 JavaScript 기반이며 몽키 패치가 가능한 파서를 사용하도록 해야 할 수 있습니다.</span>
+| Well-known use case | Workaround |
+| --- | --- |
+| `mdxRs` option in [Rspress 1.x](https://v1.rspress.rs/guide/basic/use-mdx#disabling-the-rust-version-compiler) | Set it to `false` |
+| `mdxRs` option in [Next.js (`@next/mdx`)](https://nextjs.org/docs/pages/building-your-application/configuring/mdx#using-the-rust-based-mdx-compiler-experimental) | Set it to `false` |
+| Astro 6.4 or later | Use `@astrojs/markdown-remark` instead of `@astrojs/markdown-satteri` |
+
+<div lang="ja">
+
+本プラグインは、次を含むRustベースのremark互換のMarkdown・MDXパーサと互換性がありません。
+
+- [mdx-rs](https://crates.io/crates/mdx-rs)クレート
+- [@rspress/mdx-rs](https://github.com/web-infra-dev/mdx-rs)パッケージ
+- [Sätteri](https://satteri.bruits.org/)
+
+本プラグインを使う場合、これらのパーサではなく、純JavaScriptで実装されているためモンキーパッチ可能なパーサmicromarkを中で使用している、本物のremarkパーサを使う必要があります。次のような利用先が有名です。当てはまる場合は、対応する回避策を取ってください。
+
+| 有名な利用先 | 回避策 |
+| --- | --- |
+| [Rspress 1.x](https://v1.rspress.rs/guide/basic/use-mdx#disabling-the-rust-version-compiler)の`mdxRs`オプション | `false`にしてください |
+| [Next.js（`@next/mdx`）](https://nextjs.org/docs/pages/building-your-application/configuring/mdx#using-the-rust-based-mdx-compiler-experimental)の`mdxRs`オプション | `false`にしてください |
+| Astro 6.4以降 | `@astrojs/markdown-satteri`ではなく、`@astrojs/markdown-remark`を使ってください |
+
+</div>
+
+<div lang="zh-Hans-CN">
+
+本插件与以下Rust语言实现的remark兼容的Markdown/MDX解析器不兼容：
+
+- [mdx-rs](https://crates.io/crates/mdx-rs) crate
+- [@rspress/mdx-rs](https://github.com/web-infra-dev/mdx-rs) 包
+- [Sätteri](https://satteri.bruits.org/)
+
+使用本插件时，需要使用内部使用micromark（由纯JavaScript实现，因此可以进行猴子补丁）的真正的remark解析器，而不是这些解析器。以下是常见的使用场景，如果适用，请采取相应的解决方法。
+
+| 常见使用场景 | 解决方法 |
+| --- | --- |
+| [Rspress 1.x](https://v1.rspress.rs/zh/guide/basic/use-mdx#%E5%85%B3%E9%97%AD-rust-%E7%89%88%E6%9C%AC%E7%BC%96%E8%AF%91%E5%99%A8)的`mdxRs`选项 | 请设置为`false` |
+| [Next.js（`@next/mdx`）](https://nextjs.org/docs/pages/building-your-application/configuring/mdx#using-the-rust-based-mdx-compiler-experimental)的`mdxRs`选项 | 请设置为`false` |
+| Astro 6.4及以后版本 | 请使用`@astrojs/markdown-remark`而不是`@astrojs/markdown-satteri` |
+
+</div>
+
+<div lang="ko">
+
+이 플러그인은 다음을 포함하는 Rust 기반의 remark 호환 Markdown/MDX 파서와 호환되지 않습니다.
+
+- [mdx-rs](https://crates.io/crates/mdx-rs) 크레이트
+- [@rspress/mdx-rs](https://github.com/web-infra-dev/mdx-rs) 패키지
+- [Sätteri](https://satteri.bruits.org/)
+
+이 플러그인을 사용할 때는 이러한 파서 대신, 순수 JavaScript로 구현되어 있어 몽키 패치가 가능한 micromark를 내부적으로 사용하는 진정한 remark 파서를 사용해야 합니다. 다음과 같은 잘 알려진 사용처가 있습니다. 해당하는 경우에는 그에 맞는 해결 방법을 적용하세요.
+
+| 잘 알려진 사용처 | 해결 방법 |
+| --- | --- |
+| [Rspress 1.x](https://v1.rspress.rs/guide/basic/use-mdx#disabling-the-rust-version-compiler)의 `mdxRs` 옵션 | `false`로 설정하세요 |
+| [Next.js（`@next/mdx`）](https://nextjs.org/docs/pages/building-your-application/configuring/mdx#using-the-rust-based-mdx-compiler-experimental)의 `mdxRs` 옵션 | `false`로 설정하세요 |
+| Astro 6.4 이후 | `@astrojs/markdown-satteri` 대신 `@astrojs/markdown-remark`를 사용하세요 |
+
+</div>
 
 ## Compatibility with the other languages / <span lang="ja">他言語との互換性</span> / <span lang="zh-Hans-CN">与其他语言的兼容性</span> / <span lang="ko">다른 언어와의 호환성</span>
 
