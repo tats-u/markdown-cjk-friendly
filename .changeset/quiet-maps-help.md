@@ -10,4 +10,4 @@
 "remark-cjk-friendly-gfm-strikethrough": patch
 ---
 
-Add package directory metadata to the CJK-friendly packages.
+Fix package.json repository fields for monorepos.
