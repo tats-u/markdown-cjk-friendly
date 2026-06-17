@@ -3,6 +3,7 @@ import { compile as compileMdx } from "@mdx-js/mdx";
 import rehypeStringify from "rehype-stringify";
 import remarkCjkFriendly from "remark-cjk-friendly";
 import remarkCjkFriendlyGfmStrikethrough from "remark-cjk-friendly-gfm-strikethrough";
+import remarkCjkFriendlyGfmStrikethroughParseOnly from "remark-cjk-friendly-gfm-strikethrough/parseOnly";
 import remarkGfm from "remark-gfm";
 import remarkParse from "remark-parse";
 import remarkRehype from "remark-rehype";
@@ -22,8 +23,21 @@ const processor = unified()
   .use(remarkRehype)
   .use(rehypeStringify);
 
+const processorPartial = unified()
+  .use(remarkParse)
+  .use(remarkGfm)
+  .use(remarkCjkFriendly)
+  .use(remarkCjkFriendlyGfmStrikethroughParseOnly)
+  .use(remarkRehype)
+  .use(rehypeStringify);
+
 async function md2Html(md: string): Promise<string> {
   const result = await processor.process(md);
+  return result.toString();
+}
+
+async function md2HtmlPartial(md: string): Promise<string> {
+  const result = await processorPartial.process(md);
   return result.toString();
 }
 
@@ -96,5 +110,20 @@ describe("remark-cjk-friendly-gfm-strikethrough", () => {
     expect(result).toContain("components.table,");
     expect(result).toContain("components.del,");
     expect(result).toEqual(await mdx2ReactNonCjk(source));
+  });
+});
+
+describe("remark-cjk-friendly-gfm-strikethrough/parseOnly", () => {
+  it("Compatible with CJK", async () => {
+    const result = await md2HtmlPartial(
+      await readFile(
+        new URL("../../../testcases/gfm-strikethrough.md", import.meta.url),
+        "utf-8",
+      ),
+    );
+    for (const line of result.split(/\r?\n/)) {
+      expect(line).not.toMatch(/~~[^\n]+~~/);
+    }
+    expect(result).toMatchSnapshot();
   });
 });

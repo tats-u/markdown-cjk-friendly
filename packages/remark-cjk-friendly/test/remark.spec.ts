@@ -2,6 +2,7 @@ import { readFile } from "node:fs/promises";
 import { compile as compileMdx } from "@mdx-js/mdx";
 import rehypeStringify from "rehype-stringify";
 import remarkCjkFriendly from "remark-cjk-friendly";
+import remarkCjkFriendlyParseOnly from "remark-cjk-friendly/parseOnly";
 import remarkGfm from "remark-gfm";
 import remarkParse from "remark-parse";
 import remarkRehype from "remark-rehype";
@@ -13,6 +14,12 @@ import commonMarkTestCases from "../../../testcases/commonmark.json" with {
 const processor = unified()
   .use(remarkParse)
   .use(remarkCjkFriendly)
+  .use(remarkRehype)
+  .use(rehypeStringify);
+
+const processorPartial = unified()
+  .use(remarkParse)
+  .use(remarkCjkFriendlyParseOnly)
   .use(remarkRehype)
   .use(rehypeStringify);
 
@@ -37,6 +44,11 @@ const processorWithGfm2 = unified()
 
 async function md2Html(md: string): Promise<string> {
   const result = await processor.process(md);
+  return result.toString();
+}
+
+async function md2HtmlPartial(md: string): Promise<string> {
+  const result = await processorPartial.process(md);
   return result.toString();
 }
 
@@ -229,6 +241,21 @@ describe("remark-cjk-friendly", () => {
     );
     for (const line of result.split(/\r?\n/)) {
       expect(line).not.toContain("__");
+    }
+    expect(result).toMatchSnapshot();
+  });
+});
+
+describe("remark-cjk-friendly/parseOnly", () => {
+  it("** around Kana/Han is converted to <strong>", async () => {
+    const result = await md2HtmlPartial(
+      await readFile(
+        new URL("../../../testcases/strong.md", import.meta.url),
+        "utf-8",
+      ),
+    );
+    for (const line of result.split(/\r?\n/)) {
+      expect(line).not.toMatch(/\*\*[^\n]+\*\*/);
     }
     expect(result).toMatchSnapshot();
   });

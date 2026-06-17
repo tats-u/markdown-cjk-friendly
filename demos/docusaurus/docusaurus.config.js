@@ -5,8 +5,8 @@
 // See: https://docusaurus.io/docs/api/docusaurus-config
 
 import { themes as prismThemes } from "prism-react-renderer";
-import remarkCjkFriendly from "remark-cjk-friendly";
-import remarkCjkFriendlyGfmStrikethrough from "remark-cjk-friendly-gfm-strikethrough";
+import remarkCjkFriendly from "remark-cjk-friendly/parseOnly";
+import remarkCjkFriendlyGfmStrikethrough from "remark-cjk-friendly-gfm-strikethrough/parseOnly";
 
 /**
  * @import { Options as PresetOptions } from "@docusaurus/preset-classic"

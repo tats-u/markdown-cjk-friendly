@@ -1,31 +1,19 @@
-import type { Root } from "mdast";
-import { cjkFriendlyGfmStrikethroughToMarkdown } from "mdast-util-to-markdown-cjk-friendly-gfm-strikethrough";
-import {
-  gfmStrikethroughCjkFriendly,
+import remarkCjkFriendlyGfmStrikethroughParseOnly, {
   type Options,
-} from "micromark-extension-cjk-friendly-gfm-strikethrough";
-import type { Processor } from "unified";
+} from "./parseOnly.ts";
+import remarkCjkFriendlyGfmStrikethroughSerializeOnly from "./serializeOnly.ts";
 
 export type { Options };
 
 /**
  * Make Markdown strikethrough (`~~`) in GFM more friendly with Chinese, Japanese, and Korean (CJK)
+ *
+ * This plugin supports both parsing and serializing. If you want to support only one of them, it is recommended to use {@linkcode remarkCjkFriendlyGfmStrikethroughParseOnly} (`remark-cjk-friendly-gfm-strikethrough/parseOnly`) or {@linkcode remarkCjkFriendlyGfmStrikethroughSerializeOnly} (`remark-cjk-friendly-gfm-strikethrough/serializeOnly`) instead to minimize bundled dependencies.
  */
 export default function remarkGfmStrikethroughCjkFriendly(
   this: unknown,
   options?: Options | null,
 ): void {
-  const data = (this as Processor<Root>).data() as {
-    micromarkExtensions?: unknown[];
-    toMarkdownExtensions?: unknown[];
-  };
-  const micromarkExtensions =
-    // biome-ignore lint/suspicious/noAssignInExpressions: base plugin (remark-gfm) already does this
-    data.micromarkExtensions || (data.micromarkExtensions = []);
-  const toMarkdownExtensions =
-    // biome-ignore lint/suspicious/noAssignInExpressions: base plugin (remark-gfm) already does this
-    data.toMarkdownExtensions || (data.toMarkdownExtensions = []);
-
-  micromarkExtensions.push(gfmStrikethroughCjkFriendly(options));
-  toMarkdownExtensions.push(cjkFriendlyGfmStrikethroughToMarkdown());
+  remarkCjkFriendlyGfmStrikethroughParseOnly.call(this, options);
+  remarkCjkFriendlyGfmStrikethroughSerializeOnly.call(this);
 }

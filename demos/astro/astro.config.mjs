@@ -1,8 +1,8 @@
 import mdx from "@astrojs/mdx";
 // @ts-check
 import { defineConfig } from "astro/config";
-import remarkCjkFriendly from "remark-cjk-friendly";
-import remarkCjkFriendlyGfmStrikethrough from "remark-cjk-friendly-gfm-strikethrough";
+import remarkCjkFriendly from "remark-cjk-friendly/parseOnly";
+import remarkCjkFriendlyGfmStrikethrough from "remark-cjk-friendly-gfm-strikethrough/parseOnly";
 
 // https://astro.build/config
 export default defineConfig({
