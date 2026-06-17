@@ -33,6 +33,6 @@
     "@types/markdown-it": "catalog:",
     "@types/node": "catalog:",
     "@types/semver": "^7.7.1",
-    "vite": "^7.3.2"
+    "vite": "^7.3.5"
   }
 }

@@ -27,7 +27,7 @@ catalog:
   '@types/markdown-it': ^14.1.2
   '@types/mdast': ^4.0.4
   '@types/node': ^24.12.2
-  astro: ^6.1.10
+  astro: ^6.4.6
   devlop: ^1.1.0
   get-east-asian-width: ^1.4.0
   markdown-it: ^14.1.1
