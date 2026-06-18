@@ -17,5 +17,13 @@
   },
   "[css]": {
     "editor.defaultFormatter": "biomejs.biome"
+  },
+  "chat.tools.terminal.autoApprove": {
+    "Push-Location": true,
+    "Pop-Location": true,
+    "/^node --run (fix|lint|build|test|bench)(:[a-z]{1,15})?$/": {
+      "approve": true,
+      "matchCommandLine": true
+    }
   }
 }
