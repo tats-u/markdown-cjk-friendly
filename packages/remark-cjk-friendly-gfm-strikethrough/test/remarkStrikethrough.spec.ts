@@ -3,6 +3,7 @@ import { compile as compileMdx } from "@mdx-js/mdx";
 import rehypeStringify from "rehype-stringify";
 import remarkCjkFriendly from "remark-cjk-friendly";
 import remarkCjkFriendlyGfmStrikethrough from "remark-cjk-friendly-gfm-strikethrough";
+import remarkCjkFriendlyGfmStrikethroughBidi from "remark-cjk-friendly-gfm-strikethrough/bidi";
 import remarkCjkFriendlyGfmStrikethroughParseOnly from "remark-cjk-friendly-gfm-strikethrough/parseOnly";
 import remarkGfm from "remark-gfm";
 import remarkParse from "remark-parse";
@@ -125,5 +126,13 @@ describe("remark-cjk-friendly-gfm-strikethrough/parseOnly", () => {
       expect(line).not.toMatch(/~~[^\n]+~~/);
     }
     expect(result).toMatchSnapshot();
+  });
+});
+
+describe("remark-cjk-friendly-gfm-strikethrough/bidi", () => {
+  it("identical to remark-cjk-friendly-gfm-strikethrough entry point", () => {
+    expect(remarkCjkFriendlyGfmStrikethroughBidi).toBe(
+      remarkCjkFriendlyGfmStrikethrough,
+    );
   });
 });

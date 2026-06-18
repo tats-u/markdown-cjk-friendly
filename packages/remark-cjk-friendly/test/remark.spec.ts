@@ -2,6 +2,7 @@ import { readFile } from "node:fs/promises";
 import { compile as compileMdx } from "@mdx-js/mdx";
 import rehypeStringify from "rehype-stringify";
 import remarkCjkFriendly from "remark-cjk-friendly";
+import remarkCjkFriendlyBidi from "remark-cjk-friendly/bidi";
 import remarkCjkFriendlyParseOnly from "remark-cjk-friendly/parseOnly";
 import remarkGfm from "remark-gfm";
 import remarkParse from "remark-parse";
@@ -258,5 +259,11 @@ describe("remark-cjk-friendly/parseOnly", () => {
       expect(line).not.toMatch(/\*\*[^\n]+\*\*/);
     }
     expect(result).toMatchSnapshot();
+  });
+});
+
+describe("remark-cjk-friendly/bidi", () => {
+  it("identical to remark-cjk-friendly entry point", async () => {
+    expect(remarkCjkFriendlyBidi).toBe(remarkCjkFriendly);
   });
 });
