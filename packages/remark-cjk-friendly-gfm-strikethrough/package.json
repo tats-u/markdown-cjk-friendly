@@ -15,6 +15,10 @@
       "types": "./dist/serializeOnly.d.ts",
       "default": "./dist/serializeOnly.js"
     },
+    "./bidi": {
+      "types": "./dist/bidi.d.ts",
+      "default": "./dist/bidi.js"
+    },
     "./package.json": "./package.json"
   },
   "module": "./dist/index.js",
