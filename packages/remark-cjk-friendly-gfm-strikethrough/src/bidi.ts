@@ -1,6 +1,4 @@
-import parseOnly, {
-  type Options,
-} from "./parseOnly.ts";
+import parseOnly, { type Options } from "./parseOnly.ts";
 import serializeOnly from "./serializeOnly.ts";
 
 export type { Options };
