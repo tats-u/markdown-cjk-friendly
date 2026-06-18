@@ -7,7 +7,7 @@ import type { Processor } from "unified";
  *
  * This plugin only supports serializing.
  */
-export default function remarkCjkFriendlySerializeOnly(this: unknown): void {
+export default function remarkCjkFriendly(this: unknown): void {
   const data = (this as Processor<Root>).data() as {
     toMarkdownExtensions?: unknown[];
   };

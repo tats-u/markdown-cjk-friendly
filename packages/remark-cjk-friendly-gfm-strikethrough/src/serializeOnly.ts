@@ -7,7 +7,7 @@ import type { Processor } from "unified";
  *
  * This plugin only supports serializing.
  */
-export default function remarkCjkFriendlyGfmStrikethroughSerializeOnly(
+export default function remarkCjkFriendlyGfmStrikethrough(
   this: unknown,
 ): void {
   const data = (this as Processor<Root>).data() as {

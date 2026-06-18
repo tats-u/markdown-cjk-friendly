@@ -170,13 +170,53 @@ const processor = unified()
 const htmlResult = (await processor.process(markdownString)).toString();
 ```
 
-This plugin also wires the reverse path for `remark-stringify` / `mdast-util-to-markdown`, so CJK text around `*` / `**` stays raw when it is valid under this specification instead of being escaped as character references. If you don't need this (only need Markdown parsing), or don't need parsing and only need this serialization, you can import from `remark-cjk-friendly/parseOnly` or `remark-cjk-friendly/serializeOnly` instead of `remark-cjk-friendly` to avoid bundling the unnecessary processing.
+This plugin also wires the reverse path for `remark-stringify` / `mdast-util-to-markdown`, so CJK text around `*` / `**` stays raw when it is valid under this specification instead of being escaped as character references. Since this serialization feature may be removed from the default entry point of `remark-cjk-friendly` in a future version, it is strongly recommended to import from `remark-cjk-friendly/bidi`. For users who only need parsing or serialization and want to minimize bundle size (reduces a few KB), import from `remark-cjk-friendly/parseOnly` or `remark-cjk-friendly/serializeOnly` respectively.
 
-<span lang="ja">このプラグインは`remark-stringify` / `mdast-util-to-markdown`向けの逆方向シリアライズ拡張も自動で配線するため、この仕様で妥当なケースでは`*` / `**`の前後にあるCJK文字が文字参照へエスケープされず、そのまま出力されます。これが不要（Markdownのパースのみが必要）、またはパースが不要でこのシリアライズのみが必要な場合は、`remark-cjk-friendly`の代わりにそれぞれ`remark-cjk-friendly/parseOnly`または`remark-cjk-friendly/serializeOnly`からインポートすると、不要な方の処理のバンドルを避けることができます。</span>
+| Entry point | Parsing (Markdown → AST) | Serialization (AST → Markdown) |
+| --- | --- | --- |
+| `remark-cjk-friendly` | ✅ | ⚠️ |
+| `remark-cjk-friendly/bidi` | ✅ | ✅ |
+| `remark-cjk-friendly/parseOnly` | ✅ | ❌ |
+| `remark-cjk-friendly/serializeOnly` | ❌ | ✅ |
 
-<span lang="zh-Hans-CN">此插件还会自动接入 `remark-stringify` / `mdast-util-to-markdown` 的反向序列化扩展，因此在本规范允许的情况下，`*` / `**` 周围的 CJK 文字会保持原样输出，而不会被转义为字符引用。如果不需要此功能（仅需要 Markdown 解析），或者不需要解析仅需要序列化，可以分别从 `remark-cjk-friendly/parseOnly` 或 `remark-cjk-friendly/serializeOnly` 导入，而不是从 `remark-cjk-friendly` 导入，以避免打包不必要的处理。</span>
+<div lang="ja">
 
-<span lang="ko">이 플러그인은 `remark-stringify` / `mdast-util-to-markdown`용 역방향 직렬화 확장도 자동으로 연결하므로, 이 사양에서 유효한 경우 `*` / `**` 주변의 CJK 문자가 문자 참조로 이스케이프되지 않고 그대로 출력됩니다. 이 기능이 필요 없는 경우（Markdown 파싱만 필요）또는 파싱이 필요 없고 직렬화만 필요한 경우, `remark-cjk-friendly` 대신 각각 `remark-cjk-friendly/parseOnly` 또는 `remark-cjk-friendly/serializeOnly`에서 가져오면 불필요한 처리 번들을 피할 수 있습니다.</span>
+このプラグインは`remark-stringify` / `mdast-util-to-markdown`向けの逆方向シリアライズ拡張にも対応しており、この仕様で妥当なケースでは`*` / `**`の前後にあるCJK文字が文字参照へエスケープされず、そのまま出力されます。このシリアライズ機能は将来のバージョンで`remark-cjk-friendly`のデフォルトのエントリポイントから削除するかもしれませんので、`remark-cjk-friendly/bidi`からインポートすることを強く推奨します。また、パース・シリアライズの片方しか使わない場合でバンドルサイズを最小限に抑えたい場合（数KB削減）は、`remark-cjk-friendly/parseOnly`または`remark-cjk-friendly/serializeOnly`からインポートしてください。
+
+| エントリポイント | パース（Markdown → AST） | シリアライズ（AST → Markdown） |
+| --- | --- | --- |
+| `remark-cjk-friendly` | ⭕️ | ⚠️ |
+| `remark-cjk-friendly/bidi` | ⭕️ | ⭕️ |
+| `remark-cjk-friendly/parseOnly` | ⭕️ | ❌ |
+| `remark-cjk-friendly/serializeOnly` | ❌ | ⭕️ |
+
+</div>
+
+<div lang="zh-Hans-CN">
+
+此插件还会自动接入 `remark-stringify` / `mdast-util-to-markdown` 的反向序列化扩展，因此在本规范允许的情况下，`*` / `**` 周围的 CJK 文字会保持原样输出，而不会被转义为字符引用。由于此序列化功能可能在未来版本中从 `remark-cjk-friendly` 的默认入口点中删除，强烈建议从 `remark-cjk-friendly/bidi` 导入。如果只需要解析或序列化其中之一，并希望尽量减小打包体积（可减少数KB），请分别从 `remark-cjk-friendly/parseOnly` 或 `remark-cjk-friendly/serializeOnly` 导入。
+
+| 入口点 | 解析（Markdown → AST） | 序列化（AST → Markdown） |
+| --- | --- | --- |
+| `remark-cjk-friendly` | ✅ | ⚠️ |
+| `remark-cjk-friendly/bidi` | ✅ | ✅ |
+| `remark-cjk-friendly/parseOnly` | ✅ | ❌ |
+| `remark-cjk-friendly/serializeOnly` | ❌ | ✅ |
+
+</div>
+
+<div lang="ko">
+
+이 플러그인은 `remark-stringify` / `mdast-util-to-markdown`용 역방향 직렬화 확장도 자동으로 연결하므로, 이 사양에서 유효한 경우 `*` / `**` 주변의 CJK 문자가 문자 참조로 이스케이프되지 않고 그대로 출력됩니다. 이 직렬화 기능은 향후 버전에서 `remark-cjk-friendly`의 기본 엔트리 포인트에서 제거될 수 있으므로, `remark-cjk-friendly/bidi`에서 가져오는 것을 강력히 권장합니다. 파싱과 직렬화 중 하나만 필요하고 번들 크기를 최소화하려는 경우（수 KB 절감）에는 각각 `remark-cjk-friendly/parseOnly` 또는 `remark-cjk-friendly/serializeOnly`에서 가져오세요.
+
+| 엔트리 포인트 | 파싱（Markdown → AST） | 직렬화（AST → Markdown） |
+| --- | --- | --- |
+| `remark-cjk-friendly` | ⭕️ | ⚠️ |
+| `remark-cjk-friendly/bidi` | ⭕️ | ⭕️ |
+| `remark-cjk-friendly/parseOnly` | ⭕️ | ❌ |
+| `remark-cjk-friendly/serializeOnly` | ❌ | ⭕️ |
+
+</div>
 
 For MDX, add `remarkCjkFriendly` to the `remarkPlugins` array in the config object:
 
