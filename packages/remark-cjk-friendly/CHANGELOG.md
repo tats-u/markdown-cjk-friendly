@@ -1,5 +1,22 @@
 # remark-cjk-friendly
 
+## 2.3.1
+
+### Patch Changes
+
+- [`7b08850`](https://github.com/tats-u/markdown-cjk-friendly/commit/7b08850ec519cbd49cf3a2d1e6e78fb729840ba4) Thanks [@tats-u](https://github.com/tats-u)! - fix(remark-\*): add /bidi entry point to package.json
+
+  The `/bidi` entry points were advertised as available starting from v2.3.0, but they were not actually exported in `package.json`, so users could not use them.
+
+  With this fix, the `/bidi` entry points are now officially available for use. If you want to use both parsing and serialization, please update your `import` statements to use the `/bidi` entry points as shown below:
+
+  ```diff
+  -import remarkCjkFriendly from "remark-cjk-friendly";
+  -import remarkCjkFriendlyGfmStrikethrough from "remark-cjk-friendly-gfm-strikethrough";
+  +import remarkCjkFriendly from "remark-cjk-friendly/bidi";
+  +import remarkCjkFriendlyGfmStrikethrough from "remark-cjk-friendly-gfm-strikethrough/bidi";
+  ```
+
 ## 2.3.0
 
 ### Minor Changes
