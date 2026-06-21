@@ -17,7 +17,9 @@
     "README.md"
   ],
   "repository": {
-    "url": "https://github.com/tats-u/markdown-cjk-friendly"
+    "type": "git",
+    "url": "git+https://github.com/tats-u/markdown-cjk-friendly.git",
+    "directory": "packages/micromark-extension-cjk-friendly-util"
   },
   "license": "MIT",
   "author": "Tatsunori Uchino <tats.u@live.jp> (https://github.com/tats-u)",
