@@ -14,7 +14,7 @@
     "diff": "^8.0.3",
     "dompurify": "3.4.11",
     "lz-string": "^1.5.0",
-    "markdown-exit": "1.0.0-beta.8",
+    "markdown-exit": "1.1.0-beta.2",
     "markdown-it": "catalog:",
     "markdown-it-cjk-friendly": "workspace:^",
     "marked": "^17.0.0",
