@@ -44,7 +44,7 @@ catalog:
   remark-gfm: ^4.0.1
   remark-parse: ^11.0.0
   remark-rehype: ^11.1.2
-  tsdown: ^0.18.1
+  tsdown: ^0.22.3
   unified: ^11.0.5
 dedupePeers: true
 
@@ -55,6 +55,7 @@ minimumReleaseAgeExclude:
 
 overrides:
   compression@1.8.0>on-headers: 1.1.0
+  gray-matter@^4: "npm:@11ty/gray-matter@^2.1.0"
   react-render-to-markdown@>=19 <19.1.0: ^19.1.0
   refractor@3.6.0>prismjs: ^1.30.0
   # Node 18 has been discarded since 7.x but not affected because 6.x is only used by example sites
@@ -62,7 +63,6 @@ overrides:
   serve-handler@6.1.6>minimatch: ^3.1.3
   unstorage>@azure/identity: "-"
   webpack-dev-server@^5>sockjs: "-" # Unsed by default: https://github.com/webpack/webpack-dev-server/issues/5662#issuecomment-4448722673
-  gray-matter@^4: "npm:@11ty/gray-matter@^2.1.0"
 
 publicHoistPattern:
   - decode-named-character-reference
