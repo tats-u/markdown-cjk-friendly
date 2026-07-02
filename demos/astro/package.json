@@ -9,6 +9,7 @@
     "test:watch": "vitest watch"
   },
   "dependencies": {
+    "@astrojs/markdown-remark": "catalog:",
     "@astrojs/mdx": "catalog:",
     "astro": "catalog:",
     "remark-cjk-friendly": "workspace:^",
