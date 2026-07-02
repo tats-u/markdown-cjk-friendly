@@ -1,9 +1,9 @@
-import mdx from "@astrojs/mdx";
 // @ts-check
+import { unified } from "@astrojs/markdown-remark";
+import mdx from "@astrojs/mdx";
 import { defineConfig } from "astro/config";
 import remarkCjkFriendly from "remark-cjk-friendly/parseOnly";
 import remarkCjkFriendlyGfmStrikethrough from "remark-cjk-friendly-gfm-strikethrough/parseOnly";
-import { unified } from "@astrojs/markdown-remark";
 
 // https://astro.build/config
 export default defineConfig({
