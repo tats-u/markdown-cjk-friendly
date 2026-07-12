@@ -138,6 +138,90 @@ const Editor = (props: { bundledVersionName: string }) => {
     resetBenchmarkWorker();
   });
 
+  function applyLocationState() {
+    const url = new URL(window.location.href);
+    const searchParams = url.hash.startsWith("#?")
+      ? new URLSearchParams(url.hash.slice(2))
+      : url.searchParams;
+    const src = searchParams.get("src");
+    const b64u8 = searchParams.get("sc8");
+    const b64u16 = searchParams.get("s16");
+    const lzs = searchParams.get("lzs");
+    const bench = searchParams.get("bench");
+
+    let nextMarkdown: string | undefined;
+    // searchParams.has() is unnecessary since we need to handle empty strings as falsy values
+    if (src) {
+      nextMarkdown = decodeURIComponent(src);
+    } else if (
+      Object.hasOwn?.(Uint8Array.prototype, "fromBase64") &&
+      (b64u8 || b64u16)
+    ) {
+      if (b64u8) {
+        nextMarkdown = new TextDecoder().decode(
+          Uint8Array.fromBase64(b64u8, { alphabet: "base64url" }),
+        );
+      } else {
+        nextMarkdown = new TextDecoder("utf-16le").decode(
+          // Type checker sucks, `as string` is shamefully necessary here
+          Uint8Array.fromBase64(b64u16 as string, { alphabet: "base64url" }),
+        );
+      }
+    } else if (lzs) {
+      const decompressed = decompressFromEncodedURIComponent(lzs);
+      if (decompressed) {
+        nextMarkdown = decompressed;
+      }
+    } else if (textareaRef) {
+      nextMarkdown = textareaRef.value;
+    }
+
+    if (nextMarkdown !== undefined) {
+      setMarkdown(nextMarkdown);
+      setTextareaMarkdown(nextMarkdown);
+      resetBenchResult();
+    }
+
+    const gfm = searchParams.get("gfm");
+    if (gfm) {
+      const gfmLower = gfm.toLowerCase();
+      switch (gfmLower) {
+        case "false":
+        case "off":
+        case "no":
+        case "f":
+        case "n":
+        case "0":
+          setGfmEnabled(false);
+          break;
+        default:
+          setGfmEnabled(true);
+      }
+    }
+
+    const nextEngine = searchParams.get("engine");
+    if (nextEngine) {
+      const engineLower = nextEngine.toLowerCase();
+      switch (engineLower as MarkdownProcessorName) {
+        case "marked":
+        case "markdown-it":
+        case "micromark":
+        case "markdown-exit":
+          setEngine(engineLower as MarkdownProcessorName);
+          break;
+      }
+    }
+
+    const ver = searchParams.get("ver");
+    if (ver) {
+      setLibVersionSuperior(ver);
+    }
+
+    if (bench) {
+      void handleBenchmark();
+    }
+  }
+
   function handleCopyPermalink() {
     const markdown = textareaMarkdown();
     if (!markdown) return;
@@ -168,43 +252,46 @@ const Editor = (props: { bundledVersionName: string }) => {
           })
         : "";
     const url = new URL(window.location.href);
+    const searchParams = new URLSearchParams();
     if (
       !markdownBase64 ||
       percentEncodedMarkdown.length <= markdownBase64.length
     ) {
-      url.searchParams.delete("sc8");
-      url.searchParams.delete("s16");
+      searchParams.delete("sc8");
+      searchParams.delete("s16");
       if (percentEncodedMarkdown.length <= lzStringMarkdownBase64.length) {
-        url.searchParams.set("src", percentEncodedMarkdown);
-        url.searchParams.delete("lzs");
+        searchParams.set("src", percentEncodedMarkdown);
+        searchParams.delete("lzs");
       } else {
-        url.searchParams.set("lzs", lzStringMarkdownBase64);
-        url.searchParams.delete("src");
+        searchParams.set("lzs", lzStringMarkdownBase64);
+        searchParams.delete("src");
       }
     } else if (lzStringMarkdownBase64.length < markdownBase64.length) {
-      url.searchParams.set("lzs", lzStringMarkdownBase64);
-      url.searchParams.delete("src");
-      url.searchParams.delete("sc8");
-      url.searchParams.delete("s16");
+      searchParams.set("lzs", lzStringMarkdownBase64);
+      searchParams.delete("src");
+      searchParams.delete("sc8");
+      searchParams.delete("s16");
     } else {
-      url.searchParams.delete("src");
-      url.searchParams.delete("lzs");
+      searchParams.delete("src");
+      searchParams.delete("lzs");
       if (useU16) {
-        url.searchParams.set("s16", markdownBase64);
-        url.searchParams.delete("sc8");
+        searchParams.set("s16", markdownBase64);
+        searchParams.delete("sc8");
       } else {
-        url.searchParams.set("sc8", markdownBase64);
-        url.searchParams.delete("s16");
+        searchParams.set("sc8", markdownBase64);
+        searchParams.delete("s16");
       }
     }
-    url.searchParams.set("gfm", Number(gfmEnabled()).toString());
-    url.searchParams.set("engine", engine());
+    searchParams.set("gfm", Number(gfmEnabled()).toString());
+    searchParams.set("engine", engine());
     const ver = libVersionSuperior();
     if (ver && ver !== props.bundledVersionName) {
-      url.searchParams.set("ver", ver);
+      searchParams.set("ver", ver);
     } else {
-      url.searchParams.delete("ver");
+      searchParams.delete("ver");
     }
+    url.hash = `#?${searchParams.toString()}`;
+    url.search = "";
     window.history.replaceState(null, "", url.href);
     navigator.clipboard.writeText(window.location.href);
   }
@@ -274,79 +361,11 @@ const Editor = (props: { bundledVersionName: string }) => {
   }
 
   onMount(() => {
-    const url = new URL(window.location.href);
-    const src = url.searchParams.get("src");
-    const b64u8 = url.searchParams.get("sc8");
-    const b64u16 = url.searchParams.get("s16");
-    const lzs = url.searchParams.get("lzs");
-    const bench = url.searchParams.get("bench");
-    // searchParams.has() is unnecessary since we need to handle empty strings as falsy values
-    if (src) {
-      setMarkdown(decodeURIComponent(src));
-      setTextareaMarkdown(decodeURIComponent(src));
-    } else if (
-      Object.hasOwn?.(Uint8Array.prototype, "fromBase64") &&
-      (b64u8 || b64u16)
-    ) {
-      if (b64u8) {
-        const decoded = new TextDecoder().decode(
-          Uint8Array.fromBase64(b64u8, { alphabet: "base64url" }),
-        );
-        setMarkdown(decoded);
-        setTextareaMarkdown(decoded);
-      } else {
-        const decoded = new TextDecoder("utf-16le").decode(
-          // Type checker sucks, `as string` is shamefully necessary here
-          Uint8Array.fromBase64(b64u16 as string, { alphabet: "base64url" }),
-        );
-        setMarkdown(decoded);
-        setTextareaMarkdown(decoded);
-      }
-    } else if (lzs) {
-      const decompressed = decompressFromEncodedURIComponent(lzs);
-      if (decompressed) {
-        setMarkdown(decompressed);
-        setTextareaMarkdown(decompressed);
-      }
-    } else if (textareaRef) {
-      setTextareaMarkdown(textareaRef.value);
-      setMarkdown(textareaRef.value);
-    }
-    const gfm = url.searchParams.get("gfm");
-    if (gfm) {
-      const gfmLower = gfm.toLowerCase();
-      switch (gfmLower) {
-        case "false":
-        case "off":
-        case "no":
-        case "f":
-        case "n":
-        case "0":
-          setGfmEnabled(false);
-          break;
-        default:
-          setGfmEnabled(true);
-      }
-    }
-    const engine = url.searchParams.get("engine");
-    if (engine) {
-      const engineLower = engine.toLowerCase();
-      switch (engineLower as MarkdownProcessorName) {
-        case "marked":
-        case "markdown-it":
-        case "micromark":
-        case "markdown-exit":
-          setEngine(engineLower as MarkdownProcessorName);
-          break;
-      }
-    }
-    const ver = url.searchParams.get("ver");
-    if (ver) {
-      setLibVersionSuperior(ver);
-    }
-    if (bench) {
-      handleBenchmark();
-    }
+    applyLocationState();
+    window.addEventListener("hashchange", applyLocationState);
+    onCleanup(() => {
+      window.removeEventListener("hashchange", applyLocationState);
+    });
   });
   createEffect(() => {
     if (versionList.isPending()) {
