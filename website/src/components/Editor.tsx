@@ -362,6 +362,12 @@ const Editor = (props: { bundledVersionName: string }) => {
 
   onMount(() => {
     applyLocationState();
+    const url = new URL(window.location.href);
+    if (!url.hash.startsWith("#?") && url.search) {
+      url.hash = `#?${url.searchParams.toString()}`;
+      url.search = "";
+      window.history.replaceState(null, "", url.href);
+    }
     window.addEventListener("hashchange", applyLocationState);
     onCleanup(() => {
       window.removeEventListener("hashchange", applyLocationState);
