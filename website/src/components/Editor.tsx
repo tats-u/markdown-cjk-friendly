@@ -74,6 +74,17 @@ function getRenderErrorMessage(error: unknown) {
   return error instanceof Error ? error.message : "Failed to render preview";
 }
 
+function searchParamsToHash(searchParams: {
+  size: number;
+  entries: () => Iterable<[string, string]>;
+}) {
+  if (searchParams.size === 0) {
+    return "";
+  }
+  // searchParams#toString() is based on application/x-www-form-urlencoded, which escapes too many kinds of symbols.
+  return `#?${Array.from(searchParams.entries(), ([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`).join("&")}`;
+}
+
 type SuperiorPreviewState =
   | {
       kind: "placeholder";
@@ -290,7 +301,7 @@ const Editor = (props: { bundledVersionName: string }) => {
     } else {
       searchParams.delete("ver");
     }
-    url.hash = `#?${searchParams.toString()}`;
+    url.hash = searchParamsToHash(searchParams);
     url.search = "";
     window.history.replaceState(null, "", url.href);
     navigator.clipboard.writeText(window.location.href);
@@ -364,7 +375,7 @@ const Editor = (props: { bundledVersionName: string }) => {
     applyLocationState();
     const url = new URL(window.location.href);
     if (!url.hash.startsWith("#?") && url.search) {
-      url.hash = `#?${url.searchParams.toString()}`;
+      url.hash = searchParamsToHash(url.searchParams);
       url.search = "";
       window.history.replaceState(null, "", url.href);
     }
