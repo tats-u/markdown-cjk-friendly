@@ -164,10 +164,7 @@ const Editor = (props: { bundledVersionName: string }) => {
     // searchParams.has() is unnecessary since we need to handle empty strings as falsy values
     if (src) {
       nextMarkdown = decodeURIComponent(src);
-    } else if (
-      Object.hasOwn?.(Uint8Array, "fromBase64") &&
-      (b64u8 || b64u16)
-    ) {
+    } else if (Object.hasOwn?.(Uint8Array, "fromBase64") && (b64u8 || b64u16)) {
       if (b64u8) {
         nextMarkdown = new TextDecoder().decode(
           Uint8Array.fromBase64(b64u8, { alphabet: "base64url" }),
