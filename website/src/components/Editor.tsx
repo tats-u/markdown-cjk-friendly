@@ -165,7 +165,7 @@ const Editor = (props: { bundledVersionName: string }) => {
     if (src) {
       nextMarkdown = decodeURIComponent(src);
     } else if (
-      Object.hasOwn?.(Uint8Array.prototype, "fromBase64") &&
+      Object.hasOwn?.(Uint8Array, "fromBase64") &&
       (b64u8 || b64u16)
     ) {
       if (b64u8) {
