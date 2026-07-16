@@ -1,6 +1,8 @@
 import clsx from "clsx";
 import { diffChars } from "diff";
 import DOMPurify from "dompurify";
+import { toBase64, toBytes } from "fast-base64/js";
+import { fromUrl, toUrl } from "fast-base64/url";
 import {
   compressToEncodedURIComponent,
   decompressFromEncodedURIComponent,
@@ -122,6 +124,22 @@ function getRetainedPreviewHTML(previous: SuperiorPreviewState | undefined) {
   }
 }
 
+function encodeBase64UrlFromUint8Array(bytes: Uint8Array) {
+  if (typeof Uint8Array.prototype.toBase64 === "function") {
+    return bytes.toBase64({ alphabet: "base64url", omitPadding: true });
+  }
+
+  return toUrl(toBase64(bytes));
+}
+
+function decodeBase64UrlToUint8Array(base64Url: string) {
+  if (typeof Uint8Array.fromBase64 === "function") {
+    return Uint8Array.fromBase64(base64Url, { alphabet: "base64url" });
+  }
+
+  return toBytes(fromUrl(base64Url));
+}
+
 const Editor = (props: { bundledVersionName: string }) => {
   const gfmCheckBoxId = createUniqueId();
   const [textareaMarkdown, setTextareaMarkdown] = createSignal("");
@@ -164,17 +182,15 @@ const Editor = (props: { bundledVersionName: string }) => {
     // searchParams.has() is unnecessary since we need to handle empty strings as falsy values
     if (src) {
       nextMarkdown = decodeURIComponent(src);
-    } else if (Object.hasOwn?.(Uint8Array, "fromBase64") && (b64u8 || b64u16)) {
-      if (b64u8) {
-        nextMarkdown = new TextDecoder().decode(
-          Uint8Array.fromBase64(b64u8, { alphabet: "base64url" }),
-        );
-      } else {
-        nextMarkdown = new TextDecoder("utf-16le").decode(
-          // Type checker sucks, `as string` is shamefully necessary here
-          Uint8Array.fromBase64(b64u16 as string, { alphabet: "base64url" }),
-        );
-      }
+    } else if (b64u8) {
+      nextMarkdown = new TextDecoder().decode(
+        decodeBase64UrlToUint8Array(b64u8),
+      );
+    } else if (b64u16) {
+      nextMarkdown = new TextDecoder("utf-16le").decode(
+        // Type checker sucks, `as string` is shamefully necessary here
+        decodeBase64UrlToUint8Array(b64u16),
+      );
     } else if (lzs) {
       const decompressed = decompressFromEncodedURIComponent(lzs);
       if (decompressed) {
@@ -251,14 +267,7 @@ const Editor = (props: { bundledVersionName: string }) => {
       shortestB64Buffer = u16Buffer;
     }
     const lzStringMarkdownBase64 = compressToEncodedURIComponent(markdown);
-    const markdownBase64 =
-      (Object.hasOwn?.(Uint8Array.prototype, "toBase64") ??
-      "toBase64" in Uint8Array.prototype)
-        ? shortestB64Buffer.toBase64({
-            alphabet: "base64url",
-            omitPadding: true,
-          })
-        : "";
+    const markdownBase64 = encodeBase64UrlFromUint8Array(shortestB64Buffer);
     const url = new URL(window.location.href);
     const searchParams = new URLSearchParams();
     if (
