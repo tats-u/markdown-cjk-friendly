@@ -48,7 +48,7 @@
     "lint:type": "tsc --noEmit"
   },
   "devDependencies": {
-    "marked": "^17.0.0"
+    "marked": "^18.0.7"
   },
   "peerDependencies": {
     "marked": ">=15.0.0"

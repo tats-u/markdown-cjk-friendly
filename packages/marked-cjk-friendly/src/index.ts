@@ -216,6 +216,25 @@ function isCjkAdjacentToDelimiter(
   return cjkTest.test(charBefore) || cjkTest.test(charAfter);
 }
 
+const nonPunctuationCapture = new WeakMap<RegExp, boolean>();
+
+/**
+ * Whether marked captures the non-punctuation character following `*`, which
+ * it does from v18 on. That capture shifts every later group of
+ * `emStrongLDelim` by one, so the group layout has to be read from the rule
+ * rather than assumed from a version this package cannot see.
+ */
+function capturesNonPunctuation(emStrongLDelim: RegExp): boolean {
+  const known = nonPunctuationCapture.get(emStrongLDelim);
+  if (known !== undefined) return known;
+  const probe = new RegExp(`${emStrongLDelim.source}|`).exec(
+    "",
+  ) as RegExpExecArray;
+  const captures = probe.length - 1 >= 4;
+  nonPunctuationCapture.set(emStrongLDelim, captures);
+  return captures;
+}
+
 /**
  * Creates a marked extension that makes emphasis markers CJK-friendly.
  *
@@ -244,11 +263,31 @@ export default function markedCjkFriendly(): MarkedExtension {
         const match = rules.inline.emStrongLDelim.exec(src);
         if (!match) return false;
 
-        // _ can't be between two alphanumerics
-        if (match[3] && prevChar.match(rules.other.unicodeAlphaNumeric))
-          return false;
+        const modernGroups = capturesNonPunctuation(
+          rules.inline.emStrongLDelim,
+        );
 
-        const nextChar = match[1] || match[2] || "";
+        if (modernGroups) {
+          // The delimiter run is optional-suffixed there, so it can match
+          // with nothing after it, which opens no emphasis
+          if (!match[1] && !match[2] && !match[3] && !match[4]) return false;
+
+          // _ can't be between two alphanumerics
+          if (match[4] && prevChar.match(rules.other.unicodeAlphaNumeric))
+            return false;
+        } else if (
+          match[3] &&
+          prevChar.match(rules.other.unicodeAlphaNumeric)
+        ) {
+          return false;
+        }
+
+        // Only the punctuation groups gate the left delimiter. A run followed
+        // by an ordinary character opens emphasis whatever precedes it, which
+        // is what makes `a*b*c` emphasise.
+        const nextChar = modernGroups
+          ? match[1] || match[3] || ""
+          : match[1] || match[2] || "";
 
         const prevIsCjk = isPrevCharCjk(prevChar, maskedSrc, src);
 
