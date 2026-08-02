@@ -123,6 +123,22 @@ describe("marked-cjk-friendly", () => {
     expect(result).toMatchSnapshot();
   });
 
+  it("keeps CommonMark emphasis decisions intact with marked 18's emStrongLDelim group layout", () => {
+    const cases: [string, string][] = [
+      ["a*b*c", "<p>a<em>b</em>c</p>\n"],
+      ["5*6*78", "<p>5<em>6</em>78</p>\n"],
+      ["foo*bar*", "<p>foo<em>bar</em></p>\n"],
+      ["a * foo bar*", "<p>a * foo bar*</p>\n"],
+      ["foo_bar_", "<p>foo_bar_</p>\n"],
+      ["_foo bar_", "<p><em>foo bar</em></p>\n"],
+      ["5_6_78", "<p>5_6_78</p>\n"],
+    ];
+    for (const [input, expected] of cases) {
+      expect(md2Html(input)).toBe(expected);
+      expect(md2Html(input)).toBe(md2HtmlOriginal(input));
+    }
+  });
+
   it("Output for CommonMark test cases are the same as those without this plugin", async () => {
     for (const testCase of commonMarkTestCases) {
       expect(md2Html(testCase.markdown)).toBe(
