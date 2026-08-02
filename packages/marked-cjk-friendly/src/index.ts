@@ -227,9 +227,10 @@ const nonPunctuationCapture = new WeakMap<RegExp, boolean>();
 function capturesNonPunctuation(emStrongLDelim: RegExp): boolean {
   const known = nonPunctuationCapture.get(emStrongLDelim);
   if (known !== undefined) return known;
-  const probe = new RegExp(`${emStrongLDelim.source}|`).exec(
-    "",
-  ) as RegExpExecArray;
+  const probe = new RegExp(
+    `${emStrongLDelim.source}|`,
+    emStrongLDelim.flags,
+  ).exec("") as RegExpExecArray;
   const captures = probe.length - 1 >= 4;
   nonPunctuationCapture.set(emStrongLDelim, captures);
   return captures;
