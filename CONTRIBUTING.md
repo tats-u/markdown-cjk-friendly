@@ -42,6 +42,30 @@ For trivial changes where you can expect (nearly) identical results whether done
 
 The maintainer(s) reserve(s) the right to ask for more information about the AI usage, or to reject your PR if the disclosure is insufficient or if they suspect that you (blatantly) violated these rules (depending on e.g. the frequency of the PRs and the amount and quality of code in the PR). If you are violating the rules too badly, the maintainer(s) reserve(s) the right to block you.
 
+If the content you are pasting becomes too long, wrap it inside the [`<details>` element](https://developer.mozilla.org/docs/Web/HTML/Reference/Elements/details) like this:
+
+```md
+<details>
+<summary>Title</summary>
+
+Content
+</details>
+```
+
+If the content is not in English, wrap it inside the `<div lang="language_code">` element like this:
+
+```md
+<details>
+<summary>Title</summary>
+<div lang="ja">
+
+日本語の内容（Japanese content）
+</div>
+</details>
+```
+
+Make sure to insert an empty line between the `<summary>` or `<div>` tag and the content. Otherwise, the content will not be treated as Markdown and will be displayed as-is. An empty line between the content and the closing `</details>` tag is optional.
+
 ## Submit an issue or PR / <span lang="ja">Issue・PRの投稿</span> / <span lang="zh-Hans-CN">提出一个issue或PR</span> / <span lang="ko">이슈 및 PR 제출</span>
 
 Please submit an issue or PR in English or Japanese. English is recommended.
