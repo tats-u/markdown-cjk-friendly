@@ -45,7 +45,7 @@
   },
   "devDependencies": {
     "@types/markdown-it": "catalog:",
-    "markdown-it": "catalog:"
+    "markdown-it": "^14.3.0"
   },
   "peerDependencies": {
     "@types/markdown-it": "*",

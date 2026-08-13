@@ -31,7 +31,7 @@ catalog:
   astro: ^7.1.2
   devlop: ^1.1.0
   get-east-asian-width: ^1.4.0
-  markdown-it: ^14.1.1
+  markdown-it: ^15.0.0
   mdast-util-from-markdown: ^2.0.3
   micromark: ^4.0.2
   micromark-extension-gfm: ^3.0.0
