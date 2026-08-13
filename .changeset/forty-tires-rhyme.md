@@ -2,4 +2,6 @@
 "markdown-it-cjk-friendly": patch
 ---
 
-fix Markdown-It 15 compatibility
+Support markdown-it 15
+
+Avoid breaking changes in markdown-it 15.
