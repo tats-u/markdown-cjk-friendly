@@ -1,4 +1,9 @@
 import type MarkdownIt from "markdown-it";
+import {
+  isMdAsciiPunct,
+  isPunctChar,
+  isWhiteSpace,
+} from "markdown-it/lib/common/utils.mjs";
 
 function isCj(uc: number) {
   if (uc < 0x2e80) {
@@ -83,12 +88,12 @@ export default function markdownItCjFriendlyPlugin(md: MarkdownIt) {
       const nextChar = pos < max ? this.src.codePointAt(pos)! : 0x20;
 
       const isLastPunctChar =
-        md.utils.isMdAsciiPunct(lastChar) || md.utils.isPunctChar(String.fromCodePoint(lastChar));
+        isMdAsciiPunct(lastChar) || isPunctChar(String.fromCodePoint(lastChar));
       const isNextPunctChar =
-        md.utils.isMdAsciiPunct(nextChar) || md.utils.isPunctChar(String.fromCodePoint(nextChar));
+        isMdAsciiPunct(nextChar) || isPunctChar(String.fromCodePoint(nextChar));
 
-      const isLastWhiteSpace = md.utils.isWhiteSpace(lastChar);
-      const isNextWhiteSpace = md.utils.isWhiteSpace(nextChar);
+      const isLastWhiteSpace = isWhiteSpace(lastChar);
+      const isNextWhiteSpace = isWhiteSpace(nextChar);
 
       const isLastCJChar = isCj(lastChar);
       const isNextCjChar = isCj(nextChar);
