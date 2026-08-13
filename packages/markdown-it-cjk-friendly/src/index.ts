@@ -1,10 +1,5 @@
 import { eastAsianWidthType } from "get-east-asian-width";
 import type MarkdownIt from "markdown-it";
-import {
-  isMdAsciiPunct,
-  isPunctChar,
-  isWhiteSpace,
-} from "markdown-it/lib/common/utils.mjs";
 import type { Scanned } from "markdown-it/lib/rules_inline/state_inline.mjs";
 
 function isEmoji(uc: number) {
@@ -92,8 +87,8 @@ export default function markdownItCjkFriendlyPlugin(md: MarkdownIt): void {
       const nextChar = pos < max ? this.src.codePointAt(pos)! : 0x20;
 
       // We don't consider a sequence of a Unicode whitespace followed by a general-use VS
-      const isLastWhiteSpace = isWhiteSpace(lastMainChar);
-      const isNextWhiteSpace = isWhiteSpace(nextChar);
+      const isLastWhiteSpace = md.utils.isWhiteSpace(lastMainChar);
+      const isNextWhiteSpace = md.utils.isWhiteSpace(nextChar);
 
       // Fast path for the most cases adjacent to whitespaces (no need to check for CJK characters)
       if (isLastWhiteSpace || isNextWhiteSpace) {
@@ -105,10 +100,11 @@ export default function markdownItCjkFriendlyPlugin(md: MarkdownIt): void {
       }
 
       const isLastPunctChar =
-        isMdAsciiPunct(lastMainChar) ||
-        isPunctChar(String.fromCodePoint(lastMainChar));
+        md.utils.isMdAsciiPunct(lastMainChar) ||
+        md.utils.isPunctChar(String.fromCodePoint(lastMainChar));
       const isNextPunctChar =
-        isMdAsciiPunct(nextChar) || isPunctChar(String.fromCodePoint(nextChar));
+        md.utils.isMdAsciiPunct(nextChar) ||
+        md.utils.isPunctChar(String.fromCodePoint(nextChar));
 
       // Fast path for `_`
       let left_flanking = isLastPunctChar;
