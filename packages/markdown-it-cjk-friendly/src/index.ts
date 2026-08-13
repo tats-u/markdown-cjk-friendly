@@ -103,7 +103,8 @@ export default function markdownItCjkFriendlyPlugin(md: MarkdownIt): void {
         md.utils.isMdAsciiPunct(lastMainChar) ||
         md.utils.isPunctChar(String.fromCodePoint(lastMainChar));
       const isNextPunctChar =
-        md.utils.isMdAsciiPunct(nextChar) || md.utils.isPunctChar(String.fromCodePoint(nextChar));
+        md.utils.isMdAsciiPunct(nextChar) ||
+        md.utils.isPunctChar(String.fromCodePoint(nextChar));
 
       // Fast path for `_`
       let left_flanking = isLastPunctChar;
