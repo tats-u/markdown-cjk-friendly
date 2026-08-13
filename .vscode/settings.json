@@ -24,6 +24,10 @@
     "/^node --run (fix|lint|build|test|bench)(:[a-z]{1,15})?$/": {
       "approve": true,
       "matchCommandLine": true
+    },
+    "gh repo view tats-u/markdown-cjk-friendly --json viewerPermission -q .viewerPermission": {
+      "approve": true,
+      "matchCommandLine": true
     }
   }
 }

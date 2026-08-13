@@ -112,3 +112,7 @@ This repository uses Changesets for all publishable packages under `packages/` e
 3. Edit the created changeset and commit it together.
 
 Of course, if you are sure that your PR does not affect any packages, you do not need to add a changeset. (Please add a note in the PR summary.)
+
+## Don't touch `packages/markdown-it-cj-friendly/src` unless you have to fix build/CI errors
+
+`markdown-it-cj-friendly` is deprecated and no longer maintained. Those who are not collaborators should not make any changes to this directory unless they have to fix build/CI errors.
