@@ -1,6 +1,5 @@
 import { eastAsianWidthType } from "get-east-asian-width";
-import type MarkdownIt from "markdown-it";
-import type { Scanned } from "markdown-it/lib/rules_inline/state_inline.mjs";
+import type { MarkdownIt } from "markdown-it";
 
 function isEmoji(uc: number) {
   return /^\p{Emoji_Presentation}/u.test(String.fromCodePoint(uc));
@@ -60,7 +59,10 @@ export default function markdownItCjkFriendlyPlugin(md: MarkdownIt): void {
   const PreviousState = md.inline.State;
 
   class CjkFriendlyState extends PreviousState {
-    override scanDelims(start: number, canSplitWord: boolean): Scanned {
+    override scanDelims(
+      start: number,
+      canSplitWord: boolean,
+    ): ReturnType<typeof PreviousState.prototype.scanDelims> {
       const max = this.posMax;
       const marker = this.src.charCodeAt(start);
 

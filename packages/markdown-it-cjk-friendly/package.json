@@ -48,7 +48,6 @@
     "lint:type": "tsc --noEmit"
   },
   "devDependencies": {
-    "@types/markdown-it": "catalog:",
     "markdown-it": "catalog:"
   },
   "peerDependencies": {
