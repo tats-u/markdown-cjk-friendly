@@ -1,0 +1,40 @@
+name: Regular CI (old libraries)
+on:
+  push:
+    branches:
+      - main
+      - next
+      - "nopr/*"
+  pull_request:
+
+jobs:
+  test-old-libs:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: "24.x"
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --no-frozen-lockfile
+
+      - name: Build
+        run: pnpm -C packages/markdown-it-cjk-friendly build:lib
+
+      - name: Override markdown-it to v14 for compatibility test
+        run: |
+          pnpm -C packages/markdown-it-cjk-friendly add -D markdown-it@^14 @types/markdown-it@^14
+
+      - name: Type check
+        run: pnpm -C packages/markdown-it-cjk-friendly lint:type
+
+      - name: Run tests
+        run: pnpm -C packages/markdown-it-cjk-friendly test:lib
