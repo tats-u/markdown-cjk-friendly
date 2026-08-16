@@ -6,6 +6,8 @@ We use `pnpm` as our package manager. Never use `npm` or `npx` to run commands i
 - ✅️`pnpm exec <non-task-command>`
 - ✅️`pnpm ...` (other than `pnpm run <task>`)
 - ✅️`pnpx ...`
+- ✅️ `pnpm -F <package> <command>` (to run a command in a specific package)
+- ✅️ `pnpm -C <dir> <command>` (to run a command in a specific directory)
 - 🤔`pnpm run <task>` (In simple cases, `node --run <task>` can suffice. You must provide a compelling reason to choose `pnpm run` over this alternative)
 - ❌️`npm ...`
 - ❌️`npx ...`
