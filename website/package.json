@@ -17,7 +17,7 @@
     "markdown-exit": "1.1.0-beta.2",
     "markdown-it": "catalog:",
     "markdown-it-cjk-friendly": "workspace:^",
-    "marked": "^17.0.0",
+    "marked": "^18.0.9",
     "marked-cjk-friendly": "workspace:^",
     "micromark": "catalog:",
     "micromark-extension-cjk-friendly": "workspace:^",
