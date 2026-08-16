@@ -11,7 +11,7 @@
     "@tanstack/solid-query": "^5.100.8",
     "astro": "catalog:",
     "clsx": "^2.1.1",
-    "diff": "^8.0.3",
+    "diff": "^9.0.0",
     "dompurify": "3.4.13",
     "lz-string": "^1.5.0",
     "markdown-exit": "1.1.0-beta.2",
