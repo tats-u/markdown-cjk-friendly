@@ -25,11 +25,7 @@
       "approve": true,
       "matchCommandLine": true
     },
-    "/^pnpm -F [a-z0-9_-]{1,20} (fix|lint|build|test|bench)(:[a-z]{1,15})?$/": {
-      "approve": true,
-      "matchCommandLine": true
-    },
-    "/^pnpm -C \\.?[a-z0-9_/\\\\\\-]{1,30} (fix|lint|build|test|bench)(:[a-z]{1,15})?$/": {
+    "/^pnpm -[CF] (\\.(\\.([/\\\\]\\.\\.){0,10})?[/\\\\])?[a-z0-9_/\\\\\\-]{1,30} (fix|lint|build|test|bench)(:[a-z]{1,15})?$/": {
       "approve": true,
       "matchCommandLine": true
     },
