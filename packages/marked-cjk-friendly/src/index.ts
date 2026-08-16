@@ -216,6 +216,32 @@ function isCjkAdjacentToDelimiter(
   return cjkTest.test(charBefore) || cjkTest.test(charAfter);
 }
 
+// Marked 17.0.5+ split the opening-delimiter captures into four groups and can
+// return a bare delimiter match with no following content. We detect that layout
+// so the CJK override can keep following Marked's native branching on 17.0.4 and
+// on newer releases such as 18.
+function usesModernEmStrongLayout(match: RegExpExecArray): boolean {
+  return match.length >= 5;
+}
+
+function hasEmStrongLeadContent(match: RegExpExecArray): boolean {
+  return Boolean(match[1] || match[2] || match[3] || match[4]);
+}
+
+function isEmStrongUnderscoreWordChar(match: RegExpExecArray): boolean {
+  return usesModernEmStrongLayout(match)
+    ? Boolean(match[4])
+    : Boolean(match[3]);
+}
+
+function getEmStrongOpeningPunctuation(match: RegExpExecArray): string {
+  if (usesModernEmStrongLayout(match)) {
+    return match[1] || match[3] || "";
+  }
+
+  return match[1] || match[2] || "";
+}
+
 /**
  * Creates a marked extension that makes emphasis markers CJK-friendly.
  *
@@ -244,11 +270,19 @@ export default function markedCjkFriendly(): MarkedExtension {
         const match = rules.inline.emStrongLDelim.exec(src);
         if (!match) return false;
 
+        const modernEmStrongLayout = usesModernEmStrongLayout(match);
+        if (modernEmStrongLayout && !hasEmStrongLeadContent(match)) {
+          return undefined;
+        }
+
         // _ can't be between two alphanumerics
-        if (match[3] && prevChar.match(rules.other.unicodeAlphaNumeric))
+        if (
+          isEmStrongUnderscoreWordChar(match) &&
+          prevChar.match(rules.other.unicodeAlphaNumeric)
+        )
           return false;
 
-        const nextChar = match[1] || match[2] || "";
+        const nextChar = getEmStrongOpeningPunctuation(match);
 
         const prevIsCjk = isPrevCharCjk(prevChar, maskedSrc, src);
 
@@ -266,6 +300,12 @@ export default function markedCjkFriendly(): MarkedExtension {
           let rLength: number;
           let delimTotal = lLength;
           let midDelimTotal = 0;
+          // Marked 17.0.5+ also stops when the opener is preceded by the same
+          // delimiter and the candidate closer is both left- and right-flanking.
+          // Keeping that guard preserves native CommonMark results like
+          // `*foo**bar***` while still allowing the CJK-specific reclassification.
+          const prevCharIsSameDelimiter =
+            modernEmStrongLayout && prevChar === match[0][0];
 
           // Select the CJK-modified right delimiter regex
           // Detect GFM mode: GFM regex source includes (?!~) for tilde handling
@@ -303,17 +343,23 @@ export default function markedCjkFriendly(): MarkedExtension {
               rMatch,
               clippedMaskedSrc,
             );
+            const isLeftOnly = Boolean(rMatch[3] || rMatch[4]);
+            const isBoth = Boolean(rMatch[5] || rMatch[6]);
 
-            if ((rMatch[3] || rMatch[4]) && !isCjkAdjacent) {
+            if (isLeftOnly && !isCjkAdjacent) {
               // found another Left Delim (no CJK → stays Left)
               delimTotal += rLength;
               continue;
             }
-            if (rMatch[5] || rMatch[6] || isCjkAdjacent) {
+            if (isBoth || isCjkAdjacent) {
               // either Left or Right Delim (or CJK-reclassified as Both)
               if (lLength % 3 && !((lLength + rLength) % 3)) {
                 midDelimTotal += rLength;
                 continue; // CommonMark Emphasis Rules 9-10
+              }
+
+              if (prevCharIsSameDelimiter && isBoth) {
+                break;
               }
             }
 
