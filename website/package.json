@@ -7,7 +7,7 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/solid-js": "^6.0.1",
+    "@astrojs/solid-js": "^7.0.2",
     "@tanstack/solid-query": "^5.100.8",
     "astro": "catalog:",
     "clsx": "^2.1.1",
@@ -25,7 +25,7 @@
     "micromark-extension-gfm": "catalog:",
     "semver": "^7.7.4",
     "solid-icons": "^1.2.0",
-    "solid-js": "^1.9.11",
+    "solid-js": "^1.9.14",
     "tinybench": "^6.0.0",
     "visual-dom-diff": "^0.7.3"
   },
