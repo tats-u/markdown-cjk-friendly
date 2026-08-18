@@ -1,6 +1,6 @@
 {
   "name": "marked-cjk-friendly",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "type": "module",
   "exports": {
     ".": {
@@ -48,7 +48,9 @@
     "lint:type": "tsc --noEmit"
   },
   "devDependencies": {
-    "marked": "^17.0.0"
+    "marked": "^18.0.9",
+    "marked17": "npm:marked@^17.0.6",
+    "marked17-0-4": "npm:marked@17.0.4"
   },
   "peerDependencies": {
     "marked": ">=15.0.0"

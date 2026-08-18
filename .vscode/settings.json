@@ -25,9 +25,25 @@
       "approve": true,
       "matchCommandLine": true
     },
-    "gh repo view tats-u/markdown-cjk-friendly --json viewerPermission -q .viewerPermission": {
+    "/^pnpm -[CF] (\\.(\\.([/\\\\]\\.\\.){0,10})?[/\\\\])?[a-z0-9_/\\\\\\-]{1,30} (fix|lint|build|test|bench)(:[a-z]{1,15})?$/": {
       "approve": true,
       "matchCommandLine": true
-    }
+    },
+    "/^gh repo (view|read-(file|dir)|license|gitignore)\\b/": {
+      "approve": true,
+      "matchCommandLine": true
+    },
+    "gh search": true,
+    "gh status": true,
+    "/^gh (issue|pr) (list|view|status)\\b/": {
+      "approve": true,
+      "matchCommandLine": true
+    },
+    "/^git (status|diff|log|show|ls-files|ls-tree|rev-parse|blame|describe|shortlog)\\b/": {
+      "approve": true,
+      "matchCommandLine": true
+    },
+    "jq": true,
+    "yq": true
   }
 }

@@ -16,7 +16,12 @@ auditConfig:
   ignoreGhsas:
     # Both come from VitePress 1.6, which is just an example.
     - GHSA-4w7w-66w2-5vf9 # Vite 5 is too old (<6.4.2)
+    - GHSA-v6wh-96g9-6wx3 # ditto (<6.4.3)
+    - GHSA-fx2h-pf6j-xcff # ditto
     - GHSA-67mh-4wv8-2f99 # esbuild 0.21 is too old (<0.25.0)
+    # image-size, used by Docusaurus, was abandoned and vulnerabilities will no longer be fixed. We can't expect they will be fixed in the future.
+    - GHSA-5p2g-fcmc-qvqq
+    - GHSA-w3rx-r6r6-pgpr
 blockExoticSubdeps: true
 
 catalog:
