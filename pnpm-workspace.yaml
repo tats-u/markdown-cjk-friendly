@@ -51,7 +51,7 @@ dedupePeers: true
 minimumReleaseAge: 1440
 
 minimumReleaseAgeExclude:
-  - markdown-it@14.2.0
+  - "@types/markdown-it@14.2.0"
 
 overrides:
   compression@1.8.0>on-headers: 1.1.0

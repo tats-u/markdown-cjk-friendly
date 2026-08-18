@@ -51,7 +51,7 @@
     "markdown-it": "catalog:"
   },
   "peerDependencies": {
-    "@types/markdown-it": "*",
+    "@types/markdown-it": ">=14.2.0",
     "markdown-it": "*"
   },
   "peerDependenciesMeta": {
