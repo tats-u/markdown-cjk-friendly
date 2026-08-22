@@ -30,7 +30,6 @@
     "visual-dom-diff": "^0.7.3"
   },
   "devDependencies": {
-    "@types/markdown-it": "catalog:",
     "@types/node": "catalog:",
     "@types/semver": "^7.7.1",
     "fast-base64": "^0.1.8",
