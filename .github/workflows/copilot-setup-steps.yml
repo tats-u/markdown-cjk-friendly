@@ -27,12 +27,12 @@ jobs:
     # If you do not check out your code, Copilot will do this for you.
     steps:
       - uses: actions/checkout@v5
-      - uses: pnpm/action-setup@v4
+      - uses: pnpm/action-setup@v6
       - uses: actions/setup-node@v5
         with:
           node-version: '24.x'
           registry-url: 'https://registry.npmjs.org'
-      - uses: pnpm/action-setup@v4
+      - uses: pnpm/action-setup@v6
         with:
           run_install: true
       - name: Build
