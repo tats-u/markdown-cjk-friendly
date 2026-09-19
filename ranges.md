@@ -20,7 +20,7 @@ node --run print-ranges -- -h
 
 ## Unicode Version
 
-17
+18
 
 ## CJK characters
 
@@ -60,20 +60,23 @@ node --run print-ranges -- -h
 - U+FFE8..U+FFEE (￨..￮)
 - U+16FE0..U+16FE4 (𖿠..𖿤)
 - U+16FF0..U+16FF6 (𖿰..𖿶)
-- U+17000..U+18CD5 (𗀀..𘳕)
-- U+18CFF..U+18D1E (𘳿..𘴞)
+- U+17000..U+18CDA (𗀀..𘳚)
+- U+18CFF..U+18D20 (𘳿..𘴠)
 - U+18D80..U+18DF2 (𘶀..𘷲)
+- U+18E00..U+19191 (𘸀..𙆑)
+- U+191A0..U+191D2 (𙆠..𙇒)
 - U+1AFF0..U+1AFF3 (𚿰..𚿳)
 - U+1AFF5..U+1AFFB (𚿵..𚿻)
 - U+1AFFD..U+1AFFE (𚿽..𚿾)
-- U+1B000..U+1B122 (𛀀..𛄢)
+- U+1B000..U+1B128 (𛀀..𛄨)
 - U+1B132 (𛄲)
 - U+1B150..U+1B152 (𛅐..𛅒)
 - U+1B155 (𛅕)
-- U+1B164..U+1B167 (𛅤..𛅧)
+- U+1B164..U+1B168 (𛅤..𛅨)
 - U+1B170..U+1B2FB (𛅰..𛋻)
 - U+1D300..U+1D356 (𝌀..𝍖)
 - U+1D360..U+1D376 (𝍠..𝍶)
+- U+1F1AE (🆮)
 - U+1F200 (🈀)
 - U+1F202 (🈂)
 - U+1F210..U+1F219 (🈐..🈙)
@@ -83,6 +86,7 @@ node --run print-ranges -- -h
 - U+1F23B (🈻)
 - U+1F240..U+1F248 (🉀..🉈)
 - U+1F260..U+1F265 (🉠..🉥)
+- U+1F7DA (🟚)
 - U+20000..U+3FFFD (𠀀..𿿽)
 
 <details>
@@ -125,20 +129,23 @@ const bool is_cjk = 0x1100 <= cp && cp <= 0x11ff
   || 0xffe8 <= cp && cp <= 0xffee
   || 0x16fe0 <= cp && cp <= 0x16fe4
   || 0x16ff0 <= cp && cp <= 0x16ff6
-  || 0x17000 <= cp && cp <= 0x18cd5
-  || 0x18cff <= cp && cp <= 0x18d1e
+  || 0x17000 <= cp && cp <= 0x18cda
+  || 0x18cff <= cp && cp <= 0x18d20
   || 0x18d80 <= cp && cp <= 0x18df2
+  || 0x18e00 <= cp && cp <= 0x19191
+  || 0x191a0 <= cp && cp <= 0x191d2
   || 0x1aff0 <= cp && cp <= 0x1aff3
   || 0x1aff5 <= cp && cp <= 0x1affb
   || 0x1affd <= cp && cp <= 0x1affe
-  || 0x1b000 <= cp && cp <= 0x1b122
+  || 0x1b000 <= cp && cp <= 0x1b128
   || cp == 0x1b132
   || 0x1b150 <= cp && cp <= 0x1b152
   || cp == 0x1b155
-  || 0x1b164 <= cp && cp <= 0x1b167
+  || 0x1b164 <= cp && cp <= 0x1b168
   || 0x1b170 <= cp && cp <= 0x1b2fb
   || 0x1d300 <= cp && cp <= 0x1d356
   || 0x1d360 <= cp && cp <= 0x1d376
+  || cp == 0x1f1ae
   || cp == 0x1f200
   || cp == 0x1f202
   || 0x1f210 <= cp && cp <= 0x1f219
@@ -148,6 +155,7 @@ const bool is_cjk = 0x1100 <= cp && cp <= 0x11ff
   || cp == 0x1f23b
   || 0x1f240 <= cp && cp <= 0x1f248
   || 0x1f260 <= cp && cp <= 0x1f265
+  || cp == 0x1f7da
   || 0x20000 <= cp && cp <= 0x3fffd;
 ```
 
@@ -193,20 +201,23 @@ const isCjk = 0x1100 <= cp && cp <= 0x11ff
   || 0xffe8 <= cp && cp <= 0xffee
   || 0x16fe0 <= cp && cp <= 0x16fe4
   || 0x16ff0 <= cp && cp <= 0x16ff6
-  || 0x17000 <= cp && cp <= 0x18cd5
-  || 0x18cff <= cp && cp <= 0x18d1e
+  || 0x17000 <= cp && cp <= 0x18cda
+  || 0x18cff <= cp && cp <= 0x18d20
   || 0x18d80 <= cp && cp <= 0x18df2
+  || 0x18e00 <= cp && cp <= 0x19191
+  || 0x191a0 <= cp && cp <= 0x191d2
   || 0x1aff0 <= cp && cp <= 0x1aff3
   || 0x1aff5 <= cp && cp <= 0x1affb
   || 0x1affd <= cp && cp <= 0x1affe
-  || 0x1b000 <= cp && cp <= 0x1b122
+  || 0x1b000 <= cp && cp <= 0x1b128
   || cp === 0x1b132
   || 0x1b150 <= cp && cp <= 0x1b152
   || cp === 0x1b155
-  || 0x1b164 <= cp && cp <= 0x1b167
+  || 0x1b164 <= cp && cp <= 0x1b168
   || 0x1b170 <= cp && cp <= 0x1b2fb
   || 0x1d300 <= cp && cp <= 0x1d356
   || 0x1d360 <= cp && cp <= 0x1d376
+  || cp === 0x1f1ae
   || cp === 0x1f200
   || cp === 0x1f202
   || 0x1f210 <= cp && cp <= 0x1f219
@@ -216,13 +227,14 @@ const isCjk = 0x1100 <= cp && cp <= 0x11ff
   || cp === 0x1f23b
   || 0x1f240 <= cp && cp <= 0x1f248
   || 0x1f260 <= cp && cp <= 0x1f265
+  || cp === 0x1f7da
   || 0x20000 <= cp && cp <= 0x3fffd;
 ```
 
 regexp version
 
 ```js
-const isCjkRegex = /^[\u1100-\u11ff\u20a9\u2329-\u232a\u2630-\u2637\u268a-\u268f\u2e80-\u2e99\u2e9b-\u2ef3\u2f00-\u2fd5\u2ff0-\u303e\u3041-\u3096\u3099-\u30ff\u3105-\u312f\u3131-\u318e\u3190-\u31e5\u31ef-\u321e\u3220-\u3247\u3250-\ua48c\ua490-\ua4c6\ua960-\ua97c\uac00-\ud7a3\ud7b0-\ud7c6\ud7cb-\ud7fb\uf900-\ufaff\ufe10-\ufe19\ufe30-\ufe52\ufe54-\ufe66\ufe68-\ufe6b\uff01-\uffbe\uffc2-\uffc7\uffca-\uffcf\uffd2-\uffd7\uffda-\uffdc\uffe0-\uffe6\uffe8-\uffee\u{16fe0}-\u{16fe4}\u{16ff0}-\u{16ff6}\u{17000}-\u{18cd5}\u{18cff}-\u{18d1e}\u{18d80}-\u{18df2}\u{1aff0}-\u{1aff3}\u{1aff5}-\u{1affb}\u{1affd}-\u{1affe}\u{1b000}-\u{1b122}\u{1b132}\u{1b150}-\u{1b152}\u{1b155}\u{1b164}-\u{1b167}\u{1b170}-\u{1b2fb}\u{1d300}-\u{1d356}\u{1d360}-\u{1d376}\u{1f200}\u{1f202}\u{1f210}-\u{1f219}\u{1f21b}-\u{1f22e}\u{1f230}-\u{1f231}\u{1f237}\u{1f23b}\u{1f240}-\u{1f248}\u{1f260}-\u{1f265}\u{20000}-\u{3fffd}]/u;
+const isCjkRegex = /^[\u1100-\u11ff\u20a9\u2329-\u232a\u2630-\u2637\u268a-\u268f\u2e80-\u2e99\u2e9b-\u2ef3\u2f00-\u2fd5\u2ff0-\u303e\u3041-\u3096\u3099-\u30ff\u3105-\u312f\u3131-\u318e\u3190-\u31e5\u31ef-\u321e\u3220-\u3247\u3250-\ua48c\ua490-\ua4c6\ua960-\ua97c\uac00-\ud7a3\ud7b0-\ud7c6\ud7cb-\ud7fb\uf900-\ufaff\ufe10-\ufe19\ufe30-\ufe52\ufe54-\ufe66\ufe68-\ufe6b\uff01-\uffbe\uffc2-\uffc7\uffca-\uffcf\uffd2-\uffd7\uffda-\uffdc\uffe0-\uffe6\uffe8-\uffee\u{16fe0}-\u{16fe4}\u{16ff0}-\u{16ff6}\u{17000}-\u{18cda}\u{18cff}-\u{18d20}\u{18d80}-\u{18df2}\u{18e00}-\u{19191}\u{191a0}-\u{191d2}\u{1aff0}-\u{1aff3}\u{1aff5}-\u{1affb}\u{1affd}-\u{1affe}\u{1b000}-\u{1b128}\u{1b132}\u{1b150}-\u{1b152}\u{1b155}\u{1b164}-\u{1b168}\u{1b170}-\u{1b2fb}\u{1d300}-\u{1d356}\u{1d360}-\u{1d376}\u{1f1ae}\u{1f200}\u{1f202}\u{1f210}-\u{1f219}\u{1f21b}-\u{1f22e}\u{1f230}-\u{1f231}\u{1f237}\u{1f23b}\u{1f240}-\u{1f248}\u{1f260}-\u{1f265}\u{1f7da}\u{20000}-\u{3fffd}]/u;
 ```
 
 </details>
@@ -269,20 +281,23 @@ let is_cjk = matches!(
       | 0xffe8..=0xffee
       | 0x16fe0..=0x16fe4
       | 0x16ff0..=0x16ff6
-      | 0x17000..=0x18cd5
-      | 0x18cff..=0x18d1e
+      | 0x17000..=0x18cda
+      | 0x18cff..=0x18d20
       | 0x18d80..=0x18df2
+      | 0x18e00..=0x19191
+      | 0x191a0..=0x191d2
       | 0x1aff0..=0x1aff3
       | 0x1aff5..=0x1affb
       | 0x1affd..=0x1affe
-      | 0x1b000..=0x1b122
+      | 0x1b000..=0x1b128
       | 0x1b132
       | 0x1b150..=0x1b152
       | 0x1b155
-      | 0x1b164..=0x1b167
+      | 0x1b164..=0x1b168
       | 0x1b170..=0x1b2fb
       | 0x1d300..=0x1d356
       | 0x1d360..=0x1d376
+      | 0x1f1ae
       | 0x1f200
       | 0x1f202
       | 0x1f210..=0x1f219
@@ -292,6 +307,7 @@ let is_cjk = matches!(
       | 0x1f23b
       | 0x1f240..=0x1f248
       | 0x1f260..=0x1f265
+      | 0x1f7da
       | 0x20000..=0x3fffd
 );
 ```
@@ -339,20 +355,23 @@ var isCjk =
     or >= 0xffe8 and <= 0xffee
     or >= 0x16fe0 and <= 0x16fe4
     or >= 0x16ff0 and <= 0x16ff6
-    or >= 0x17000 and <= 0x18cd5
-    or >= 0x18cff and <= 0x18d1e
+    or >= 0x17000 and <= 0x18cda
+    or >= 0x18cff and <= 0x18d20
     or >= 0x18d80 and <= 0x18df2
+    or >= 0x18e00 and <= 0x19191
+    or >= 0x191a0 and <= 0x191d2
     or >= 0x1aff0 and <= 0x1aff3
     or >= 0x1aff5 and <= 0x1affb
     or >= 0x1affd and <= 0x1affe
-    or >= 0x1b000 and <= 0x1b122
+    or >= 0x1b000 and <= 0x1b128
     or 0x1b132
     or >= 0x1b150 and <= 0x1b152
     or 0x1b155
-    or >= 0x1b164 and <= 0x1b167
+    or >= 0x1b164 and <= 0x1b168
     or >= 0x1b170 and <= 0x1b2fb
     or >= 0x1d300 and <= 0x1d356
     or >= 0x1d360 and <= 0x1d376
+    or 0x1f1ae
     or 0x1f200
     or 0x1f202
     or >= 0x1f210 and <= 0x1f219
@@ -362,6 +381,7 @@ var isCjk =
     or 0x1f23b
     or >= 0x1f240 and <= 0x1f248
     or >= 0x1f260 and <= 0x1f265
+    or 0x1f7da
     or >= 0x20000 and <= 0x3fffd;
 ```
 
@@ -407,20 +427,23 @@ is_cjk = 0x1100 <= cp <= 0x11ff \
     or 0xffe8 <= cp <= 0xffee \
     or 0x16fe0 <= cp <= 0x16fe4 \
     or 0x16ff0 <= cp <= 0x16ff6 \
-    or 0x17000 <= cp <= 0x18cd5 \
-    or 0x18cff <= cp <= 0x18d1e \
+    or 0x17000 <= cp <= 0x18cda \
+    or 0x18cff <= cp <= 0x18d20 \
     or 0x18d80 <= cp <= 0x18df2 \
+    or 0x18e00 <= cp <= 0x19191 \
+    or 0x191a0 <= cp <= 0x191d2 \
     or 0x1aff0 <= cp <= 0x1aff3 \
     or 0x1aff5 <= cp <= 0x1affb \
     or 0x1affd <= cp <= 0x1affe \
-    or 0x1b000 <= cp <= 0x1b122 \
+    or 0x1b000 <= cp <= 0x1b128 \
     or cp == 0x1b132 \
     or 0x1b150 <= cp <= 0x1b152 \
     or cp == 0x1b155 \
-    or 0x1b164 <= cp <= 0x1b167 \
+    or 0x1b164 <= cp <= 0x1b168 \
     or 0x1b170 <= cp <= 0x1b2fb \
     or 0x1d300 <= cp <= 0x1d356 \
     or 0x1d360 <= cp <= 0x1d376 \
+    or cp == 0x1f1ae \
     or cp == 0x1f200 \
     or cp == 0x1f202 \
     or 0x1f210 <= cp <= 0x1f219 \
@@ -430,6 +453,7 @@ is_cjk = 0x1100 <= cp <= 0x11ff \
     or cp == 0x1f23b \
     or 0x1f240 <= cp <= 0x1f248 \
     or 0x1f260 <= cp <= 0x1f265 \
+    or cp == 0x1f7da \
     or 0x20000 <= cp <= 0x3fffd
 ```
 
@@ -442,7 +466,7 @@ is_cjk = 0x1100 <= cp <= 0x11ff \
 ## EAW is treated as "W" if unassigned (defined by Unicode)
 
 > [!NOTE]
-> The following result is extracted from https://www.unicode.org/Public/17.0.0/ucd/EastAsianWidth.txt. It is slightly different from https://www.unicode.org/reports/tr11/#Unassigned. U+2FFFE, U+2FFFF, U+3FFFE, and U+3FFFF are missing, but [they are "Noncharacter"](https://www.unicode.org/versions/Unicode17.0.0/core-spec/chapter-23/#G19653), not ["Unassigned" (or "Reserved")](https://www.unicode.org/glossary/#reserved_code_point). This shows that we do not have to care about whether they are included in the list of CJK code points or not. To simplify the ranges, U+2FFFE and U+2FFFF are merged to U+20000–U+2FFFD here.
+> The following result is extracted from https://www.unicode.org/Public/18.0.0/ucd/EastAsianWidth.txt. It is slightly different from https://www.unicode.org/reports/tr11/#Unassigned. U+2FFFE, U+2FFFF, U+3FFFE, and U+3FFFF are missing, but [they are "Noncharacter"](https://www.unicode.org/versions/Unicode18.0.0/core-spec/chapter-23/#G19653), not ["Unassigned" (or "Reserved")](https://www.unicode.org/glossary/#reserved_code_point). This shows that we do not have to care about whether they are included in the list of CJK code points or not. To simplify the ranges, U+2FFFE and U+2FFFF are merged to U+20000–U+2FFFD here.
 
 - U+3400..U+4DBF (㐀..䶿)
 - U+4E00..U+9FFF (一..鿿)

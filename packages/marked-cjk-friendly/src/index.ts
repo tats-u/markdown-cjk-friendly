@@ -1,6 +1,6 @@
 import type { MarkedExtension, Tokens } from "marked";
 
-// CJK character ranges (Unicode 17, from ranges.md)
+// CJK character ranges (Unicode 18, from ranges.md)
 // Matches CJK characters by East Asian Width (Wide, Fullwidth, Halfwidth)
 // plus Hangul script characters with Neutral width.
 // Emoji_Presentation characters overlapping with CJK Wide are excluded.
@@ -15,14 +15,15 @@ const CJK =
   "\\uffca-\\uffcf\\uffd2-\\uffd7\\uffda-\\uffdc\\uffe0-\\uffe6" +
   "\\uffe8-\\uffee" +
   "\\u{16fe0}-\\u{16fe4}\\u{16ff0}-\\u{16ff6}" +
-  "\\u{17000}-\\u{18cd5}\\u{18cff}-\\u{18d1e}\\u{18d80}-\\u{18df2}" +
+  "\\u{17000}-\\u{18cda}\\u{18cff}-\\u{18d20}\\u{18d80}-\\u{18df2}" +
+  "\\u{18e00}-\\u{19191}\\u{191a0}-\\u{191d2}" +
   "\\u{1aff0}-\\u{1aff3}\\u{1aff5}-\\u{1affb}\\u{1affd}-\\u{1affe}" +
-  "\\u{1b000}-\\u{1b122}\\u{1b132}\\u{1b150}-\\u{1b152}\\u{1b155}" +
-  "\\u{1b164}-\\u{1b167}\\u{1b170}-\\u{1b2fb}" +
+  "\\u{1b000}-\\u{1b128}\\u{1b132}\\u{1b150}-\\u{1b152}\\u{1b155}" +
+  "\\u{1b164}-\\u{1b168}\\u{1b170}-\\u{1b2fb}" +
   "\\u{1d300}-\\u{1d356}\\u{1d360}-\\u{1d376}" +
-  "\\u{1f200}\\u{1f202}\\u{1f210}-\\u{1f219}\\u{1f21b}-\\u{1f22e}" +
-  "\\u{1f230}-\\u{1f231}\\u{1f237}\\u{1f23b}" +
-  "\\u{1f240}-\\u{1f248}\\u{1f260}-\\u{1f265}" +
+  "\\u{1f1ae}\\u{1f200}\\u{1f202}\\u{1f210}-\\u{1f219}\\u{1f21b}-\\u{1f22e}" +
+  "\\u{1f230}-\\u{1f231}\\u{1f237}\\u{1f23b}\\u{1f240}-\\u{1f248}" +
+  "\\u{1f260}-\\u{1f265}\\u{1f7da}" +
   "\\u{20000}-\\u{3fffd}";
 
 // CJK test for single character (used for prevChar check)

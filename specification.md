@@ -30,13 +30,13 @@ A <a href="#unicode-punctuation-sequence" id="unicode-punctuation-sequence">Unic
 A <a href="#cjk-ambiguous-punctuation-sequence" id="cjk-ambiguous-punctuation-sequence">CJK ambiguous punctuation sequence</a> is a [Standardized Variation Sequence](https://www.unicode.org/glossary/#standardized_variation_sequence) whose description in `StandardizedVariants.txt` [(the latest version)](https://www.unicode.org/Public/UCD/latest/ucd/StandardizedVariants.txt) contains a word "fullwidth form", whose first character is a [Unicode punctuation character](https://spec.commonmark.org/0.31.2/#unicode-punctuation-character), and the [UAX #11 East Asian Width](https://www.unicode.org/reports/tr11/) category of whose first character is `A`.
 
 > [!NOTE]
-> - [The Sibe form of quotation marks added in Unicode 17](https://www.unicode.org/L2/L2025/25028-vs3-sibe-quotation-marks.pdf) are vertical only and come with a space, so they are not CJK ambiguous punctuation sequences.
+> - [The Sibe form of quotation marks added in Unicode 18](https://www.unicode.org/L2/L2025/25028-vs3-sibe-quotation-marks.pdf) are vertical only and come with a space, so they are not CJK ambiguous punctuation sequences.
 
 A <a href="#cjk-punctuation-sequence" id="cjk-punctuation-sequence">CJK punctuation sequence</a> is a [CJK punctuation character](#cjk-punctuation-character), a [CJK ambiguous punctuation sequence](#cjk-ambiguous-punctuation-sequence), or a sequence of 2 [characters](https://spec.commonmark.org/0.31.2/#character) where the first one is [CJK punctuation character](#cjk-punctuation-character) and the second one is [Non-emoji General-use Variation Selector](#non-emoji-general-use-variation-selector).
 
 A <a href="#non-cjk-punctuation-sequence" id="non-cjk-punctuation-sequence">Non-CJK punctuation sequence</a> is a [Non-CJK punctuation character](#non-cjk-punctuation-character) or a sequence of 2 [characters](https://spec.commonmark.org/0.31.2/#character) where the first one is [Non-CJK punctuation character](#non-cjk-punctuation-character) and the second one is [Non-emoji General-use Variation Selector](#non-emoji-general-use-variation-selector).
 
-[^svs-range]: The range except for U+FE0E is computed from https://www.unicode.org/Public/17.0.0/ucd/StandardizedVariants.txt (as of Unicode 17) by extracting those that can follow CJK characters. Also, https://unicode.org/Public/17.0.0/ucd/emoji/emoji-variation-sequences.txt shows that U+FE0E can follow some CJK characters.
+[^svs-range]: The range except for U+FE0E is computed from https://www.unicode.org/Public/18.0.0/ucd/StandardizedVariants.txt (as of Unicode 18) by extracting those that can follow CJK characters. Also, https://unicode.org/Public/18.0.0/ucd/emoji/emoji-variation-sequences.txt shows that U+FE0E can follow some CJK characters.
 
 > [!NOTE]
 > To see the concrete ranges of each definition, see [ranges.md](ranges.md).
@@ -67,13 +67,13 @@ See [implementers-tips.md](implementers-tips.md).
 
 ## Unicode data list
 
-| Data name | Latest | Unicode 17 |
+| Data name | Latest | Unicode 18 |
 | --- | --- | --- |
-| East Asian Width | https://www.unicode.org/Public/UCD/latest/ucd/EastAsianWidth.txt | https://www.unicode.org/Public/17.0.0/ucd/EastAsianWidth.txt |
-| Script | https://www.unicode.org/Public/UCD/latest/ucd/Scripts.txt | https://www.unicode.org/Public/17.0.0/ucd/Scripts.txt |
-| Block | https://www.unicode.org/Public/UCD/latest/ucd/Blocks.txt | https://www.unicode.org/Public/17.0.0/ucd/Blocks.txt |
-| Characters followed by Non-emoji General-use Variation Selector Variation Selector | https://www.unicode.org/Public/UCD/latest/ucd/StandardizedVariants.txt | https://www.unicode.org/Public/17.0.0/ucd/StandardizedVariants.txt |
-| Default emoji presentation characters | https://www.unicode.org/Public/UCD/latest/ucd/emoji/emoji-data.txt | https://www.unicode.org/Public/17.0.0/ucd/emoji/emoji-data.txt |
-| Characters followed by U+FE0E/U+FE0F | https://unicode.org/Public/UCD/latest/ucd/emoji/emoji-variation-sequences.txt | https://unicode.org/Public/17.0.0/ucd/emoji/emoji-variation-sequences.txt |
-| Fully-qualified Emojis (without ZWJ) | https://unicode.org/Public/emoji/latest/emoji-sequences.txt | https://unicode.org/Public/17.0.0/emoji/emoji-sequences.txt |
-| Emoji qualification test | https://unicode.org/Public/emoji/latest/emoji-test.txt | https://unicode.org/Public/17.0.0/emoji/emoji-test.txt |
+| East Asian Width | https://www.unicode.org/Public/UCD/latest/ucd/EastAsianWidth.txt | https://www.unicode.org/Public/18.0.0/ucd/EastAsianWidth.txt |
+| Script | https://www.unicode.org/Public/UCD/latest/ucd/Scripts.txt | https://www.unicode.org/Public/18.0.0/ucd/Scripts.txt |
+| Block | https://www.unicode.org/Public/UCD/latest/ucd/Blocks.txt | https://www.unicode.org/Public/18.0.0/ucd/Blocks.txt |
+| Characters followed by Non-emoji General-use Variation Selector Variation Selector | https://www.unicode.org/Public/UCD/latest/ucd/StandardizedVariants.txt | https://www.unicode.org/Public/18.0.0/ucd/StandardizedVariants.txt |
+| Default emoji presentation characters | https://www.unicode.org/Public/UCD/latest/ucd/emoji/emoji-data.txt | https://www.unicode.org/Public/18.0.0/ucd/emoji/emoji-data.txt |
+| Characters followed by U+FE0E/U+FE0F | https://unicode.org/Public/UCD/latest/ucd/emoji/emoji-variation-sequences.txt | https://unicode.org/Public/18.0.0/ucd/emoji/emoji-variation-sequences.txt |
+| Fully-qualified Emojis (without ZWJ) | https://unicode.org/Public/emoji/latest/emoji-sequences.txt | https://unicode.org/Public/18.0.0/emoji/emoji-sequences.txt |
+| Emoji qualification test | https://unicode.org/Public/emoji/latest/emoji-test.txt | https://unicode.org/Public/18.0.0/emoji/emoji-test.txt |

@@ -111,7 +111,7 @@ function completeUnicodeVersion(version: string): string | undefined {
   }
 }
 
-const defaultUnicodeVersion = "17";
+const defaultUnicodeVersion = "18";
 
 // Unicode version & output type (conditional expression (&& , || , <=) / Rust match)
 const args = parseArgs({
