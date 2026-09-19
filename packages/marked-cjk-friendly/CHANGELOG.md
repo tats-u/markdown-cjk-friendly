@@ -1,5 +1,11 @@
 # marked-cjk-friendly
 
+## 0.1.2
+
+### Patch Changes
+
+- [`caa3723`](https://github.com/tats-u/markdown-cjk-friendly/commit/caa37236186e0d294cd6da255a1bdde81dbc0f50) Thanks [@tats-u](https://github.com/tats-u)! - Update the CJK character ranges to Unicode 18
+
 ## 0.1.1
 
 ### Patch Changes
