@@ -1,4 +1,4 @@
-name: Regular CI (old Node.js)
+name: Regular CI (second class citizen of Node.js)
 on:
   push:
     branches:
@@ -10,19 +10,14 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: ['20.x', '22.x']
+        node-version: [20, 22, 26]
     permissions:
       contents: read
     steps:
-      - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v6
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v7
+      - uses: pnpm/setup@v2.1.0 # Immutable
         with:
-          node-version: ${{ matrix.node-version }}
-          registry-url: 'https://registry.npmjs.org'
-      - uses: pnpm/action-setup@v6
-        with:
-          run_install: true
+          runtime: node@${{ matrix.node-version }}
       - name: Build
         run: pnpm build:lib
       - name: Test

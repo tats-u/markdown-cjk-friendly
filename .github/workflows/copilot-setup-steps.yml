@@ -26,14 +26,13 @@ jobs:
     # You can define any steps you want, and they will run before the agent starts.
     # If you do not check out your code, Copilot will do this for you.
     steps:
-      - uses: actions/checkout@v5
-      - uses: pnpm/action-setup@v6
-      - uses: actions/setup-node@v5
+      - uses: actions/checkout@v7
         with:
-          node-version: '24.x'
-          registry-url: 'https://registry.npmjs.org'
-      - uses: pnpm/action-setup@v6
+          fetch-depth: 0
+          filter: blob:none
+      - uses: pnpm/setup@v2.1.0 # Immutable
         with:
-          run_install: true
+          runtime: node
+          
       - name: Build
         run: node --run build:lib
