@@ -27,7 +27,3 @@ Make sure to run the following command every time you make changes to `*.ts(x)` 
 ```bash
 node --run lint:type
 ```
-
-## `packages/markdown-it-cj-friendly/src` can be touched only by collaborators or when fixing build/CI errors
-
-`packages/markdown-it-cj-friendly` is deprecated and no longer maintained. Do not make any changes to this directory unless you want to fix build/CI errors or `gh repo view tats-u/markdown-cjk-friendly --json viewerPermission -q .viewerPermission` returns `ADMIN`, `MAINTAIN`, or `WRITE`. If you want to fix build/CI errors, try not to change the semantics of the code there.
