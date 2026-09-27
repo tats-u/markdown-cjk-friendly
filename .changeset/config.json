@@ -11,6 +11,5 @@
   "linked": [],
   "access": "public",
   "baseBranch": "main",
-  "updateInternalDependencies": "patch",
-  "ignore": ["markdown-it-cj-friendly"]
+  "updateInternalDependencies": "patch"
 }
