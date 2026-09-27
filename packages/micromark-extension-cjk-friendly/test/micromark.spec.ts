@@ -94,6 +94,20 @@ describe("micromark-extensions-cjk-friendly", () => {
     expect(result).toMatchSnapshot();
   });
 
+  it("does not loosen flanking around core attention markers", () => {
+    expect(md2Html("a*_*")).toBe("<p>a*_*</p>");
+    expect(md2Html("*x_*a")).toBe("<p>*x_*a</p>");
+    expect(md2Html("a**_**")).toBe("<p>a**_**</p>");
+    expect(md2Html("**x_**a")).toBe("<p>**x_**a</p>");
+  });
+
+  it("still loosens flanking for GFM strikethrough markers", () => {
+    expect(gfm2Html("a*~~b~~*c")).toBe("<p>a<em><del>b</del></em>c</p>");
+    expect(gfm2Html("a**~~b~~**c")).toBe(
+      "<p>a<strong><del>b</del></strong>c</p>",
+    );
+  });
+
   it("Example Markdown in README", async () => {
     const readme = await readFile(
       new URL("../README.md", import.meta.url),

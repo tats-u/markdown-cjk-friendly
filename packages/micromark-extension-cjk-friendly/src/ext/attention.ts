@@ -282,23 +282,37 @@ function tokenizeAttention(
     assert(attentionMarkers, "expected `attentionMarkers` to be populated");
 
     const beforeNonCjkPunctuation = isNonCjkPunctuation(beforePrimary);
+    const beforeCoreAttentionMarker =
+      previous === codes.asterisk || previous === codes.underscore;
     const beforeSpaceOrNonCjkPunctuation =
-      beforeNonCjkPunctuation || isUnicodeWhitespace(beforePrimary);
+      beforeNonCjkPunctuation ||
+      isUnicodeWhitespace(beforePrimary) ||
+      beforeCoreAttentionMarker;
     const afterNonCjkPunctuation = isNonCjkPunctuation(after);
+    const afterCoreAttentionMarker =
+      code === codes.asterisk || code === codes.underscore;
     const afterSpaceOrNonCjkPunctuation =
-      afterNonCjkPunctuation || isUnicodeWhitespace(after);
+      afterNonCjkPunctuation ||
+      isUnicodeWhitespace(after) ||
+      afterCoreAttentionMarker;
     const beforeCjkOrIvs = isCjkOrIvs(beforePrimary);
 
+    // `*` and `_` come from core attention markers.
+    // Only markers registered by other constructs should loosen flanking.
     const open =
       !afterSpaceOrNonCjkPunctuation ||
       (afterNonCjkPunctuation &&
         (beforeSpaceOrNonCjkPunctuation || beforeCjkOrIvs)) ||
-      attentionMarkers.includes(code);
+      (attentionMarkers.includes(code) &&
+        code !== codes.asterisk &&
+        code !== codes.underscore);
     const close =
       !beforeSpaceOrNonCjkPunctuation ||
       (beforeNonCjkPunctuation &&
         (afterSpaceOrNonCjkPunctuation || isCjk(after))) ||
-      attentionMarkers.includes(previous);
+      (attentionMarkers.includes(previous) &&
+        previous !== codes.asterisk &&
+        previous !== codes.underscore);
 
     token._open = Boolean(
       marker === codes.asterisk
