@@ -1,5 +1,12 @@
 # remark-cjk-friendly
 
+## 2.3.2
+
+### Patch Changes
+
+- Updated dependencies [[`2bb9fed`](https://github.com/tats-u/markdown-cjk-friendly/commit/2bb9fed47b80f573cd48e7164f0b5e99d82b5c29)]:
+  - micromark-extension-cjk-friendly@2.0.2
+
 ## 2.3.1
 
 ### Patch Changes
