@@ -19,9 +19,6 @@
     "print-ranges": "node --experimental-strip-types scripts/cjk-ranges.ts",
     "bench:all": "vitest bench"
   },
-  "workspaces": [
-    "packages/*"
-  ],
   "type": "module",
   "devDependencies": {
     "@biomejs/biome": "2.3.12",
@@ -40,5 +37,5 @@
     "vite": "^7.3.6",
     "vitest": "^4.1.9"
   },
-  "packageManager": "pnpm@12.7.0"
+  "packageManager": "pnpm@12.8.1"
 }
