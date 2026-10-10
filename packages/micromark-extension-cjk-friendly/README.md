@@ -32,9 +32,9 @@ CommonMark has a problem that the following emphasis marks `**` are not recogniz
 ```md
 **このアスタリスクは強調記号として認識されず、そのまま表示されます。**この文のせいで。
 
-**该星号不会被识别，而是直接显示。**这是因为它没有被识别为强调符号。
+**这些星号不会被识别为强调标记，而是就这么原样显示出来。**都是因为这个句子。
 
-**이 별표는 강조 표시로 인식되지 않고 그대로 표시됩니다(이 괄호 때문에)**이 문장 때문에.
+**이 애스터리스크는 이 괄호(parenthesis)**가 있는 바람에 강조 기호로 인식되지 않고 그대로 표시됩니다.
 ```
 
 This problem occurs because the character just inside the `**` is a (Japanese or Chinese) punctuation mark (。) or parenthesis and the character just outside is not a space or punctuation mark.
