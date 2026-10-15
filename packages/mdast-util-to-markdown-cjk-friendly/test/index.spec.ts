@@ -81,6 +81,44 @@ function fromInlineMarkdown(markdown: string | null): PhrasingContent[] {
 }
 
 describe("cjkFriendlyToMarkdown", () => {
+  it.each([
+    "*a*_b_",
+    "*_a_*",
+    "**a**__b__",
+    "**_a_**",
+    "*__a__*",
+    "***a***",
+    "**__a__**",
+    "𐐀*(a)*𐐁",
+    "## *_a_*\n\n> **a**__b__",
+  ])("preserves the attention tree when serializing %s", (source) => {
+    const tree = fromMarkdown(source);
+    const original = structuredClone(tree);
+    const markdown = toMarkdown(tree, {
+      extensions: [cjkFriendlyToMarkdown()],
+    });
+    expect(stripPosition(fromMarkdown(markdown))).toEqual(stripPosition(tree));
+    expect(tree).toEqual(original);
+  });
+
+  it("serializes an inline attention node directly", () => {
+    const node = {
+      type: "emphasis" as const,
+      children: [
+        {
+          type: "emphasis" as const,
+          children: [{ type: "text" as const, value: "a" }],
+        },
+      ],
+    };
+    const markdown = toMarkdown(node, {
+      extensions: [cjkFriendlyToMarkdown()],
+    });
+    expect(
+      (stripPosition(fromMarkdown(markdown)).children[0] as Paragraph).children,
+    ).toEqual([node]);
+  });
+
   const srcList: [string | null, boolean, string, boolean, string | null][] = [
     ["漢", true, "()", true, "字"],
     ["A", true, "「」", true, "B"],

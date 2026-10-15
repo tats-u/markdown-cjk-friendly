@@ -2,6 +2,8 @@
 
 `mdast-util-to-markdown` extension for CJK-friendly emphasis and strong serialization.
 
+Requires `mdast-util-to-markdown` 2.1.3 or later.
+
 ## Usage
 
 ```js

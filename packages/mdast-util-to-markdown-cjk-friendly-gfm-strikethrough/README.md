@@ -2,6 +2,8 @@
 
 `mdast-util-to-markdown` extension package for GFM strikethrough serialization in the CJK-friendly remark stack.
 
+Requires `mdast-util-to-markdown` 2.1.3 or later and `mdast-util-gfm-strikethrough` 2.0.1 or later.
+
 ## Usage
 
 ```js

@@ -46,10 +46,9 @@
     "lint:type": "tsc --noEmit"
   },
   "dependencies": {
-    "mdast-util-gfm-strikethrough": "^2.0.0",
-    "mdast-util-to-markdown": "^2.1.2",
-    "micromark-extension-cjk-friendly-util": "workspace:*",
-    "micromark-util-symbol": "catalog:"
+    "mdast-util-gfm-strikethrough": "^2.0.1",
+    "mdast-util-to-markdown": "^2.1.3",
+    "mdast-util-to-markdown-cjk-friendly": "workspace:*"
   },
   "peerDependencies": {
     "@types/mdast": "*"
