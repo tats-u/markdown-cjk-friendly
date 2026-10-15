@@ -27,3 +27,11 @@ Make sure to run the following command every time you make changes to `*.ts(x)` 
 ```bash
 node --run lint:type
 ```
+
+## Code Writing Policy
+
+- Avoid inefficient code. Performance matters. Example:
+  - BAD: `[...str].at(-1)` (O(n))
+  - GOOD: Check `str.charCodeAt(str.length - 1)` and, if necessary, `str.charCodeAt(str.length - 2)`, and extract the required range (O(1))
+- When checking surrogate code units, prefer `< 0xdc00` or `< 0xe000` over `<= 0xdbff` or `<= 0xdfff`.
+- If external string input lacks specific character restrictions, assume it may contain supplementary characters U+10000 and above. Handle surrogate pairs correctly.
