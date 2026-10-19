@@ -1,4 +1,6 @@
 {
+  "name": "demo-vitepress",
+  "private": true,
   "type": "module",
   "scripts": {
     "dev": "vitepress dev",

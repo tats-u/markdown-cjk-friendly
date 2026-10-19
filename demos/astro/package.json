@@ -1,4 +1,6 @@
 {
+  "name": "demo-astro",
+  "private": true,
   "type": "module",
   "scripts": {
     "dev": "astro dev",

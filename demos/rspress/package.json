@@ -1,4 +1,6 @@
 {
+  "name": "demo-rspress",
+  "private": true,
   "scripts": {
     "build": "rspress build",
     "dev": "rspress dev",

@@ -1,4 +1,6 @@
 {
+  "name": "demo-docusaurus",
+  "private": true,
   "scripts": {
     "docusaurus": "docusaurus",
     "start": "docusaurus start",
