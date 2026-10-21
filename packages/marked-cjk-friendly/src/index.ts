@@ -243,6 +243,20 @@ function getEmStrongOpeningPunctuation(match: RegExpExecArray): string {
   return match[1] || match[2] || "";
 }
 
+function codePointCount(str: string): number {
+  let result = str.length;
+  const end = result - 1;
+  for (let i = 0; i < end; ) {
+    const bmpOrHigh = str.charCodeAt(i++);
+    if (bmpOrHigh < 0xd800 || 0xdc00 <= bmpOrHigh) continue;
+    const low = str.charCodeAt(i);
+    if (low < 0xdc00 || 0xe000 <= low) continue;
+    i++;
+    result--;
+  }
+  return result;
+}
+
 /**
  * Creates a marked extension that makes emphasis markers CJK-friendly.
  *
@@ -296,7 +310,7 @@ export default function markedCjkFriendly(): MarkedExtension {
           prevIsCjk ||
           cjkTest.test(nextChar)
         ) {
-          const lLength = [...match[0]].length - 1;
+          const lLength = codePointCount(match[0]) - 1;
           let rDelim: string | undefined;
           let rLength: number;
           let delimTotal = lLength;
@@ -335,7 +349,7 @@ export default function markedCjkFriendly(): MarkedExtension {
 
             if (!rDelim) continue;
 
-            rLength = [...rDelim].length;
+            rLength = codePointCount(rDelim);
 
             // Check if CJK is adjacent to this delimiter
             // When CJK is adjacent, Left-only or Right-only
@@ -425,7 +439,7 @@ export default function markedCjkFriendly(): MarkedExtension {
           prevIsCjk ||
           cjkTest.test(nextChar)
         ) {
-          const lLength = [...match[0]].length - 1;
+          const lLength = codePointCount(match[0]) - 1;
           let rDelim: string | undefined;
           let rLength: number;
           let delimTotal = lLength;
@@ -447,7 +461,7 @@ export default function markedCjkFriendly(): MarkedExtension {
 
             if (!rDelim) continue;
 
-            rLength = [...rDelim].length;
+            rLength = codePointCount(rDelim);
             if (rLength !== lLength) continue;
 
             const isCjkAdjacent = isCjkAdjacentToDelimiter(
