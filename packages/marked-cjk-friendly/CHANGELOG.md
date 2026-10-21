@@ -1,5 +1,11 @@
 # marked-cjk-friendly
 
+## 0.1.3
+
+### Patch Changes
+
+- [#71](https://github.com/tats-u/markdown-cjk-friendly/pull/71) [`bb8acfe`](https://github.com/tats-u/markdown-cjk-friendly/commit/bb8acfe832e31860452d57d9b151b6ccef08ef7d) Thanks [@tats-u](https://github.com/tats-u)! - Optimize getting the code point count
+
 ## 0.1.2
 
 ### Patch Changes

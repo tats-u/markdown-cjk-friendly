@@ -1,5 +1,12 @@
 # remark-cjk-friendly-gfm-strikethrough
 
+## 2.3.2
+
+### Patch Changes
+
+- Updated dependencies [[`97ee233`](https://github.com/tats-u/markdown-cjk-friendly/commit/97ee2330b41153406d811a68c8d5915e625af783)]:
+  - mdast-util-to-markdown-cjk-friendly-gfm-strikethrough@1.0.1
+
 ## 2.3.1
 
 ### Patch Changes
