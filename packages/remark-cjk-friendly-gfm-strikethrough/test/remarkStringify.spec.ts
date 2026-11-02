@@ -1,4 +1,4 @@
-import type { Root } from "mdast";
+import type { PhrasingContent, Root } from "mdast";
 import { remark } from "remark";
 import remarkCjkFriendly from "remark-cjk-friendly";
 import remarkCjkFriendlyGfmStrikethrough from "remark-cjk-friendly-gfm-strikethrough";
@@ -21,6 +21,30 @@ function withoutPositions(node: unknown): unknown {
 }
 
 describe("remark-cjk-friendly-gfm-strikethrough stringify", () => {
+  it.each([
+    remarkCjkFriendlyGfmStrikethrough,
+    remarkCjkFriendlyGfmStrikethroughSerializeOnly,
+  ])("round-trips backslashes before strikethrough character references with %s", (plugin) => {
+    const children: PhrasingContent[][] = [
+      ...["\\ ", "\\\t", "\\\\ "].map((value): PhrasingContent[] => [
+        { type: "text", value: "𩸽" },
+        { type: "delete", children: [{ type: "text", value }] },
+        { type: "text", value: "𠀀" },
+      ]),
+      [
+        { type: "text", value: "\\𐐀" },
+        { type: "delete", children: [{ type: "text", value: ".b" }] },
+      ],
+    ];
+    const tree: Root = {
+      type: "root",
+      children: children.map((children) => ({ type: "paragraph", children })),
+    };
+    const markdown = remark().use(remarkGfm).use(plugin).stringify(tree);
+
+    expect(parser.parse(markdown)).toMatchObject(tree);
+  });
+
   it.each([
     false,
     true,
