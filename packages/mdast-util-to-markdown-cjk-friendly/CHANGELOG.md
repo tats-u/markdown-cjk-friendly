@@ -1,5 +1,11 @@
 # mdast-util-to-markdown-cjk-friendly
 
+## 1.0.2
+
+### Patch Changes
+
+- [#73](https://github.com/tats-u/markdown-cjk-friendly/pull/73) [`86709cb`](https://github.com/tats-u/markdown-cjk-friendly/commit/86709cbfd28d65c5d37fbe407ad74ad2e0698658) Thanks [@tats-u](https://github.com/tats-u)! - Preserve backslashes before character references at emphasis, strong, and strikethrough boundaries, including supplementary characters. Backport the fix first released in [mdast-util-to-markdown 2.2.1](https://github.com/syntax-tree/mdast-util-to-markdown/releases/tag/2.2.1) ([8304b43](https://github.com/syntax-tree/mdast-util-to-markdown/commit/8304b433b12a7d13082154d2df602b5509201098)).
+
 ## 1.0.1
 
 ### Patch Changes
