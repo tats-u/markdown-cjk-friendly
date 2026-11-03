@@ -238,9 +238,16 @@ function encode(tokens: Token[], start: boolean): void {
     ? firstCharacter(token.value)
     : lastCharacter(token.value);
   const reference = `&#x${character.codePointAt(0)?.toString(16).toUpperCase()};`;
-  token.value = start
-    ? reference + token.value.slice(character.length)
-    : token.value.slice(0, -character.length) + reference;
+  if (start) {
+    token.value = reference + token.value.slice(character.length);
+  } else {
+    let value = token.value.slice(0, -character.length);
+    let escapes = 0;
+    while (value.charCodeAt(value.length - 1 - escapes) === 92) escapes++;
+    // Match upstream container-phrasing: an odd run would escape the new `&`.
+    if (escapes % 2) value += "\\";
+    token.value = value + reference;
+  }
 }
 
 function attentionSequences(

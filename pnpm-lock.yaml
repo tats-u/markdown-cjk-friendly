@@ -681,8 +681,8 @@ importers:
         specifier: ^0.1.8
         version: 0.1.8
       vite:
-        specifier: ^8.3.5
-        version: 8.3.5(@types/node@24.19.0)(esbuild@0.28.2)(jiti@1.21.7)(terser@5.51.2)
+        specifier: ^7.3.7
+        version: 7.3.7(@types/node@24.19.0)(jiti@1.21.7)(lightningcss@1.33.0)(terser@5.51.2)
 
 packages:
 
