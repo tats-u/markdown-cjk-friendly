@@ -29,7 +29,7 @@ describe("remark-cjk-friendly-gfm-strikethrough stringify", () => {
       ...["\\ ", "\\\t", "\\\\ "].map((value): PhrasingContent[] => [
         { type: "text", value: "𩸽" },
         { type: "delete", children: [{ type: "text", value }] },
-        { type: "text", value: "𠀀" },
+        { type: "text", value: "𠮷" },
       ]),
       [
         { type: "text", value: "\\𐐀" },
