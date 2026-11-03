@@ -1,5 +1,12 @@
 # remark-cjk-friendly
 
+## 2.3.4
+
+### Patch Changes
+
+- Updated dependencies [[`86709cb`](https://github.com/tats-u/markdown-cjk-friendly/commit/86709cbfd28d65c5d37fbe407ad74ad2e0698658)]:
+  - mdast-util-to-markdown-cjk-friendly@1.0.2
+
 ## 2.3.3
 
 ### Patch Changes

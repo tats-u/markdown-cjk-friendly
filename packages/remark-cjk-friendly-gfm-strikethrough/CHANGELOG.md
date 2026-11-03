@@ -1,5 +1,12 @@
 # remark-cjk-friendly-gfm-strikethrough
 
+## 2.3.3
+
+### Patch Changes
+
+- Updated dependencies []:
+  - mdast-util-to-markdown-cjk-friendly-gfm-strikethrough@1.0.2
+
 ## 2.3.2
 
 ### Patch Changes
