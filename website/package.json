@@ -27,7 +27,7 @@
     "micromark-extension-gfm": "catalog:",
     "semver": "^7.8.5",
     "solid-icons": "^1.2.0",
-    "solid-js": "^1.9.15",
+    "solid-js": "^1.9.18",
     "tinybench": "^6.2.0",
     "visual-dom-diff": "^0.7.3"
   },
