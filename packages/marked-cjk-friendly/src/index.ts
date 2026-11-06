@@ -197,10 +197,6 @@ function isCjkAdjacentToDelimiter(
   rightMatch: RegExpExecArray,
   clippedMaskedSrc: string,
 ): boolean {
-  if (!(rightMatch[1] || rightMatch[2] || rightMatch[3] || rightMatch[4])) {
-    return false;
-  }
-
   const charBefore = String.fromCodePoint(
     // biome-ignore lint/style/noNonNullAssertion: rightMatch[0] is always non-empty
     rightMatch[0].codePointAt(0)!,
@@ -368,7 +364,18 @@ export default function markedCjkFriendly(): MarkedExtension {
             }
             if (isBoth || isCjkAdjacent) {
               // either Left or Right Delim (or CJK-reclassified as Both)
-              if (lLength % 3 && !((lLength + rLength) % 3)) {
+              // In CJK prose, an even run can close strong emphasis and leave
+              // pairs to open the next span without requiring whitespace.
+              const closesStrongPair =
+                isCjkAdjacent &&
+                src[0] === "*" &&
+                lLength % 2 === 0 &&
+                rLength % 2 === 0;
+              if (
+                !closesStrongPair &&
+                lLength % 3 &&
+                !((lLength + rLength) % 3)
+              ) {
                 midDelimTotal += rLength;
                 continue; // CommonMark Emphasis Rules 9-10
               }
