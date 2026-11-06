@@ -51,6 +51,20 @@ describe.each(htmlConverters)("marked-cjk-friendly (marked $version)", ({
   const md2Html = (input: string) => converter.md2Html(input);
   const md2HtmlOriginal = (input: string) => converter.md2HtmlOriginal(input);
 
+  it("splits even CJK delimiter runs between adjacent strong spans", ({
+    expect,
+  }) => {
+    expect(md2Html("**标签：****重点：**正文")).toBe(
+      "<p><strong>标签：</strong><strong>重点：</strong>正文</p>\n",
+    );
+    expect(md2Html("**甲****乙****丙**正文")).toBe(
+      "<p><strong>甲</strong><strong>乙</strong><strong>丙</strong>正文</p>\n",
+    );
+    expect(md2Html("`**标签：****重点：**正文`")).toBe(
+      "<p><code>**标签：****重点：**正文</code></p>\n",
+    );
+  });
+
   it.concurrent("** around Kana/Han is converted to <strong>", async ({
     expect,
   }) => {
