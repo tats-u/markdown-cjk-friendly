@@ -9,7 +9,7 @@
     "test:watch": "vitest watch"
   },
   "dependencies": {
-    "@rspress/core": "^2.0.9",
+    "@rspress/core": "^2.0.23",
     "remark-cjk-friendly": "workspace:^",
     "remark-cjk-friendly-gfm-strikethrough": "workspace:^"
   },

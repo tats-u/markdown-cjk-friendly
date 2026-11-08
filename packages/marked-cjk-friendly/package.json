@@ -48,7 +48,7 @@
     "lint:type": "tsc --noEmit"
   },
   "devDependencies": {
-    "marked": "^18.0.9",
+    "marked": "^18.0.14",
     "marked17": "npm:marked@^17.0.6",
     "marked17-0-4": "npm:marked@17.0.4"
   },
