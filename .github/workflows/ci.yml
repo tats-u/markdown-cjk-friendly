@@ -44,8 +44,9 @@ jobs:
       - name: Build
         run: node --run build:lib
       - name: Run benchmarks
-        uses: CodSpeedHQ/action@v3
+        uses: CodSpeedHQ/action@v5
         with:
+          mode: simulation
           run: pnpm vitest bench --run --shard=${{ matrix.shard }}
           token: ${{ secrets.CODSPEED_TOKEN }}
     if: ${{ !startsWith(github.head_ref, 'changeset-release/') }} 
