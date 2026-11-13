@@ -9,7 +9,7 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/solid-js": "^7.0.2",
+    "@astrojs/solid-js": "^7.1.2",
     "@tanstack/solid-query": "^5.104.0",
     "astro": "catalog:",
     "clsx": "^2.1.1",

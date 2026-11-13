@@ -608,8 +608,8 @@ importers:
   website:
     dependencies:
       '@astrojs/solid-js':
-        specifier: ^7.0.2
-        version: 7.0.2(@types/node@24.19.0)(esbuild@0.28.2)(jiti@1.21.7)(solid-js@1.9.18)(supports-color@8.1.1)(terser@5.51.2)
+        specifier: ^7.1.2
+        version: 7.1.2(@types/node@24.19.0)(esbuild@0.28.2)(jiti@1.21.7)(solid-js@1.9.18)(supports-color@8.1.1)(terser@5.51.2)
       '@tanstack/solid-query':
         specifier: ^5.104.0
         version: 5.104.0(solid-js@1.9.18)
@@ -900,9 +900,9 @@ packages:
     resolution: {integrity: sha512-KTivpmnz6lDsC6o9H4+DNm2SrE/GHzw8cNAvEJwAvUT+eoaEnn/4NtbDNfRRaxaJHdp15gf+tfHAWiXR4wB3BA==}
     engines: {node: '>=22.12.0'}
 
-  '@astrojs/solid-js@7.0.2':
-    resolution: {integrity: sha512-4Sk28a4HId176eXqEIrkuLmd+VFePwGSS/smL0ZdiUlb8cBAm5E5Gg0iSQIy/7bYuoj2xN398TcdtSZLl4regA==}
-    engines: {node: '>=22.12.0'}
+  '@astrojs/solid-js@7.1.2':
+    resolution: {integrity: sha512-AXSXsB3t3EISa41A8QLsUhjqDtlKLXUHAirmCY1VKm1SIYJjj6gWvpAKjXhsxZSHxrxwmDH/7LR6+wM/5S7nkg==}
+    engines: {node: '>=22.23.4'}
     peerDependencies:
       solid-devtools: ^0.34.5
       solid-js: ^1.9.13
@@ -6942,11 +6942,6 @@ packages:
     resolution: {integrity: sha512-71ippSywq5Yb7/tVYyGbkBggbU8H3u5Rz56fH60jGFgr8uHwxs+aSKeqmluIVzM0m0kB7xQjKS6qPfd0b2ZoqQ==}
     hasBin: true
 
-  nanoid@3.3.19:
-    resolution: {integrity: sha512-Y2tUNy4ouw6tq5oDSKeQYGOyhkUBhNOcGV/02KC+6kd9eDGqdZd++mjMiIDilrBYvjEnCYvVtsuHCuP+okSfug==}
-    engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
-    hasBin: true
-
   nanoid@3.3.20:
     resolution: {integrity: sha512-uKdg2G3GNCKQn9byYOpxbGqrT2fGO5KRt5J/8b3pok8rT6qxGWF6hxMyJiEYtAf+FVyYuD9hRaDqX5uPFYJ4ZQ==}
     engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
@@ -9744,7 +9739,7 @@ snapshots:
     dependencies:
       prismjs: 1.30.0
 
-  '@astrojs/solid-js@7.0.2(@types/node@24.19.0)(esbuild@0.28.2)(jiti@1.21.7)(solid-js@1.9.18)(supports-color@8.1.1)(terser@5.51.2)':
+  '@astrojs/solid-js@7.1.2(@types/node@24.19.0)(esbuild@0.28.2)(jiti@1.21.7)(solid-js@1.9.18)(supports-color@8.1.1)(terser@5.51.2)':
     dependencies:
       solid-js: 1.9.18
       vite: 8.3.5(@types/node@24.19.0)(esbuild@0.28.2)(jiti@1.21.7)(terser@5.51.2)
@@ -17196,8 +17191,6 @@ snapshots:
 
   mustache@4.2.0: {}
 
-  nanoid@3.3.19: {}
-
   nanoid@3.3.20: {}
 
   negotiator@0.6.3: {}
@@ -18135,7 +18128,7 @@ snapshots:
 
   postcss@8.5.28:
     dependencies:
-      nanoid: 3.3.19
+      nanoid: 3.3.20
       picocolors: 1.1.1
       source-map-js: 1.2.2
 
