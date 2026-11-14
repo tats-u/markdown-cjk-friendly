@@ -1,5 +1,13 @@
 # remark-cjk-friendly
 
+## 2.3.5
+
+### Patch Changes
+
+- Updated dependencies []:
+  - mdast-util-to-markdown-cjk-friendly@1.0.3
+  - micromark-extension-cjk-friendly@2.0.3
+
 ## 2.3.4
 
 ### Patch Changes
