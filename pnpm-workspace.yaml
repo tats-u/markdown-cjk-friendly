@@ -12,6 +12,11 @@ allowBuilds:
   esbuild: true
   sharp: true
 
+audit:
+  ignore:
+    # Withdrawn advisory: https://github.com/github/advisory-database/pull/11056
+    - GHSA-gcqx-w48m-w2h4
+
 blockExoticSubdeps: true
 
 catalog:
