@@ -2,13 +2,28 @@ import { readFile } from "node:fs/promises";
 import { Marked } from "marked";
 import markedCjkFriendly from "marked-cjk-friendly";
 import { Marked as Marked17 } from "marked17";
+import { Marked as Marked17_0_1 } from "marked17-0-1";
+import { Marked as Marked17_0_2 } from "marked17-0-2";
 import { Marked as Marked17_0_4 } from "marked17-0-4";
+import { Marked as Marked18_1 } from "marked18-1";
+import { Marked as Marked18_1_1 } from "marked18-1-1";
+import { Marked as Marked18_1_2 } from "marked18-1-2";
+import { Marked as Marked18_2_0 } from "marked18-2-0";
 import commonMarkTestCases from "../../../testcases/commonmark.json" with {
   type: "json",
 };
 
-type MarkedObject = Marked | Marked17 | Marked17_0_4;
-type MarkedClass = typeof Marked | typeof Marked17 | typeof Marked17_0_4;
+type MarkedClass =
+  | typeof Marked
+  | typeof Marked17
+  | typeof Marked17_0_4
+  | typeof Marked17_0_1
+  | typeof Marked17_0_2
+  | typeof Marked18_1_1
+  | typeof Marked18_1_2
+  | typeof Marked18_2_0
+  | typeof Marked18_1;
+type MarkedObject = InstanceType<MarkedClass>;
 
 class MarkedHtmlConverter {
   private marked: MarkedObject;
@@ -177,5 +192,31 @@ describe.each(htmlConverters)("marked-cjk-friendly (marked $version)", ({
       md2Html(testCase.markdown),
       `Different result. Markdown: ${testCase.markdown}`,
     ).toBe(md2HtmlOriginal(testCase.markdown));
+  });
+});
+
+it.each([
+  { version: "17.0.1", converter: new MarkedHtmlConverter(Marked17_0_1) },
+  { version: "17.0.2", converter: new MarkedHtmlConverter(Marked17_0_2) },
+])("parses CJK strikethrough with marked $version", ({ converter }) => {
+  expect(converter.md2Html("漢~~「字」~~漢")).toBe(
+    "<p>漢<del>「字」</del>漢</p>\n",
+  );
+});
+
+describe.each([
+  ...htmlConverters,
+  { version: "18.1.1", converter: new MarkedHtmlConverter(Marked18_1_1) },
+  { version: "18.1.2", converter: new MarkedHtmlConverter(Marked18_1_2) },
+  { version: "18.2.0", converter: new MarkedHtmlConverter(Marked18_2_0) },
+  { version: "18.1", converter: new MarkedHtmlConverter(Marked18_1) },
+])("marked $version delimiter regressions", ({ converter }) => {
+  it.each([
+    "a*b**",
+    "*_#_",
+    "前文 a*b** 後文",
+    "前文 *_#_ 後文",
+  ])("preserves native emphasis for non-CJK delimiter runs in %s", (source) => {
+    expect(converter.md2Html(source)).toBe(converter.md2HtmlOriginal(source));
   });
 });

@@ -129,11 +129,8 @@ const delRDelimCjk = buildRDelimDel(
 );
 
 interface InlineRules {
-  delLDelim: RegExp;
-  delRDelim: RegExp;
+  delLDelim?: RegExp;
   emStrongLDelim: RegExp;
-  emStrongRDelimAst: RegExp;
-  emStrongRDelimUnd: RegExp;
   punctuation: RegExp;
 }
 
@@ -157,7 +154,7 @@ function isPrevCharCjk(
   maskedSrc: string,
   src: string,
 ): boolean {
-  let prevIsCjk = punctuationCjk.test(prevChar);
+  let prevIsCjk = cjkTest.test(prevChar);
   if (!prevIsCjk && prevChar) {
     const prevIdx = maskedSrc.length - src.length;
     if (prevIdx >= 1) {
@@ -197,10 +194,6 @@ function isCjkAdjacentToDelimiter(
   rightMatch: RegExpExecArray,
   clippedMaskedSrc: string,
 ): boolean {
-  if (!(rightMatch[1] || rightMatch[2] || rightMatch[3] || rightMatch[4])) {
-    return false;
-  }
-
   const charBefore = String.fromCodePoint(
     // biome-ignore lint/style/noNonNullAssertion: rightMatch[0] is always non-empty
     rightMatch[0].codePointAt(0)!,
@@ -273,6 +266,7 @@ export default function markedCjkFriendly(): MarkedExtension {
     tokenizer: {
       emStrong(
         this: {
+          options: { gfm?: boolean; pedantic?: boolean };
           rules: TokenizerRules;
           lexer: { inlineTokens: (text: string) => Tokens.Generic[] };
         },
@@ -282,12 +276,13 @@ export default function markedCjkFriendly(): MarkedExtension {
       ): Tokens.Em | Tokens.Strong | false | undefined {
         const { rules } = this;
 
+        if (src[0] !== "*" && src[0] !== "_") return false;
         const match = rules.inline.emStrongLDelim.exec(src);
         if (!match) return false;
 
         const modernEmStrongLayout = usesModernEmStrongLayout(match);
         if (modernEmStrongLayout && !hasEmStrongLeadContent(match)) {
-          return undefined;
+          return false;
         }
 
         // _ can't be between two alphanumerics
@@ -299,7 +294,10 @@ export default function markedCjkFriendly(): MarkedExtension {
 
         const nextChar = getEmStrongOpeningPunctuation(match);
 
-        const prevIsCjk = isPrevCharCjk(prevChar, maskedSrc, src);
+        // Only override Marked when a delimiter touches CJK. Its native
+        // tokenizer owns the CommonMark rules for all other runs.
+        let touchesCjk =
+          isPrevCharCjk(prevChar, maskedSrc, src) || cjkTest.test(match[0]);
 
         // Original: !nextChar || !prevChar || punctuation.exec(prevChar)
         // CJK extension: also allow when prevChar or nextChar is CJK
@@ -307,8 +305,8 @@ export default function markedCjkFriendly(): MarkedExtension {
           !nextChar ||
           !prevChar ||
           rules.inline.punctuation.exec(prevChar) ||
-          prevIsCjk ||
-          cjkTest.test(nextChar)
+          punctuationCjk.test(prevChar) ||
+          touchesCjk
         ) {
           const lLength = codePointCount(match[0]) - 1;
           let rDelim: string | undefined;
@@ -323,8 +321,7 @@ export default function markedCjkFriendly(): MarkedExtension {
             modernEmStrongLayout && prevChar === match[0][0];
 
           // Select the CJK-modified right delimiter regex
-          // Detect GFM mode: GFM regex source includes (?!~) for tilde handling
-          const isGfm = rules.inline.emStrongRDelimAst.source.includes("(?!~)");
+          const isGfm = this.options.gfm && !this.options.pedantic;
           let endReg: RegExp;
           if (match[0][0] === "*") {
             endReg = isGfm ? emStrongRDelimAstCjkGfm : emStrongRDelimAstCjk;
@@ -358,6 +355,7 @@ export default function markedCjkFriendly(): MarkedExtension {
               rMatch,
               clippedMaskedSrc,
             );
+            touchesCjk ||= isCjkAdjacent;
             const isLeftOnly = Boolean(rMatch[3] || rMatch[4]);
             const isBoth = Boolean(rMatch[5] || rMatch[6]);
 
@@ -381,6 +379,8 @@ export default function markedCjkFriendly(): MarkedExtension {
             delimTotal -= rLength;
 
             if (delimTotal > 0) continue;
+
+            if (!touchesCjk) return false;
 
             // Remove extra characters. *a*** -> *a*
             rLength = Math.min(rLength, rLength + delimTotal + midDelimTotal);
@@ -413,7 +413,7 @@ export default function markedCjkFriendly(): MarkedExtension {
             };
           }
         }
-        return undefined;
+        return touchesCjk ? undefined : false;
       },
       del(
         this: {
@@ -426,18 +426,23 @@ export default function markedCjkFriendly(): MarkedExtension {
       ): Tokens.Del | false | undefined {
         const { rules } = this;
 
-        const match = rules.inline.delLDelim.exec(src);
+        if (src[0] !== "~") return false;
+        // Before 17.0.2, native strikethrough already accepts CJK boundaries.
+        const match = rules.inline.delLDelim?.exec(src);
         if (!match) return false;
 
         const nextChar = match[1] || "";
-        const prevIsCjk = isPrevCharCjk(prevChar, maskedSrc, src);
+        // Only override Marked when a delimiter touches CJK. Its native
+        // tokenizer owns the CommonMark rules for all other runs.
+        let touchesCjk =
+          isPrevCharCjk(prevChar, maskedSrc, src) || cjkTest.test(match[0]);
 
         if (
           !nextChar ||
           !prevChar ||
           rules.inline.punctuation.exec(prevChar) ||
-          prevIsCjk ||
-          cjkTest.test(nextChar)
+          punctuationCjk.test(prevChar) ||
+          touchesCjk
         ) {
           const lLength = codePointCount(match[0]) - 1;
           let rDelim: string | undefined;
@@ -469,6 +474,7 @@ export default function markedCjkFriendly(): MarkedExtension {
               clippedMaskedSrc,
             );
 
+            touchesCjk ||= isCjkAdjacent;
             if ((rMatch[3] || rMatch[4]) && !isCjkAdjacent) {
               delimTotal += rLength;
               continue;
@@ -477,6 +483,7 @@ export default function markedCjkFriendly(): MarkedExtension {
             delimTotal -= rLength;
             if (delimTotal > 0) continue;
 
+            if (!touchesCjk) return false;
             rLength = Math.min(rLength, rLength + delimTotal);
             // biome-ignore lint/style/noNonNullAssertion: rMatch[0] is always non-empty
             const firstCp = rMatch[0].codePointAt(0)!;
@@ -495,7 +502,7 @@ export default function markedCjkFriendly(): MarkedExtension {
           }
         }
 
-        return undefined;
+        return touchesCjk ? undefined : false;
       },
     },
   };
