@@ -1,5 +1,17 @@
 # marked-cjk-friendly
 
+## 0.1.4
+
+### Patch Changes
+
+- [#85](https://github.com/tats-u/markdown-cjk-friendly/pull/85) [`2bab47a`](https://github.com/tats-u/markdown-cjk-friendly/commit/2bab47afcc889556dff52342e51434819089666f) Thanks [@tats-u](https://github.com/tats-u)! - Fix incorrect emphasis and strikethrough pairing when whitespace precedes a delimiter followed by CJK text. Keep intraword underscores literal when adjacent CJK letters prevent them from closing emphasis.
+
+- [#83](https://github.com/tats-u/markdown-cjk-friendly/pull/83) [`2620aa5`](https://github.com/tats-u/markdown-cjk-friendly/commit/2620aa5d3ce7eb652e09f67ab995247eede5f5bc) Thanks [@tats-u](https://github.com/tats-u)! - Support the latest Marked
+
+  Preserve native Marked emphasis behavior for delimiters without adjacent CJK, including changes in Marked 18.1.2 and 18.2.0. Support the original Marked 17 strikethrough tokenizer.
+
+- [#87](https://github.com/tats-u/markdown-cjk-friendly/pull/87) [`6bbba89`](https://github.com/tats-u/markdown-cjk-friendly/commit/6bbba8902082a5f0fee12b755b2e5fdf5b70ad21) Thanks [@tats-u](https://github.com/tats-u)! - Fix nested emphasis and strong emphasis next to quotes and brackets in CJK text.
+
 ## 0.1.3
 
 ### Patch Changes

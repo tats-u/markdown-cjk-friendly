@@ -1,5 +1,12 @@
 # mdast-util-to-markdown-cjk-friendly
 
+## 1.0.3
+
+### Patch Changes
+
+- Updated dependencies [[`e9762c3`](https://github.com/tats-u/markdown-cjk-friendly/commit/e9762c379b36ce5ee0e9b185fae9a908244f598b)]:
+  - micromark-extension-cjk-friendly-util@3.0.2
+
 ## 1.0.2
 
 ### Patch Changes
