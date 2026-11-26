@@ -47,6 +47,16 @@ describe.each(markedVersions)("marked-cjk-friendly (marked $version)", ({
   md2HtmlOriginal,
 }) => {
   it.each([
+    ['*"가 **나**"*', "<em>&quot;가 <strong>나</strong>&quot;</em>"],
+    ["*(가 **나**)*", "<em>(가 <strong>나</strong>)</em>"],
+    ["*「가 **나**」*", "<em>「가 <strong>나</strong>」</em>"],
+    ['**"가 *나*"**', "<strong>&quot;가 <em>나</em>&quot;</strong>"],
+    ['*"**나** 다"*', "<em>&quot;<strong>나</strong> 다&quot;</em>"],
+    ['*"注意 **重要**"*', "<em>&quot;注意 <strong>重要</strong>&quot;</em>"],
+    ["*참고 (**주의:** 내용*", "<em>참고 (<strong>주의:</strong> 내용</em>"],
+    ["*참고 「**주의:** 내용*", "<em>참고 「<strong>주의:</strong> 내용</em>"],
+    ["**나*나*", "**나<em>나</em>"],
+    ["**나 *나**", "*<em>나 <em>나</em></em>"],
     ["**강조 **는", "**강조 **는"],
     ["***코드 ***를", "***코드 ***를"],
     ["*참고 **주의:** 내용*", "<em>참고 <strong>주의:</strong> 내용</em>"],

@@ -53,6 +53,89 @@ function buildRDelimAst(
   );
 }
 
+interface AsteriskOpener {
+  length: number;
+  remaining: number;
+  canClose: boolean;
+  position: number;
+}
+
+function initialAsteriskOpener(
+  length: number,
+  maskedSrc: string,
+  offset: number,
+  prevChar: string,
+  nextPunctuation: string,
+  touchesCjk: boolean,
+  isGfm: boolean | undefined,
+): AsteriskOpener {
+  // Marked retries a partially unmatched run after emitting a literal
+  // marker. Rule 9 still uses the length and flank of the original run.
+  let runStart = offset;
+  if (prevChar === "*") {
+    while (runStart > 0 && maskedSrc[runStart - 1] === "*") runStart--;
+  }
+  let before = prevChar;
+  if (runStart < offset || /[\uDC00-\uDFFF]/u.test(prevChar)) {
+    before =
+      maskedSrc.slice(Math.max(0, runStart - 2), runStart).match(/.$/su)?.[0] ||
+      "";
+  }
+  const beforeIsPunctuation = /[\p{P}\p{S}]/u.test(before);
+  const canClose = Boolean(
+    before &&
+      !/\s/u.test(before) &&
+      (!beforeIsPunctuation ||
+        touchesCjk ||
+        cjkTest.test(before) ||
+        nextPunctuation ||
+        (isGfm && before === "~")),
+  );
+  return {
+    length: length + offset - runStart,
+    remaining: length,
+    canClose,
+    position: 0,
+  };
+}
+
+// CommonMark rules 9–10 compare the original lengths of the two runs being
+// paired, even after some of their markers have been consumed.
+function matchAsteriskCloser(
+  openers: AsteriskOpener[],
+  lowerBounds: number[],
+  position: number,
+  length: number,
+  canOpen: boolean,
+): { end: number; width: number } | undefined {
+  let remaining = length;
+  const bucket = (length % 3) + (canOpen ? 3 : 0);
+  for (let i = openers.length - 1; i >= 0 && remaining; i--) {
+    const opener = openers[i];
+    if (opener.position <= lowerBounds[bucket]) break;
+    if (
+      (canOpen || opener.canClose) &&
+      length % 3 !== 0 &&
+      (length + opener.length) % 3 === 0
+    )
+      continue;
+
+    const used = Math.min(remaining, opener.remaining);
+    remaining -= used;
+    opener.remaining -= used;
+    // Unmatched openers inside the new span cannot pair outside it.
+    openers.length = opener.remaining ? i + 1 : i;
+    if (i === 0 && !opener.remaining) {
+      return { end: position + length - remaining, width: used % 2 || 2 };
+    }
+  }
+  if (remaining) {
+    // Earlier openers were exhausted or incompatible with this closer class.
+    lowerBounds[bucket] = position - 1;
+    if (canOpen) openers.push({ length, remaining, canClose: true, position });
+  }
+}
+
 function buildRDelimUnd(
   punct: string,
   punctSpace: string,
@@ -310,10 +393,7 @@ export default function markedCjkFriendly(): MarkedExtension {
           let rLength: number;
           let delimTotal = lLength;
           let midDelimTotal = 0;
-          // Marked 17.0.5+ also stops when the opener is preceded by the same
-          // delimiter and the candidate closer is both left- and right-flanking.
-          // Keeping that guard preserves native CommonMark results like
-          // `*foo**bar***` while still allowing the CJK-specific reclassification.
+          // Preserve Marked's guard for retried underscore runs.
           const prevCharIsSameDelimiter =
             modernEmStrongLayout && prevChar === match[0][0];
 
@@ -330,6 +410,22 @@ export default function markedCjkFriendly(): MarkedExtension {
 
           // Clip maskedSrc to same section of string as src
           const clippedMaskedSrc = maskedSrc.slice(-1 * src.length + lLength);
+
+          const openers: AsteriskOpener[] = [];
+          const lowerBounds = Array<number>(6).fill(-1);
+          if (isAsterisk) {
+            openers.push(
+              initialAsteriskOpener(
+                lLength,
+                maskedSrc,
+                maskedSrc.length - src.length,
+                prevChar,
+                nextChar,
+                touchesCjk,
+                isGfm,
+              ),
+            );
+          }
 
           let rMatch: RegExpExecArray | null;
           // biome-ignore lint/suspicious/noAssignInExpressions: following marked's pattern
@@ -357,54 +453,52 @@ export default function markedCjkFriendly(): MarkedExtension {
             const isLeftOnly = Boolean(rMatch[3] || rMatch[4]);
             const isBoth = Boolean(rMatch[5] || rMatch[6]);
 
-            if (isLeftOnly && !isCjkBoth) {
-              // found another Left Delim (no CJK → stays Left)
-              delimTotal += rLength;
-              continue;
-            }
-            if (isBoth || isCjkBoth) {
-              // either Left or Right Delim (or CJK-reclassified as Both)
-              if (lLength % 3 && !((lLength + rLength) % 3)) {
-                midDelimTotal += rLength;
-                continue; // CommonMark Emphasis Rules 9-10
+            const delimiterStart =
+              lLength + rMatch.index + rMatch[0].length - rDelim.length;
+            let width: number;
+            let end: number;
+            if (isAsterisk) {
+              if (isLeftOnly && !isCjkBoth) {
+                openers.push({
+                  length: rLength,
+                  remaining: rLength,
+                  canClose: false,
+                  position: delimiterStart,
+                });
+                continue;
               }
-
-              if (prevCharIsSameDelimiter && isBoth) {
-                break;
+              const pair = matchAsteriskCloser(
+                openers,
+                lowerBounds,
+                delimiterStart,
+                rLength,
+                isBoth || isCjkBoth,
+              );
+              if (!pair) continue;
+              ({ width, end } = pair);
+            } else {
+              if (isLeftOnly) {
+                delimTotal += rLength;
+                continue;
               }
+              if (isBoth) {
+                if (lLength % 3 && !((lLength + rLength) % 3)) {
+                  midDelimTotal += rLength;
+                  continue;
+                }
+                if (prevCharIsSameDelimiter) break;
+              }
+              delimTotal -= rLength;
+              if (delimTotal > 0) continue;
+              rLength = Math.min(rLength, rLength + delimTotal + midDelimTotal);
+              width = Math.min(lLength, rLength) % 2 || 2;
+              end = delimiterStart + rLength;
             }
-
-            delimTotal -= rLength;
-
-            if (delimTotal > 0) continue;
-
             if (!touchesCjk) return false;
-
-            // Remove extra characters. *a*** -> *a*
-            rLength = Math.min(rLength, rLength + delimTotal + midDelimTotal);
-            // biome-ignore lint/style/noNonNullAssertion: match[0] is always non-empty
-            const firstCp = rMatch[0].codePointAt(0)!;
-            const lastCharLength = firstCp > 0xffff ? 2 : 1;
-            const raw = src.slice(
-              0,
-              lLength + rMatch.index + lastCharLength + rLength,
-            );
-
-            // Create `em` if smallest delimiter has odd char count
-            if (Math.min(lLength, rLength) % 2) {
-              const text = raw.slice(1, -1);
-              return {
-                type: "em",
-                raw,
-                text,
-                tokens: this.lexer.inlineTokens(text),
-              };
-            }
-
-            // Create 'strong' if smallest delimiter has even char count
-            const text = raw.slice(2, -2);
+            const raw = src.slice(0, end);
+            const text = raw.slice(width, -width);
             return {
-              type: "strong",
+              type: width === 1 ? "em" : "strong",
               raw,
               text,
               tokens: this.lexer.inlineTokens(text),
