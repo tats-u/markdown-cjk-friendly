@@ -66,6 +66,22 @@ describe.each(htmlConverters)("marked-cjk-friendly (marked $version)", ({
   const md2Html = (input: string) => converter.md2Html(input);
   const md2HtmlOriginal = (input: string) => converter.md2HtmlOriginal(input);
 
+  it.each([
+    ["**강조 **는", "**강조 **는"],
+    ["***코드 ***를", "***코드 ***를"],
+    ["*참고 **주의:** 내용*", "<em>참고 <strong>주의:</strong> 내용</em>"],
+    ["*注意 **重要:** 内容*", "<em>注意 <strong>重要:</strong> 内容</em>"],
+    ["***API* *설정* 값**", "<strong><em>API</em> <em>설정</em> 값</strong>"],
+    ["월 __회 × __분", "월 __회 × __분"],
+    ["a/_원문/x 와 b/_원문/y", "a/_원문/x 와 b/_원문/y"],
+    ["**코드(code)**를", "<strong>코드(code)</strong>를"],
+    ["*強調　*𠮷", "*強調　*𠮷"],
+    ["*a日**", "<em>a日</em>*"],
+    ["~~강조 ~~는", "~~강조 ~~는"],
+  ])("resolves CJK-adjacent delimiters in %s", (markdown, html) => {
+    expect(md2Html(markdown)).toBe(`<p>${html}</p>\n`);
+  });
+
   it.concurrent("** around Kana/Han is converted to <strong>", async ({
     expect,
   }) => {

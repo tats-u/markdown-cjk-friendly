@@ -117,10 +117,11 @@ const emStrongRDelimAstCjkGfm = buildRDelimAst(
   cjkPunctSpaceGfm,
   cjkNotPunctSpaceGfm,
 );
-const emStrongRDelimUndCjk = buildRDelimUnd(
-  cjkPunct,
-  cjkPunctSpace,
-  cjkNotPunctSpace,
+// Intraword underscores require actual punctuation to open or close.
+const emStrongRDelimUnd = buildRDelimUnd(
+  "[\\p{P}\\p{S}]",
+  "[\\s\\p{P}\\p{S}]",
+  "[^\\s\\p{P}\\p{S}]",
 );
 const delRDelimCjk = buildRDelimDel(
   cjkDelPunct,
@@ -185,10 +186,6 @@ function isPrevCharCjk(
 
 /**
  * Checks whether a matched right delimiter is immediately adjacent to CJK text.
- *
- * Marked classifies these matches as left-only, right-only, or both using regex
- * groups. When CJK sits next to the delimiter, we treat the delimiter as "both"
- * so GFM emphasis/strikethrough can close across CJK punctuation boundaries.
  */
 function isCjkAdjacentToDelimiter(
   rightMatch: RegExpExecArray,
@@ -323,10 +320,11 @@ export default function markedCjkFriendly(): MarkedExtension {
           // Select the CJK-modified right delimiter regex
           const isGfm = this.options.gfm && !this.options.pedantic;
           let endReg: RegExp;
-          if (match[0][0] === "*") {
+          const isAsterisk = match[0][0] === "*";
+          if (isAsterisk) {
             endReg = isGfm ? emStrongRDelimAstCjkGfm : emStrongRDelimAstCjk;
           } else {
-            endReg = emStrongRDelimUndCjk;
+            endReg = emStrongRDelimUnd;
           }
           endReg.lastIndex = 0;
 
@@ -348,23 +346,23 @@ export default function markedCjkFriendly(): MarkedExtension {
 
             rLength = codePointCount(rDelim);
 
-            // Check if CJK is adjacent to this delimiter
-            // When CJK is adjacent, Left-only or Right-only
-            // should be reclassified as "Both" (Left or Right)
             const isCjkAdjacent = isCjkAdjacentToDelimiter(
               rMatch,
               clippedMaskedSrc,
             );
             touchesCjk ||= isCjkAdjacent;
+            // Groups 1 and 4 border whitespace or end of input and stay one-sided.
+            const isCjkBoth =
+              isAsterisk && isCjkAdjacent && Boolean(rMatch[2] || rMatch[3]);
             const isLeftOnly = Boolean(rMatch[3] || rMatch[4]);
             const isBoth = Boolean(rMatch[5] || rMatch[6]);
 
-            if (isLeftOnly && !isCjkAdjacent) {
+            if (isLeftOnly && !isCjkBoth) {
               // found another Left Delim (no CJK → stays Left)
               delimTotal += rLength;
               continue;
             }
-            if (isBoth || isCjkAdjacent) {
+            if (isBoth || isCjkBoth) {
               // either Left or Right Delim (or CJK-reclassified as Both)
               if (lLength % 3 && !((lLength + rLength) % 3)) {
                 midDelimTotal += rLength;
@@ -475,7 +473,7 @@ export default function markedCjkFriendly(): MarkedExtension {
             );
 
             touchesCjk ||= isCjkAdjacent;
-            if ((rMatch[3] || rMatch[4]) && !isCjkAdjacent) {
+            if (rMatch[4] || (rMatch[3] && !isCjkAdjacent)) {
               delimTotal += rLength;
               continue;
             }
